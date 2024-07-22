@@ -1,0 +1,35 @@
+{% extends 'baseform.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Formulaire de connexion au back-end du blog">
+    <title>{% block title %}Authentification administrateur{% endblock %}</title>
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+{% block body_content %}
+<form method="POST" action="{{ url_for('auth.login_admin') }}">
+	<div class="imgcontainer">
+		<img src="../static/Images/images_formulaires/" alt="Avatar" class="avatar">
+	</div>
+	<h3>Authentification administrateur</h3>
+	{{ form.csrf_token }}
+	<div class="container">
+		{{ form.pseudo.label }} {{ form.pseudo() }}
+		<br><br>
+		{{ form.role.label }} {{ form.role() }}
+		<br><br>
+		{{ form.password.label }} {{ form.password() }}
+
+		<div class="container" style="background-color:#f1f1f1">
+			<button type="submit" class="validatedbtn">Validation</button>
+			<button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}">Annulation de l'authentification administrateur</a></button>
+		</div>
+	</div>
+</form>
+{% endblock %}
+
+{% block footer_content %}
+{% endblock %}
+

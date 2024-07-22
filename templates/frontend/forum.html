@@ -1,0 +1,62 @@
+{% extends 'base.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Forum du blog permettant de discuter, interagir et donner son avis sur le blog.">
+    <title>{% block title %}Bienvenue sur le forum du blog{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/forum.css') }}">
+
+{% endblock %}
+
+    {% block header_content %}
+    {% endblock %}
+
+{% block main_content %}
+<br>
+        <h1>Forum de discussion</h1>
+<section id="categories">
+    <div id="forum_pic">
+        <div id="forum_pic_left">
+        </div>
+        <div id="forum_pic_center">
+        </div>
+        <div id="forum_pic_right">
+        </div>
+    </div>
+
+    <br><br><br><br><br><br>
+
+    <div class="categorie">
+        <h4>Ajouter un sujet sur le forum</h4>
+        <br>
+        <form method="POST" action="{{ url_for('user.add_subject_forum') }}">
+            {{ formsubjectforum.csrf_token }}
+            {{ formsubjectforum.nom.label }}
+            <label class="label">{{ formsubjectforum.nom(size=20) }}</label>
+            {{ formsubjectforum.submit() }}
+        </form>
+        <br>
+    </div>
+    <br>
+    <div class="separation"></div>
+    <br>
+    <div id="container_subject">
+        <h4>Sujets</h4>
+        <br>
+        <table id="subject">
+            <tbody>
+            {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.nom }}</td>
+                <td><a href="{{ url_for('frontend.forum_subject', subject_id=subject.id) }}" class="button-subject">Voir le sujet</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<div class="separation"></div>
+</section>
+
+    {% endblock %}
+
+    {% block footer_content %}
+    {% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'baseerror.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Page renvoyant l'erreur 404.">
+    <title>{% block title %}Erreur 404{% endblock %}</title>
+{% endblock %}
+
+{% block body_content %}
+<div id="container-error">
+    <h1>Erreur 404--Trop de pages ??</h1>
+    <div class="error-404">
+        <div class="error-message404">
+            <p>Oups ! La page que vous cherchez semble avoir été emportée par des licornes.</p>
+            <p>Mais ne vous inquiétez pas, nous avons envoyé une quête à la guilde <b>Blue Pegasus</b>,
+                tout devrait revenir à la normale bientôt!</p>
+        </div>
+    </div>
+    <div id="error-image404">
+        <img src="" alt="Image illustrative">
+    </div>
+    <div class="separation"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equip="X-UA-Compatible" content="IE=edge">
+    <met name="viewport" content="width=devise-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/accueil.css') }}">
+
+    {% block head_content %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+    {% block header_content %}
+
+    {% endblock %}
+    </header>
+    <div id="navbar">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('landing_page') }}">Accueil de Titi</a></li>
+                <li><a href="{{ url_for('frontend.view_videos') }}">Accès aux vidéos</a></li>
+                <li><a href="{{ url_for('frontend.forum') }}">Forum de Titi</a></li>
+                <li><a href="{{ url_for('user.user_recording') }}">Devenir membre</a></li>
+                <li><a href="https://www.youtube.com/@titi.lebricoleur">Accès à ma chaîne YouTube</a></li>
+            </ul>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div id="connection">
+                {% if logged_in %}
+                <p>Bienvenue, {{ pseudo }} ! Vous êtes connecté.</p>
+                <p><button><a href="{{ url_for('auth.user_logout') }}">Se déconnecter</a></button></p>
+            <!-- Afficher d'autres contenus de la page pour les utilisateurs connectés -->
+                {% else %}
+                <p>Veuillez vous connecter afin d'accéder aux fonctionnalités des membres.</p>
+                <button><a href="{{ url_for('auth.user_connection') }}">Se connecter.</a></button>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+    <div class="separation2"></div>
+
+    <main>
+    {% block main_content %}
+    {% endblock %}
+    </main>
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content row">
+            <div class="footer-section col-md-3">
+                <h3>Informations</h3>
+                <p>Email : <a href="mailto:example@example.com">example@example.com</a></p>
+                <p>Adresse : Cherbourg, Manche, France</p>
+            </div>
+            <div class="footer-section col-md-3">
+                <h3>Liens utiles</h3>
+                <ul>
+                    <li><a href="#">Chaîne Youtube</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section col-md-3">
+                <h3>Mentions Légales</h3>
+                <ul>
+                    <li><a href="{{ url_for('functional.politique') }}">Politique de confidentialité</a></li>
+                    <li><a href="{{ url_for('functional.mentions') }}">Mentions Légales</a></li>
+                </ul>
+            </div>
+            <div class="footer-section col-md-3">
+                <h3>Réseaux Sociaux</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Youtube</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-pinterest"></i> Pinterest</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="separation2"></div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 SethiarWorks. Tous droits réservés.</p>
+        <a href="{{ url_for('auth.admin_connection') }}">S'identifier en tant qu'administrateur</a>
+    </div>
+</footer>
+    <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Inclure Popper.js, qui est nécessaire pour certaines fonctionnalités de Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Inclure le fichier JavaScript de Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='CSS/javascript/menu_portable.js') }}"></script>
+    {% block footer_content %}
+    {% endblock %}
+
+</body>
+</html>

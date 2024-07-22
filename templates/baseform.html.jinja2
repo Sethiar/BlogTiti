@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='stylesheet' href="{{ url_for('static',filename='CSS/form.css') }}">
+	{% block head_content %}
+	{% endblock %}
+</head>
+<body>
+    <header>
+    {% block header_content %}
+    {% endblock %}
+
+    {% block body_content %}
+    {% endblock %}
+
+</body>
+</html>

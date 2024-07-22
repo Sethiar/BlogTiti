@@ -1,0 +1,86 @@
+{% extends 'baseform.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Formulaire d'adhésion aux conditions générales du blog.">
+    <title>{% block title %}Formulaire d'adhésion pour s'inscrire faire parti de la communauté de <b>Titi Technique</b>>.{% endblock %}</title>
+    {% endblock %}
+
+{% block body_content %}
+    <header>
+        <div id="introduction">
+            <p>Bienvenue aux nouveaux membres, veuillez remplir ce formulaire afin de vous inscrire.</p>
+            <p>Vous pourrez alors en toute liberté accéder au forum, choisir un sujet et débattre
+                avec les autres utilisateurs, vous pourrez aussi laisser des commentaires
+                sur les articles publiés.</p>
+            <p>Pour tout renseignement supplémentaire, vous pouvez consulter nos
+                <b><a href="{{url_for('functional.politique')}}">conditions générales d'utilisation</a></b>
+                ou nos <b><a href="{{url_for('functional.mentions')}}">mentions légales</a></b>.</p>
+        </div>
+    </header>
+
+    <form method="POST" action="{{ url_for('user.user_recording') }}" enctype="multipart/form-data">
+    <div class="imgcontainer">
+        <img src="" alt="Avatar" class="avatar">
+    </div>
+
+    <h3>Enregistrement Membre</h3>
+    {{ form.csrf_token }}
+    <div class="container">
+        {{ form.pseudo.label }} {{ form.pseudo() }}
+        {% if form.pseudo.errors %}
+            <ul>
+                {% for error in form.pseudo.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ form.email.label }} {{ form.email() }}
+        {% if form.email.errors %}
+            <ul>
+                {% for error in form.email.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ form.password.label }} {{ form.password() }}
+        {% if form.password.errors %}
+            <ul>
+                {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ form.password2.label }} {{ form.password2() }}
+        {% if form.password2.errors %}
+            <ul>
+                {% for error in form.password2.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ form.date_naissance.label }} {{ form.date_naissance() }}
+        {% if form.date_naissance.errors %}
+            <ul>
+                {% for error in form.date_naissance.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <ul>
+            {{ form.profil_photo.label }}<br>
+            {{ form.profil_photo }}
+        </ul>
+        <br><br>
+    </div>
+        <div class="separation"></div>
+    <div class="container" style="background-color:black">
+        <button type="submit" class="validatedbtn">Validation de la souscription</button>
+        <button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}">Annulation de la souscription et retour à l'accueil</a></button>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+
+/* Style pour la section forum. */
+
+#forum_pic {
+  background-image: url('../Images/');
+  height: 100%;
+}
+
+#forum_pic_center {
+  border-radius: 100%;
+  background-image: url('../Images/');
+  background-position: center;
+  margin: 0 auto;
+  background-size: cover;
+  top: 15%;
+  width: 550px;
+  height: 350px;
+}
+
+#forum_pic_left {
+  background-image: url('');
+  background-position: left;
+  position: absolute;
+  background-size: cover;
+  left: 0%;
+  top: 35%;
+  width: 20%;
+  height: 50%;
+  z-index: 1;
+  background-size: 100% 100%;
+}
+
+#forum_pic_right {
+  background-image: url('../Images/');
+  background-position: right;
+  position: absolute;
+  margin: 0 auto;
+  background-size: cover;
+  right: 0%;
+  top: 35%;
+  width: 20%;
+  height: 50%;
+  z-index: 1;
+  background-size: 100% 100%;
+}
+
+.categorie {
+  margin: 0 auto;
+  text-align: center;
+  border : 1px solid orange;
+  font-size: 16px;
+  width : 50%;
+}
+
+.label {
+  width: 40%;
+}
+
+.separation {
+  margin: 0 auto;
+  border-bottom: 1px solid gold;
+  margin: 3% 20% 3%  20%;
+}
+
+#subject {
+  width: 30%;
+  margin-left: 10%;
+  border-collapse: collapse;
+  border: 1px solid orange;
+  text-align: left;
+}
+
+#subject th, #subject td {
+  padding: 8px;
+  font-size: 14px;
+  border-top: 1px solid orange;
+  border-bottom: 1px solid orange;
+}
+
+h4{
+  margin-left: 10%;
+}
+
+.button-subject {
+  color: black;
+  background-color: orange;
+  border: 1px solid gold;
+  justify-content: flex-end;
+  margin: 10px 0;
+  padding: 2px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  cursor: pointer;
+}
+
