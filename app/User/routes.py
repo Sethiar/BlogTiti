@@ -22,7 +22,8 @@ from app.Models.comment_subject import CommentSubject
 from app.Models.likes_comment_subject import CommentLikeSubject
 from app.Models.reply_subject import ReplySubject
 
-from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ReplySubjectForm
+from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ChangeCommentSubjectForm, \
+    SuppressCommentForm, ReplySubjectForm
 
 from app.Mail.routes import mail_reply_forum_comment, mail_like_comment_subject
 
@@ -197,6 +198,64 @@ def comment_subject(user_pseudo):
             return redirect(url_for("functional.connection_requise"))
 
 
+@user_bp.route('/modification-commentaire-utilisateur/<int:id>', methods=['GET', 'POST'])
+@login_required
+def change_comment(id):
+    """
+    Permet à un utilisateur de modifier son commentaire.
+
+    Args:
+        id (int): L'id du commentaire à modifier.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après modification du commentaire.
+    """
+    comment = CommentSubject.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire
+    if comment.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à modifier ce commentaire.')
+        return redirect(url_for('frontend.forum_subject', subject_id=comment.subject_id))
+
+    formchange = ChangeCommentSubjectForm(obj=comment)
+
+    if formchange.validate_on_submit():
+        comment.comment_content = formchange.comment_content.data
+        db.session.commit()
+        flash('Commentaire modifié avec succès.')
+        return redirect(url_for('frontend.forum_subject', subject_id=comment.subject_id))
+    else:
+        flash('Erreur lors de la validation du commentaire.')
+
+    return render_template('user/edit_comment.html', formchange=formchange, comment=comment)
+
+
+@user_bp.route('/suppression-commentaire-utilisateur/<int:id>', methods=['POST'])
+@login_required
+def delete_comment(id):
+    """
+    Permet à un utilisateur de supprimer son commentaire.
+
+    Args:
+        id (int): L'id du commentaire à supprimer.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après suppression du commentaire.
+    """
+    formsuppress = SuppressCommentForm()
+    comment = CommentSubject.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire
+    if comment.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à supprimer ce commentaire.')
+        return redirect(url_for('frontend.forum_subject', subject_id=comment.subject_id))
+
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Commentaire supprimé avec succès.')
+    return redirect(url_for('frontend.forum_subject', subject_id=comment.subject_id))
+
+
 # Route permettant de répondre à un commentaire une fois connecté.
 @user_bp.route("/<string:user_pseudo>/comment<int:comment_subject_id>/reply_subject", methods=['GET', 'POST'])
 @login_required
@@ -252,7 +311,7 @@ def comment_replies_subject(comment_subject_id, user_pseudo):
         return redirect(url_for("frontend.forum_subject", subject_id=comment.subject_id))
 
     # Si le formulaire n'est pas validé ou en méthode GET, affichez le formulaire de réponse
-    return render_template("reply_form_subject.html", form=formsubjectreply, comment=comment)
+    return render_template("user/reply_form_subject.html", form=formsubjectreply, comment=comment)
 
 
 # Route permettant de liker un commentaire dans la section forum.

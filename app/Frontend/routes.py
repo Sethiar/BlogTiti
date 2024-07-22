@@ -7,7 +7,7 @@ from app.Frontend import frontend_bp
 from flask import render_template, abort
 from flask_login import current_user
 
-from app.Models.forms import NewSubjectForumForm, CommentSubjectForm, CommentLike
+from app.Models.forms import NewSubjectForumForm, CommentSubjectForm, CommentLike, SuppressCommentForm
 
 from app.Models.subject_forum import SubjectForum
 from app.Models.comment_subject import CommentSubject
@@ -60,6 +60,7 @@ def forum_subject(subject_id):
     # Création de l'instance des formulaires.
     formcomment = CommentSubjectForm()
     formlikecomment = CommentLike()
+    formsuppress = SuppressCommentForm()
 
     # Récupération du sujet spécifié par l'id depuis la base de donnée.
     subject = SubjectForum.query.get_or_404(subject_id)
@@ -84,6 +85,6 @@ def forum_subject(subject_id):
             "liked_by_current_user": liked_by_current_user
         }
 
-    return render_template("frontend/subject_forum.html", subject=subject, subject_id=subject_id,
-                           comment_subject=comment_subject, formcomment=formcomment, formlikecomment=formlikecomment,
-                           comment_likes_data=comment_likes_data)
+    return render_template("frontend/subject_forum.html", formsuppress=formsuppress, subject=subject,
+                           subject_id=subject_id, comment_subject=comment_subject, formcomment=formcomment,
+                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data)

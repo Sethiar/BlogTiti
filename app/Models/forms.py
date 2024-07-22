@@ -324,6 +324,26 @@ class CommentSubjectForm(FlaskForm):
     csrf_token = HiddenField()
 
 
+# Formulaire permettant à un utilisateur de modifier son commentaire pour la section forum.
+class ChangeCommentSubjectForm(FlaskForm):
+    comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
+                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+    submit = SubmitField("Soumettre le commentaire")
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant à un utilisateur de supprimer son commentaire pour la section forum.
+class SuppressCommentForm(FlaskForm):
+    """
+    Formulaire permettant de supprimer un commentaire par l'utilisateur.
+    Attributes :
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+    submit = SubmitField('Supprimer le commentaire')
+    csrf_token = HiddenField()
+
+
 # Formulaire permettant de répondre à un commentaire dans la section forum.
 class ReplySubjectForm(FlaskForm):
     """
