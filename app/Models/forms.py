@@ -326,6 +326,14 @@ class CommentSubjectForm(FlaskForm):
 
 # Formulaire permettant à un utilisateur de modifier son commentaire pour la section forum.
 class ChangeCommentSubjectForm(FlaskForm):
+    """
+    Formulaire permettant de supprimer un commentaire par l'utilisateur.
+    Attributes :
+        comment_content : Contenu du commentaire de l'utilisateur.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+
     comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
                                     render_kw={"placeholder": "Veuillez entrer votre commentaire."})
     submit = SubmitField("Soumettre le commentaire")
@@ -358,11 +366,40 @@ class ReplySubjectForm(FlaskForm):
     csrf_token = HiddenField()
     # Le contenu de la réponse.
     reply_content = TextAreaField("Réponse au sujet du forum", validators=[DataRequired()],
-                                  render_kw={"placeholder": "Veuillez écrire votre commentaire."})
+                                  render_kw={"placeholder": "Veuillez écrire votre réponse."})
     # Champ pour stocker l'id du commentaire parent.
     comment_id = HiddenField('ID du commentaire')
     # Action de soumettre le formulaire.
     submit = SubmitField()
+
+
+# Formulaire permettant à un utilisateur de modifier sa réponse à un commentaire dans la section forum.
+class ChangeReplySubject(FlaskForm):
+    """
+    Formulaire permettant de modifier une réponse par l'utilisateur.
+    Attributes :
+        reply_content : Contenu du commentaire de l'utilisateur.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+
+    reply_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
+                                  render_kw={"placeholder": "Veuillez entrer votre réponse."})
+    submit = SubmitField("Soumettre la réponse.")
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire dans la section forum.
+class SuppressReplySubject(FlaskForm):
+    """
+    Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire de la section forum.
+
+    Attributes :
+        comment_id (HiddenField) : Champ caché pour l'ID de la réponse à supprimer.
+        submit (SubmitField): Bouton de soumission du formulaire.
+    """
+    reply_id = HiddenField('reply_id', validators=[DataRequired()])
+    submit = SubmitField('Supprimer')
 
 
 # Formulaire permettant de supprimer les commentaires dans la section forum.

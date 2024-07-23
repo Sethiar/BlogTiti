@@ -23,7 +23,7 @@ from app.Models.likes_comment_subject import CommentLikeSubject
 from app.Models.reply_subject import ReplySubject
 
 from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ChangeCommentSubjectForm, \
-    SuppressCommentForm, ReplySubjectForm
+    SuppressCommentForm, ReplySubjectForm, ChangeReplySubject, SuppressReplySubject
 
 from app.Mail.routes import mail_reply_forum_comment, mail_like_comment_subject
 
@@ -312,6 +312,66 @@ def comment_replies_subject(comment_subject_id, user_pseudo):
 
     # Si le formulaire n'est pas validé ou en méthode GET, affichez le formulaire de réponse
     return render_template("user/reply_form_subject.html", form=formsubjectreply, comment=comment)
+
+
+# Route permettant à un utilisateur de modifier sa réponse à un commentaire de la section forum.
+@user_bp.route('/modification-reponse-utilisateur/<int:id>', methods=['GET', 'POST'])
+@login_required
+def change_reply(id):
+    """
+    Permet à un utilisateur de modifier sa réponse à un commentaire.
+
+    Args:
+        id (int): L'id de la réponse à modifier.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après modification de la réponse
+    """
+    reply = ReplySubject.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire
+    if reply.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à modifier cette réponse.')
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+
+    formchangereply = ChangeReplySubject(obj=reply)
+
+    if formchangereply.validate_on_submit():
+        reply.reply_content = formchangereply.reply_content.data
+        db.session.commit()
+        flash('Réponse modifiée avec succès.')
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+    else:
+        flash('Erreur lors de la validation du commentaire.')
+
+    return render_template('user/edit_reply.html', formchangereply=formchangereply, reply=reply)
+
+
+# Route permettant à un utilisateur de supprimer sa réponse à un commentaire.
+@user_bp.route('/suppression-reponse-utilisateur/<int:id>', methods=['POST'])
+@login_required
+def delete_reply(id):
+    """
+    Permet à un utilisateur de supprimer sa réponse à un commentaire.
+
+    Args:
+        id (int): L'id de la réponse à supprimer.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après suppression de la réponse.
+    """
+    formsuppressreply = SuppressReplySubject()
+    reply = ReplySubject.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire
+    if reply.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à supprimer cette réponse.')
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+
+    db.session.delete(reply)
+    db.session.commit()
+    flash('Réponse supprimée avec succès.')
+    return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
 
 
 # Route permettant de liker un commentaire dans la section forum.
