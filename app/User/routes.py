@@ -332,7 +332,7 @@ def change_reply(id):
     # Vérification que l'utilisateur actuel est l'auteur du commentaire
     if reply.user_id != current_user.id:
         flash('Vous n\'êtes pas autorisé à modifier cette réponse.')
-        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment.subject_id))
 
     formchangereply = ChangeReplySubject(obj=reply)
 
@@ -340,7 +340,7 @@ def change_reply(id):
         reply.reply_content = formchangereply.reply_content.data
         db.session.commit()
         flash('Réponse modifiée avec succès.')
-        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment.subject_id))
     else:
         flash('Erreur lors de la validation du commentaire.')
 
@@ -366,12 +366,16 @@ def delete_reply(id):
     # Vérification que l'utilisateur actuel est l'auteur du commentaire
     if reply.user_id != current_user.id:
         flash('Vous n\'êtes pas autorisé à supprimer cette réponse.')
-        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+        return redirect(url_for('frontend.forum_subject', subject_id=reply.comment.subject_id))
+
+    # Obtenir le subject_id avant de supprimer la réponse
+    subject_id = reply.comment.subject_id
 
     db.session.delete(reply)
     db.session.commit()
     flash('Réponse supprimée avec succès.')
-    return redirect(url_for('frontend.forum_subject', subject_id=reply.comment_id))
+
+    return redirect(url_for('frontend.forum_subject', subject_id=subject_id))
 
 
 # Route permettant de liker un commentaire dans la section forum.
