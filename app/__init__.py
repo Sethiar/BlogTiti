@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from itsdangerous import URLSafeTimedSerializer
 from datetime import timedelta
 
-from flask import Flask, session
+from flask import Flask, session, redirect, url_for
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
@@ -24,6 +24,9 @@ load_dotenv()
 
 # Instanciation de flask-mail.
 mailing = Mail()
+
+# Instanciation de loginManager.
+login_manager = LoginManager()
 
 
 # Fonction créant l'initialisation de l'application.
@@ -96,8 +99,26 @@ def create_app():
     from app.Models.user import User
     from app.Models.anonyme import Anonyme
 
-    # Instanciation de loginManager.
-    login_manager = LoginManager()
+    # Initialisation de la classe à utiliser pour les utilisateurs anonymes.
+    login_manager.init_app(app)
+    login_manager.anonymous_user = Anonyme
+
+    # Route permettant de renvoyant l'utilisateur vers les bons moyens d'authentification.
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        """
+        Fonction exécutée lorsque l'utilisateur tente d'accéder à une page nécessitant une connexion,
+        mais n'est pas authentifié. Redirige l'utilisateur vers la page "connexion_requise".
+
+        Cette fonction est utilisée pour gérer les tentatives d'accès non autorisé à des pages nécessitant une connexion.
+        Lorsqu'un utilisateur non authentifié essaie d'accéder à une telle page, cette fonction est appelée et redirige
+        l'utilisateur vers la page "connexion_requise" où il peut se connecter.
+
+        Returns:
+            Redirige l'utilisateur vers la page "connexion_requise".
+        """
+        return redirect(url_for('functional.connexion_requise'))
+
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -125,10 +146,6 @@ def create_app():
         logged_in = session.get("logged_in", False)
         pseudo = session.get("pseudo", None)
         return dict(logged_in=logged_in, pseudo=pseudo)
-
-    # Initialisation de la classe à utiliser pour les utilisateurs anonymes.
-    login_manager.init_app(app)
-    login_manager.anonymous_user = Anonyme
 
     # Configuration de la durée de vie des cookies de session (optionnel)
     app.permanent_session_lifetime = timedelta(days=1)  # Durée de vie d'un jour pour les cookies de session
