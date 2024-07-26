@@ -4,15 +4,30 @@
     <meta name="description" content="Blog de Tititechnique renseignant sur les techniques de bricolage, jardinage,
     et tout autre chose afin de pouvoir réaliser des petits travaux chez soi en toute sécurité.">
     <title>{% block title %}Le Blog de TitiTechnique{% endblock %}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 {% endblock %}
 
 {% block main_content %}
 <br>
-<div id="principle_container">
-    <div id="pics_accueil">
-        <img src="../static/Images/images_bannière_logo/logo.jpg">
+<div id="pics_accueil">
+    <img src="../static/Images/images_bannière_logo/logo.jpg">
+</div>
+<div class="animation">
+    <div class="avatar right"></div>
+    <div class="zone" id="gardening">
+        <img src="../static/Images/images_accueil/terre_vierge.png" class="initial" data-next="../static/Images/images_accueil/plantes_poussees.png" data-initial="../static/Images/images_accueil/terre_vierge.png">
     </div>
-    <br>
+    <div class="zone" id="building">
+        <div class="spritesheet" data-src="../static/Images/images_accueil/building.png') }}"></div>
+    </div>
+    <div class="zone" id="mechanic">
+        <img src="../static/Images/images_accueil/mechanic.png" class="initial" data-next="../static/Images/images_accueil/mechanic2.png" data-initial="../static/Images/images_accueil/mechanic.png">
+    </div>
+    <div class="zone2" id="tools">
+        <img src="../static/Images/images_accueil/tools.png" class="initial" data-initial="../static/Images/images_accueil/tools.png">
+    </div>
+</div>
+<br>
     <div id="container_intro">
         <h1>Je vous souhaite la bienvenue sur le blog de TitiTechnique</h1>
         <br><br>
@@ -71,4 +86,6 @@
 
 </div>
 <br>
+<script src="{{ url_for('static', filename='CSS/javascript/avatar_move.js') }}"></script>
+
 {% endblock %}
