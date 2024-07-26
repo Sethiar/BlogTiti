@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const avatar = document.querySelector('.avatar');
-    const zones = document.querySelectorAll('.zone, .zone2'); // Inclure les deux classes
+    const zones = document.querySelectorAll('.zone, .zone2');
     let currentZone = 0;
 
     function moveToNextZone() {
@@ -15,85 +15,89 @@ document.addEventListener('DOMContentLoaded', function() {
             const avatarWidth = avatar.offsetWidth;
             const avatarHeight = avatar.offsetHeight;
 
-            let newLeft, newTop;
-
-            if (currentZone === 0) {
-                // Calculer la position centrée uniquement pour la première zone.
-                newLeft = rect.left + (rect.width / 2) - (avatarWidth / 2);
-                newTop = rect.top + (rect.height / 2) - (avatarHeight / 2);
-            } else {
-                // Utiliser les coordonnées de la zone comme telles pour les autres zones.
-                newLeft = rect.left;
-                newTop = rect.top;
+            // Calculer les positions avec correction pour le défilement et de la zone.
+            if (zone.id === 'gardening') {
+                // Centrer l'avatar dans la zone gardening
+                newLeft = rect.left + window.pageXOffset - avatar.parentElement.offsetLeft + avatarWidth;
+                newTop = rect.top + window.pageYOffset - avatar.parentElement.offsetTop + (rect.height / 2) + (avatarHeight / 2);
+            } else if (zone.id === 'building' || zone.id === 'mechanic') {
+                // Positionner l'avatar en bas de la zone
+                newLeft = rect.left + window.pageXOffset - avatar.parentElement.offsetLeft;
+                newTop = rect.bottom + window.pageYOffset - avatar.parentElement.offsetTop - rect.height + (avatarHeight / 2);
+            } else if (zone.id === 'tools') {
+                // Positionner l'avatar en bas de la zone tools
+                newLeft = rect.left + window.pageXOffset - avatar.parentElement.offsetLeft + (rect.width / 2) - avatarWidth;
+                newTop = rect.bottom + window.pageYOffset - avatar.parentElement.offsetTop - avatarHeight;
             }
 
-            console.log(`Moving to zone ${currentZone}: (${newLeft}px, ${newTop}px)`);
-
-            avatar.style.transition = 'left 2s linear, top 2s linear';
-            avatar.style.left = `${newLeft}px`;
-            avatar.style.top = `${newTop}px`;
-
-            setTimeout(() => {
-                avatar.classList.remove(nextClass);
-                if (zone.id !== 'tools') {
-                    avatar.classList.add('work');
-                }
-
-                // Déclencher l'animation de la spritesheet uniquement pour la zone #building
-                if (zone.id === 'building') {
-                    const spritesheet = zone.querySelector('.spritesheet');
-                    if (spritesheet) {
-                        spritesheet.classList.add('animate');
-                        spritesheet.addEventListener('animationend', () => {
-                            spritesheet.classList.add('final'); // Ajouter la classe final
-                        }, { once: true });
-                    }
-                }
-
-                setTimeout(() => {
+            // Utilisation de GSAP pour animer l'avatar.
+            gsap.to(avatar, {
+                duration: 2,
+                left: newLeft,
+                top: newTop,
+                ease: "power1.out",
+                onComplete: () => {
+                    avatar.classList.remove(nextClass);
                     if (zone.id !== 'tools') {
-                        changeZoneImage(zone);
-                        avatar.classList.remove('work');
+                        avatar.classList.add('work');
                     }
-                    currentZone++;
-                    if (currentZone < zones.length) {
-                        setTimeout(moveToNextZone, 0); // Move to the next zone immediately
-                    } else {
-                        // Retourner à la zone 'tools' et continuer l'animation 'work'
-                        const toolsZone = document.querySelector('#tools');
-                        const toolsRect = toolsZone.getBoundingClientRect();
 
-                        // Positionner l'avatar au centre de la zone 'tools'
-                        const centeredToolsLeft = toolsRect.left + (toolsRect.width / 2) - (avatarWidth / 2);
-                        const centeredToolsTop = toolsRect.top + (toolsRect.height / 2) - (avatarHeight / 2);
+                    if (zone.id === 'building') {
+                        const spritesheet = zone.querySelector('.spritesheet');
+                        if (spritesheet) {
+                            spritesheet.classList.add('animate');
+                            spritesheet.addEventListener('animationend', () => {
+                                spritesheet.classList.add('final');
+                            }, { once: true });
+                        }
+                    }
 
-                        avatar.style.transition = 'left 2s linear, top 2s linear';
-                        avatar.style.left = `${centeredToolsLeft}px`;
-                        avatar.style.top = `${centeredToolsTop}px`;
+                    setTimeout(() => {
+                        if (zone.id !== 'tools') {
+                            changeZoneImage(zone);
+                            avatar.classList.remove('work');
+                        }
+                        currentZone++;
+                        if (currentZone < zones.length) {
+                            setTimeout(moveToNextZone, 0);
+                        } else {
+                            // Retourner à la zone 'tools'
+                            const toolsZone = document.querySelector('#tools');
+                            const toolsRect = toolsZone.getBoundingClientRect();
 
-                        setTimeout(() => {
-                            avatar.classList.add('work');
+                            const centeredToolsLeft = rect.left + window.pageXOffset - avatar.parentElement.offsetLeft + (rect.width / 2) - avatarWidth;
+                            const centeredToolsTop = rect.bottom + window.pageYOffset - avatar.parentElement.offsetTop - avatarHeight;
 
-                            setTimeout(() => {
-                                avatar.classList.remove('work');
-                                avatar.classList.add('happy');
-
-                                setTimeout(() => {
-                                    avatar.classList.remove('happy');
-                                    avatar.classList.add('sleep');
+                            gsap.to(avatar, {
+                                duration: 0,
+                                left: centeredToolsLeft,
+                                top: centeredToolsTop,
+                                ease: "power1.out",
+                                onComplete: () => {
+                                    avatar.classList.add('work');
 
                                     setTimeout(() => {
-                                        avatar.classList.remove('sleep');
-                                        currentZone = 0; // Réinitialiser à la première zone
-                                        resetImages(); // Réinitialiser les images à l'état initial
-                                        setTimeout(moveToNextZone, 0); // Démarrer le cycle à nouveau immédiatement
-                                    }, 5000); // Durée de l'animation 'sleep'
-                                }, 4000); // Durée de l'animation 'happy'
-                            }, 5000); // Durée de l'animation 'work'
-                        }, 2000); // Temps pour revenir à la zone 'tools'
-                    }
-                }, zone.id === 'tools' ? 0 : 5000); // délai de 5 secondes pour l'animation work.
-            }, 2000); // 2-second delay to allow for the movement animation
+                                        avatar.classList.remove('work');
+                                        avatar.classList.add('happy');
+
+                                        setTimeout(() => {
+                                            avatar.classList.remove('happy');
+                                            avatar.classList.add('sleep');
+
+                                            setTimeout(() => {
+                                                avatar.classList.remove('sleep');
+                                                currentZone = 0;
+                                                resetImages();
+                                                setTimeout(moveToNextZone, 0);
+                                            }, 5000); // Durée de l'animation 'sleep'
+                                        }, 4000); // Durée de l'animation 'happy'
+                                    }, 5000); // Durée de l'animation 'work'
+                                }
+                            });
+                        }
+                    }, zone.id === 'tools' ? 0 : 5000);
+                }
+            });
         }
     }
 
@@ -123,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (spritesheet) {
                 spritesheet.classList.remove('animate');
-                spritesheet.classList.remove('final'); // Enlever la classe final lors de la réinitialisation
+                spritesheet.classList.remove('final');
             }
         });
     }
