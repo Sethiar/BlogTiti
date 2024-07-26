@@ -41,22 +41,6 @@ def page_not_found(error):
     return render_template("Error/401.html"), 401
 
 
-# Route permettant de renvoyant l'utilisateur vers les bons moyens d'authentification.
-@login_manager.unauthorized_handler
-def unauthorized():
-    """
-    Fonction exécutée lorsque l'utilisateur tente d'accéder à une page nécessitant une connexion,
-    mais n'est pas authentifié. Redirige l'utilisateur vers la page "connexion_requise".
-
-    Cette fonction est utilisée pour gérer les tentatives d'accès non autorisé à des pages nécessitant une connexion.
-    Lorsqu'un utilisateur non authentifié essaie d'accéder à une telle page, cette fonction est appelée et redirige
-    l'utilisateur vers la page "connexion_requise" où il peut se connecter.
-
-    Returns:
-        Redirige l'utilisateur vers la page "connexion_requise".
-    """
-    return redirect(url_for('functional.connexion_requise'))
-
 @app.route("/")
 def landing_page():
     """
