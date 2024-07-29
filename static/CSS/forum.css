@@ -2,46 +2,37 @@
 /* Style pour la section forum. */
 
 #forum_pic {
-  background-image: url('../Images/');
-  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#forum_pic_center {
-  border-radius: 100%;
-  background-image: url('../Images/');
-  background-position: center;
-  margin: 0 auto;
-  background-size: cover;
-  top: 15%;
-  width: 550px;
-  height: 350px;
+#forum_pic div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-#forum_pic_left {
-  background-image: url('');
-  background-position: left;
-  position: absolute;
-  background-size: cover;
-  left: 0%;
-  top: 35%;
-  width: 20%;
-  height: 50%;
-  z-index: 1;
-  background-size: 100% 100%;
+#forum_pic_left img,
+#forum_pic_center img,
+#forum_pic_right img {
+  width: 30vw;
+  max-width: 100%;
 }
 
-#forum_pic_right {
-  background-image: url('../Images/');
-  background-position: right;
-  position: absolute;
-  margin: 0 auto;
-  background-size: cover;
-  right: 0%;
-  top: 35%;
-  width: 20%;
-  height: 50%;
-  z-index: 1;
-  background-size: 100% 100%;
+#forum_pic_center img {
+  border-radius: 50%;
+  border: 2px solid gold;
+}
+
+#forum_pic_left img {
+  width: 25vw;
+  border-radius: 25%;
+}
+
+#forum_pic_right img {
+  width: 25vw;
+  border-radius: 25%;
 }
 
 .categorie {

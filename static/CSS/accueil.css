@@ -95,7 +95,7 @@ button a {
 
 /* Style pour la connexion utilisateur */
 #connection {
-  width: 15vw;
+  width: 20vw;
   border: 1px solid gold;
   border-radius: 5px;
   background-color: orange;
@@ -115,7 +115,7 @@ button a {
 
 #connection button {
   color: black;
-  width: 15vw;
+  width: 17vw;
   background-color: gold;
   border: 1px solid black;
   text-align: center;
@@ -285,9 +285,14 @@ h1 {
 
 .spritesheet {
   background-image: url('../Images/images_accueil/building.png');
-  width: 60px; /* Largeur d'une frame */
-  height: 100px; /* Hauteur d'une frame */
-  background-position: 0 0; /* Afficher la première frame par défaut */
+  width: 60px;
+  height: 100px;
+  background-position: 0 0;
+  transform: scale(1.7);
+}
+
+#building {
+  width: 20vw;
 }
 
 .spritesheet.animate {
@@ -352,6 +357,17 @@ h1 {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin: 0 auto;
+}
+
+.pics-accueil-fin {
+  overflow: hidden;
+  width: 50vw;
+  font-size: 20px;
+  display: flex;
+  border-radius: 50%;
+  border: 3px solid orange;
+  height: auto;
   margin: 0 auto;
 }
 
