@@ -87,8 +87,7 @@ def forum_subject(subject_id):
             "liked_by_current_user": liked_by_current_user
         }
 
-    return render_template("frontend/subject_forum.html", formsuppress=formsuppress,
-                           formsuppressreply=formsuppressreply, subject=subject, subject_id=subject_id,
-
+    return render_template("frontend/subject_forum.html",  subject=subject, subject_id=subject_id,
+                           formsuppress=formsuppress, formsuppressreply=formsuppressreply,
                            comment_subject=comment_subject, formcomment=formcomment,
                            formlikecomment=formlikecomment, comment_likes_data=comment_likes_data)

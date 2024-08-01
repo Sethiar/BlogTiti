@@ -198,6 +198,7 @@ def comment_subject(user_pseudo):
             return redirect(url_for("functional.connection_requise"))
 
 
+# Route permettant à un utilisateur de modifier son commentaire dans la section forum.
 @user_bp.route('/modification-commentaire-utilisateur/<int:id>', methods=['GET', 'POST'])
 @login_required
 def change_comment(id):
@@ -227,9 +228,10 @@ def change_comment(id):
     else:
         flash('Erreur lors de la validation du commentaire.')
 
-    return render_template('user/edit_comment.html', formchange=formchange, comment=comment)
+    return render_template('user/edit_comment_subject.html', formchange=formchange, comment=comment)
 
 
+# Route permettant à un utilisateur de supprimer son commentaire dans la section forum.
 @user_bp.route('/suppression-commentaire-utilisateur/<int:id>', methods=['POST'])
 @login_required
 def delete_comment(id):
@@ -344,7 +346,7 @@ def change_reply(id):
     else:
         flash('Erreur lors de la validation du commentaire.')
 
-    return render_template('user/edit_reply.html', formchangereply=formchangereply, reply=reply)
+    return render_template('user/edit_reply_subject.html', formchangereply=formchangereply, reply=reply)
 
 
 # Route permettant à un utilisateur de supprimer sa réponse à un commentaire.
