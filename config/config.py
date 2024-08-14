@@ -1,7 +1,7 @@
 """
 Ceci est le code pour la configuration de l'application du blog de tititechnique.
 """
-
+import os
 
 # Configuration des fichiers uploadés.
 UPLOAD_FOLDER = "static/Images/images_profil"

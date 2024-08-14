@@ -19,6 +19,9 @@ from app.Models import db
 from config.config import Config
 import config.config
 
+from app.scheduler import create_scheduler
+import atexit
+
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
 
@@ -92,6 +95,14 @@ def create_app():
     # Instanciation de flask-Migrate.
     Migrate(app, db)
 
+    # Pour les réponses JSON concerne l'encodage.
+    app.config['JSON_AS_ASCII'] = False
+
+    # Lancement du processus apscheduler.
+    scheduler_app = create_scheduler(app)
+    scheduler_app.start()
+    atexit.register(lambda: scheduler_app.shutdown())
+
     # Configuration de l'application pour utiliser la protection CSRF.
     csrf = CSRFProtect(app)
 
@@ -118,7 +129,6 @@ def create_app():
             Redirige l'utilisateur vers la page "connexion_requise".
         """
         return redirect(url_for('functional.connexion_requise'))
-
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -161,5 +171,3 @@ def create_app():
     app.logger.addHandler(handler)
 
     return app
-
-

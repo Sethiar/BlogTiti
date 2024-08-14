@@ -14,5 +14,6 @@ def allowed_file(filename):
     :return: True si l'extension est autorisée, False sinon.
     """
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
