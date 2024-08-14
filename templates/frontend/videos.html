@@ -1,0 +1,49 @@
+{% extends 'base.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Toutes les vidéos de la chaîne Youtube de TitiTechnique.">
+    <title>{% block title %}Accès à toutes les vidéos de la chaîne de Titi{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/videos.css') }}">
+    {% endblock %}
+
+{% block main_content %}
+
+<br><br>
+<div class="separation"></div>
+<div id="carrousel">
+    <h2>Vidéos de TitiTechnique</h2>
+    <div class="video-container">
+        {% for video in videos %}
+        <div class="video-item">
+            <h3>{{ video.title }}</h3>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            <p>Date de publication : {{ video.published_at }}</p>
+            <p>Vues : {{ video.view_count }}</p>
+            <p>Likes : {{ video.like_count }}</p>
+            <p>Commentaires : {{ video.comment_count }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+<div class="separation"></div>
+<br>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('frontend.show_videos', page=page-1) }}">Précédent</a>
+    {% endif %}
+
+    {% for p in range(1, total_pages + 1) %}
+        <a href="{{ url_for('frontend.show_videos', page=p) }}" class="{% if page == p %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('frontend.show_videos', page=page+1) }}">Suivant</a>
+    {% endif %}
+</div>
+
+{% endblock %}

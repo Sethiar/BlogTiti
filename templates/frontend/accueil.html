@@ -46,7 +46,7 @@
         </div>
         <div class="content-block">
             <img class="pics-accueil" src="../static/Images/images_accueil/forum1.jpg" alt="Image de titi pour forum">
-            <p>Et surtout, nous pourrons échanger tous ensemble dans la section <b><a href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pourvoir nous parler de manière plus directe.</p>
+            <p>Et surtout, nous pourrons échanger tous ensemble dans la section <b><a href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de manière plus directe et plus sympathiquement surtout.</p>
         </div>
         <div class="separation"></div>
         <br><br>
@@ -63,26 +63,100 @@
 <br><br>
 <div class="separation"></div>
 <br><br>
-<div id="container">
-    <div id="space-before">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Carrousels -->
+            <section class="new-videos">
+                <h2>Nouvelles vidéos</h2>
+                <div id="new_videos" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for video in current_month %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <div class="d-flex">
+                                <!-- Vidéo -->
+                                <div class="video-container">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                                            picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <!-- Informations à côté -->
+                                <div class="video-info ml-4">
+                                    <h5>{{ video.title }}</h5>
+                                    <p>Date de publication : {{ video.published_at }}</p>
+                                    <p>Vues : {{ video.view_count }}</p>
+                                    <p>Likes : {{ video.like_count }}</p>
+                                    <p>Commentaires : {{ video.comment_count }}</p>
+                                    <br>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#new_videos" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Précédent</span>
+                    </a>
+                    <a class="carousel-control-next" href="#new_videos" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Suivant</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="other-videos">
+                <h2>Vidéos les plus populaires</h2>
+                <div id="popular_videos" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for video in popular %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <div class="d-flex">
+                                <!-- Vidéo -->
+                                <div class="video-container">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                                        picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <!-- Informations à côté -->
+                                <div class="video-info ml-4">
+                                    <h5>{{ video.title }}</h5>
+                                    <p>Date de publication : {{ video.published_at }}</p>
+                                    <p>Vues : {{ video.view_count }}</p>
+                                    <p>Likes : {{ video.like_count }}</p>
+                                    <p>Commentaires : {{ video.comment_count }}</p>
+                                    <br>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#popular_videos" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Précédent</span>
+                    </a>
+                    <a class="carousel-control-next" href="#popular_videos" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Suivant</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-4">
+            <!-- Aside -->
+            <aside>
+                <h2>Archives</h2>
+                <ul>
+                    {% for month_year, videos in archived.items() %}
+                    <li><a href="{{ url_for('frontend.show_archived_videos', month_year=month_year) }}">{{ month_year | capitalize }}</a></li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        </div>
     </div>
-    <div id="carrousel">
-        <section class="new-videos">
-            <h2>Nouvelles vidéos</h2>
-
-            <div class="video">
-
-            </div>
-        </section>
-
-        <section class="other-videos">
-            <h2>Vidéos les plus populaires</h2>
-
-        </section>
-    </div>
-    <div id="space-after"></div>
-
 </div>
+
 <br>
 <div class="separation">
 
