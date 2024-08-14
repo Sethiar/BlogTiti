@@ -353,13 +353,6 @@ h1 {
   overflow: hidden;
 }
 
-#container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0 auto;
-}
-
 .pics-accueil-fin {
   overflow: hidden;
   width: 50vw;
@@ -369,6 +362,82 @@ h1 {
   border: 3px solid orange;
   height: auto;
   margin: 0 auto;
+}
+
+/* Style de l'aside */
+aside {
+  background-color: orange;
+  color: black;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+aside h2 {
+  background-color: orange;
+}
+
+aside ul {
+  list-style: none;
+  background-color: orange;
+  padding: 0;
+}
+
+aside ul li {
+  background-color: orange;
+  margin-bottom: 10px;
+}
+
+aside ul li a {
+  color: black;
+  background-color: orange;
+  text-decoration: underline;
+}
+
+/* Style des carrousels */
+.carousel {
+    margin-bottom: 2rem;
+}
+
+.carousel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Empile les carrousels verticalement */
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Style pour la vidéo et les informations */
+.video-container {
+    width: 100%;
+    max-width: 560px; /* Limite la largeur de la vidéo */
+}
+
+.video-info {
+    background-color: orange; /* Couleur de fond orange */
+    color: black; /* Couleur du texte noir */
+    padding: 1rem; /* Ajoute du padding */
+    border-radius: 25px; /* Coins arrondis */
+    width: 100%; /* Prend toute la largeur disponible */
+}
+
+.video-info p {
+  background-color: orange;
+}
+
+.video-info h5 {
+  background-color: orange;
+  text-decoration: underline;
+}
+/* Ajuste le comportement des contrôles du carrousel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0,0,0,0.5); /* Fond semi-transparent pour les icônes */
 }
 
 /* Style pour le footer */

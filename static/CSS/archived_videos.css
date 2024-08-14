@@ -1,0 +1,66 @@
+/* Container général pour les vidéos */
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Trois colonnes de largeur égale */
+    gap: 20px; /* Espacement entre les vidéos */
+    margin: 0 auto;
+    max-width: 1200px; /* Limite la largeur maximale du conteneur */
+}
+
+/* Style pour chaque élément vidéo */
+.video-item {
+    border: 1px solid #ddd; /* Ajouter une bordure */
+    padding: 10px;
+    border-radius: 8px; /* Ajouter des coins arrondis */
+    background-color: #f9f9f9; /* Fond clair pour chaque vidéo */
+    text-align: center; /* Centrer le contenu de la vidéo */
+    min-height: 400px; /* Assure une hauteur uniforme pour chaque vidéo */
+    box-sizing: border-box; /* Inclure les bordures et les paddings dans la hauteur/largeur */
+}
+
+/* Ajustement de la taille de l'iframe pour avoir des vidéos plus petites */
+.video-item iframe {
+    width: 100%; /* Ajuster l'iframe à 100% de la largeur de son conteneur */
+    height: 150px; /* Réduire la hauteur des vidéos */
+}
+
+/* Style pour la pagination */
+.pagination {
+    text-align: center;
+    margin: 20px auto; /* Centrer la pagination et ajouter un espacement vertical */
+    display: flex; /* Utiliser flexbox pour centrer */
+    justify-content: center; /* Centrer horizontalement */
+}
+
+.pagination a {
+    color: gold;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: orange;
+    color: black;
+    border: 1px solid #333;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Pour les écrans plus petits, ajuster à une ou deux colonnes */
+@media screen and (max-width: 768px) {
+    .video-container {
+        grid-template-columns: repeat(2, 1fr); /* Deux colonnes sur des écrans plus petits */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .video-container {
+        grid-template-columns: 1fr; /* Une colonne sur les petits écrans */
+    }
+}
