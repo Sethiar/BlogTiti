@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equip="X-UA-Compatible" content="IE=edge">
-    <met name="viewport" content="width=devise-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=devise-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/accueil.css') }}">
@@ -21,8 +21,8 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="{{ url_for('landing_page') }}">Accueil de Titi</a></li>
-                <li><a href="{{ url_for('frontend.view_videos') }}">Accès aux vidéos</a></li>
                 <li><a href="{{ url_for('frontend.forum') }}">Forum de Titi</a></li>
+                <li><a href="{{ url_for('frontend.show_videos') }}"">Accès aux videos</a></li>
                 <li><a href="{{ url_for('user.user_recording') }}">Devenir membre</a></li>
                 <li><a href="https://www.youtube.com/@titi.lebricoleur">Accès à ma chaîne YouTube</a></li>
             </ul>
@@ -88,13 +88,10 @@
         <a href="{{ url_for('auth.admin_connection') }}">S'identifier en tant qu'administrateur</a>
     </div>
 </footer>
-    <!-- Inclure jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- Inclure Popper.js, qui est nécessaire pour certaines fonctionnalités de Bootstrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Inclure le fichier JavaScript de Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ url_for('static', filename='CSS/javascript/menu_portable.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
+    <script src="{{ url_for('static', filename='CSS/javascript/menu_portable.js') }}" defer></script>
     {% block footer_content %}
     {% endblock %}
 
