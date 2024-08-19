@@ -52,8 +52,10 @@ def before_request():
     Cette fonction assure la continuité de la session utilisateur à travers le site.
     """
     if current_user.is_authenticated:
-        pseudo = current_user.pseudo
-        session['pseudo'] = pseudo
+        if hasattr(current_user, 'pseudo'):
+            session['pseudo'] = current_user.pseudo
+        else:
+            session['pseudo'] = None  # Ou toute autre valeur par défaut si nécessaire
     else:
         session['anon_id'] = generate_unique_id()
 
