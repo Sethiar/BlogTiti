@@ -14,6 +14,7 @@ from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_socketio import SocketIO
 
 from app.Models import db
 from config.config import Config
@@ -31,6 +32,9 @@ mailing = Mail()
 # Instanciation de loginManager.
 login_manager = LoginManager()
 
+# Instanciation de socketio.
+socketio = SocketIO()
+
 
 # Fonction créant l'initialisation de l'application.
 def create_app():
@@ -45,6 +49,9 @@ def create_app():
 
     from app.Auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.Chat import chat_bp
+    app.register_blueprint(chat_bp, url_prefix='/chat')
 
     from app.Functional import functional_bp
     app.register_blueprint(functional_bp, url_prefix='/functional')
@@ -97,6 +104,11 @@ def create_app():
 
     # Pour les réponses JSON concerne l'encodage.
     app.config['JSON_AS_ASCII'] = False
+
+    # Configuration du chat_video avec Socketio.
+    app.config['SECRET_KEY_SOCKETIO'] = os.getenv('SECRET_KEY_SOCKETIO')
+    # Initialise socketio avec l'application
+    socketio.init_app(app)
 
     # Lancement du processus apscheduler.
     scheduler_app = create_scheduler(app)
