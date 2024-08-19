@@ -1,0 +1,19 @@
+{% extends 'video.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Chat vidéo permettant de discuter plus librement avec l'administrateur du blog.">
+    <title>{% block title %}Chat vidéo de TitiTechnique{% endblock %}</title>
+
+{% endblock %}
+
+{% block main_content %}
+    <h1>Video Chat</h1>
+    <div id="video_chat">
+        <video id="localVideo" autoplay muted></video>
+        <video id="remoteVideo" autoplay></video>
+    </div>
+<br>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+<script src="/static/CSS/javascript/scripts.js"></script>
+
+{% endblock %}
