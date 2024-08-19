@@ -67,7 +67,7 @@ def forum_subject(subject_id):
     formsuppress = SuppressCommentForm()
     formsuppressreply = SuppressReplySubject()
 
-    # Récupération du sujet spécifié par l'id depuis la base de donnée.
+    # Récupération du sujet spécifié par l'id depuis la base de données.
     subject = SubjectForum.query.get_or_404(subject_id)
 
     # Vérification de l'existence du sujet.
