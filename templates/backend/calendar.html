@@ -1,10 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'baseback.html.jinja2' %}
 
-</body>
-</html>
+{% block head_content %}
+    <meta name="description" content="Page du backend afin d'afficher la liste des rendez-vous pour le chat vidéo.">
+    <title>{% block title %}Page administrateur - Calendrier pour chat vidéo{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
+
+
+{% endblock %}
+
+{% block body_content %}
+<br><br>
+<div id="table_appointment">
+    <h5>Liste des demandes de chat vidéo.</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pseudo de l'utilisateur</th>
+                <th>Date choisie par l'utilisateur</th>
+                <th>heure choisie par l'utilisateur</th>
+                <th>Statue de la requête</th>
+                <th>Lien de connexion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.pseudo }}</td>
+                <td>{{ request.date_rdv }}</td>
+                <td>{{ request.heure }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    {% if request.status == 'validée' %}
+                    <a href="{{ url_for('chat.admin_chat_video_session', request_id=request.id, _external=True) }}" target="_blank">Lien de connexion</a>
+                    {% else %}
+                    Non disponible
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{{ url_for('chat.suppress_request', id=request.id) }}" method="POST" class="btn_suppression">
+                        {{ formrequest.csrf_token }}
+                        <button type="submit" class="btn_suppression" data-pseudo="l'utilisateur {{ request.pseudo }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                    <form action="{{url_for('chat.valide_request', id=request.id) }}" method="POST" class="btn_valide">
+                        {{ formrequest.csrf_token }}
+                        <button type="submit" class="btn_valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
+                    </form>
+                    <form action="{{url_for('chat.refuse_request', id=request.id) }}" method="POST" class="btn_valide">
+                        {{ formrequest.csrf_token }}
+                        <button type="submit" class="btn_valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                            <i class="fas fa-thumbs-down"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br>
+<div class="container">
+    <h5>Calendrier des Rendez-vous</h5>
+    <div id="calendar"></div>
+</div>
+
+<!-- Passer les données JSON au fichier JavaScript externe -->
+<script>
+    var rdvData = [
+        {% for rdv in rdv_data %}
+        {
+            title: '{{ rdv.pseudo|replace("'", "\\'") }} - {{ rdv.status|replace("'", "\\'") }}',
+            start: '{{ rdv.date_rdv.strftime("%Y-%m-%dT%H:%M:%S") }}',  // Assurez-vous que cette ligne inclut l'heure
+            allDay: false
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+</script>
+
+
+<script src="{{ url_for('static', filename='CSS/javascript/calendar.js') }}" defer></script>
+
+{% endblock %}

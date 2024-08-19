@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'baseback.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Page du backend afin d'afficher la liste des vidéos.">
+    <title>{% block title %}Page administrateur - Liste des vidéos{% endblock %}</title>
+
+{% endblock %}
+
+{% block body_content %}
+<br><br>
+<br><br>
+<div class="container">
+
+    <h5>Liste des vidéos</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Identifiant de la vidéo</th>
+                <th>Titre de la vidéo</th>
+                <th>Date de publication</th>
+                <th>Nombre de vues</th>
+                <th>Nombre de commentaires</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+            <tr>
+                <td>{{ video.id }}</td>
+                <td>{{ video.title }}</td>
+                <td>{{ video.published_at }}</td>
+                <td>{{ video.view_count }}</td>
+                <td>{{ video.comment_count }}</td>
+                <td>{{ video.tags }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
