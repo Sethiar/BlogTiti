@@ -9,6 +9,8 @@ from app import create_app
 
 from datetime import datetime
 
+from sqlalchemy.dialects.postgresql import JSON
+
 app = create_app()
 
 
@@ -198,6 +200,37 @@ with app.app_context():
         like_count = db.Column(db.Integer)
         comment_count = db.Column(db.Integer)
         tags = db.Column(db.Text)
+
+
+    class ChatRequest(db.Model):
+        """
+        Modèle de données représentant une demande de chat vidéo.
+
+        Attributes :
+            id (int): Identifiant unique de la demande.
+            pseudo (str): Pseudo de l'utilisateur.
+            request_content (str): Contenu de la requête.
+            date_rdv (datetime): Date initiale proposée par l'utilisateur.
+            heure (time): Heure proposée par l'utilisateur.
+            status (StatusEnum): Statut de la demande (en attente, approuvé, rejeté).
+            admin_choices (list): Stocke les choix de créneaux proposés par l'administrateur.
+            user_choice (datetime): Stocke le choix final de l'utilisateur.
+            created_at (datetime): Date et heure de création de la demande.
+        """
+
+        __tablename__ = "chat_request"
+        __table_args__ = {"extend_existing": True}
+
+        id = db.Column(db.Integer, primary_key=True)
+        pseudo = db.Column(db.String(30), nullable=False)
+        request_content = db.Column(db.Text, nullable=False)
+        date_rdv = db.Column(db.DateTime(timezone=True), nullable=False)
+        heure = db.Column(db.Time(), nullable=False)
+        status = db.Column(db.String(20), nullable=False, default='en attente')
+        admin_choices = db.Column(JSON, nullable=True)  # Stocke les créneaux comme liste de strings ou datetimes
+        user_choice = db.Column(db.DateTime(timezone=True), nullable=True)
+        created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+
 
     # Création de toutes les tables à partir de leur classe.
     db.create_all()

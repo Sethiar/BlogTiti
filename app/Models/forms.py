@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, EmailField, DateField, FileField, \
-    TextAreaField
+    TextAreaField, TimeField
 from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo
 
 from app.Models.user import User
@@ -425,4 +425,44 @@ class CommentLike(FlaskForm):
     """
     csrf_token = HiddenField()
     submit = SubmitField()
+
+
+# Formulaire permettant de demander un chat vidéo à l'administrateur.
+class ChatRequestForm(FlaskForm):
+    """
+    Formulaire permettant de demander un chat vidéo à l'administrateur.
+
+    Attributes:
+        request_content (TextAreaField): Champ pour le contenu de la demande.
+        pseudo (StringField): Champ pour le pseudo de l'utilisateur.
+        date_rdv (DateField): Champ pour sélectionner la date du chat vidéo.
+        heure (TimeField): Champ pour indiquer l'heure du chat vidéo.
+        submit (SubmitField): Bouton pour soumettre le formulaire.
+        csrf_token (HiddenField): Champ caché pour la protection CSRF.
+
+    Example :
+        form = ChatRequestForm()
+    """
+
+    # Le contenu de la demande.
+    request_content = TextAreaField("Contenu de la demande", validators=[DataRequired()],
+                                    render_kw={"placeholder": "Veuillez préciser le motif de "
+                                                              "votre demande pour le chat vidéo."})
+
+    # Le pseudo de l'utilisateur.
+    pseudo = StringField("Pseudo de l'utilisateur", validators=[DataRequired()],
+                         render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+
+    # La date du chat vidéo.
+    date_rdv = DateField("Veuillez sélectionner la date souhaitée", validators=[DataRequired()],
+                         render_kw={"placeholder": "Veuillez renseigner la date souhaitée pour le chat vidéo :"})
+
+    # L'heure' souhaitée.
+    heure = TimeField("Heure souhaitée", format='%H:%M', validators=[DataRequired()])
+
+    # Action de soumettre le formulaire.
+    submit = SubmitField("Soumettre la demande")
+
+    csrf_token = HiddenField()
+
 
