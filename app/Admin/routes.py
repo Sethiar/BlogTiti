@@ -12,12 +12,17 @@ from markupsafe import escape
 
 from app.Models import db
 from app.Models.forms import UserSaving, BanUserForm, UnBanUserForm, SuppressSubject, SuppressCommentSubjectForm,\
-    CommentSubjectForm
+    CommentSubjectForm, ChatRequestForm
 
 from app.Models.user import User
 from app.Models.subject_forum import SubjectForum
 from app.Models.comment_subject import CommentSubject
+from app.Models.videos import Video
+from app.Models.chat_request import ChatRequest
+
 from app.Mail.routes import mail_banned_user, mail_deban_user
+
+from app.decorators import admin_required
 
 
 # Route permettant d'accéder au backend.
@@ -30,14 +35,21 @@ def back_end():
     return render_template("backend/backend.html")
 
 
-# Route permettant d'afficher la liste de tous les utilisateurs du blog.
+# Route permettant d'afficher la liste de toutes les vidéos.
 @admin_bp.route('/backend/liste-vidéos')
 def videos_list():
     """
+    Affiche la liste de toutes les vidéos, triées par date de publication.
 
-    :return:
+    Cette route récupère toutes les vidéos de la base de données, les trie par date de publication
+    (de la plus ancienne à la plus récente) et les passe au template "backend/video_list.html" pour l'affichage.
+
+    Returns:
+        str: Le rendu du template HTML contenant la liste triée des vidéos.
     """
-    pass
+    videos = Video.query.all()
+    sorted_videos = sorted(videos, key=lambda video: video.published_at)
+    return render_template("backend/video_list.html", videos=sorted_videos)
 
 
 # Route permettant de visualiser la liste des utilisateurs et leurs informations.
@@ -170,6 +182,7 @@ def unbanning_user(id):
     return redirect(url_for('admin.back_end', formban=formban, formunban=formunban))
 
 
+# Route permettant d'afficher la liste des commentaires des utilisateurs concernant les vidéos.
 @admin_bp.route('/backend/liste-commentaires-vidéos')
 def list_comments_users_videos():
     """
@@ -179,12 +192,13 @@ def list_comments_users_videos():
     pass
 
 
-# Route permettant de visualiser les sujets du forum, d'en ajouter ou d'en supprimer.
+# Route permettant de visualiser les sujets du forum.
 @admin_bp.route('/backend/liste-sujets-forum')
 def list_subject_forum():
     """
+    Permet d'afficher les sujets du forum.
 
-    :return:
+    :return: backend/subject_forum_list.html.
     """
     # Instanciation du formulaire de suppression.
     formsuppress_subject = SuppressSubject()
@@ -254,6 +268,7 @@ def suppress_subject(id):
     return redirect(url_for("admin.list_subject_forum"))
 
 
+# Route permettant d'afficher la liste des commentaires du forum.
 @admin_bp.route('/backend/liste-commentaires-forum')
 def list_comments_forum():
     """
@@ -261,9 +276,6 @@ def list_comments_forum():
 
     Cette route permet de voir tous les commentaires des utilisateurs sur les sujets du forum.
     Les commentaires sont regroupés par utilisateur et affichés dans une page HTML.
-
-    Args:
-        None
 
     Returns:
         Response: Une page HTML affichant les commentaires des utilisateurs sur les sujets du forum.
@@ -297,7 +309,7 @@ def list_comments_forum():
                            suppressform=suppressform, subject=subject)
 
 
-# Route permettant de filtrer les commentaires en fonction des utilisateurs dans la section des sujets du forum.
+# Route permettant de filtrer selon le pseudo des utilisateurs les commentaires dans la section des sujets du forum.
 @admin_bp.route("back-end-blog/filtrage-utilisateur-sujets-alphabet", methods=['GET', 'POST'])
 def users_subject_alpha_filter():
     """
@@ -305,9 +317,6 @@ def users_subject_alpha_filter():
 
     Cette route permet de filtrer les utilisateurs en fonction de la première lettre de leur pseudo.
     Les utilisateurs filtrés et leurs commentaires sur les sujets du forum sont affichés dans une page HTML.
-
-    Args:
-        None
 
     Returns:
         Response: Une page HTML affichant les utilisateurs filtrés et leurs commentaires sur les sujets du forum.
@@ -374,3 +383,29 @@ def suppress_subject_comment(id):
               + datetime.now().strftime(" le %d-%m-%Y à %H:%M:%S"))
 
     return redirect(url_for("admin.users_subject_alpha_filter"))
+
+
+# Route permettant d'accéder aux événements du calendrier du chat vidéo.
+@admin_bp.route("/back-end-blog/calendrier-chat-video")
+def calendar():
+    """
+
+    :return:
+    """
+    formrequest = ChatRequestForm()
+    requests = ChatRequest.query.all()
+
+    # Récupération des données pour le calendrier.
+    rdv_data = [
+        {
+            'pseudo': request.pseudo,
+            'status': request.status,
+            'date_rdv': datetime.combine(request.date_rdv, request.heure),
+            'link': url_for('chat.chat_video_session', request_id=request.id, _external=True)
+            if request.status == 'validée' else None
+        } for request in requests if request.status == 'validée'
+    ]
+
+    return render_template('backend/calendar.html', formrequest=formrequest,
+                           requests=requests, rdv_data=rdv_data)
+
