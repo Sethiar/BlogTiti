@@ -49,32 +49,11 @@ def admin_connection():
     return render_template("backend/admin_connection.html", form=form)
 
 
+# Route permettant à l'administrateur de se connecter au backend.
 @auth_bp.route('/connexion-administrateur', methods=['GET', 'POST'])
 def login_admin():
     """
     Gère l'authentification de l'administrateur pour accéder au back-end du blog.
-
-    Cette route gère le processus d'authentification de l'administrateur afin de lui permettre d'accéder
-    à l'interface back-end du blog. L'administrateur saisit son identifiant, son mot de passe et son rôle
-    (par exemple, SuperAdmin) via un formulaire de connexion dédié.
-
-    Returns:
-        - Redirige l'administrateur vers la page back_end s'il est authentifié avec succès.
-        - Redirige l'administrateur vers la page de connexion admin_connection si l'authentification échoue.
-
-    Notes:
-        - En cas de succès, les informations d'identification de l'administrateur sont stockées dans la session Flask
-          pour maintenir sa connexion active.
-        - En cas d'échec de l'authentification, l'administrateur est redirigé vers la page de connexion admin_connection
-          avec un avertissement approprié.
-        - Les journaux d'application sont utilisés pour enregistrer les tentatives de connexion réussies et les erreurs.
-
-    Example:
-        L'administrateur accède à la route '/connexion_admin' via un navigateur web.
-        Il saisit ses informations d'identification (identifiant, mot de passe et rôle) dans le formulaire de connexion.
-        Après soumission du formulaire, l'application vérifie les informations et authentifie l'administrateur.
-        Si l'authentification réussit, l'administrateur est redirigé vers la page back_end du blog.
-        Sinon, il est redirigé vers la page de connexion admin_connection avec un message d'erreur.
     """
     # Création de l'instance du formulaire.
     form = AdminConnection()
@@ -93,10 +72,11 @@ def login_admin():
                 if role == "Admin":
                     current_app.logger.info(f"L'administrateur {admin.pseudo} s'est bien connecté.")
 
-                    # Connexion de l'admin et stockage de ses informations dans la session.
-                    session["logged_in"] = True
-                    session["pseudo"] = admin.pseudo
-                    session["user_id"] = admin.id
+                    # Connexion de l'admin avec Flask-Login.
+                    login_user(admin)
+
+                    # Stockage de l'identifiant unique dans la session si nécessaire.
+                    session["role"] = admin.role
 
                     return redirect(url_for("admin.back_end"))
                 else:
