@@ -1,4 +1,5 @@
 """
+Code permettant de définir les routes concernant les fonctions de mailing du blog.
 """
 from flask import Blueprint
 

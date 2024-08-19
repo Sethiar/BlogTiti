@@ -12,21 +12,6 @@ from app.Models.user import User
 from app.email_utils import send_email_in_background
 
 
-@mail_bp.route('/send')
-def send_email():
-    """
-
-    :return:
-    """
-    msg = Message(
-        'Hello',
-        recipients=['alefetey123@gmail.com'],
-        body='This is a test email sent from Flask-Mail!'
-    )
-    current_app.extensions['mail'].send(msg)
-    return 'Email envoyé avec succès !'
-
-
 # Méthode qui envoie un mail de confirmation pour l'inscription d'un utilisateur."
 @mail_bp.route("/send_confirmation_email/<string:email>")
 def send_confirmation_email_user(email):
@@ -237,11 +222,99 @@ def mail_like_comment_subject(user, subject):
     :param subject: sujet dont le commentaire a été liké.
     """
     msg = Message("Quelqu'un a aimé votre commentaire de la section forum.",
-                      sender=current_app.config['MAIL_DEFAULT_SENDER'],
-                      recipients=[user.email])
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo},\n" \
                f"Un utilisateur a aimé votre commentaire de la section forum " \
                f"concernant le sujet suivant : {subject.nom}.\n" \
                f"Cordialement,\n" \
                f"Votre équipe de support."
     send_email_in_background(current_app._get_current_object(), msg)
+
+
+# Méthode envoyant un mail de confirmation de la demande de chat vidéo à l'utilisateur.
+def send_confirmation_request_reception(user):
+    """
+    Fonction qui envoie un mail de confirmation à l'utilisateur de la bonne réception de sa requête de chat vidéo.
+
+    :param user: utilisateur qui a fait la requête de chat vidéo.
+    :return:
+    """
+    msg = Message("Confirmation de la demande de chat vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
+    msg.body = f"Bonjour {user.pseudo} \n" \
+               f"nous vous confirmons la bonne réception de votre demande \n" \
+               f"et nous vous répondrons dans les plus brefs délais " \
+               f"afin de convenir d'un rendez-vous. \n" \
+               f"Cordialement,\n" \
+               f"Votre équipe de support."
+    current_app.extensions['mail'].send(msg)
+
+
+# Méthode envoyant un mail à l'administrateur du site s'il y a une demande de chat vidéo.
+def send_request_admin(user, request_content):
+    """
+    Fonction qui envoie un mail pour informer l'administration d'une requête de chat vidéo.
+
+    :param user: utilisateur qui a envoyé la demande de chat.
+    :param request_content: contenu de la requête de l'utilisateur.
+    :return:
+    """
+    msg = Message("Demande de chat vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[current_app.config['MAIL_DEFAULT_SENDER']])
+    msg.body = f"Bonjour Titi, \n" \
+               f"{user.pseudo} souhaite avoir un chat vidéo avec vous.\n" \
+               f"Voici sa requête :\n" \
+               f"{request_content} \n" \
+               "\n" \
+               f"Bon courage Titi."
+    current_app.extensions['mail'].send(msg)
+
+
+# Méthode qui envoie un mail de validation de la requête de chat vidéo.
+def send_mail_validate_request(user, request):
+    """
+    Fonction qui envoie un mail pour informer de la validation de la requête par l'administrateur.
+
+    :param user: utilisateur qui a envoyé la demande de chat.
+    :param request: requête de l'utilisateur.
+    :return:
+    """
+    # Génère l'URL pour la session de chat vidéo
+    chat_link = url_for('chat.chat_video_session', request_id=request.id, _external=True)
+
+    msg = Message("Validation de la requête de chat vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
+    msg.body = f"Bonjour {user.pseudo}, \n" \
+               f"Titi a accepté votre requête de chat vidéo.\n" \
+               f"Le rendez-vous est prévu le {request.date_rdv} à {request.heure}.\n" \
+               f"Voici le lien de connexion: {chat_link}\n" \
+               f"Nous vous demandons de cliquer sur ce lien quelques minutes " \
+               f"avant le rendez-vous afin d'être prêt pour le chat vidéo.\n" \
+               f"Cordialement,\n" \
+               f"Votre équipe de support."
+    current_app.extensions['mail'].send(msg)
+
+
+# Méthode qui envoie un mail de refus de la requête de chat vidéo.
+def send_mail_refusal_request(user):
+    """
+    Fonction qui envoie un mail pour informer du refus de la requête par l'administrateur.
+
+    :param user: utilisateur qui a envoyé la demande de chat.
+    :return:
+    """
+    msg = Message("Refus de la requête de chat vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
+    msg.body = f"Bonjour {user.pseudo}, \n" \
+               f"Titi est dans l'impossibilité d'accepter votre rendez-vous. \n" \
+               f"Afin de renouveler votre demande, nous vous prions de bien vouloir"\
+               f"refaire une demande de chat vidéo. \n"\
+               f"Cordialement,\n" \
+               f"Votre équipe de support."
+    current_app.extensions['mail'].send(msg)
+
