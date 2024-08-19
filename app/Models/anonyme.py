@@ -43,3 +43,11 @@ class Anonyme(AnonymousUserMixin):
         # L'utilisateur anonyme est considéré comme actif
         return True
 
+    def is_admin(self):
+        """
+        Vérifie si l'utilisateur est un administrateur.
+
+        Returns:
+            bool: False car un utilisateur anonyme n'est pas un administrateur.
+        """
+        return False

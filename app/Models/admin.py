@@ -20,7 +20,7 @@ class Admin(db.Model, UserMixin):
         salt (LB): Salage du mot de passe.
     """
 
-    __table_name__ = "admin"
+    __tablename__ = "admin"
     __table_args__ = {"extend_existing": True}
 
     id = db.Column(db.Integer, primary_key=True)
@@ -38,22 +38,7 @@ class Admin(db.Model, UserMixin):
         Returns:
             str: chaîne de caractère représentant l'objet Administrateur.
         """
-        return f"Admin(id='{self.id}', pseudo='{self.pseudo}', role='{self.role}', " \
-               f"email=)'{self.email}')"
-
-    def is_authorized(self, role):
-        """
-        Vérifie si l'administrateur possède un rôle spécifié.
-
-        Args:
-            role (str): Le rôle à vérifier.
-
-        Returns :
-            bool : True si l'administrateur a le rôle spécifié, False sinon.
-        """
-        print("is_authenticated method called")
-        logging.debug("is_authenticated method called")
-        return self.role == role
+        return f"<Admin(id={self.id}, pseudo='{self.pseudo}', role='{self.role}')>"
 
     def is_active(self):
         """
@@ -62,7 +47,6 @@ class Admin(db.Model, UserMixin):
         Returns :
             bool : Toujours True car les administrateurs sont toujours actifs.
         """
-        print("is_active method called")
         logging.debug("is_active method called")
         return True
 
@@ -73,7 +57,6 @@ class Admin(db.Model, UserMixin):
         Returns :
             bool : False car l'administrateur n'est jamais anonyme.
         """
-        print("is_anonymous method called")
         logging.debug("is_anonymous method called")
         return False
 
@@ -84,7 +67,6 @@ class Admin(db.Model, UserMixin):
         Returns :
             str : L'identifiant de l'administrateur.
         """
-        print("get_id method called")
         logging.debug("get_id method called")
         return str(self.id)
 
@@ -98,7 +80,6 @@ class Admin(db.Model, UserMixin):
         Returns :
             bool : True si l'administrateur a le rôle spécifié, False sinon.
         """
-        print("has_role method called")
         logging.debug("has_role method called")
         return self.role == role
 
