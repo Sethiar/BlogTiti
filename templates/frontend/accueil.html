@@ -69,14 +69,14 @@
             <!-- Carrousels -->
             <section class="new-videos">
                 <h2>Nouvelles vidéos</h2>
-                <div id="new_videos" class="carousel slide" data-ride="carousel">
+                <div id="carousel-new-videos" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for video in current_month %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
                             <div class="d-flex">
                                 <!-- Vidéo -->
                                 <div class="video-container">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                    <iframe width="450" height="215" src="https://www.youtube.com/embed/{{ video.video_id }}"
                                             frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
                                             picture-in-picture" allowfullscreen></iframe>
                                 </div>
@@ -94,11 +94,11 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <a class="carousel-control-prev" href="#new_videos" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" href="#carousel-new-videos" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Précédent</span>
                     </a>
-                    <a class="carousel-control-next" href="#new_videos" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#carousel-new-videos" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Suivant</span>
                     </a>
@@ -107,14 +107,14 @@
 
             <section class="other-videos">
                 <h2>Vidéos les plus populaires</h2>
-                <div id="popular_videos" class="carousel slide" data-ride="carousel">
+                <div id="carousel-popular-videos" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for video in popular %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
                             <div class="d-flex">
                                 <!-- Vidéo -->
                                 <div class="video-container">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                    <iframe width="450" height="215" src="https://www.youtube.com/embed/{{ video.video_id }}"
                                         frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
                                         picture-in-picture" allowfullscreen></iframe>
                                 </div>
@@ -132,11 +132,11 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <a class="carousel-control-prev" href="#popular_videos" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" href="#carousel-popular-videos" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Précédent</span>
                     </a>
-                    <a class="carousel-control-next" href="#popular_videos" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#carousel-popular-videos" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Suivant</span>
                     </a>
