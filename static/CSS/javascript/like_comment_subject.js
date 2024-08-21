@@ -1,14 +1,14 @@
 // Récupérer le jeton CSRF depuis le modèle Flask
-    var csrfToken = document.querySelector('#fromlikecomment input[name="csrf_token"]').value;
+    var csrfToken = document.querySelector('#formlikecomment input[name="csrf_token"]').value;
 
 
     function toggleLike(element, commentId, userPseudo) {
-    // Ici, vous pouvez utiliser userPseudo directement passé en paramètre
+    // Utilisation de userPseudo directement passé en paramètre.
     console.log(`User Pseudo: ${userPseudo}`);
     console.log(`CommentId: ${commentId}`);
     console.log(`csrfToken: ${csrfToken}`);
 
-    // Envoi d'une requête AJAX à Flask pour enregistrer l'utilisateur qui a aimé
+    // Envoi d'une requête AJAX à Flask pour enregistrer l'utilisateur qui a aimé.
     $.ajax({
         type: 'POST',
         url: '/user/likes-commentaire-sujet',
