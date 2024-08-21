@@ -22,10 +22,17 @@ from app.Models.comment_subject import CommentSubject
 from app.Models.likes_comment_subject import CommentLikeSubject
 from app.Models.reply_subject import ReplySubject
 
-from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ChangeCommentSubjectForm, \
-    SuppressCommentForm, ReplySubjectForm, ChangeReplySubject, SuppressReplySubject
+from app.Models.videos import Video
+from app.Models.comment_video import CommentVideo
+from app.Models.likes_comment_video import CommentLikeVideo
+from app.Models.reply_video import ReplyVideo
 
-from app.Mail.routes import mail_reply_forum_comment, mail_like_comment_subject
+from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ChangeCommentSubjectForm, \
+    SuppressCommentForm, ReplySubjectForm, ChangeReplySubject, SuppressReplySubject, CommentVideoForm, \
+    ChangeCommentVideoForm, SuppressCommentVideoForm, ReplyVideoForm, ChangeReplyVideo, SuppressReplyVideo
+
+from app.Mail.routes import mail_reply_forum_comment, mail_like_comment_subject, \
+    mail_reply_video_comment, mail_like_comment_video
 
 from app.extensions import allowed_file
 
@@ -157,7 +164,7 @@ def add_subject_forum():
 @login_required
 def comment_subject(user_pseudo):
     """
-    Permet à un utilisateur de laisser un commentaire sur un sujet du forum.
+    Permet à un utilisateur connecté de laisser un commentaire sur un sujet du forum.
 
     Args:
         user_pseudo (str) : Le pseudo de l'utilisateur.
@@ -460,3 +467,309 @@ def reply_form_subject(comment_id, user_pseudo):
     return render_template("User/reply_form_subject.html", formsubjectreply=formsubjectreply,
                            comment=comment, user=user)
 
+
+# Route permettant de commenter une vidéo.
+@user_bp.route('/commentaires-vidéo/<string:user_pseudo>', methods=['GET', 'POST'])
+def comment_video(user_pseudo):
+    """
+    Permet à un utilisateur connecté de laisser un commentaire sur une vidéo.
+
+    Args:
+        user_pseudo (str) : Le pseudo de l'utilisateur.
+
+    Returns:
+        redirect : Redirige vers la page de la vidéo après avoir laissé le commentaire.
+    """
+    # Création de l'instance du formulaire.
+    formcommentvideo = CommentVideoForm()
+
+    if request.method == 'POST':
+        # Obtention de l'id de la vidéo à partir de la requête POST.
+        video_id = request.form.get("video_id")
+
+        # Obtention de l'utilisateur actuel à partir du pseudo.
+        user = User.query.filter_by(pseudo=user_pseudo).first()
+
+        # Vérification de l'existence de l'utilisateur et de la vidéo.
+        if user and video_id:
+            # Obtenir le contenu du commentaire à partir de la requête POST.
+            comment_content = request.form.get("comment_content")
+
+            # Créer un nouvel objet de commentaire.
+            new_comment = CommentVideo(comment_content=comment_content, user_id=user.id, video_id=video_id)
+
+            # Ajouter le nouveau commentaire à la table de données.
+            db.session.add(new_comment)
+            db.session.commit()
+
+            # Récupération de tous les commentaires de la vidéo après ajout du commentaire.
+            comment_content = CommentVideo.query.filter_by(video_id=video_id).first()
+
+            # Redirection sur la page d'affichage des sujets.
+            return redirect(url_for("frontend.display_video", video_id=video_id, comment_content=comment_content))
+        else:
+            # Redirection vers une autre page si l'utilisateur ou la vidéo n'existe pas.
+            return redirect(url_for("functional.connection_requise"))
+
+
+# Route permettant à un utilisateur de modifier son commentaire dans la section vidéo.
+@user_bp.route('/modification-commentaire-utilisateur-vidéo/<int:id>', methods=['GET', 'POST'])
+@login_required
+def change_comment_video(id):
+    """
+    Permet à un utilisateur de modifier son commentaire dans la section vidéo..
+
+    Args:
+        id (int): L'id du commentaire à modifier.
+
+    Returns:
+        redirect: Redirige vers la page d'affichage de la vidéo après modification du commentaire.
+    """
+    comment = CommentVideo.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire.
+    if comment.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à modifier ce commentaire.')
+        return redirect(url_for('frontend.display_video', video_id=comment.video_id))
+
+    formchange = ChangeCommentVideoForm(obj=comment)
+
+    if formchange.validate_on_submit():
+        comment.comment_content = formchange.comment_content.data
+        db.session.commit()
+        flash('Commentaire modifié avec succès.')
+        return redirect(url_for('frontend.display_video', video_id=comment.video_id))
+    else:
+        flash('Erreur lors de la validation du commentaire.')
+
+    return render_template('user/edit_comment_video.html', formchange=formchange, comment=comment)
+
+
+# Route permettant à un utilisateur de supprimer son commentaire dans la section vidéo.
+@user_bp.route('/suppression-commentaire-utilisateur-vidéo/<int:id>', methods=['POST'])
+@login_required
+def delete_comment_video(id):
+    """
+    Permet à un utilisateur de supprimer son commentaire de la section vidéo..
+
+    Args:
+        id (int): L'id du commentaire à supprimer.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après suppression du commentaire.
+    """
+    formsuppress = SuppressCommentVideoForm()
+    comment = CommentVideo.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire.
+    if comment.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à supprimer ce commentaire.')
+        return redirect(url_for('frontend.display_video', video_id=comment.video_id))
+
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Commentaire supprimé avec succès.')
+    return redirect(url_for('frontend.display_video', video_id=comment.video_id))
+
+
+# Route permettant de répondre à un commentaire une fois connecté.
+@user_bp.route('/comment_replies_video/<int:comment_video_id>/<string:user_pseudo>', methods=['GET', 'POST'])
+@login_required
+def comment_replies_video(comment_video_id, user_pseudo):
+    """
+    Permet à un utilisateur de répondre à un commentaire d'une vidéo.
+
+    Args :
+        comment_video_id (int) : L'identifiant du commentaire auquel répondre.
+        user_pseudo (str) : Le pseudo de l'utilisateur.
+
+    Returns :
+        redirect ou render_template : Redirige vers la page de la présentation, des vidéos
+        après avoir ajouté une réponse, ou affiche le formulaire de réponse si la méthode est GET.
+    """
+    # Création de l'instance du formulaire.
+    formreply = ReplyVideoForm()
+
+    # Récupérer le commentaire par son id.
+    comment = CommentVideo.query.get(comment_video_id)
+
+    if not comment:
+        flash("Le commentaire n'a pas été trouvé.", "error")
+        return redirect(url_for("frontend.show_videos"))
+
+    if formreply.validate_on_submit():
+        # Obtention de l'utilisateur actuel à partir du pseudo.
+        user = User.query.filter_by(pseudo=user_pseudo).first()
+
+        if not user:
+            flash("Utilisateur non trouvé.", "error")
+            return redirect(url_for("functional.connection_requise"))
+
+        # Obtenir le contenu du commentaire à partir de la requête POST.
+        reply_content = formreply.reply_content.data
+
+        # Obtenir l'ID du commentaire parent à partir du formulaire
+        comment_id = formreply.comment_id.data
+
+        # Créer une nouvelle réponse au commentaire.
+        new_reply = ReplyVideo(reply_content=reply_content, user_id=user.id, comment_id=comment_id)
+
+        # Ajouter le nouveau commentaire à la table de données.
+        db.session.add(new_reply)
+        db.session.commit()
+
+        video = Video.query.get(comment.video_id)
+
+        flash("La réponse au commentaire a bien été enregistrée.", "success")
+        mail_reply_video_comment(comment.user.email, video.title)
+
+        # Redirection vers la page du sujet du forum
+        return redirect(url_for("frontend.display_video", video_id=comment.video_id))
+
+    # Si le formulaire n'est pas validé ou en méthode GET, affichage du formulaire de réponse.
+    return render_template("user/reply_form_video.html", formreply=formreply, comment=comment)
+
+
+# Route permettant à un utilisateur de modifier sa réponse à un commentaire de la section vidéo.
+@user_bp.route('/modification-réponse-utilisateur-vidéo/<int:id>', methods=['GET', 'POST'])
+@login_required
+def change_reply_video(id):
+    """
+    Permet à un utilisateur de modifier sa réponse à un commentaire.
+
+    Args:
+        id (int): L'id de la réponse à modifier.
+
+    Returns:
+        redirect: Redirige vers la page d'affichage de la vidéo après modification de la réponse.
+    """
+    reply = ReplyVideo.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire.
+    if reply.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à modifier cette réponse.')
+        return redirect(url_for('frontend.display_video', video_id=reply.comment.video_id))
+
+    formchangereply = ChangeReplyVideo(obj=reply)
+
+    if formchangereply.validate_on_submit():
+        reply.reply_content = formchangereply.reply_content.data
+        db.session.commit()
+        flash('Réponse modifiée avec succès.')
+        return redirect(url_for('frontend.display_video', video_id=reply.comment_video.video_id))
+    else:
+        flash('Erreur lors de la validation du commentaire.')
+
+    return render_template('user/edit_reply_video.html', formchangereply=formchangereply, reply=reply)
+
+
+# Route permettant à un utilisateur de supprimer sa réponse à un commentaire.
+@user_bp.route('/suppression-réponse-utilisateur-vidéo/<int:id>', methods=['POST'])
+@login_required
+def delete_reply_video(id):
+    """
+    Permet à un utilisateur de supprimer sa réponse à un commentaire.
+
+    Args:
+        id (int): L'id de la réponse à supprimer.
+
+    Returns:
+        redirect: Redirige vers la page du sujet du forum après suppression de la réponse.
+    """
+    formsuppressreply = SuppressReplyVideo()
+    reply = ReplyVideo.query.filter_by(id=id).first_or_404()
+
+    # Vérification que l'utilisateur actuel est l'auteur du commentaire.
+    if reply.user_id != current_user.id:
+        flash('Vous n\'êtes pas autorisé à supprimer cette réponse.')
+        return redirect(url_for('frontend.display_video', video_id=reply.comment_video.video_id))
+
+    # Obtenir le video_id avant de supprimer la réponse.
+    video_id = reply.comment_video.video_id
+
+    db.session.delete(reply)
+    db.session.commit()
+    flash('Réponse supprimée avec succès.')
+
+    return redirect(url_for('frontend.display_video', video_id=video_id))
+
+
+# Route permettant de liker un commentaire dans la section video.
+@user_bp.route("/likes-commentaire-video", methods=['POST'])
+@login_required
+def likes_comment_video():
+    """
+    Permet à un utilisateur de liker ou disliker un commentaire sur une vidéo.
+
+    Returns :
+        jsonify : Un objet JSON avec le statut de l'opération et les informations mises à jour sur le like.
+    """
+    data = request.get_json()
+    comment_id = data.get("comment_id")
+    pseudo = current_user.pseudo
+
+    if not comment_id or not pseudo:
+        return jsonify({"status": "error", "message": "Invalid data"}), 400
+
+    try:
+        user = User.query.filter_by(pseudo=pseudo).one()
+        user_id = user.id
+        comment = CommentVideo.query.get(comment_id)
+        if not comment:
+            return jsonify({"status": "error", "message": "Comment not found"}), 404
+
+        like_entry = CommentLikeVideo.query.filter_by(user_id=user_id, comment_id=comment_id).first()
+
+        if like_entry:
+            # Suppression d'un like.
+            db.session.delete(like_entry)
+            db.session.commit()
+            liked = False
+        else:
+            # Ajout d'un like.
+            new_like = CommentLikeVideo(user_id=user_id, comment_id=comment_id)
+            db.session.add(new_like)
+            db.session.commit()
+            liked = True
+
+            # Envoi d'un mail si le commentaire de la section forum est liké.
+            mail_like_comment_video(comment.user, comment.video)
+
+        # Comptage du nombre de likes pour le commentaire.
+        like_count = CommentLikeVideo.query.filter_by(comment_id=comment_id).count()
+        # Obtention des IDs des utilisateurs ayant liké le commentaire.
+        liked_user_ids = [like.user_id for like in CommentLikeVideo.query.filter_by(comment_id=comment_id).all()]
+
+        return jsonify({"status": "success",
+                        "liked": liked,
+                        "like_count": like_count,
+                        "user_pseudo": pseudo,
+                        "liked_user_ids": liked_user_ids})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+# Route permettant de joindre le formulaire afin de poster une réponse à un commentaire.
+@user_bp.route("/<string:user_pseudo>/comment<int:comment_id>/reply_form_video", methods=['GET'])
+@login_required
+def reply_form_video(comment_id, user_pseudo):
+    """
+    Affiche le formulaire pour répondre à un commentaire sur un sujet.
+
+    Args:
+        comment_id (int) : L'identifiant du commentaire auquel répondre.
+        user_pseudo (str) : Le pseudo de l'utilisateur.
+
+    Returns :
+        render_template : Le template HTML pour afficher le formulaire de réponse.
+    """
+    # Création d'une instance du formulaire.
+    formreply = ReplyVideoForm()
+    # Récupération des commentaires du sujet.
+    comment = db.session.get(CommentVideo, comment_id)
+    # Récupération des utilisateurs qui ont posté sur le sujet.
+    user = User.query.filter_by(pseudo=user_pseudo).first()
+
+    return render_template("User/reply_form_video.html", formreply=formreply,
+                           comment=comment, user=user)
