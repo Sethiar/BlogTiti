@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/accueil.css') }}">
+    <!-- Inclure moment.js -->
+    {{ moment.include_moment() }}
 
     {% block head_content %}
     {% endblock %}
@@ -23,7 +25,11 @@
                 <li><a href="{{ url_for('landing_page') }}">Accueil de Titi</a></li>
                 <li><a href="{{ url_for('frontend.forum') }}">Forum de Titi</a></li>
                 <li><a href="{{ url_for('frontend.show_videos') }}">Accès aux videos</a></li>
-                <li><a href="{{ url_for('chat.chat_request') }}">Demande de chat vidéo</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('chat.chat_request', user_id=current_user.id) }}">Demande de chat vidéo</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login', next=url_for('chat.chat_request')) }}">Demande de chat vidéo</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('user.user_recording') }}">Devenir membre</a></li>
                 <li><a href="https://www.youtube.com/@titi.lebricoleur">Accès à ma chaîne YouTube</a></li>
             </ul>
@@ -61,7 +67,7 @@
             <div class="footer-section col-md-3">
                 <h3>Liens utiles</h3>
                 <ul>
-                    <li><a href="#">Chaîne Youtube</a></li>
+                    <li><a href="https://www.youtube.com/@titi.lebricoleur">Chaîne Youtube</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
