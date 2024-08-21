@@ -1,6 +1,6 @@
 """
-Code permettant de définir les routes concernant les fonctions des administrateurs du blog comme le bannissement
-des utilisateurs, la suppression des commentaires des différentes sections et l'accès au backend.
+Code permettant de définir les routes concernant les fonctions des administrateurs du blog comme, par exemple,
+le bannissement des utilisateurs, la suppression des commentaires des différentes sections et l'accès au backend.
 """
 
 from datetime import datetime
@@ -12,13 +12,15 @@ from markupsafe import escape
 
 from app.Models import db
 from app.Models.forms import UserSaving, BanUserForm, UnBanUserForm, SuppressSubject, SuppressCommentSubjectForm,\
-    CommentSubjectForm, ChatRequestForm
+   ChatRequestForm, SuppressCommentVideoForm
 
 from app.Models.user import User
 from app.Models.subject_forum import SubjectForum
 from app.Models.comment_subject import CommentSubject
 from app.Models.videos import Video
 from app.Models.chat_request import ChatRequest
+
+from app.Models.comment_video import CommentVideo
 
 from app.Mail.routes import mail_banned_user, mail_deban_user
 
@@ -81,7 +83,7 @@ def users_list():
                            formban=formban, formunban=formunban)
 
 
-# Route permettant de supprimer d'un utilisateur.
+# Route permettant de supprimer un utilisateur.
 @admin_bp.route("/backend/supprimer-utilisateur/<int:id>", methods=["POST"])
 def suppress_user(id):
     """
@@ -182,16 +184,6 @@ def unbanning_user(id):
     return redirect(url_for('admin.back_end', formban=formban, formunban=formunban))
 
 
-# Route permettant d'afficher la liste des commentaires des utilisateurs concernant les vidéos.
-@admin_bp.route('/backend/liste-commentaires-vidéos')
-def list_comments_users_videos():
-    """
-
-    :return:
-    """
-    pass
-
-
 # Route permettant de visualiser les sujets du forum.
 @admin_bp.route('/backend/liste-sujets-forum')
 def list_subject_forum():
@@ -202,9 +194,10 @@ def list_subject_forum():
     """
     # Instanciation du formulaire de suppression.
     formsuppress_subject = SuppressSubject()
-
+    # Récupération des sujets du forum.
     subjects = db.session.query(SubjectForum.id, SubjectForum.nom).all()
 
+    # Création d'un dictionnaire permettant de récupérer les informations.
     subject_data = [
         {'id': subject_id, 'nom': nom}
         for subject_id, nom in subjects
@@ -220,9 +213,7 @@ def add_subject_forum_back():
     """
     Permet à l'administrateur d'ajouter un nouveau sujet pour le forum à partir du back-end.
 
-    Cette route permet à l'administrateur d'ajouter un nouveau sujet pour le forum en utilisant
-    un formulaire POST. Le nom du sujet est extrait du formulaire, enregistré dans la base de données,
-    et l'utilisateur est redirigé vers la page du back-end après l'ajout.
+    Cette route permet à l'administrateur d'ajouter un nouveau sujet pour le forum.
 
     Returns:
         Response: Redirection vers la page du back-end après l'ajout du sujet.
@@ -231,6 +222,7 @@ def add_subject_forum_back():
     if request.method == "POST":
         # Saisie du nom du sujet.
         nom_subject_forum = escape(request.form.get("nom"))
+        # Création de l'instance.
         subject_forum = SubjectForum(nom=nom_subject_forum)
 
         # Enregistrement du sujet dans la base de données.
@@ -248,7 +240,7 @@ def suppress_subject(id):
 
     Cette route permet de supprimer un sujet spécifique, identifié par son ID,
     du forum. Après la suppression, un message de confirmation est affiché et
-    l'utilisateur est redirigé vers la page d'administration.
+    l'administrateur est redirigé vers la page d'administration.
 
     Args:
         id (int): L'identifiant unique du sujet à supprimer.
@@ -257,7 +249,9 @@ def suppress_subject(id):
         Response: Une redirection vers la page d'administration après la suppression.
 
     """
+    # Récupération de tous les sujets depuis la base de données.
     subject = SubjectForum.query.get(id)
+    # Logique du code.
     if subject:
         # Suppression du sujet.
         db.session.delete(subject)
@@ -268,14 +262,15 @@ def suppress_subject(id):
     return redirect(url_for("admin.list_subject_forum"))
 
 
-# Route permettant d'afficher la liste des commentaires du forum.
-@admin_bp.route('/backend/liste-commentaires-forum')
+# Route permettant d'afficher la liste des commentaires du forum, avec option de filtrage.
+@admin_bp.route('/backend/liste-commentaires-forum', methods=['GET', 'POST'])
 def list_comments_forum():
     """
     Visualiser les commentaires des utilisateurs en fonction des sujets du forum.
 
     Cette route permet de voir tous les commentaires des utilisateurs sur les sujets du forum.
     Les commentaires sont regroupés par utilisateur et affichés dans une page HTML.
+    Il est possible de filtrer les utilisateurs par la première lettre de leur pseudo.
 
     Returns:
         Response: Une page HTML affichant les commentaires des utilisateurs sur les sujets du forum.
@@ -288,63 +283,27 @@ def list_comments_forum():
         suppressform (SuppressCommentSubjectForm): Formulaire pour supprimer des commentaires de sujets.
         user_comments (dict): Dictionnaire contenant les utilisateurs et leurs commentaires sur les sujets du forum.
     """
+    # Instanciation des formulaires.
     formuser = UserSaving()
     suppressform = SuppressCommentSubjectForm()
-    user_comments = {}
 
-    comments = CommentSubject.query.all()
-    subject = SubjectForum.query.all()
-    for comment in comments:
-        user = User.query.get(comment.user_id)
-        subject = SubjectForum.query.get(comment.subject_id)
-
-        if user.pseudo not in user_comments:
-            user_comments[user.pseudo] = []
-        user_comments[user.pseudo].append({
-            'sujet': subject,
-            'comment': comment
-        })
-
-    return render_template("backend/users_subject_comments.html", user_comments=user_comments, formuser=formuser,
-                           suppressform=suppressform, subject=subject)
-
-
-# Route permettant de filtrer selon le pseudo des utilisateurs les commentaires dans la section des sujets du forum.
-@admin_bp.route("back-end-blog/filtrage-utilisateur-sujets-alphabet", methods=['GET', 'POST'])
-def users_subject_alpha_filter():
-    """
-    Filtre les utilisateurs par la première lettre de leur pseudo et affiche leurs commentaires sur les sujets du forum.
-
-    Cette route permet de filtrer les utilisateurs en fonction de la première lettre de leur pseudo.
-    Les utilisateurs filtrés et leurs commentaires sur les sujets du forum sont affichés dans une page HTML.
-
-    Returns:
-        Response: Une page HTML affichant les utilisateurs filtrés et leurs commentaires sur les sujets du forum.
-
-    Templates:
-        admin/users_subject_comments.html: Le modèle utilisé pour rendre la page des commentaires des utilisateurs.
-
-    Context:
-        formuser (CommentSubjectForm): Formulaire pour les commentaires sur les sujets.
-        suppressform (SuppressCommentSubjectForm): Formulaire pour supprimer des commentaires de sujets.
-        user_comments (dict): Dictionnaire contenant les utilisateurs et leurs commentaires sur les sujets du forum.
-    """
-    formuser = CommentSubjectForm()
-    suppressform = SuppressCommentSubjectForm()
-
-    subject = SubjectForum.query.all()
-
+    # Récupération de la lettre de filtrage des utilisateurs à partir des paramètres de requête.
     lettre = request.args.get('lettre', type=str)
+
+    # Filtrage des utilisateurs en fonction de la lettre choisie.
     if lettre:
-        users = User.query.filter(User.pseudo.ilike(f'{lettre}%')).order_by(
-            User.pseudo.asc()).all()
+        users = User.query.filter(User.pseudo.ilike(f'{lettre}%')).order_by(User.pseudo.asc()).all()
     else:
         users = User.query.order_by(User.pseudo.asc()).all()
 
+    # Création du dictionnaire récupérant les données.
     user_comments = {}
+
+    # Pour chaque utilisateur, récupération de tous les commentaires associés.
     for user in users:
         comments = CommentSubject.query.filter_by(user_id=user.id).all()
         for comment in comments:
+            # Récupération des sujets associés aux commentaires.
             subject = SubjectForum.query.get(comment.subject_id)
             if user.pseudo not in user_comments:
                 user_comments[user.pseudo] = []
@@ -352,8 +311,9 @@ def users_subject_alpha_filter():
                 'sujet': subject,
                 'comment': comment
             })
-    return render_template('backend/users_subject_comments.html', user_comments=user_comments, formuser=formuser,
-                           suppressform=suppressform, subject=subject)
+
+    return render_template("backend/users_subject_comments.html", user_comments=user_comments, formuser=formuser,
+                           suppressform=suppressform)
 
 
 # Route permettant de supprimer un commentaire d'un sujet du forum.
@@ -364,7 +324,7 @@ def suppress_subject_comment(id):
 
     Cette route permet de supprimer un commentaire spécifique, identifié par son ID,
     d'un sujet dans le forum. Après la suppression, un message de confirmation
-    est affiché et l'utilisateur est redirigé vers la page d'administration.
+    est affiché et l'administrateur est redirigé vers la page d'administration.
 
     Args:
         id (int): L'identifiant unique du commentaire à supprimer.
@@ -373,37 +333,123 @@ def suppress_subject_comment(id):
         Response: Une redirection vers la page d'administration après la suppression.
 
     """
+    # Récupération du commentaire du sujet à supprimer.
     comment = CommentSubject.query.get(id)
+
     if comment:
-        # Suppression du sujet.
+        # Suppression du commentaire.
         db.session.delete(comment)
         # Validation de l'action.
         db.session.commit()
-        flash("Le commentaire du blog a été supprimé avec succès." + " "
+        flash("Le commentaire du forum a été supprimé avec succès." + " "
               + datetime.now().strftime(" le %d-%m-%Y à %H:%M:%S"))
 
-    return redirect(url_for("admin.users_subject_alpha_filter"))
+    return redirect(url_for("admin.list_comments_forum"))
+
+
+# Route permettant d'afficher les commentaires des utilisateurs et de les filtrer par leur pseudo.
+@admin_bp.route('/backend/liste-commentaires-video')
+def list_comments_video():
+    """
+    Affiche et filtre les commentaires des vidéos par utilisateur.
+
+    Cette route permet de voir tous les commentaires des utilisateurs sur les vidéos.
+    Les commentaires peuvent être filtrés par la première lettre du pseudo.
+
+    Returns:
+        Response: Une page HTML affichant les commentaires des utilisateurs.
+
+    Templates:
+        admin/users_video_comments.html: Le modèle utilisé pour rendre la page des commentaires.
+
+    Context:
+        formuser (UserSaving): Formulaire pour les utilisateurs.
+        suppressform (SuppressCommentVideoForm): Formulaire pour supprimer des commentaires.
+        user_comments (dict): Dictionnaire contenant les utilisateurs et leurs commentaires sur les vidéos.
+    """
+    # Instanciation des formulaires.
+    formuser = UserSaving()
+    suppressform = SuppressCommentVideoForm()
+
+    # Récupération de la lettre pour le filtrage (facultatif).
+    lettre = request.args.get('lettre', type=str)
+
+    # Filtrer les utilisateurs par pseudo si une lettre est fournie.
+    if lettre:
+        users = User.query.filter(User.pseudo.ilike(f'{lettre}%')).order_by(User.pseudo.asc()).all()
+    else:
+        users = User.query.order_by(User.pseudo.asc()).all()
+
+    # Création du dictionnaire pour stocker les commentaires par utilisateur.
+    user_comments = {}
+    for user in users:
+        comments = CommentVideo.query.filter_by(user_id=user.id).all()
+        for comment in comments:
+            video = Video.query.get(comment.video_id)
+            if user.pseudo not in user_comments:
+                user_comments[user.pseudo] = []
+            user_comments[user.pseudo].append({
+                'video': video,
+                'comment': comment
+            })
+
+    return render_template('backend/users_video_comments.html', user_comments=user_comments, formuser=formuser,
+                           suppressform=suppressform, video=Video.query.all())
+
+
+# Route permettant de supprimer un commentaire d'une vidéo.
+@admin_bp.route("/back-end-blog/supprimer-commentaires-video/<int:id>", methods=['POST'])
+def suppress_video_comment(id):
+    """
+    Supprime un commentaire vidéo par son ID et redirige vers la liste des commentaires.
+
+    Args:
+        id (int): L'identifiant unique du commentaire à supprimer.
+
+    Returns:
+        Response: Une redirection vers la page des commentaires après la suppression.
+    """
+    comment = CommentVideo.query.get_or_404(id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash(f"Le commentaire a été supprimé avec succès le {datetime.now().strftime('%d-%m-%Y à %H:%M:%S')}", 'success')
+    return redirect(url_for('admin.list_comments_video'))
 
 
 # Route permettant d'accéder aux événements du calendrier du chat vidéo.
 @admin_bp.route("/back-end-blog/calendrier-chat-video")
 def calendar():
     """
+    Affiche la page du calendrier pour les événements de chat vidéo.
 
-    :return:
+    Cette route récupère toutes les demandes de chat vidéo, filtre celles qui sont validées,
+    et prépare les données nécessaires pour le calendrier.
+
+    :return: La page HTML du calendrier des chats vidéo, incluant les données des demandes.
     """
+    # Instanciation des formulaires.
     formrequest = ChatRequestForm()
+    # Récupération de toutes les requêtes.
     requests = ChatRequest.query.all()
 
-    # Récupération des données pour le calendrier.
+    # Préparation des données des rendez-vous pour le calendrier.
+    # Seules les demandes validées sont incluses.
     rdv_data = [
         {
+            # Le pseudo de l'utilisateur ayant fait la demande.
             'pseudo': request.pseudo,
+            # Le statut de la demande (ici, seulement 'validée').
             'status': request.status,
+            # Combinaison de la date et de l'heure en un seul objet datetime.
             'date_rdv': datetime.combine(request.date_rdv, request.heure),
+            # Génération du lien vers la session de chat vidéo si la demande est validée.
             'link': url_for('chat.chat_video_session', request_id=request.id, _external=True)
+
             if request.status == 'validée' else None
+
+            # Liste des rendez-vous filtrée pour ne conserver que ceux dont le statut est 'validée'.
         } for request in requests if request.status == 'validée'
+
     ]
 
     return render_template('backend/calendar.html', formrequest=formrequest,
