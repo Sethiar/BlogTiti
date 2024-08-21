@@ -23,6 +23,7 @@
             <p>Vues : {{ video.view_count }}</p>
             <p>Likes : {{ video.like_count }}</p>
             <p>Commentaires : {{ video.comment_count }}</p>
+            <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
         </div>
         {% endfor %}
     </div>

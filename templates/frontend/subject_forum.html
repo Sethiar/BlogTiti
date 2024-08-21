@@ -44,7 +44,7 @@
                 <i>{{ comment.user.role }}</i>
             </div>
             <div class="date_comment">
-                <small>Le {{ comment.comment_date.strftime('%d-%m-%Y à %H:%M') }}</small>
+                <small>Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:MM') }}</small>
             </div>
             <div class="content_comment">
                 {{ comment.comment_content | replace('\n', '<br>') | safe }}
@@ -54,7 +54,7 @@
                 <a href="{{ url_for('user.change_comment', id=comment.id) }}">Modifier</a>
                 <form action="{{ url_for('user.delete_comment', id=comment.id) }}" method="POST" style="display:inline;">
                     {{ formsuppress.csrf_token }}
-                    <input class="suppress_button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouoloir supprimer votre commentaire ?');">
+                    <input class="suppress_button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
                 </form>
                 {% endif %}
             </div>
@@ -62,7 +62,7 @@
         <div class="reply-button-container">
             <a href="{{ url_for('user.reply_form_subject', comment_id=comment.id, user_pseudo=current_user.pseudo) }}" class="reply-button">Répondre</a>
             <div class="like-section" data-user-id="{{ current_user.pseudo }}">
-                <form id="fromlikecomment" method="POST" action="{{ url_for('user.likes_comment_subject') }}" style="display: none;">
+                <form id="formlikecomment" method="POST" action="{{ url_for('user.likes_comment_subject') }}" style="display: none;">
                     {{ formlikecomment.csrf_token }}
                     <input type="hidden" name="comment_id" value="{{ comment.id }}">
                     <input type="hidden" name="user_pseudo" value="{{ current_user.pseudo }}">
@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="replies">
-            {% for reply in comment.replies_comment_subject %}
+            {% for reply in comment.replies %}
             <div class="comment-reply">
                 <div class="reply-header">
                     <img src="{{ url_for('user.profil_photo', user_id=reply.user_id) }}" alt="Photo de profil" class="profile-picture">
@@ -102,7 +102,7 @@
                         <i>{{ reply.user.role }}</i>
                     </div>
                     <div class="reply-date">
-                        <small>Le {{ reply.reply_date.strftime('%d-%m-%Y à %H:%M') }}</small>
+                         <small>Le {{ moment(reply.reply_date).format('DD-MM-YYYY à HH:mm') }}</small>
                     </div>
                 </div>
                 <div class="content-reply">
@@ -125,7 +125,8 @@
     <div class="separation"></div>
     <br>
     <div id="comment_avis">
-        <h2>Vous pouvez laisser un commentaire : </h2>
+        <h2>Vous pouvez laisser un commentaire :</h2>
+        <br>
         <div class="form-comment">
             <form method="POST" action="{{ url_for('user.comment_subject', user_pseudo=current_user.pseudo, subject_id=subject.id) }}">
                 {{ formcomment.csrf_token }}
