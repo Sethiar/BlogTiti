@@ -415,7 +415,7 @@ class SuppressCommentSubjectForm(FlaskForm):
     submit = SubmitField('Supprimer')
 
 
-# Formulaire permettant de liker un commentaire dans la section article.
+# Formulaire permettant de liker un commentaire dans la section forum.
 class CommentLike(FlaskForm):
     """
     Formulaire permettant de liker un commentaire.
@@ -465,4 +465,121 @@ class ChatRequestForm(FlaskForm):
 
     csrf_token = HiddenField()
 
+
+# Formulaire permettant à un utilisateur de créer un commentaire pour la section vidéo.
+class CommentVideoForm(FlaskForm):
+    """
+    Formulaire pour ajouter un commentaire à une vidéo.
+
+    Attributes :
+        comment_content (TextAreaField) : Champ pour le contenu du commentaire.
+        user_pseudo (StringField) : Champ pour le pseudo de l'utilisateur.
+
+    Example :
+        form = CommentVideoForm()
+    """
+
+    # Le contenu du commentaire.
+    comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
+                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+
+    # Le pseudo de l'utilisateur.
+    user_pseudo = StringField("Pseudo de l'utilisateur", validators=[DataRequired()],
+                              render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+
+    # Action de soumettre le formulaire.
+    submit = SubmitField("Soumettre le commentaire")
+
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant à un utilisateur de modifier son commentaire pour la section vidéo.
+class ChangeCommentVideoForm(FlaskForm):
+    """
+    Formulaire permettant de supprimer un commentaire par l'utilisateur.
+    Attributes :
+        comment_content : Contenu du commentaire de l'utilisateur.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+
+    comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
+                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+    submit = SubmitField("Soumettre le commentaire")
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant à un utilisateur de supprimer son commentaire pour la section vidéo.
+class SuppressCommentVideoForm(FlaskForm):
+    """
+    Formulaire permettant de supprimer un commentaire par l'utilisateur.
+    Attributes :
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+    submit = SubmitField('Supprimer le commentaire')
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant de répondre à un commentaire dans la section video.
+class ReplyVideoForm(FlaskForm):
+    """
+    Formulaire permettant d'ajouter une réponse à un commentaire dans la section video.
+
+    Attributes :
+        reply_content (TextAreaField) : Champ de texte pour la réponse au commentaire.
+        comment_id (HiddenField) : Champ caché pour l'ID du commentaire parent.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+    csrf_token = HiddenField()
+    # Le contenu de la réponse.
+    reply_content = TextAreaField("Réponse au sujet du forum", validators=[DataRequired()],
+                                  render_kw={"placeholder": "Veuillez écrire votre réponse."})
+    # Champ pour stocker l'id du commentaire parent.
+    comment_id = HiddenField('ID du commentaire')
+    # Action de soumettre le formulaire.
+    submit = SubmitField()
+
+
+# Formulaire permettant à un utilisateur de modifier sa réponse à un commentaire dans la section vidéo.
+class ChangeReplyVideo(FlaskForm):
+    """
+    Formulaire permettant de modifier une réponse par l'utilisateur.
+    Attributes :
+        reply_content : Contenu du commentaire de l'utilisateur.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    """
+
+    reply_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
+                                  render_kw={"placeholder": "Veuillez entrer votre réponse."})
+    submit = SubmitField("Soumettre la réponse.")
+    csrf_token = HiddenField()
+
+
+# Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire dans la section vidéo.
+class SuppressReplyVideo(FlaskForm):
+    """
+    Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire de la section vidéo.
+
+    Attributes :
+        comment_id (HiddenField) : Champ caché pour l'ID de la réponse à supprimer.
+        submit (SubmitField): Bouton de soumission du formulaire.
+    """
+    reply_id = HiddenField('reply_id', validators=[DataRequired()])
+    submit = SubmitField('Supprimer')
+
+
+# Formulaire permettant de supprimer les commentaires dans la section vidéo.
+class SuppressCommentVideoAdminForm(FlaskForm):
+    """
+    Formulaire pour supprimer un commentaire de la section vidéo depuis la section admin.
+
+    Attributes :
+        comment_id (HiddenField) : Champ caché pour l'ID du commentaire à supprimer.
+        submit (SubmitField): Bouton de soumission du formulaire.
+    """
+    comment_id = HiddenField('Comment_id', validators=[DataRequired()])
+    submit = SubmitField('Supprimer')
 
