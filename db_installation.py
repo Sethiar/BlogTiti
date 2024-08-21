@@ -30,7 +30,7 @@ with app.app_context():
             salt (LB): Salage du mot de passe.
         """
 
-        __table_name__ = "admin"
+        __tablename__ = "admin"
         __table_args__ = {"extend_existing": True}
 
         id = db.Column(db.Integer, primary_key=True)
@@ -40,6 +40,9 @@ with app.app_context():
         profil_photo = db.Column(db.LargeBinary, nullable=True)
         password_hash = db.Column(db.LargeBinary(255), nullable=False)
         salt = db.Column(db.LargeBinary(255), nullable=False)
+
+        # Relation avec la table ChatRequest.
+        chat_requests = db.relationship('ChatRequest', back_populates='admin', cascade='all, delete-orphan')
 
     # Modèle de la classe User.
     class User(db.Model, UserMixin):
@@ -77,6 +80,28 @@ with app.app_context():
         date_ban_end = db.Column(db.DateTime, nullable=True)
         count_ban = db.Column(db.Integer, default=0)
 
+        # Relation avec les commentaires sur les sujets du forum.
+        comments_subject = db.relationship('CommentSubject', back_populates='user', cascade='all, delete-orphan')
+
+        # Relation avec les commentaires sur les vidéos.
+        comments_video = db.relationship('CommentVideo', back_populates='user', cascade='all, delete-orphan')
+
+        # Relation avec les réponses aux commentaires de sujets.
+        replies_subject = db.relationship('ReplySubject', back_populates='user', cascade='all, delete-orphan')
+
+        # Relation avec les réponses aux commentaires de vidéos.
+        replies_video = db.relationship('ReplyVideo', back_populates='user', cascade='all, delete-orphan')
+
+        # Relation avec les likes sur les commentaires de sujets.
+        likes_comment_subject = db.relationship('CommentLikeSubject', back_populates='user',
+                                                cascade='all, delete-orphan')
+
+        # Relation avec les likes sur les commentaires de vidéos.
+        likes_comment_video = db.relationship('CommentLikeVideo', back_populates='user', cascade='all, delete-orphan')
+
+        # Relation entre la demande de chat et la classe user.
+        chat_requests = db.relationship('ChatRequest', back_populates='user', cascade='all, delete-orphan')
+
     # Modèle de la classe SubjectForum.
     class SubjectForum(db.Model):
         """
@@ -92,6 +117,9 @@ with app.app_context():
 
         id = db.Column(db.Integer, primary_key=True)
         nom = db.Column(db.String(50), nullable=False)
+
+        # Relation avec les commentaires.
+        comments = db.relationship('CommentSubject', back_populates='subject', cascade='all, delete-orphan')
 
     # Modèle de la classe Comment pour les sujets du forum.
     class CommentSubject(db.Model):
@@ -110,23 +138,21 @@ with app.app_context():
 
         id = db.Column(db.Integer, primary_key=True)
         comment_content = db.Column(db.Text(), nullable=False)
-        comment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+        comment_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
 
         # Relation avec la classe SubjectForum.
         subject_id = db.Column(db.Integer, db.ForeignKey('subject_forum.id'), nullable=False)
-        subject = db.relationship('SubjectForum', backref=db.backref('subject_comments', lazy=True))
+        subject = db.relationship('SubjectForum', back_populates='comments')
 
         # Relation avec la classe User.
         user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-        user = db.relationship('User', backref=db.backref('user_subject_comments', lazy=True))
+        user = db.relationship('User', back_populates='comments_subject')
 
         # Relation avec la classe ReplySubject avec suppression en cascade.
-        replies_suppress_subject = db.relationship('ReplySubject', backref='parent_comment',
-                                                   cascade='all, delete-orphan')
+        replies = db.relationship('ReplySubject', back_populates='comment', cascade='all, delete-orphan')
 
         # Relation avec la classe LikeCommentSubject avec suppression en cascade.
-        likes_suppress_subject = db.relationship('CommentLikeSubject', backref='comment_like_subject',
-                                                 cascade='all, delete-orphan')
+        likes = db.relationship('CommentLikeSubject', back_populates='comment', cascade='all, delete-orphan')
 
     # Table de liaison pour les likes des commentaires de la section forum.
     class CommentLikeSubject(db.Model):
@@ -143,6 +169,10 @@ with app.app_context():
 
         user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
         comment_id = db.Column(db.Integer, db.ForeignKey("comment_subject.id"), primary_key=True)
+
+        # Relation avec les utilisateurs et les commentaires.
+        user = db.relationship('User', back_populates='likes_comment_subject')
+        comment = db.relationship('CommentSubject', back_populates='likes')
 
     # Table des réponses aux commentaires des sujets du forum.
     class ReplySubject(db.Model):
@@ -161,15 +191,15 @@ with app.app_context():
 
         id = db.Column(db.Integer, primary_key=True)
         reply_content = db.Column(db.Text(), nullable=False)
-        reply_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+        reply_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
 
         # Relation avec la classe CommentSubject.
         comment_id = db.Column(db.Integer, db.ForeignKey('comment_subject.id'), nullable=False)
-        comment = db.relationship('CommentSubject', backref=db.backref('replies_comment_subject', lazy=True))
+        comment = db.relationship('CommentSubject', back_populates='replies')
 
         # Relation avec la classe User.
         user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-        user = db.relationship('User', backref=db.backref('user_comment_subject_replies', lazy=True))
+        user = db.relationship('User', back_populates='replies_subject')
 
     # Classe qui permet l'enregistrement des caractéristiques des vidéos.
     class Video(db.Model):
@@ -188,7 +218,7 @@ with app.app_context():
             tags (str): Tags associés à la vidéo.
         """
 
-        __tablename__ = "videos"
+        __tablename__ = "video"
         __table_args__ = {"extend_existing": True}
 
         id = db.Column(db.Integer, primary_key=True)
@@ -201,6 +231,88 @@ with app.app_context():
         comment_count = db.Column(db.Integer)
         tags = db.Column(db.Text)
 
+        # Relation avec les commentaires.
+        comments_video = db.relationship('CommentVideo', back_populates='video', cascade='all, delete-orphan')
+
+    # Modèle de la classe Comment pour les vidéos du blog.
+    class CommentVideo(db.Model):
+        """
+        Représente un commentaire pour une vidéo du blog.
+
+        Attributes:
+            id (int): Identifiant unique du commentaire.
+            comment_content (str) : Contenu du commentaire.
+            comment_date (datetime) : Date et heure du commentaire.
+            video_id (int): Identifiant de la vidéo associée au commentaire.
+            user_id (int) : Identifiant de l'utilisateur qui a écrit le commentaire.
+        """
+        __tablename__ = "comment_video"
+        __table_args__ = {"extend_existing": True}
+
+        id = db.Column(db.Integer, primary_key=True)
+        comment_content = db.Column(db.Text(), nullable=False)
+        comment_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+
+        # Relation avec la classe Video.
+        video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
+        video = db.relationship('Video', back_populates='comments_video')
+
+        # Relation avec la classe User.
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        user = db.relationship('User', back_populates='comments_video')
+
+        # Relation avec la classe ReplyVideo avec suppression en cascade.
+        replies = db.relationship('ReplyVideo', back_populates='comment_video', cascade='all, delete-orphan')
+
+        # Relation avec la classe LikeCommentVideo avec suppression en cascade.
+        likes = db.relationship('CommentLikeVideo', back_populates='comment_video', cascade='all, delete-orphan')
+
+    # Table des réponses aux commentaires des vidéos.
+    class ReplyVideo(db.Model):
+        """
+        Représente une réponse à un commentaire d'une vidéo du blog.
+
+        Attributes:
+            id (int) : Identifiant unique de la réponse.
+            reply_content (str) : Contenu de la réponse.
+            reply_date (datetime) : Date et heure de la réponse (par défaut, date actuelle UTC).
+            comment_id (int) : Identifiant du commentaire associé à la réponse.
+            user_id (int) : Identifiant de l'utilisateur ayant posté la réponse.
+        """
+        __tablename__ = "reply_video"
+        __table_args__ = {"extend_existing": True}
+
+        id = db.Column(db.Integer, primary_key=True)
+        reply_content = db.Column(db.Text(), nullable=False)
+        reply_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+
+        # Relation avec la classe CommentVideo.
+        comment_id = db.Column(db.Integer, db.ForeignKey('comment_video.id'), nullable=False)
+        comment_video = db.relationship('CommentVideo', back_populates='replies')
+
+        # Relation avec la classe User.
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        user = db.relationship('User', back_populates='replies_video')
+
+    # Table de liaison pour les likes des commentaires de la section vidéo.
+    class CommentLikeVideo(db.Model):
+        """
+        Modèle de données représentant la relation entre les utilisateurs et les commentaires
+        qu'ils aiment dans la section vidéo.
+
+        Attributes:
+            user_id (int) : Identifiant de l'utilisateur qui a aimé le commentaire (clé primaire).
+            comment_id (int): Identifiant du commentaire aimé (clé primaire).
+        """
+        __tablename__ = "likes_comment_video"
+        __table_args__ = {"extend_existing": True}
+
+        user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+        comment_id = db.Column(db.Integer, db.ForeignKey("comment_video.id"), primary_key=True)
+
+        # Relation avec les utilisateurs et les commentaires.
+        user = db.relationship('User', back_populates='likes_comment_video')
+        comment_video = db.relationship('CommentVideo', back_populates='likes')
 
     class ChatRequest(db.Model):
         """
@@ -230,6 +342,14 @@ with app.app_context():
         admin_choices = db.Column(JSON, nullable=True)  # Stocke les créneaux comme liste de strings ou datetimes
         user_choice = db.Column(db.DateTime(timezone=True), nullable=True)
         created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+
+        # Relation avec la classe User.
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        user = db.relationship('User', back_populates='chat_requests')
+
+        # Relation avec la classe Admin.
+        admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
+        admin = db.relationship('Admin', back_populates='chat_requests')
 
 
     # Création de toutes les tables à partir de leur classe.
