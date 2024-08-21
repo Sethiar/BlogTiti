@@ -56,25 +56,6 @@ def send_confirmation_email_admin(email):
     return redirect(url_for('landing_page'))
 
 
-# Méthode qui permet d'envoyer un mail à tous les utilisateurs lors de la publication d'un nouvel article.
-def mail_edit_article(email, article):
-    """
-    Envoie des emails à tous les utilisateurs lors de la publication d'un nouvel article.
-    :return:
-    """
-    msg = Message("Publication d'un nouvel article",
-                  sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
-    msg.body = f"Un nouvel article a été publié : {article.title}." \
-               f"Venez donner votre avis sur le blog.\n" \
-               f"Cordialement,\n" \
-               f"L'équipe du blog."
-
-    try:
-        current_app.extensions['mail'].send(msg)
-    except Exception as e:
-        current_app.logger.error(f"Erreur lors de l'envoi du mail à {email} :{str(e)}")
-
-
 # Méthode qui renvoie le mail de bon anniversaire à l'utilisateur.
 def send_birthday_email(email):
     """
@@ -231,6 +212,44 @@ def mail_like_comment_subject(user, subject):
                f"Votre équipe de support."
     send_email_in_background(current_app._get_current_object(), msg)
 
+
+# Méthode qui permet d'envoyer un mail à un utilisateur si quelqu'un a
+# répondu à son commentaire dans la section vidéo.
+def mail_reply_video_comment(email, video_title):
+    """
+    Envoie un mail à l'auteur du commentaire en cas de réponse à celui-ci.
+    :param email: email de l'utilisateur qui a commenté le sujet du forum.
+    :param video_title : titre de la vidéo commentée.
+    """
+    user = User.query.filter_by(email=email).first()
+
+    msg = Message("Quelqu'un a répondu à votre commentaire de la section vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
+    msg.body = f"Bonjour {user.pseudo},\n" \
+               f"Un utilisateur a répondu à votre commentaire de la section vidéo dont le titre est {video_title}.\n" \
+               f"Cordialement,\n" \
+               f"Votre équipe de support."
+    current_app.extensions['mail'].send(msg)
+
+
+# Méthode qui envoie un mail à utilisateur en cas de like de son commentaire à la section vidéo.
+def mail_like_comment_video(user, video):
+    """
+    Envoie un mail à l'auteur du commentaire de la section vidéo afin de l'avertir
+    qu'un utilisateur a aimé son commentaire.
+    :param user: utilisateur qui a posté le commentaire.
+    :param video: vidéo dont le commentaire a été liké.
+    """
+    msg = Message("Quelqu'un a aimé votre commentaire de la section vidéo.",
+                  sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                  recipients=[user.email])
+    msg.body = f"Bonjour {user.pseudo},\n" \
+               f"Un utilisateur a aimé votre commentaire de la section vidéo " \
+               f"concernant le sujet suivant : {video.title}.\n" \
+               f"Cordialement,\n" \
+               f"Votre équipe de support."
+    send_email_in_background(current_app._get_current_object(), msg)
 
 # Méthode envoyant un mail de confirmation de la demande de chat vidéo à l'utilisateur.
 def send_confirmation_request_reception(user):
