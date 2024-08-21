@@ -1,5 +1,5 @@
 """
-Code permettant de définir les routes concernant les fonctions du chat vidéo du blog.
+Code permettant de définir l'accès aux routes concernant les fonctions du chat vidéo du blog.
 """
 
 from flask import Blueprint
