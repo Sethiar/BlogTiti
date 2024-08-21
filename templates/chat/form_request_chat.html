@@ -37,7 +37,7 @@
         </div>
     </header>
 
-    <form method="POST" action="{{ url_for('chat.send_request') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('chat.send_request', user_id=current_user.id) }}" enctype="multipart/form-data">
     <div class="imgcontainer">
         <img src="{{ url_for('static', filename='Images/images_chat/avatar.png') }}" alt="Avatar" class="avatar">
     </div>
