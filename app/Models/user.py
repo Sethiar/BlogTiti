@@ -44,6 +44,27 @@ class User(db.Model, UserMixin):
     date_ban_end = db.Column(db.DateTime, nullable=True)
     count_ban = db.Column(db.Integer, default=0)
 
+    # Relation avec les commentaires sur les sujets du forum.
+    comments_subject = db.relationship('CommentSubject', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation avec les commentaires sur les vidéos.
+    comments_video = db.relationship('CommentVideo', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation avec les réponses aux commentaires de sujets.
+    replies_subject = db.relationship('ReplySubject', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation avec les réponses aux commentaires de vidéos.
+    replies_video = db.relationship('ReplyVideo', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation avec les likes sur les commentaires de sujets.
+    likes_comment_subject = db.relationship('CommentLikeSubject', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation avec les likes sur les commentaires de vidéos.
+    likes_comment_video = db.relationship('CommentLikeVideo', back_populates='user', cascade='all, delete-orphan')
+
+    # Relation entre la demande de chat et la classe user.
+    chat_requests = db.relationship('ChatRequest', back_populates='user', cascade='all, delete-orphan')
+
     def __repr__(self):
         """
         Représentation en chaîne de caractères de l'objet Utilisateur.

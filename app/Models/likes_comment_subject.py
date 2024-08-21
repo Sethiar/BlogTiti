@@ -19,5 +19,9 @@ class CommentLikeSubject(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
     comment_id = db.Column(db.Integer, db.ForeignKey("comment_subject.id"), primary_key=True)
 
+    # Relation avec les utilisateurs et les commentaires.
+    user = db.relationship('User', back_populates='likes_comment_subject')
+    comment = db.relationship('CommentSubject', back_populates='likes')
+
     def __repr__(self):
         return f"CommentLikeSubject(user_id={self.user_id}, comment_id={self.comment_id})"

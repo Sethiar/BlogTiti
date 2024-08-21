@@ -39,6 +39,14 @@ class ChatRequest(db.Model):
     user_choice = db.Column(db.DateTime(timezone=True), nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
 
+    # Relation avec la classe User.
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='chat_requests')
+
+    # Relation avec la classe Admin.
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
+    admin = db.relationship('Admin', back_populates='chat_requests')
+
     def __repr__(self):
         """
         Représentation en chaîne de caractères de l'objet ChatRequest

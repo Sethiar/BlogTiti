@@ -20,7 +20,7 @@ class Video(db.Model):
         tags (str): Tags associés à la vidéo.
     """
 
-    __tablename__ = "videos"
+    __tablename__ = "video"
     __table_args__ = {"extend_existing": True}
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +32,9 @@ class Video(db.Model):
     like_count = db.Column(db.Integer)
     comment_count = db.Column(db.Integer)
     tags = db.Column(db.Text)
+
+    # Relation avec les commentaires.
+    comments_video = db.relationship('CommentVideo', back_populates='video', cascade='all, delete-orphan')
 
     def __repr__(self):
         """

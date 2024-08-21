@@ -23,23 +23,21 @@ class CommentSubject(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     comment_content = db.Column(db.Text(), nullable=False)
-    comment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    comment_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
 
     # Relation avec la classe SubjectForum.
     subject_id = db.Column(db.Integer, db.ForeignKey('subject_forum.id'), nullable=False)
-    subject = db.relationship('SubjectForum', backref=db.backref('subject_comments', lazy=True))
+    subject = db.relationship('SubjectForum', back_populates='comments')
 
     # Relation avec la classe User.
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('user_subject_comments', lazy=True))
+    user = db.relationship('User', back_populates='comments_subject')
 
     # Relation avec la classe ReplySubject avec suppression en cascade.
-    replies_suppress_subject = db.relationship('ReplySubject', backref='parent_comment',
-                                               cascade='all, delete-orphan')
+    replies = db.relationship('ReplySubject', back_populates='comment', cascade='all, delete-orphan')
 
     # Relation avec la classe LikeCommentSubject avec suppression en cascade.
-    likes_suppress_subject = db.relationship('CommentLikeSubject', backref='comment_like_subject',
-                                             cascade='all, delete-orphan')
+    likes = db.relationship('CommentLikeSubject', back_populates='comment', cascade='all, delete-orphan')
 
     def __repr__(self):
         """

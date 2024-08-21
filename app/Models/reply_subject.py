@@ -23,15 +23,15 @@ class ReplySubject(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     reply_content = db.Column(db.Text(), nullable=False)
-    reply_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    reply_date = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.utcnow)
 
     # Relation avec la classe CommentSubject.
     comment_id = db.Column(db.Integer, db.ForeignKey('comment_subject.id'), nullable=False)
-    comment = db.relationship('CommentSubject', backref=db.backref('replies_comment_subject', lazy=True))
+    comment = db.relationship('CommentSubject', back_populates='replies')
 
     # Relation avec la classe User.
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('user_comment_subject_replies', lazy=True))
+    user = db.relationship('User', back_populates='replies_subject')
 
     def __repr__(self):
         """
@@ -42,3 +42,5 @@ class ReplySubject(db.Model):
         """
         return f"ReplySubject(id={self.id}, comment_id={self.comment_id}, user_id={self.user_id}, " \
                f"date={self.reply_date}, like={self.reply_likes}, dislikes={self.reply_dislikes})"
+
+

@@ -20,6 +20,9 @@ class SubjectForum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50), nullable=False)
 
+    # Relation avec les commentaires.
+    comments = db.relationship('CommentSubject', back_populates='subject', cascade='all, delete-orphan')
+
     def __repr__(self):
         """
         Représentation en chaîne de caractères de l'objet Subject_forum.
