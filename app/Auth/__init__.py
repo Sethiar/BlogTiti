@@ -1,5 +1,5 @@
 """
-Code permettant de définir les routes concernant les fonctions d'authentification du blog.
+Code permettant de définir l'accès aux routes concernant les fonctions d'authentification du blog.
 """
 
 from flask import Blueprint
