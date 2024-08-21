@@ -15,13 +15,16 @@ from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_socketio import SocketIO
+from flask_moment import Moment
 
 from app.Models import db
 from config.config import Config
 import config.config
 
 from app.scheduler import create_scheduler
+
 import atexit
+
 
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
@@ -42,7 +45,11 @@ def create_app():
     Code configurant l'application flask
     """
 
+    # Instanciation de l'application.
     app = Flask("TititechniqueBlog")
+
+    # Configuration de flask-moment.
+    moment = Moment(app)
 
     from app.Admin import admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')
@@ -181,5 +188,15 @@ def create_app():
     app.logger.error("Message d'erreur")
     handler = logging.FileHandler("fichier.log")
     app.logger.addHandler(handler)
+
+    @app.template_filter('format_date')
+    def format_date(value, format='%d-%m-%Y à %H:%M'):
+        """
+        Formate une date selon le format spécifié.
+        """
+        if value is None:
+            return 'Date non disponible'
+        return value.strftime(format)
+    app.template_filter('format_date')(format_date)
 
     return app
