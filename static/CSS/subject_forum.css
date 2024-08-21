@@ -39,36 +39,36 @@
     margin: 3% 20% 3%  20%;
 }
 
-  /* Styles de la section commentaire */
-  #form-comment {
-    display: flex;
-    padding-left: 5%;
-  }
+/* Styles de la section commentaire */
+#form-comment {
+  display: flex;
+  padding-left: 5%;
+}
 
-  /* Style pour la zone de texte de la réponse aux commentaires */
-  textarea {
-    width: 100%;
-    max-width: 800px;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+/* Style pour la zone de texte de la réponse aux commentaires */
+textarea {
+  width: 100%;
+  max-width: 800px;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-  #container_subject_forum h2 {
-    margin: 0 auto;
-    text-indent: 5%;
-    width: 70%;
-    height: 35px;
-    border-collapse: collapse;
-    border: 1px solid purple;
-    color: black;
-    background-color: orange;
-    text-align: left;
-  }
+#container_subject_forum h2 {
+  margin: 0 auto;
+  text-indent: 5%;
+  width: 70%;
+  height: 35px;
+  border-collapse: collapse;
+  border: 1px solid purple;
+  color: black;
+  background-color: orange;
+  text-align: left;
+}
 
   label {
     margin-left: 15%;
@@ -83,100 +83,100 @@
     text-align: center;
   }
 
-  #container_comment {
-    border: 1px solid orange;
-    margin: 5%;
-    text-align: left;
-    font-size: 16px;
-    background-color: grey;
-  }
+#container_comment {
+  border: 1px solid orange;
+  margin: 5%;
+  text-align: left;
+  font-size: 16px;
+  background-color: grey;
+}
 
-  #container_comment #comment {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    background-color: grey;
-  }
+#container_comment #comment {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: grey;
+}
 
-  .comment {
-    font-style: italic;
-    color: black;
-    background-color: grey;
-  }
+.comment {
+  font-style: italic;
+  color: black;
+  background-color: grey;
+}
 
-  /* Photo des utilisateurs ayant posté */
-  .comment-header {
-    background-color: grey;
-    color: black;
-  }
+/* Photo des utilisateurs ayant posté */
+.comment-header {
+  background-color: grey;
+  color: black;
+}
 
-  .comment-header img {
-    width: auto;
-    height: auto;
-    background-color: grey;
-    color: black;
-    border: 1px solid gold;
-  }
+.comment-header img {
+  width: auto;
+  height: auto;
+  background-color: grey;
+  color: black;
+  border: 1px solid gold;
+}
 
-  .comment strong {
-    color: black;
-    background-color: grey;
-  }
+.comment strong {
+  color: black;
+  background-color: grey;
+}
 
-  .comment i {
-    color: black;
-    background-color: grey;
-  }
+.comment i {
+  color: black;
+  background-color: grey;
+}
 
-  .content_comment {
-    text-indent: 5%;
-    font-size: 18px;
-    text-align: justify;
-    background-color: grey;
-    color: black;
-  }
+.content_comment {
+  text-indent: 5%;
+  font-size: 18px;
+  text-align: justify;
+  background-color: grey;
+  color: black;
+}
 
-  .date_comment {
-    font-size: 16px;
-    color: white;
-    background-color: grey;
-  }
+.date_comment {
+  font-size: 16px;
+  color: white;
+  background-color: grey;
+}
 
-  .date_comment small {
-    border-top: 1px solid gold;
-    background-color: grey;
-  }
+.date_comment small {
+  border-top: 1px solid gold;
+  background-color: grey;
+}
 
-  /* Style des réponses aux commentaires */
-  .reply-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+/* Style des réponses aux commentaires */
+.reply-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .like-section {
-    display: flex;
-    align-items: center;
-    background-color: black;
-    border: black;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 3px;
-  }
+.like-section {
+  display: flex;
+  align-items: center;
+  background-color: black;
+  border: black;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 3px;
+}
 
-  .like-icon {
-    color: orange;
-    cursor: pointer;
-    font-size: 20px;
-    margin-left: 10px;
-  }
+.like-icon {
+  color: orange;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
 
-  .liked-users {
-    font-size: 14px;
-    color: #555;
-    margin-left: 5px;
-  }
+.liked-users {
+  font-size: 14px;
+  color: #555;
+  margin-left: 5px;
+}
 
 .comment-reply {
   text-indent: 10%;
@@ -186,112 +186,112 @@
   height: 200px;
 }
 
-  .reply-header {
-    text-indent: 10%;
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-header {
+  text-indent: 10%;
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-header img {
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-header img {
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-details {
-    text-indent: 10%;
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-details {
+  text-indent: 10%;
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-details strong i {
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-details strong i {
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-details i {
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-details i {
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-date {
-    text-indent: 10%;
-    background-color: lightgrey;
-    color: black;
-  }
+.reply-date {
+  text-indent: 10%;
+  background-color: lightgrey;
+  color: black;
+}
 
-  .reply-date small {
-    background-color: lightgrey;
-    color: black;
-    border-top: 1px solid black;
-  }
+.reply-date small {
+  background-color: lightgrey;
+  color: black;
+  border-top: 1px solid black;
+}
 
-  .content-reply {
-    text-align: center;
-    background-color: lightgrey;
-    color: black;
-    padding-right: 4%;
-    padding-bottom: 2%;
-    font-size: 15px;
-    margin-left: 7%;
-    margin-right: 7%;
-    border-bottom: 1px solid black;
-  }
+.content-reply {
+  text-align: center;
+  background-color: lightgrey;
+  color: black;
+  padding-right: 4%;
+  padding-bottom: 2%;
+  font-size: 15px;
+  margin-left: 7%;
+  margin-right: 7%;
+  border-bottom: 1px solid black;
+}
 
-  .reply-button {
-    background-color: black;
-    border: black;
-    color: orange;
-    padding: 2px 7px;
-    text-align: center;
-    font-style: italic;
-    display: inline-block;
-    font-size: 12px;
-    cursor: pointer;
-  }
+.reply-button {
+  background-color: black;
+  border: black;
+  color: orange;
+  padding: 2px 7px;
+  text-align: center;
+  font-style: italic;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+}
 
-  .back {
-    background-color: orange;
-    margin-left: 10%;
-    border: gold;
-    box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
-    color: black;
-    padding: 2px 7px;
-    text-align: center;
-    font-style: italic;
-    display: inline-block;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 3px;
-  }
+.back {
+  background-color: orange;
+  margin-left: 10%;
+  border: gold;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  color: black;
+  padding: 2px 7px;
+  text-align: center;
+  font-style: italic;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+}
 
-  .back a {
-    background-color: orange;
-  }
+.back a {
+  background-color: orange;
+}
 
-  .back a:hover {
-    text-decoration: underline;
-    color: black;
-  }
+.back a:hover {
+  text-decoration: underline;
+  color: black;
+}
 
-  #comment_avis {
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    font-style: italic;
-    text-align: center;
-  }
+#comment_avis {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  font-style: italic;
+  text-align: center;
+}
 
-  #comment_avis h2 {
-    font-size: 24px;
-    border-bottom: 1px solid white;
-  }
+#comment_avis h2 {
+  font-size: 24px;
+  border-bottom: 1px solid white;
+}
 
-  #comment_avis button {
-    color: orange;
-    font-size: 14px;
-  }
+#comment_avis button {
+  color: orange;
+  font-size: 14px;
+}
 
-  #comment_avis button:hover {
-    text-decoration: underline;
-  }
+#comment_avis button:hover {
+  text-decoration: underline;
+}
 
