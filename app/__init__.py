@@ -4,48 +4,43 @@ Fichier d'initialisation de l'application Blog TitiTechnique.
 import os
 import secrets
 import logging
+import atexit
+
+from datetime import timedelta
 
 from dotenv import load_dotenv
 from itsdangerous import URLSafeTimedSerializer
-from datetime import timedelta
-
-from flask import Flask, session, redirect, url_for
+from flask import Flask, session, redirect, url_for, request
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_socketio import SocketIO
 from flask_moment import Moment
 
 from app.Models import db
 from config.config import Config
 import config.config
-
 from app.scheduler import create_scheduler
-
-import atexit
 
 
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
 
-# Instanciation de flask-mail.
+# Instanciation des extensions Flask.
 mailing = Mail()
-
-# Instanciation de loginManager.
 login_manager = LoginManager()
-
-# Instanciation de socketio.
-socketio = SocketIO()
 
 
 # Fonction créant l'initialisation de l'application.
 def create_app():
     """
-    Code configurant l'application flask
+    Crée et configure l'application Flask pour le blog TitiTechnique.
+
+    Returns:
+        Flask app: Instance de l'application Flask configurée.
     """
 
-    # Instanciation de l'application.
+    # Création de l'application Flask.
     app = Flask("TititechniqueBlog")
 
     # Configuration de flask-moment.
@@ -72,6 +67,7 @@ def create_app():
     from app.Mail import mail_bp
     app.register_blueprint(mail_bp, url_prefix='/mail')
 
+    # Configuration du mailing Flask.
     app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
     app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
     app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
@@ -88,7 +84,7 @@ def create_app():
     # Chargement de la configuration de l'environnement.
     if os.environ.get("FLASK_ENV") == "development":
         app.config.from_object(config.config.DevelopmentConfig)
-    elif os.environ.get("FLASK_ENV") == "testing" :
+    elif os.environ.get("FLASK_ENV") == "testing":
         app.config.from_object(config.config.TestingConfig)
     else:
         app.config.from_object(config.config.ProductConfig)
@@ -103,6 +99,8 @@ def create_app():
 
     # Configuration du serializer.
     app.config['serializer'] = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
     # Initialisation de la base de données.
     db.init_app(app)
@@ -112,91 +110,73 @@ def create_app():
     # Pour les réponses JSON concerne l'encodage.
     app.config['JSON_AS_ASCII'] = False
 
-    # Configuration du chat_video avec Socketio.
-    app.config['SECRET_KEY_SOCKETIO'] = os.getenv('SECRET_KEY_SOCKETIO')
-    # Initialise socketio avec l'application
-    socketio.init_app(app)
-
     # Lancement du processus apscheduler.
     scheduler_app = create_scheduler(app)
     scheduler_app.start()
     atexit.register(lambda: scheduler_app.shutdown())
 
     # Configuration de l'application pour utiliser la protection CSRF.
-    csrf = CSRFProtect(app)
+    csrf = CSRFProtect()
 
     from app.Models.admin import Admin
     from app.Models.user import User
-    from app.Models.anonyme import Anonyme
 
-    # Initialisation de la classe à utiliser pour les utilisateurs anonymes.
+    # Configuration du LoginManager pour les utilisateurs.
     login_manager.init_app(app)
-    login_manager.anonymous_user = Anonyme
+    login_manager.login_view = 'auth.login'
 
-    # Route permettant de renvoyant l'utilisateur vers les bons moyens d'authentification.
-    @login_manager.unauthorized_handler
-    def unauthorized():
-        """
-        Fonction exécutée lorsque l'utilisateur tente d'accéder à une page nécessitant une connexion,
-        mais n'est pas authentifié. Redirige l'utilisateur vers la page "connexion_requise".
-
-        Cette fonction est utilisée pour gérer les tentatives d'accès non autorisé à des pages nécessitant une connexion.
-        Lorsqu'un utilisateur non authentifié essaie d'accéder à une telle page, cette fonction est appelée et redirige
-        l'utilisateur vers la page "connexion_requise" où il peut se connecter.
-
-        Returns:
-            Redirige l'utilisateur vers la page "connexion_requise".
-        """
-        return redirect(url_for('functional.connexion_requise'))
-
+    # Fonction pour charger un utilisateur ou un administrateur.
     @login_manager.user_loader
     def load_user(user_id):
         """
-        Charge un utilisateur à partir de la base de données en utilisant son id.
+        Charge un utilisateur ou un administrateur en fonction de l'identifiant.
 
-        :param user_id: Identifiant de l'utilisateur.
-        :return: L'objet User ou Admin chargé depuis la base de données.
+        :param user_id: Identifiant de l'utilisateur ou administrateur.
+        :return: Instance de User ou Admin.
         """
-        user = User.query.get(user_id)
-        admin = Admin.query.get(user_id)
-
+        # Chargement d'un utilisateur.
+        user = User.query.get(int(user_id))
         if user:
             return user
+
+        # Si ce n'est pas un utilisateur, chargement d'un administrateur.
+        admin = Admin.query.get(int(user_id))
         if admin:
             return admin
 
+        # Si aucun n'est trouvé, retourne None.
         return None
+
+    # Gestion des utilisateurs non authentifiés.
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        """
+        Redirige les utilisateurs non authentifiés vers la page de connexion.
+
+        Returns:
+            Redirection vers la page "connexion_requise".
+        """
+        return redirect(url_for('auth.login', next=request.url))
 
     @app.context_processor
     def inject_logged_in():
         """
-        Injecte le statut de connexion et le pseudo de l'utilisateur dans le contexte global de l'application.
+        Injecte le statut de connexion et le pseudo dans le contexte global.
+
+        Returns:
+            dict: Contexte contenant le statut de connexion et le pseudo.
         """
         logged_in = session.get("logged_in", False)
         pseudo = session.get("pseudo", None)
         return dict(logged_in=logged_in, pseudo=pseudo)
 
-    # Configuration de la durée de vie des cookies de session (optionnel)
-    app.permanent_session_lifetime = timedelta(days=1)  # Durée de vie d'un jour pour les cookies de session
+    # Configuration de la durée de vie des cookies de session.
+    app.permanent_session_lifetime = timedelta(days=1)
 
     # Configuration de la journalisation.
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
-    app.logger.setLevel(logging.DEBUG)
-    app.logger.debug("Message de débogage")
-    app.logger.info("Message informatif")
-    app.logger.warning("Message d'avertissement")
-    app.logger.error("Message d'erreur")
     handler = logging.FileHandler("fichier.log")
+    handler.setLevel(logging.DEBUG)
     app.logger.addHandler(handler)
-
-    @app.template_filter('format_date')
-    def format_date(value, format='%d-%m-%Y à %H:%M'):
-        """
-        Formate une date selon le format spécifié.
-        """
-        if value is None:
-            return 'Date non disponible'
-        return value.strftime(format)
-    app.template_filter('format_date')(format_date)
 
     return app

@@ -3,32 +3,45 @@ Fichier configurant les décorateurs de l'application.
 """
 
 from functools import wraps
-from flask import redirect, url_for, flash
-from flask_login import current_user
+from flask import session, redirect,  url_for, flash
 
 
 def admin_required(f):
     """
-    Décorateur pour exiger que l'utilisateur soit un administrateur pour accéder à une route.
-    """
+    Décorateur pour restreindre l'accès aux routes aux administrateurs uniquement.
 
+    Ce décorateur vérifie si l'utilisateur est authentifié et possède le rôle d'administrateur.
+    Si l'utilisateur n'est pas un administrateur, il est redirigé vers la page de connexion
+    spécifique aux administrateurs avec un message d'avertissement.
+
+    Args:
+        f (function): La fonction à décorer.
+
+    Returns:
+        function: La fonction décorée qui inclut la vérification des privilèges administrateur.
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         """
+        Fonction interne exécutée à la place de la fonction décorée.
 
-        :param args:
-        :param kwargs:
-        :return:
+        Cette fonction vérifie le rôle de l'utilisateur à partir des données de session
+        et redirige si l'utilisateur n'est pas un administrateur.
+
+        Args:
+            *args: Arguments positionnels pour la fonction décorée.
+            **kwargs: Arguments nommés pour la fonction décorée.
+
+        Returns:
+            Response: Soit la réponse de la fonction décorée, soit une redirection vers
         """
-        print(f"current_user: {current_user}")
-        print(f"current_user.is_authenticated: {current_user.is_authenticated}")
-        print(f"current_user.role: {getattr(current_user, 'role', 'No role attribute')}")
+        # Vérifie si l'utilisateur est connecté et est un administrateur
+        if 'role' not in session or session['role'] != 'Admin':
+            flash("Vous n'avez pas l'autorisation d'accéder à cette page.", "danger")
+            return redirect(url_for('auth.login_admin'))
 
-        if current_user.is_authenticated and hasattr(current_user, 'role') and current_user.role == 'Admin':
-            return f(*args, **kwargs)
-        else:
-            flash("Vous devez être administrateur pour accéder à cette page.", "danger")
-            return redirect(url_for('functional.connexion_requise'))
+        # Si l'utilisateur est un administrateur, exécute la fonction décorée.
+        return f(*args, **kwargs)
 
     return decorated_function
 
