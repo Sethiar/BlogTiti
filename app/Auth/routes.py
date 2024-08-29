@@ -6,11 +6,6 @@ import bcrypt
 
 from app.Auth import auth_bp
 
-from PIL import Image
-from io import BytesIO
-
-from app.extensions import allowed_file
-
 from flask import render_template, session, request, current_app, redirect, url_for, \
     flash
 from flask_login import logout_user, login_user, login_required
