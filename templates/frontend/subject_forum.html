@@ -14,24 +14,24 @@
 <br>
 <h1>Forum de discussion</h1>
 <section id="categories">
-    <div id="forum_pic">
-        <div id="forum_pic_left">
+    <div id="forum-pic">
+        <div id="forum-pic-left">
             <img src="{{ url_for('static', filename='Images/images_forum/forum4.jpg') }}" alt="Forum Image Left">
         </div>
-        <div id="forum_pic_center">
+        <div id="forum-pic-center">
             <img src="{{ url_for('static', filename='Images/images_accueil/forum1.jpg') }}" alt="Forum Image Center">
         </div>
-        <div id="forum_pic_right">
+        <div id="forum-pic-right">
             <img src="{{ url_for('static', filename='Images/images_forum/forum5.jpg') }}" alt="Forum Image Right">
         </div>
     </div>
     <br><br><br><br><br><br>
-    <div id="container_subject_forum">
+    <div id="container-subject-forum">
         <h2>Discussion sur le sujet : </h2>
         <br>
         <label>{{ subject.nom }}</label>
     </div>
-    <div id="container_comment">
+    <div id="container-comment">
         {% for comment in comment_subject %}
         <div id="comment">
             <div class="comment-header">
@@ -43,18 +43,18 @@
             <div class="comment">
                 <i>{{ comment.user.role }}</i>
             </div>
-            <div class="date_comment">
+            <div class="date-comment">
                 <small>Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:MM') }}</small>
             </div>
-            <div class="content_comment">
+            <div class="content-comment">
                 {{ comment.comment_content | replace('\n', '<br>') | safe }}
             </div>
             <div class="change-comment">
                 {% if comment.user_id == current_user.id %}
-                <a href="{{ url_for('user.change_comment', id=comment.id) }}">Modifier</a>
+                <a href="{{ url_for('user.change_comment', id=comment.id) }}">Modifier le commentaire</a>
                 <form action="{{ url_for('user.delete_comment', id=comment.id) }}" method="POST" style="display:inline;">
                     {{ formsuppress.csrf_token }}
-                    <input class="suppress_button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
+                    <input class="suppress-button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
                 </form>
                 {% endif %}
             </div>
@@ -110,10 +110,10 @@
                 </div>
                 <div class="change-reply">
                 {% if reply.user_id == current_user.id %}
-                    <a href="{{ url_for('user.change_reply', id=reply.id) }}">Modifier</a>
+                    <a href="{{ url_for('user.change_reply', id=reply.id) }}">Modifier la réponse</a>
                     <form action="{{ url_for('user.delete_reply', id=reply.id) }}" method="POST" style="display:inline;">
                     {{ formsuppressreply.csrf_token }}
-                        <input class="suppress_button" type="submit" value="Supprimer la réponse" onclick="return confirm('Êtes vous certain de vouloir supprimer votre réponse ?');">
+                        <input class="suppress-button" type="submit" value="Supprimer la réponse" onclick="return confirm('Êtes vous certain de vouloir supprimer votre réponse ?');">
                     </form>
                 {% endif %}
                 </div>
@@ -124,7 +124,7 @@
     </div>
     <div class="separation"></div>
     <br>
-    <div id="comment_avis">
+    <div id="comment-avis">
         <h2>Vous pouvez laisser un commentaire :</h2>
         <br>
         <div class="form-comment">

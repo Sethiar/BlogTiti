@@ -12,21 +12,29 @@
 
 {% block main_content %}
 <br>
+<div>
+    <button class="back"><a href="{{ url_for('frontend.show_videos') }}">Retour aux vidéos</a></button>
+</div>
+<br>
 <section>
     <h1>Vidéo sélectionnée</h1>
-    <div id="container_vidéo">
+    <br>
+    <div id="container-vidéo">
         <br>
         <div class="video-item">
             <h3>{{ video.title }}</h3>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
-            <p>Date de publication : {{ video.published_at }}</p>
-            <p>Vues : {{ video.view_count }}</p>
-            <p>Likes : {{ video.like_count }}</p>
+            <br>
+            <div class="informations">
+                <p>Date de publication : {{ video.published_at }}</p>
+                <p>Vues : {{ video.view_count }}</p>
+                <p>Likes : {{ video.like_count }}</p>
+            </div>
         </div>
     </div>
-    <div id="container_comment">
+    <div id="container-comment">
         {% for comment in comment_video %}
         <div id="comment">
             <div class="comment-header">
@@ -38,18 +46,18 @@
             <div class="comment">
                 <i>{{ comment.user.role }}</i>
             </div>
-            <div class="date_comment">
+            <div class="date-comment">
                 <small>Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:MM') }}</small>
             </div>
-            <div class="content_comment">
+            <div class="content-comment">
                 {{ comment.comment_content | replace('\n', '<br>') | safe }}
             </div>
             <div class="change-comment">
                 {% if comment.user_id == current_user.id %}
-                <a href="{{ url_for('user.change_comment_video', id=comment.id) }}">Modifier</a>
+                <a href="{{ url_for('user.change_comment_video', id=comment.id) }}">Modifier le commentaire</a>
                 <form action="{{ url_for('user.delete_comment_video', id=comment.id) }}" method="POST" style="display:inline;">
                     {{ formsuppress.csrf_token }}
-                    <input class="suppress_button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
+                    <input class="suppress-button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
                 </form>
                 {% endif %}
             </div>
@@ -105,10 +113,10 @@
                 </div>
                 <div class="change-reply">
                 {% if reply.user_id == current_user.id %}
-                    <a href="{{ url_for('user.change_reply_video', id=reply.id) }}">Modifier</a>
+                    <a href="{{ url_for('user.change_reply_video', id=reply.id) }}">Modifier la réponse</a>
                     <form action="{{ url_for('user.delete_reply_video', id=reply.id) }}" method="POST" style="display:inline;">
                     {{ formsuppressreply.csrf_token }}
-                        <input class="suppress_button" type="submit" value="Supprimer la réponse" onclick="return confirm('Êtes vous certain de vouloir supprimer votre réponse ?');">
+                        <input class="suppress-button" type="submit" value="Supprimer la réponse" onclick="return confirm('Êtes vous certain de vouloir supprimer votre réponse ?');">
                     </form>
                 {% endif %}
                 </div>
@@ -117,9 +125,8 @@
         </div>
         {% endfor %}
     </div>
-    <div class="separation"></div>
     <br>
-    <div id="comment_avis">
+    <div id="comment-avis">
         <h2>Vous pouvez laisser un commentaire :</h2>
         <br>
         <div class="form-comment">
@@ -132,11 +139,8 @@
             </form>
         </div>
     </div>
-    <div class="separation"></div>
 </section>
-<div>
-    <button class="back"><a href="{{ url_for('frontend.show_videos') }}">Retour aux vidéos</a></button>
-</div>
+<br>
 
 {% endblock %}
 {% block footer_content %}

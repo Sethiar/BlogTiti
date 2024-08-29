@@ -10,24 +10,28 @@
 
 <br><br>
 <div class="separation"></div>
-<div id="carrousel">
-    <h2>Vidéos de TitiTechnique</h2>
-    <div class="video-container">
-        {% for video in videos %}
-        <div class="video-item">
-            <h3>{{ video.title }}</h3>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
-                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-            <p>Date de publication : {{ video.published_at }}</p>
+<h1>Vidéos de TitiTechnique</h1>
+<div class="video-container">
+    {% for video in videos %}
+    <div class="video-item">
+        <h3>{{ video.title }}</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        <div class="separation"></div>
+        <br>
+        <div class="informations">
+            <p>Date de publication : {{ moment(video.published_at).format('DD-MM-YYYY') }}</p>
             <p>Vues : {{ video.view_count }}</p>
             <p>Likes : {{ video.like_count }}</p>
             <p>Commentaires : {{ video.comment_count }}</p>
-            <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
         </div>
-        {% endfor %}
+        <br>
+        <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
     </div>
+    {% endfor %}
 </div>
+
 <br>
 <div class="separation"></div>
 <br>
