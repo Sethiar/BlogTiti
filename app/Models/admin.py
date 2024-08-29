@@ -86,3 +86,12 @@ class Admin(db.Model, UserMixin):
         logging.debug("has_role method called")
         return self.role == role
 
+    def is_admin(self):
+        """
+        Vérifie si l'administrateur a un rôle d'administrateur.
+
+        Returns:
+             bool: True si l'administrateur est un administrateur, False sinon.
+        """
+        return self.role == 'Admin'
+

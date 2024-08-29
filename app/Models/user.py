@@ -114,6 +114,15 @@ class User(db.Model, UserMixin):
         """
         return str(self.id)
 
+    def has_role(self, role):
+        """
+        Récupère le rôle de l'utilisateur.
+
+        :param role: le rôle de l'utilisateur.
+        :return:
+        """
+        return self.role == role
+
     def ban_user(self):
         """
         Bannit l'utilisateur en définissant banned à True.

@@ -583,3 +583,15 @@ class SuppressCommentVideoAdminForm(FlaskForm):
     comment_id = HiddenField('Comment_id', validators=[DataRequired()])
     submit = SubmitField('Supprimer')
 
+
+# Formulaire permettant d'envoyer le lien pour la session de chat vidéo.
+class UserLink(FlaskForm):
+    """
+    Formulaire pour envoyer le lien à l'utilisateur.
+
+    """
+    chat_link = StringField('Chat_link', validators=[DataRequired()],
+                            render_kw={"placeholder": "Veuillez renseigner le lien copié."})
+    csrf_token = HiddenField()
+    submit = SubmitField('Envoyer')
+
