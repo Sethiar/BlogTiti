@@ -1,0 +1,25 @@
+/* Style */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wait-container {
+  color: orange;
+  background-color: black;
+  border: 1px solid gold;
+  padding: 2%;
+  text-align: center; /* Centrer le texte à l'intérieur de la div */
+  max-width: 80%; /* Limite la largeur de la div */
+}
+
+h1 {
+  margin-bottom: 4%;
+}
+
+p {
+  margin: 1% 0;
+}

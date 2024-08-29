@@ -1,35 +1,35 @@
 /* Container général pour les vidéos */
 .video-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Trois colonnes de largeur égale */
-    gap: 20px; /* Espacement entre les vidéos */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     margin: 0 auto;
-    max-width: 1200px; /* Limite la largeur maximale du conteneur */
+    max-width: 1200px;
 }
 
 /* Style pour chaque élément vidéo */
 .video-item {
-    border: 1px solid #ddd; /* Ajouter une bordure */
+    border: 1px solid #ddd;
     padding: 10px;
-    border-radius: 8px; /* Ajouter des coins arrondis */
-    background-color: #f9f9f9; /* Fond clair pour chaque vidéo */
-    text-align: center; /* Centrer le contenu de la vidéo */
-    min-height: 400px; /* Assure une hauteur uniforme pour chaque vidéo */
-    box-sizing: border-box; /* Inclure les bordures et les paddings dans la hauteur/largeur */
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+    min-height: 400px;
+    box-sizing: border-box;
 }
 
 /* Ajustement de la taille de l'iframe pour avoir des vidéos plus petites */
 .video-item iframe {
-    width: 100%; /* Ajuster l'iframe à 100% de la largeur de son conteneur */
-    height: 150px; /* Réduire la hauteur des vidéos */
+    width: 100%;
+    height: 150px;
 }
 
 /* Style pour la pagination */
 .pagination {
     text-align: center;
-    margin: 20px auto; /* Centrer la pagination et ajouter un espacement vertical */
-    display: flex; /* Utiliser flexbox pour centrer */
-    justify-content: center; /* Centrer horizontalement */
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination a {
@@ -55,12 +55,12 @@
 /* Pour les écrans plus petits, ajuster à une ou deux colonnes */
 @media screen and (max-width: 768px) {
     .video-container {
-        grid-template-columns: repeat(2, 1fr); /* Deux colonnes sur des écrans plus petits */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (max-width: 480px) {
     .video-container {
-        grid-template-columns: 1fr; /* Une colonne sur les petits écrans */
+        grid-template-columns: 1fr;
     }
 }
