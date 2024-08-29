@@ -26,14 +26,11 @@ def generate_unique_id():
 @functional_bp.route("/connexion_requise")
 def connexion_requise():
     """
-    Route affichant un message informant l'utilisateur qu'une connexion est requise
+    Affiche un message informant l'utilisateur qu'une connexion est requise
     pour accéder à la page demandée.
 
-    Cette route redirige les utilisateurs non authentifiés vers une page indiquant
-    qu'ils doivent se connecter pour accéder à la ressource demandée.
-
     Returns:
-        Le template HTML de la page "connexion_requise".
+        Template HTML de la page "connexion_requise".
     """
     return render_template("Error/connexion_requise.html")
 
@@ -49,13 +46,10 @@ def before_request():
     - Si l'utilisateur n'est pas authentifié, génère un identifiant unique pour les utilisateurs anonymes
       et l'enregistre dans la session.
 
-    Cette fonction assure la continuité de la session utilisateur à travers le site.
+    Assure la continuité de la session utilisateur à travers le site.
     """
     if current_user.is_authenticated:
-        if hasattr(current_user, 'pseudo'):
-            session['pseudo'] = current_user.pseudo
-        else:
-            session['pseudo'] = None  # Ou toute autre valeur par défaut si nécessaire
+        session['pseudo'] = getattr(current_user, 'pseudo', None)
     else:
         session['anon_id'] = generate_unique_id()
 
@@ -81,4 +75,4 @@ def mentions():
     Returns:
         Template HTML de la page de mentions légales du blog.
     """
-    return render_template("Functional/mentions.html")
+    return render_template("functional/mentions.html")
