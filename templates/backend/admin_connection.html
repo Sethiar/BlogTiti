@@ -9,10 +9,22 @@
 
 {% endblock %}
 {% block body_content %}
+
 <form method="POST" action="{{ url_for('auth.login_admin') }}">
 	<div class="imgcontainer">
 		<img src="../static/Images/images_formulaires/" alt="Avatar" class="avatar">
 	</div>
+	{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+	            {% if category == 'login_admin' %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+	            {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 	<h3>Authentification administrateur</h3>
 	{{ form.csrf_token }}
 	<div class="container">

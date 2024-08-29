@@ -13,7 +13,7 @@
 {% block body_content %}
 <br><br>
 <div id="table_appointment">
-    <h5>Liste des demandes de chat vidéo.</h5>
+    <h5>Liste des demandes de chat vidéo</h5>
     <table class="table">
         <thead>
             <tr>
@@ -21,7 +21,8 @@
                 <th>Date choisie par l'utilisateur</th>
                 <th>heure choisie par l'utilisateur</th>
                 <th>Statue de la requête</th>
-                <th>Lien de connexion</th>
+                <th>Lien de connexion Administrateur</th>
+                <th>Envoi du lien utilisateur</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -34,7 +35,23 @@
                 <td>{{ request.status }}</td>
                 <td>
                     {% if request.status == 'validée' %}
-                    <a href="{{ url_for('chat.admin_chat_video_session', request_id=request.id, _external=True) }}" target="_blank">Lien de connexion</a>
+                        {% set rdv = rdv_data | selectattr("pseudo", "equalto", request.pseudo) | first %}
+                        {% if rdv %}
+                            <a href="{{ rdv.link }}" target="_blank">Lien de connexion</a>
+                        {% else %}
+                            Non disponible
+                        {% endif %}
+                    {% else %}
+                        Non disponible
+                    {% endif %}
+                </td>
+                <td>
+                    {% if request.status == 'validée' %}
+                    <form action="{{ url_for('chat.send_user_link', id=request.id) }}" method="POST" class="btn_send">
+                        {{ formlink.csrf_token }}
+                        <input type="text" name="chat_link" placeholder="Lien pour l'utilisateur" required>
+                        <button type="submit">Envoyer</button>
+                    </form>
                     {% else %}
                     Non disponible
                     {% endif %}
@@ -81,6 +98,18 @@
         }{% if not loop.last %},{% endif %}
         {% endfor %}
     ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            events: rdvData,
+            eventClick: function(info) {
+                window.open(info.event.url, '_blank');
+                info.jsEvent.preventDefault(); // don't navigate in current tab
+            }
+        });
+        calendar.render();
+    });
 </script>
 
 
