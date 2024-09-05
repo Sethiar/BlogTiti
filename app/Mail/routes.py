@@ -24,35 +24,14 @@ def send_confirmation_email_user(email):
         return redirect(url_for('landing_page'))
 
     msg = Message("Confirmation d'inscription", sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
-    msg.body = f"Merci de vous être inscrit sur notre site. Votre inscription a été confirmée avec succès.\n" \
+    msg.body = f"Bonjour {user.pseudo} \n" \
+               "\n" \
+               f"Merci de vous être inscrit sur notre site. Votre inscription a été confirmée avec succès.\n" \
                f"Nous espérons que nous vous retrouverons bientôt afin d'entendre votre voix sur notre blog.\n" \
                f"Merci {user.pseudo} de votre confiance. \n" \
                "\n" \
                f"Cordialement, \n" \
-               f"L'équipe du blog."
-
-    current_app.extensions['mail'].send(msg)
-    return redirect(url_for('landing_page'))
-
-
-# Méthode qui envoie un mail de confirmation pour l'inscription d'un utilisateur administrateur."
-@mail_bp.route("/send_confirmation_email/<string:email>")
-def send_confirmation_email_admin(email):
-    """
-    Envoie un e-mail de confirmation d'inscription à un nouvel utilisateur.
-    """
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        flash("Utilisateur non trouvé.", "attention")
-        return redirect(url_for('landing_page'))
-
-    msg = Message("Confirmation d'inscription", sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
-    msg.body = f"Merci de vous être inscrit sur notre site. Votre inscription a été confirmée avec succès.\n" \
-               f"Nous espérons que nous vous retrouverons bientôt afin d'entendre votre voix sur notre blog.\n" \
-               f"Merci {user.pseudo} de votre confiance. \n" \
-               "\n" \
-               f"Cordialement, \n" \
-               f"L'équipe du blog."
+               f"L'équipe du blog de Titiechnique."
 
     current_app.extensions['mail'].send(msg)
     return redirect(url_for('landing_page'))
@@ -67,10 +46,12 @@ def send_birthday_email(email):
     msg = Message("Joyeux anniversaire !",
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[email])
-    msg.body = f"Bonjour {user.pseudo},\n\nNous vous souhaitons un très joyeux anniversaire !\n" \
+    msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
+               f"Nous vous souhaitons un très joyeux anniversaire !\n" \
                "\n" \
                f"\nCordialement,\n" \
-               f"L'équipe du blog."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -87,12 +68,13 @@ def mail_banned_user(email):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Suite à la tenue des règles en vigueur sur le blog, vous avez été banni " \
                f"pendant une semaine. J'espère que vous comprenez notre démarche. Si vous ne respectez pas " \
                f"à nouveau les règles du blog, vous serez banni définitivement.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -108,12 +90,13 @@ def mail_deban_user(email):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[email])
     msg.body = f"Bonjour {user.pseudo}, \n" \
+               "\n" \
                f"Nous vous informons que vous n'êtes plus banni du blog. \n" \
                f"Nous espérons vous revoir très vite. \n" \
                f"À bientôt.\n" \
                "\n" \
                f"Cordialement, \n" \
-               f"L'équipe du blog."
+               f"L'équipe du blog de Titiechnique."
 
     current_app.extensions['mail'].send(msg)
 
@@ -129,10 +112,11 @@ def definitive_banned(email):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Comme nous vous l'avions indiqué dans un précédent mail, si vous étiez de nouveau sujet à un rappel " \
                f"à l'ordre sur le respect des règles en vigueur sur notre blog, vous seriez définitivement bloqué de " \
-               f"nos bases de données. Le fait que vous receviez ce mail signifie que vous avez été bloqué de notre " \
-               f"base de données. \n" \
+               f"nos bases de données. Le fait que vous receviez ce mail signifie que vous avez été banni. \n" \
+               "\n" \
                f"Nous regrettons cette décision, mais nous ne pouvons tolérer ce manquement aux " \
                f"règles établies.\n" \
                "\n" \
@@ -159,7 +143,11 @@ def reset_password_mail(email, reset_url):
                   sender='noreply@yourapp.com',
                   recipients=[email])
     msg.body = f'Bonjour {user.pseudo},\n' \
-               f' pour réinitialiser votre mot de passe, cliquez sur le lien suivant : {reset_url}'
+               "\n" \
+               f' pour réinitialiser votre mot de passe, cliquez sur le lien suivant : {reset_url}' \
+               "\n" \
+               f"Cordialement,\n" \
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -174,10 +162,11 @@ def password_reset_success_email(user):
                   sender='noreply@yourapp.com',
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Votre mot de passe a été réinitialisé avec succès.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -195,10 +184,11 @@ def mail_reply_forum_comment(email, subject_nom):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Un utilisateur a répondu à votre commentaire de la section forum dont le sujet est {subject_nom}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -214,11 +204,12 @@ def mail_like_comment_subject(user, subject):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Un utilisateur a aimé votre commentaire de la section forum " \
                f"concernant le sujet suivant : {subject.nom}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     send_email_in_background(current_app._get_current_object(), msg)
 
 
@@ -236,10 +227,11 @@ def mail_reply_video_comment(email, video_title):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo},\n" \
+               "\n" \
                f"Un utilisateur a répondu à votre commentaire de la section vidéo dont le titre est {video_title}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -259,7 +251,7 @@ def mail_like_comment_video(user, video):
                f"concernant le sujet suivant : {video.title}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     send_email_in_background(current_app._get_current_object(), msg)
 
 
@@ -277,10 +269,10 @@ def send_confirmation_request_reception(user):
     msg.body = f"Bonjour {user.pseudo} \n" \
                f"nous vous confirmons la bonne réception de votre demande \n" \
                f"et nous vous répondrons dans les plus brefs délais " \
-               f"afin de convenir d'un rendez-vous. \n" \
+               f"afin de valider votre rendez-vous. \n" \
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -297,6 +289,7 @@ def send_request_admin(user, request_content):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[current_app.config['MAIL_DEFAULT_SENDER']])
     msg.body = f"Bonjour Titi, \n" \
+               "\n" \
                f"{user.pseudo} souhaite avoir un chat vidéo avec vous.\n" \
                f"Voici sa requête :\n" \
                f"{request_content} \n" \
@@ -311,6 +304,7 @@ def send_mail_validate_request(user, request, chat_link):
     Fonction qui envoie un mail pour informer de la validation de la requête par l'administrateur.
     :param user: utilisateur qui a envoyé la demande de chat.
     :param request: requête de l'utilisateur.
+    :param chat_link: lien du chat vidéo.
     :return:
     """
 
@@ -318,6 +312,7 @@ def send_mail_validate_request(user, request, chat_link):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo}, \n" \
+               "\n" \
                f"Titi a accepté votre requête de chat vidéo.\n" \
                f"Le rendez-vous est prévu le {request.date_rdv} à {request.heure}.\n" \
                f"Voici le lien de connexion: {chat_link}\n" \
@@ -325,7 +320,7 @@ def send_mail_validate_request(user, request, chat_link):
                f"avant le rendez-vous afin d'être prêt pour le chat vidéo.\n" \
                "\n"\
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -341,11 +336,12 @@ def send_mail_refusal_request(user):
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
                   recipients=[user.email])
     msg.body = f"Bonjour {user.pseudo}, \n" \
-               f"Titi est dans l'impossibilité d'accepter votre rendez-vous. \n" \
+               "\n" \
+               f"Titi est dans l'impossibilité de valider votre rendez-vous. \n" \
                f"Afin de renouveler votre demande, nous vous prions de bien vouloir"\
                f"refaire une demande de chat vidéo. \n"\
                "\n" \
                f"Cordialement,\n" \
-               f"Votre équipe de support."
+               f"L'équipe du blog de Titiechnique."
     current_app.extensions['mail'].send(msg)
 
