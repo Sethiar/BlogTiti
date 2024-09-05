@@ -47,7 +47,7 @@
                 <i>{{ comment.user.role }}</i>
             </div>
             <div class="date-comment">
-                <small>Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:MM') }}</small>
+                <small>Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:mm') }}</small>
             </div>
             <div class="content-comment">
                 {{ comment.comment_content | replace('\n', '<br>') | safe }}
