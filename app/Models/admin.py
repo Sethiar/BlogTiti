@@ -8,6 +8,7 @@ from . import db
 from flask_login import UserMixin
 
 
+# Code de la classe Admin.
 class Admin(db.Model, UserMixin):
     """
     Modèle de données représentant un administrateur.

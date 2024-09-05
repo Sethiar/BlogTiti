@@ -132,7 +132,7 @@ class User(db.Model, UserMixin):
         # Incrémentation de count_ban.
         self.count_ban += 1
 
-        if self.count_ban >= 3:
+        if self.count_ban >= 2:
             self.permanent_ban()
 
         else:
