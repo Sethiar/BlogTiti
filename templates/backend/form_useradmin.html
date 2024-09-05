@@ -1,0 +1,71 @@
+{% extends 'baseform.html.jinja2' %}
+
+{% block head_content %}
+    <meta name="description" content="Formulaire qui permet à un utilisateur de s'inscrire en tant qu'administrateur.">
+    <title>{% block title %}Formulaire d'adhésion pour s'inscrire en tant qu'administrateur.{% endblock %}</title>
+    {% endblock %}
+
+{% block body_content %}
+    <header>
+    </header>
+
+    <form method="POST" action="{{ url_for('admin.user_admin_recording') }}" enctype="multipart/form-data">
+    <div class="imgcontainer">
+        <img src="../static/Images/images_formulaires/inscrip_titi.jpg" alt="Avatar" class="avatar">
+    </div>
+
+    <h3>Enregistrement Utilisateur Administrateur</h3>
+    {{ formuseradmin.csrf_token }}
+    <div class="container">
+        {{ formuseradmin.pseudo.label }} {{ formuseradmin.pseudo() }}
+        {% if formuseradmin.pseudo.errors %}
+            <ul>
+                {% for error in formuseradmin.pseudo.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ formuseradmin.role.label }} {{ formuseradmin.role() }}
+        {{ formuseradmin.date_naissance.label }} {{ formuseradmin.date_naissance() }}
+        {{ formuseradmin.email.label }} {{ formuseradmin.email() }}
+        {% if formuseradmin.email.errors %}
+            <ul>
+                {% for error in formuseradmin.email.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ formuseradmin.password.label }} {{ formuseradmin.password() }}
+        {% if formuseradmin.password.errors %}
+            <ul>
+                {% for error in formuseradmin.password.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        {{ formuseradmin.password2.label }} {{ formuseradmin.password2() }}
+        {% if formuseradmin.password2.errors %}
+            <ul>
+                {% for error in formuseradmin.password2.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br><br>
+        <ul>
+            {{ formuseradmin.profil_photo.label }}
+            {{ formuseradmin.profil_photo }}
+        </ul>
+        <br><br>
+    </div>
+        <div class="separation"></div>
+    <div class="container" style="background-color:black">
+        <button type="submit" class="validatedbtn">Validation de la souscription</button>
+        <button type="button" class="cancelledbtn"><a href="{{ url_for('admin.back_end') }}">Annulation de la souscription et retour au backend</a></button>
+    </div>
+</form>
+
+{% endblock %}

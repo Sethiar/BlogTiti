@@ -2,19 +2,22 @@
 Code permettant de définir les routes concernant les fonctions des administrateurs du blog comme, le bannissement des
 utilisateurs, la suppression des commentaires des différentes sections et l'accès au backend...
 """
-
+import os
 from datetime import datetime
+
+import bcrypt
 
 from app.Admin import admin_bp
 
 from flask import render_template, url_for, redirect, flash, request
-
+from PIL import Image
+from io import BytesIO
 
 from markupsafe import escape
 
 from app.Models import db
 from app.Models.forms import UserSaving, BanUserForm, UnBanUserForm, SuppressSubject, SuppressCommentSubjectForm,\
-   ChatRequestForm, SuppressCommentVideoForm, UserLink
+   ChatRequestForm, SuppressCommentVideoForm, UserLink, UserAdminSaving, NewSubjectForumForm
 
 from app.Models.user import User
 from app.Models.admin import Admin
@@ -29,7 +32,7 @@ from app.Mail.routes import mail_banned_user, mail_deban_user
 
 from app.decorators import admin_required
 
-from app.extensions import create_whereby_meeting_admin
+from app.extensions import create_whereby_meeting_admin, allowed_file
 
 
 # Route permettant d'accéder au backend.
@@ -99,13 +102,19 @@ def users_list():
     formban = BanUserForm()
     formunban = UnBanUserForm()
 
-    # Récupération de tous les utilisateurs avec leurs informations.
-    users = db.session.query(User.id, User.pseudo, User.email, User.banned, User.count_ban).all()
+    # Récupération de la lettre pour le filtrage.
+    lettre = request.args.get('lettre', type=str)
+
+    # Filtrer les utilisateurs par pseudo si une lettre est fournie.
+    if lettre:
+        users = User.query.filter(User.pseudo.ilike(f'{lettre}%')).order_by(User.pseudo.asc()).all()
+    else:
+        users = User.query.order_by(User.pseudo.asc()).all()
 
     # Création d'une liste de dictionnaires mettant à disposition toutes les données utilisateur.
     user_data = [
-        {'id': user_id, 'pseudo': pseudo, 'email': email, 'banned': banned, 'count_ban': count_ban}
-        for user_id, pseudo, email, banned, count_ban in users
+        {'id': user.id, 'pseudo': user.pseudo, 'email': user.email, 'banned': user.banned, 'count_ban': user.count_ban}
+        for user in users
     ]
 
     return render_template("backend/users_list.html", users=user_data, formuser=formuser,
@@ -147,7 +156,7 @@ def suppress_user(id):
         # Affichage d'un message d'erreur si l'utilisateur n'est pas trouvé.
         flash("L'utilisateur n'a pas été trouvé.", "error")
 
-        return redirect(url_for("admin.users_list"))
+    return redirect(url_for("admin.users_list"))
 
 
 # Route permettant de bannir un utilisateur.
@@ -262,7 +271,10 @@ def list_subject_forum():
         backend/subject_forum_list.html: Le modèle utilisé pour rendre la page des sujets du forum.
     """
     # Instanciation du formulaire de suppression.
-    formsuppress_subject = SuppressSubject()
+    formsuppresssubject = SuppressSubject()
+    # Instanciation du forumlaire d'ajout.
+    formsubjectforum = NewSubjectForumForm()
+
     # Récupération des sujets du forum.
     subjects = db.session.query(SubjectForum.id, SubjectForum.nom).all()
 
@@ -273,35 +285,39 @@ def list_subject_forum():
     ]
 
     return render_template("backend/subject_forum_list.html", subject_data=subject_data,
-                           formsuppress_subject=formsuppress_subject)
+                           formsuppresssubject=formsuppresssubject, formsubjectforum=formsubjectforum)
 
 
 # Route permettant à l'administrateur d'ajouter un sujet au forum.
-@admin_bp.route("/backend/ajouter-sujet", methods=['POST'])
+@admin_bp.route("/backend/ajouter-sujet", methods=['GET', 'POST'])
 @admin_required
 def add_subject_forum_back():
     """
-    Permet à l'administrateur d'ajouter un nouveau sujet au forum depuis le back-end.
-
-    Cette route permet à l'administrateur de soumettre un nouveau sujet pour le forum via un formulaire.
-    Le nom du sujet est récupéré à partir de la requête POST, et un nouvel objet `SubjectForum` est créé et
-    enregistré dans la base de données. Après l'ajout, l'administrateur est redirigé vers la page du back-end.
-
-    Returns:
-        Response: Une redirection vers la page du back-end après l'ajout du sujet.
+    Permet à l'administrateur de créer un nouveau sujet pour le forum.
     """
-    if request.method == "POST":
-        # Récupération et nettoyage du nom du sujet depuis le formulaire POST.
-        nom_subject_forum = escape(request.form.get("nom"))
-        # Création d'une nouvelle instance pour le SubjectForum.
+    # Création de l'instance du formulaire.
+    formsubjectforum = NewSubjectForumForm()
+    formsuppresssubject = SuppressSubject()
+
+    if formsubjectforum.validate_on_submit():
+        # Saisie du nom du sujet.
+        nom_subject_forum = escape(formsubjectforum.nom.data)
         subject_forum = SubjectForum(nom=nom_subject_forum)
 
         # Enregistrement du sujet dans la base de données.
         db.session.add(subject_forum)
-        # Validation.
         db.session.commit()
 
-    return redirect(url_for("admin.back_end"))
+    subjects = db.session.query(SubjectForum.id, SubjectForum.nom).all()
+
+    subject_data = [
+        {'id': subject_id, 'nom': nom}
+        for subject_id, nom in subjects
+    ]
+
+    # Retourne la vue avec le formulaire et les sujets mis à jour.
+    return render_template("backend/subject_forum_list.html", formsubjectforum=formsubjectforum,
+                           formsuppresssubject=formsuppresssubject, subject_data=subject_data)
 
 
 # Route permettant de supprimer un sujet du forum.
@@ -561,6 +577,7 @@ def calendar():
             rdv_data.append({
                 'pseudo': request.pseudo,
                 'status': request.status,
+                'content': request.request_content,
                 'date_rdv': datetime.combine(request.date_rdv, request.heure),
                 'link': admin_room_url
             })
@@ -573,4 +590,99 @@ def calendar():
 
     return render_template('backend/calendar.html', formrequest=formrequest, requests=requests,
                            rdv_data=rdv_data, formlink=formlink)
+
+
+# Route permettant de joindre le formulaire pour enregistrer un utilisateur avec le rôle administrateur.
+@admin_bp.route("/creer-administrateur-utilisateur", methods=['GET', 'POST'])
+def create_admin_user_form():
+    """
+    Crée un utilisateur avec le rôle administrateur automatiquement.
+    Utilise des informations prédéfinies et des variables d'environnement pour créer un administrateur.
+    :return: Redirection vers la page du backend - Admin/backend.html ou affiche un message d'erreur.
+    """
+    # Instanciation du formulaire.
+    formuseradmin = UserAdminSaving()
+
+    return render_template("backend/form_useradmin.html", formuseradmin=formuseradmin)
+
+
+# Route permettant de traiter les données du formulaire de l'enregistrement d'un utilisateur administrateur.
+@admin_bp.route('/enregistrement-utilisateur-administrateur', methods=['GET', 'POST'])
+def user_admin_recording():
+    """
+    Gère l'enregistrement d'un nouvel utilisateur. Cette fonction traite à la fois les
+    requêtes GET et POST. Lors d'une requête GET, elle affiche le formulaire
+    d'enregistrement. Lors d'une requête POST, elle traite les données soumises par
+    l'utilisateur, valide le formulaire, gère le fichier de photo de profil, redimensionne
+    l'image et enregistre les informations de l'utilisateur dans la base de données.
+
+    :return: Redirection vers la page de confirmation de l'email si l'inscription est réussie,
+             sinon redirection vers la page d'enregistrement avec un message d'erreur.
+    """
+    formuseradmin = UserAdminSaving()
+
+    if formuseradmin.validate_on_submit():
+        # Assainissement des données.
+        pseudo = formuseradmin.pseudo.data
+        role = formuseradmin.role.data
+        password_hash = formuseradmin.password.data
+        email = formuseradmin.email.data
+        date_naissance = formuseradmin.date_naissance.data
+
+        salt = bcrypt.gensalt()
+        password_hash = bcrypt.hashpw(password_hash.encode('utf-8'), salt)
+
+        # Vérification de la soumission du fichier.
+        if 'profil_photo' not in request.files or request.files['profil_photo'].filename == '':
+            flash("Aucune photo de profil fournie.", "error")
+            return redirect(url_for('user.user_recording'))
+
+        profil_photo = request.files['profil_photo']
+        if profil_photo and allowed_file(profil_photo.filename):
+            photo_data = profil_photo.read()
+
+            # Redimensionnement de l'image avec Pillow.
+            try:
+                img = Image.open(BytesIO(photo_data))
+                img.thumbnail((75, 75))
+                img_format = img.format if img.format else 'JPEG'
+                output = BytesIO()
+                img.save(output, format=img_format)
+                photo_data_resized = output.getvalue()
+            except Exception as e:
+                flash(f"Erreur lors du redimensionnement de l'image : {str(e)}", "error")
+                return redirect(url_for("admin.user_admin_recording"))
+
+            if len(photo_data_resized) > 5 * 1024 * 1024:  # 5 Mo
+                flash("Le fichier est trop grand (maximum 5 Mo).", "error")
+                return redirect(url_for("admin.user_admin_recording"))
+
+            photo_data = profil_photo.read()  # Lire les données binaires de l'image
+        else:
+            flash("Type de fichier non autorisé.", "error")
+            return redirect(url_for("admin.user_admin_recording"))
+
+        new_user = User(
+            pseudo=pseudo,
+            role=role,
+            password_hash=password_hash,
+            salt=salt,
+            email=email,
+            date_naissance=date_naissance,
+            # Stockage des données binaires de l'image.
+            profil_photo=photo_data_resized
+        )
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash("Inscription réussie! Vous pouvez maintenant vous connecter.")
+            return redirect(url_for("mail.send_confirmation_email_user", email=email))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Erreur lors de l'enregistrement de l'utilisateur: {str(e)}", "error")
+
+    return render_template("backend/backend.html", formuseradmin=formuseradmin)
+
+
 
