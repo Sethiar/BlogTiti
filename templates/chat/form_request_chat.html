@@ -40,7 +40,8 @@
     <h3>Demande de chat vidéo</h3>
     {{ formrequest.csrf_token }}
     <div class="container">
-        {{ formrequest.pseudo.label }} {{ formrequest.pseudo() }}
+        {{ formrequest.pseudo.label }}
+        {{ formrequest.pseudo(class="form-control", readonly=True) }}
         {% if formrequest.pseudo.errors %}
         <ul>
             {% for error in formrequest.pseudo.errors %}
@@ -80,9 +81,9 @@
     </div>
     <div class="separation"></div>
     <div class="container" style="background-color:black">
-        <button type="submit" class="validatedbtn">Validation de la demande</button>
+        <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la demande</button>
         <button type="button" class="cancelledbtn">
-            <a href="{{ url_for('landing_page') }}">Annulation de la demande et retour à l'accueil</a>
+            <a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de la demande et retour à l'accueil</a>
         </button>
     </div>
 </form>
