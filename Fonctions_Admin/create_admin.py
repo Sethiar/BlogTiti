@@ -27,8 +27,8 @@ sys.path.append(parent_dir)
 from database_config.db_tititechnique import conn
 
 # Si vous voulez changer votre identifiant et votre mot de passe, c'est ici.
-pseudo = "JohnDoe"
-password = "#12345six"
+pseudo = "Tititechnique"
+password = "bloggeminips626"
 role = "Admin"
 
 # Génération d'un sel aléatoire pour le hachage du mot de passe.
