@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var eventTitle = info.event.title;
             var eventDate = info.event.start.toISOString().slice(0, 10);
             var eventTime = info.event.start.toISOString().slice(11, 16);
-            alert('Rendez-vous avec ' + eventTitle + ' le ' + formatDateToFrench(eventDate) + ' à ' + eventTime);
+            var requestContent = info.event.extendedProps.content;
+
+            alert('Rendez-vous avec ' + eventTitle + ' le ' + formatDateToFrench(eventDate) + ' à ' + eventTime + ' pour le motif suivant : ' + requestContent);
 
             // Ouvrir une modale pour afficher les détails ou proposer des actions.
             openModalForEvent(info.event);
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
 
-    // Fonction pour formater la date en format français
+    // Fonction pour formater la date en format français.
     function formatDateToFrench(dateStr) {
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         var date = new Date(dateStr);
@@ -49,15 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function openModalForDate(date) {
         // Implémentation de la logique pour afficher un formulaire ou une modale ici.
         console.log('Ouverture de la modale pour la date : ' + formatDateToFrench(date));
-        // Utilisez un framework comme Bootstrap pour gérer les modales
+        // Utilisation du framework Bootstrap pour gérer les modales.
         $('#yourModalId').modal('show');
     }
 
-    // Fonction d'exemple pour ouvrir une modale lors du clic sur un événement
+    // Fonction d'exemple pour ouvrir une modale lors du clic sur un événement.
     function openModalForEvent(event) {
-        // Implémentation de la logique pour afficher les détails de l'événement ou modifier/supprimer
+        // Implémentation de la logique pour afficher les détails de l'événement ou modifier/supprimer.
         console.log('Ouverture de la modale pour l\'événement : ' + event.title);
-        // Afficher une modale avec les détails de l'événement
+        // Affichage de la modale avec les détails de l'événement.
         $('#yourModalId').modal('show');
     }
 });
