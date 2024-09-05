@@ -1,0 +1,122 @@
+/* Style de la page commentaire sujet du forum et vidéos.*/
+
+h5 {
+  padding-left: 5vw;
+  text-decoration: underline;
+  font-size: 24px;
+}
+
+.select-all-users {
+  color: gold;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.select-all-users:hover {
+  font-size: 18px;
+  color: orange;
+}
+
+.lettre-navigation {
+  padding-left: 20vw;
+  display: flex-column;
+}
+
+.lettre a {
+  color: darkorange;
+  margin-right: 1vw;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.lettre a:hover {
+  color: gold;
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+th {
+  color: darkorange;
+}
+
+tr {
+  color: white;
+}
+
+table {
+  font-size: 16px;
+}
+
+.separation {
+  border: 1px solid white;
+}
+
+.btn-suppression {
+  width: 10vw;
+  border: 1px solid darkorange;
+  background-color: gold;
+}
+
+.btn-suppression:hover {
+ border: 1px solid gold;
+  background-color: darkorange;
+}
+
+.btn-valide {
+  width: 10vw;
+  border: 1px solid darkorange;
+  background-color: gold;
+}
+
+.btn-valide:hover {
+ border: 1px solid gold;
+  background-color: darkorange;
+}
+
+
+.categorie {
+  margin: 0 auto;
+  text-align: center;
+  border : 1px solid orange;
+  font-size: 16px;
+  width : 50%;
+}
+
+.label {
+  width: 40%;
+}
+
+.separation {
+  margin: 0 auto;
+  border-bottom: 1px solid gold;
+  margin: 3% 20% 3%  20%;
+}
+
+#subject {
+  width: 30%;
+  margin-left: 10%;
+  border-collapse: collapse;
+  border: 1px solid orange;
+  text-align: left;
+}
+
+#subject th, #subject td {
+  padding: 8px;
+  font-size: 14px;
+  border-top: 1px solid orange;
+  border-bottom: 1px solid orange;
+}
+
+h4{
+  margin-left: 10%;
+}
+
+.button-subject {
+  color: black;
+  background-color: orange;
+  border: 1px solid gold;
+  justify-content: flex-end;
+  margin: 10px 0;
+  padding: 2px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  cursor: pointer;
+}

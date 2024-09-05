@@ -134,6 +134,27 @@ button a {
   color: white;
 }
 
+.visits {
+  padding-left: 5vw;
+}
+
+.visits p {
+  color: darkorange;
+  font-size: 18px;
+
+}
+
+.number-visit {
+  border: 1px solid gold;
+  margin: 2vw;
+  color: gold;
+  padding: 0.5vw;
+  text-decoration: none;
+}
+
+.visits .number-visit {
+  text-decoration: none;
+}
 /* Style pour le conteneur principal */
 h1 {
   padding-top: 10%;
