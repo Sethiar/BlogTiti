@@ -5,12 +5,15 @@ import os
 import secrets
 import logging
 import atexit
+import config.config
 
-from datetime import timedelta
+from config.config import Config
+from uuid import uuid4
+from datetime import timedelta, datetime
 
 from dotenv import load_dotenv
 from itsdangerous import URLSafeTimedSerializer
-from flask import Flask, session, redirect, url_for, request
+from flask import Flask, session, redirect, url_for, request, g
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
@@ -18,10 +21,11 @@ from flask_login import LoginManager
 from flask_moment import Moment
 
 from app.Models import db
-from config.config import Config
-import config.config
+
 from app.scheduler import create_scheduler
 
+from app.Models.anonyme import Anonyme
+from app.Models.anonymousvisit import AnonymousVisit
 
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
@@ -94,12 +98,15 @@ def create_app():
 
     app.config["SESSION_COOKIE_SECURE"] = True
 
+    # Configuration de la durée de vie des cookies de session.
+    app.permanent_session_lifetime = timedelta(days=1)
+
     # Définition de la clé secrète pour les cookies.
     app.secret_key = secrets.token_hex(16)
 
     # Configuration du serializer.
-    app.config['serializer'] = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['serializer'] = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
     # Initialisation de la base de données.
@@ -117,13 +124,18 @@ def create_app():
 
     # Configuration de l'application pour utiliser la protection CSRF.
     csrf = CSRFProtect()
+    csrf.init_app(app)
 
     from app.Models.admin import Admin
     from app.Models.user import User
 
     # Configuration du LoginManager pour les utilisateurs.
     login_manager.init_app(app)
+    # Redirection automatique si utilisateur n'est pas authentifié vers un formulaire.
     login_manager.login_view = 'auth.login'
+
+    # Enregistrement de la classe Anonyme.
+    login_manager.anonymous_user = Anonyme
 
     # Fonction pour charger un utilisateur ou un administrateur.
     @login_manager.user_loader
@@ -156,6 +168,7 @@ def create_app():
         Returns:
             Redirection vers la page "connexion_requise".
         """
+        print("Unauthorized handler called")  # Ajoutez cette ligne pour vérifier si le handler est appelé
         return redirect(url_for('auth.login', next=request.url))
 
     @app.context_processor
@@ -170,8 +183,66 @@ def create_app():
         pseudo = session.get("pseudo", None)
         return dict(logged_in=logged_in, pseudo=pseudo)
 
-    # Configuration de la durée de vie des cookies de session.
-    app.permanent_session_lifetime = timedelta(days=1)
+    # Gestion des visites anonymes.
+    @app.before_request
+    def before_request():
+        """
+        Fonction exécutée avant chaque requête.
+
+        Cette fonction est utilisée pour gérer les visiteurs anonymes en attribuant
+        un identifiant unique à chaque utilisateur anonyme s'il n'en a pas déjà un
+        """
+        # La session est rendue permanente pour que sa durée de vie suive la configuration.
+        session.permanent = True
+
+        # Récupération de l'identifiant du visiteur depuis la session.
+        visitor_id = session.get('visitor_id')
+        # Si l'identifiant n'existe pas, création d'un nouveau.
+        if not visitor_id:
+            visitor_id = str(uuid4())
+            # Stockage du nouvel identifiant dans la session.
+            session['visitor_id'] = visitor_id
+        # L'identifiant est rendu disponible globalement dans la requête via `g`.
+        g.visitor_id = visitor_id
+
+    @app.after_request
+    def after_request(response):
+        """
+        Fonction exécutée après chaque requête.
+
+        Cette fonction enregistre ou met à jour les informations de visite du visiteur anonyme
+        dans la base de données après que la requête a été traitée.
+
+        Args:
+            response (Response): L'objet réponse HTTP généré par la requête.
+        """
+        # Récupération de l'identifiant du visiteur depuis `g`.
+        visitor_id = getattr(g, 'visitor_id', None)
+        # Si identifiant de visiteur existe, enregistrement de la visite.
+        if visitor_id:
+            log_visit(visitor_id)
+
+        return response
+
+    def log_visit(visitor_id):
+        """
+        Vérification de l'existence de la visite, mise à jour ou enregistrement.
+
+        Args:
+            visitor_id (str): L'ID unique du visiteur.
+        """
+        # Vérification de l'existence de la visite, mise à jour uo enregistrement.
+        existing_visit = db.session.query(AnonymousVisit).filter_by(visitor_id=visitor_id).first()
+        if existing_visit:
+            # Mise à jour de l'horodatage de la visite existante.
+            existing_visit.visit_time = datetime.now()
+        else:
+            # Création d'un nouvel enregistrement de visite sans redéfinir le constructeur.
+            new_visit = AnonymousVisit(visitor_id=visitor_id)
+            db.session.add(new_visit)
+
+        # Sauvegarde des modifications dans la base de données.
+        db.session.commit()
 
     # Configuration de la journalisation.
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
