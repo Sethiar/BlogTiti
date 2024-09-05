@@ -8,38 +8,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel='stylesheet' href="{{ url_for('static',filename='CSS/backend.css') }}">
-
+    <link rel='stylesheet' type="text/CSS" href="{{ url_for('static',filename='CSS/backend.css') }}">
+    {{ moment.include_moment() }}
     {% block head_content %}
     {% endblock %}
-
 </head>
 <body>
+<h1>Bienvenue sur la page administrateur du blog</h1>
 <header>
     {% block header_content %}
     <nav>
-        <h2>Bienvenue sur la page administrateur du blog</h2>
+        <button class="back-frontend"><a href="{{ url_for('landing_page') }}">Aller sur la page d'accueil du blog</a></button>
+        <button class="back-backend"><a href="{{ url_for('admin.back_end') }}">Retour au back-end</a></button>
+        <button><a href="{{ url_for('admin.create_admin_user_form') }}">Créer l'utilisateur administrateur</a></button>
+    </nav>
+    {% endblock %}
+</header>
+
+{% block body_content %}
+<div class="space"></div>
+    <div class="intro">
         {% if logged_in %}
             {% for admin in admin %}
                 <p>Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
             {% endfor %}
         {% endif %}
-        <a class="retour_frontend" href="{{ url_for('landing_page') }}">Aller sur la page d'accueil du blog</a>
-
-        <button><a href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a></button>
-        <button><a href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a></button>
-        <button><a href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a></button>
-        <button><a href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des vidéos des utilisateurs</a></button>
-        <button><a href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a></button>
-        <button><a href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux sujets du forum</a></button>
-        <button><a href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a></button>
-    </nav>
-
-    {% endblock %}
-    </header>
-
-{% block body_content %}
+    </div>
+<div class="space"></div>
+<div class="button-container">
+    <button><a href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a></button>
+    <button><a href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a></button>
+    <button><a href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a></button>
+    <button><a href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des vidéos des utilisateurs</a></button>
+    <button><a href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a></button>
+    <button><a href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux sujets du forum</a></button>
+    <button><a href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a></button>
+</div>
 {% endblock %}
+
+<div class="space"></div>
 
 </body>
 </html>

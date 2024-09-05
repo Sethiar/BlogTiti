@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link rel='stylesheet' href="{{ url_for('static',filename='CSS/form.css') }}">
 	{% block head_content %}
 	{% endblock %}
@@ -14,6 +18,22 @@
 
     {% block body_content %}
     {% endblock %}
+<script>
+    function togglePassword(fieldId) {
+        const passwordField = document.getElementById(fieldId);
+        const passwordToggle = passwordField.nextElementSibling.querySelector('i');
 
+        // Vérifier le type du champ actuel et basculer entre 'password' et 'text'
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            passwordToggle.classList.remove('fa-eye');
+            passwordToggle.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = "password";
+            passwordToggle.classList.remove('fa-eye-slash');
+            passwordToggle.classList.add('fa-eye');
+        }
+    }
+</script>
 </body>
 </html>
