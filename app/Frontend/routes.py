@@ -42,7 +42,7 @@ def forum():
     Returns:
         Template HTML 'frontend/forum.html' affichant la page du forum et ses sujets.
     """
-    # Instanciation dui formulaire.
+    # Instanciation du formulaire.
     formsubjectforum = NewSubjectForumForm()
 
     # Récupération de tous les sujets de la table de données.
@@ -88,7 +88,7 @@ def forum_subject(subject_id):
     for comment in comment_subject:
         like_count = CommentLikeSubject.query.filter_by(comment_id=comment.id).count()
         liked_user_ids = [like.user_id for like in CommentLikeSubject.query.filter_by(comment_id=comment.id).all()]
-        liked_by_current_user = current_user.id in liked_user_ids
+        liked_by_current_user = current_user.is_authenticated and current_user.id in liked_user_ids
         comment_likes_data[comment.id] = {
             "like_count": like_count,
             "liked_user_ids": liked_user_ids,
