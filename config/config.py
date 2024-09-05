@@ -3,6 +3,9 @@ Ceci est le code pour la configuration de l'application du blog de tititechnique
 """
 import os
 
+from datetime import timedelta
+
+
 # Configuration des fichiers uploadés.
 UPLOAD_FOLDER = "static/Images/images_profil"
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
@@ -22,6 +25,13 @@ class Config:
     # Configuration de la base de données.
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:Monolithe8@localhost:5432/db_tititechnique"
     SQLALCHEMY_TRACK_MODIFICATION = False
+
+    # Clé secrète pour sécuriser les cookies de session.
+    SECRET_KEY = os.getenv('SECRET_KEY')
+
+    # Paramètres de sécurité des cookies de session.
+    SESSION_COOKIE_SECURE = False  # True lorsque Production.
+    PERMANENT_SESSION_LIFETIME = timedelta(days=1)
 
 
 # Configuration de l'environnement de production.
