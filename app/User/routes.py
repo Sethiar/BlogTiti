@@ -71,7 +71,7 @@ def user_recording():
         if profil_photo and allowed_file(profil_photo.filename):
             photo_data = profil_photo.read()
 
-            # Redimensionnement de l'image avec Pillow
+            # Redimensionnement de l'image avec Pillow.
             try:
                 img = Image.open(BytesIO(photo_data))
                 img.thumbnail((75, 75))
@@ -87,7 +87,7 @@ def user_recording():
                 flash("Le fichier est trop grand (maximum 5 Mo).", "error")
                 return redirect(url_for('user.user_recording'))
 
-            photo_data = profil_photo.read()  # Lire les données binaires de l'image
+            photo_data = profil_photo.read()
         else:
             flash("Type de fichier non autorisé.", "error")
             return redirect(url_for('user.user_recording'))
@@ -106,7 +106,7 @@ def user_recording():
             db.session.add(new_user)
             db.session.commit()
             flash("Inscription réussie! Vous pouvez maintenant vous connecter.")
-            return redirect(url_for("mail.send_confirmation_email_users", email=email))
+            return redirect(url_for("mail.send_confirmation_email_user", email=email))
         except Exception as e:
             db.session.rollback()
             flash(f"Erreur lors de l'enregistrement de l'utilisateur: {str(e)}", "error")
@@ -144,6 +144,10 @@ def add_subject_forum():
     # Création de l'instance du formulaire.
     formsubjectforum = NewSubjectForumForm()
 
+    #if not current_user.is_authenticated:
+        #flash("Vous devez être connecté pour faire une demande de chat vidéo.", "warning")
+        #return redirect(url_for('auth.login', next=url_for('chat.chat_request')))
+
     if request.method == "POST":
         # Saisie du nom du sujet.
         nom_subject_forum = escape(request.form.get("nom"))
@@ -172,8 +176,10 @@ def comment_subject(user_pseudo):
     Returns :
          redirect : Redirige vers la page du sujet du forum après avoir laissé un commentaire.
     """
-    # Création de l'instance du formulaire.
-    formcomment = CommentSubjectForm()
+
+    if not current_user.is_authenticated:
+        flash("Vous devez être connecté pour faire une demande de chat vidéo.", "warning")
+        return redirect(url_for('auth.login', next=request.url))
 
     if request.method == 'POST':
 
@@ -202,7 +208,8 @@ def comment_subject(user_pseudo):
             return redirect(url_for("frontend.forum_subject", subject_id=subject_id, comment_content=comment_content))
         else:
             # Redirection vers une autre page si l'utilisateur ou le sujet n'existe pas.
-            return redirect(url_for("functional.connection_requise"))
+            flash("Utilisateur ou sujet non trouvé.", "error")
+            return redirect(url_for("functional.connexion_requise"))
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section forum.
@@ -296,7 +303,7 @@ def comment_replies_subject(comment_subject_id, user_pseudo):
 
         if not user:
             flash("Utilisateur non trouvé.", "error")
-            return redirect(url_for("functional.connection_requise"))
+            return redirect(url_for("functional.connexion_requise"))
 
         # Obtenir le contenu du commentaire à partir de la requête POST.
         reply_content = formsubjectreply.reply_content.data
@@ -509,7 +516,7 @@ def comment_video(user_pseudo):
             return redirect(url_for("frontend.display_video", video_id=video_id, comment_content=comment_content))
         else:
             # Redirection vers une autre page si l'utilisateur ou la vidéo n'existe pas.
-            return redirect(url_for("functional.connection_requise"))
+            return redirect(url_for("functional.connexion_requise"))
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section vidéo.
