@@ -32,11 +32,13 @@
 		<br><br>
 		{{ form.role.label }} {{ form.role() }}
 		<br><br>
-		{{ form.password.label }} {{ form.password() }}
-
+		<div class="password-container">
+			{{ form.password.label }} {{ form.password() }}
+			<span class="toggle-password" onclick="togglePassword('password2')"><i class="fas fa-eye"></i></span>
+		</div>
 		<div class="container" style="background-color:#f1f1f1">
-			<button type="submit" class="validatedbtn">Validation</button>
-			<button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}">Annulation de l'authentification administrateur</a></button>
+			<button type="submit" class="validatedbtn" style="font-weight: normal;">Validation</button>
+			<button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de l'authentification administrateur</a></button>
 		</div>
 	</div>
 </form>

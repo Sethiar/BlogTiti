@@ -37,23 +37,28 @@
             </ul>
         {% endif %}
         <br><br>
-        {{ formuseradmin.password.label }} {{ formuseradmin.password() }}
-        {% if formuseradmin.password.errors %}
+        <div class="password-container">
+            {{ formuseradmin.password.label }} {{ formuseradmin.password() }}
+            <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+            {% if formuseradmin.password.errors %}
             <ul>
                 {% for error in formuseradmin.password.errors %}
                     <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
-        <br><br>
-        {{ formuseradmin.password2.label }} {{ formuseradmin.password2() }}
-        {% if formuseradmin.password2.errors %}
+            {% endif %}
+        </div>
+        <div class="password-container">
+            {{ formuseradmin.password2.label }} {{ formuseradmin.password2() }}
+            <span class="toggle-password" onclick="togglePassword('password2')"><i class="fas fa-eye"></i></span>
+            {% if formuseradmin.password2.errors %}
             <ul>
                 {% for error in formuseradmin.password2.errors %}
-                    <li>{{ error }}</li>
+                <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
+            {% endif %}
+        </div>
         <br><br>
         <ul>
             {{ formuseradmin.profil_photo.label }}
@@ -63,8 +68,8 @@
     </div>
         <div class="separation"></div>
     <div class="container" style="background-color:black">
-        <button type="submit" class="validatedbtn">Validation de la souscription</button>
-        <button type="button" class="cancelledbtn"><a href="{{ url_for('admin.back_end') }}">Annulation de la souscription et retour au backend</a></button>
+        <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la souscription</button>
+        <button type="button" class="cancelledbtn"><a href="{{ url_for('admin.back_end') }}" style="font-weight: normal;">Annulation de la souscription et retour au backend</a></button>
     </div>
 </form>
 

@@ -4,15 +4,17 @@
     <meta name="description" content="Page du backend afin d'afficher la liste des rendez-vous pour le chat vidéo.">
     <title>{% block title %}Page administrateur - Calendrier pour chat vidéo{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static',filename='CSS/calendar.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/fr.min.js"></script>
 
 {% endblock %}
 
 {% block body_content %}
 <br><br>
-<div id="table_appointment">
+<div id="table-appointment">
     <h5>Liste des demandes de chat vidéo</h5>
     <table class="table">
         <thead>
@@ -30,14 +32,14 @@
             {% for request in requests %}
             <tr>
                 <td>{{ request.pseudo }}</td>
-                <td>{{ request.date_rdv }}</td>
-                <td>{{ request.heure }}</td>
+                <td>{{ moment(request.date_rdv).format("DD/MM/YYYY") }}</td>
+                <td>{{ moment(request.heure).format("HH:00") }}</td>
                 <td>{{ request.status }}</td>
                 <td>
                     {% if request.status == 'validée' %}
                         {% set rdv = rdv_data | selectattr("pseudo", "equalto", request.pseudo) | first %}
                         {% if rdv %}
-                            <a href="{{ rdv.link }}" target="_blank">Lien de connexion</a>
+                            <a href="{{ rdv.link }}" target="_blank" class="link">Lien de connexion</a>
                         {% else %}
                             Non disponible
                         {% endif %}
@@ -57,22 +59,22 @@
                     {% endif %}
                 </td>
                 <td>
-                    <form action="{{ url_for('chat.suppress_request', id=request.id) }}" method="POST" class="btn_suppression">
+                    <form action="{{ url_for('chat.suppress_request', id=request.id) }}" method="POST" class="btn-valide">
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn_suppression" data-pseudo="l'utilisateur {{ request.pseudo }}">
-                            <i class="fas fa-trash"></i>
+                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request.pseudo }}">
+                            Supprimer   <i class="fas fa-trash"></i>
                         </button>
                     </form>
-                    <form action="{{url_for('chat.valide_request', id=request.id) }}" method="POST" class="btn_valide">
+                    <form action="{{url_for('chat.valide_request', id=request.id) }}" method="POST" class="btn-valide">
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn_valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
-                            <i class="fas fa-thumbs-up"></i>
+                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                            Valider la requête   <i class="fas fa-thumbs-up"></i>
                         </button>
                     </form>
-                    <form action="{{url_for('chat.refuse_request', id=request.id) }}" method="POST" class="btn_valide">
+                    <form action="{{url_for('chat.refuse_request', id=request.id) }}" method="POST" class="btn-valide">
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn_valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
-                            <i class="fas fa-thumbs-down"></i>
+                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                            Refuser la requête   <i class="fas fa-thumbs-down"></i>
                         </button>
                     </form>
                 </td>
@@ -84,6 +86,7 @@
 <br><br>
 <div class="container">
     <h5>Calendrier des Rendez-vous</h5>
+    <br>
     <div id="calendar"></div>
 </div>
 
@@ -93,8 +96,9 @@
         {% for rdv in rdv_data %}
         {
             title: '{{ rdv.pseudo|replace("'", "\\'") }} - {{ rdv.status|replace("'", "\\'") }}',
-            start: '{{ rdv.date_rdv.strftime("%Y-%m-%dT%H:%M:%S") }}',  // Assurez-vous que cette ligne inclut l'heure
-            allDay: false
+            start: '{{ rdv.date_rdv.strftime("%Y-%m-%dT%H:%M:%S") }}',
+            allDay: false,
+            content: '{{ rdv.content|replace("'", "\\'") }}'
         }{% if not loop.last %},{% endif %}
         {% endfor %}
     ];
@@ -105,8 +109,10 @@
             events: rdvData,
             eventClick: function(info) {
                 window.open(info.event.url, '_blank');
-                info.jsEvent.preventDefault(); // don't navigate in current tab
-            }
+                info.jsEvent.preventDefault();
+            },
+            eventColor: '#378006',
+            eventTextColor: 'black'
         });
         calendar.render();
     });
