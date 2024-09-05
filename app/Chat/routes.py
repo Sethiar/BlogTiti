@@ -5,7 +5,7 @@ from datetime import datetime
 
 from app.Chat import chat_bp
 
-from flask import render_template, flash, redirect, url_for, abort, request, jsonify
+from flask import render_template, flash, redirect, url_for, abort
 from flask_login import current_user, login_required
 
 from app import db
@@ -42,7 +42,7 @@ def video_chat(request_id):
     now = datetime.now()
     rdv_datetime = datetime.combine(request.date_rdv, request.heure)
 
-    # Vérification pour autoriser l'accès seulement un jour ou une heure avant le rendez-vous
+    # Vérification pour autoriser l'accès seulement un jour ou une heure avant le rendez-vous.
     if request.status != 'validée' or rdv_datetime > now:
         flash("Le chat vidéo n'est pas encore disponible ou la demande n'est pas validée.", "error")
         return redirect(url_for('landing_page'))
@@ -65,6 +65,9 @@ def chat_request():
 
     # Instanciation du formulaire.
     formrequest = ChatRequestForm()
+
+    # Pré-remplir le pseudo de l'utilisateur connecté.
+    formrequest.pseudo.data = current_user.pseudo
 
     if not current_user.is_authenticated:
         flash("Vous devez être connecté pour faire une demande de chat vidéo.", "warning")
