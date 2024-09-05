@@ -44,42 +44,47 @@
             </ul>
         {% endif %}
         <br><br>
-        {{ form.password.label }} {{ form.password() }}
-        {% if form.password.errors %}
+        <div class="password-container">
+            {{ form.password.label }} {{ form.password() }}
+            <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+            {% if form.password.errors %}
             <ul>
                 {% for error in form.password.errors %}
-                    <li>{{ error }}</li>
+                <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
+            {% endif %}
+        </div>
         <br><br>
-        {{ form.password2.label }} {{ form.password2() }}
-        {% if form.password2.errors %}
+        <div class="password-container">
+            {{ form.password2.label }} {{ form.password2() }}
+            <span class="toggle-password" onclick="togglePassword('password2')"><i class="fas fa-eye"></i></span>
+            {% if form.password2.errors %}
             <ul>
                 {% for error in form.password2.errors %}
-                    <li>{{ error }}</li>
+                <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
-        <br><br>
+            {% endif %}
+        </div>
         {{ form.date_naissance.label }} {{ form.date_naissance() }}
         {% if form.date_naissance.errors %}
             <ul>
                 {% for error in form.date_naissance.errors %}
-                    <li>{{ error }}</li>
+                <li>{{ error }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
+        <br><br>
         <ul>
-            {{ form.profil_photo.label }}<br>
+            {{ form.profil_photo.label }}
             {{ form.profil_photo }}
         </ul>
-        <br><br>
     </div>
         <div class="separation"></div>
     <div class="container" style="background-color:black">
-        <button type="submit" class="validatedbtn">Validation de la souscription</button>
-        <button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}">Annulation de la souscription et retour à l'accueil</a></button>
+        <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la souscription</button>
+        <button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de la souscription et retour à l'accueil</a></button>
     </div>
 </form>
 
