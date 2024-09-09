@@ -126,7 +126,7 @@ def profil_photo(user_id):
     """
     user = User.query.get_or_404(user_id)
     if user.profil_photo:
-        return user.profil_photo, {'Content-Type': 'image/jpeg'}  # Ou 'image/png' selon le format
+        return user.profil_photo, {'Content-Type': 'image/jpeg'}
     else:
         return "No image found", 404
 
@@ -144,9 +144,9 @@ def add_subject_forum():
     # Création de l'instance du formulaire.
     formsubjectforum = NewSubjectForumForm()
 
-    #if not current_user.is_authenticated:
-        #flash("Vous devez être connecté pour faire une demande de chat vidéo.", "warning")
-        #return redirect(url_for('auth.login', next=url_for('chat.chat_request')))
+    if not current_user.is_authenticated:
+        flash("Vous devez être connecté pour faire une demande de chat vidéo.", "login")
+        return redirect(url_for('auth.user_connection', next=url_for('chat.chat_request')))
 
     if request.method == "POST":
         # Saisie du nom du sujet.

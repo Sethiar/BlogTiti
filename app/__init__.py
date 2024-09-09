@@ -132,7 +132,7 @@ def create_app():
     # Configuration du LoginManager pour les utilisateurs.
     login_manager.init_app(app)
     # Redirection automatique si utilisateur n'est pas authentifié vers un formulaire.
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth.user_connection'
 
     # Enregistrement de la classe Anonyme.
     login_manager.anonymous_user = Anonyme
@@ -169,7 +169,7 @@ def create_app():
             Redirection vers la page "connexion_requise".
         """
         print("Unauthorized handler called")  # Ajoutez cette ligne pour vérifier si le handler est appelé
-        return redirect(url_for('auth.login', next=request.url))
+        return redirect(url_for('auth.user_connection', next=request.url))
 
     @app.context_processor
     def inject_logged_in():
