@@ -1,8 +1,14 @@
-// Récupérer le jeton CSRF depuis le modèle Flask
+// Récupérer le jeton CSRF depuis le modèle Flask.
     var csrfToken = document.querySelector('#formlikecomment input[name="csrf_token"]').value;
 
 
     function toggleLike(element, commentId, userPseudo) {
+    // Vérifier si l'utilisateur est authentifié avant d'envoyer la requête AJAX.
+    if (!userPseudo) {
+        alert("Vous devez être connecté pour liker ce commentaire.");
+        window.location.href = "/auth/connexion-utilisateur-formulaire";
+        return;
+    }
     // Utilisation de userPseudo directement passé en paramètre.
     console.log(`User Pseudo: ${userPseudo}`);
     console.log(`CommentId: ${commentId}`);
@@ -25,7 +31,7 @@
             let message;
             if (response.liked) {
                 element.classList.add('liked');
-                element.innerHTML = '&#9829;'; // Icône pour un cœur plein
+                element.innerHTML = '&#9829;'; // Icône pour un cœur plein.
                 if (likeCount > 1) {
                     message = `${userPseudo} et ${likeCount - 1} autre(s) utilisateur(s) ont aimé le commentaire.`;
                 } else {
@@ -33,7 +39,7 @@
                 }
             } else {
                 element.classList.remove('liked');
-                element.innerHTML = '&#9825;'; // Icône pour un cœur vide
+                element.innerHTML = '&#9825;'; // Icône pour un cœur vide.
                 if (likeCount > 1) {
                     message = `${likeCount} utilisateurs ont aimé le commentaire.`;
                 } else if (likeCount === 1) {

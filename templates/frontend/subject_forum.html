@@ -78,11 +78,10 @@
                 <div class="liked-users">
                     <p id="like-message-{{ comment.id }}">
                         {% set like_data = comment_likes_data[comment.id] %}
-                        {% if like_data.like_count > 0 %}
-                            {{ current_user.pseudo if current_user.id in like_data.liked_user_ids else '1 utilisateur a aimé le commentaire.'}}
-                            {% if like_data.like_count > 1 %}
-                                et {{ like_data.like_count - 1 }} autre(s) utilisateur(s) ont aimé le commentaire.
-                            {% endif %}
+                        {% if like_data.like_count == 1 %}
+                            1 utilisateur a aimé le commentaire.
+                        {% elif like_data.like_count > 1 %}
+                            {{ like_data.like_count}} utilisateurs ont aimé le commentaire.
                         {% else %}
                             Personne n'a aimé le commentaire pour le moment.
                         {% endif %}
