@@ -23,7 +23,7 @@ def generate_unique_id():
 
 
 # Route permettant à l'utilisateur de bien se connecter au blog.
-@functional_bp.route("/connexion_requise")
+@functional_bp.route("/connexion-requise")
 def connexion_requise():
     """
     Affiche un message informant l'utilisateur qu'une connexion est requise
@@ -33,25 +33,6 @@ def connexion_requise():
         Template HTML de la page "connexion_requise".
     """
     return render_template("Error/connexion_requise.html")
-
-
-# Route permettant de valider une connexion ou d'en infirmer l'authenticité.
-@functional_bp.before_request
-def before_request():
-    """
-    Fonction exécutée avant chaque requête vers les routes de ce blueprint.
-
-    Gère les sessions utilisateur en fonction de leur statut d'authentification :
-    - Si l'utilisateur est authentifié, enregistre son pseudo dans la session.
-    - Si l'utilisateur n'est pas authentifié, génère un identifiant unique pour les utilisateurs anonymes
-      et l'enregistre dans la session.
-
-    Assure la continuité de la session utilisateur à travers le site.
-    """
-    if current_user.is_authenticated:
-        session['pseudo'] = getattr(current_user, 'pseudo', None)
-    else:
-        session['anon_id'] = generate_unique_id()
 
 
 #  Route permettant d'accéder à la politique de confidentialité.

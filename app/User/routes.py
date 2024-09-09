@@ -157,59 +157,49 @@ def add_subject_forum():
         db.session.add(subject_forum)
         db.session.commit()
 
-    # Récupérer à nouveau tous les sujets après l'ajout du nouveau sujet
+    # Récupération de tous les sujets après l'ajout du nouveau sujet.
     subjects = SubjectForum.query.all()
 
     return render_template("frontend/forum.html", formsubjectforum=formsubjectforum, subjects=subjects) + '#sujet'
 
 
 # Route permettant de commenter un sujet du forum.
-@user_bp.route("/<string:user_pseudo>/forum/commentaires_sujet", methods=['POST'])
+@user_bp.route("/forum/commentaires_sujet", methods=['POST'])
 @login_required
-def comment_subject(user_pseudo):
+def comment_subject():
     """
     Permet à un utilisateur connecté de laisser un commentaire sur un sujet du forum.
-
-    Args:
-        user_pseudo (str) : Le pseudo de l'utilisateur.
 
     Returns :
          redirect : Redirige vers la page du sujet du forum après avoir laissé un commentaire.
     """
-
+    # Vérification de l'existence de l'utilisateur connecté.
     if not current_user.is_authenticated:
-        flash("Vous devez être connecté pour faire une demande de chat vidéo.", "warning")
-        return redirect(url_for('auth.login', next=request.url))
+        flash("Vous devez être connecté pour laisser un commentaire.", "warning")
+        return redirect(url_for('auth.user_connection', next=request.url))
 
-    if request.method == 'POST':
+    # Utilisation de current_user pour obtenir le pseudo et l'ID utilisateur.
+    user_pseudo = current_user.pseudo
+    user_id = current_user.id
 
-        # Obtention de l'id du sujet du forum à partir de la requête POST.
-        subject_id = request.form.get("subject_id")
+    # Obtention de l'id du sujet du forum à partir de la requête POST.
+    subject_id = request.form.get("subject_id")
+    comment_content = request.form.get("comment_content")
 
-        # Obtention de l'utilisateur actuel à partir du pseudo.
-        user = User.query.filter_by(pseudo=user_pseudo).first()
+    # Vérification que le sujet et le contenu du commentaire existent.
+    if not subject_id or not comment_content:
+        flash("L'identifiant du sujet ou le contenu du commentaire est manquant.", "error")
+        return redirect(url_for("frontend.forum"))  # Redirige vers la page du forum ou une page d'erreur appropriée.
 
-        # Vérification de l'existence de l'utilisateur et du sujet.
-        if user and subject_id:
-            # Obtenir le contenu du commentaire à partir de la requête POST.
-            comment_content = request.form.get("comment_content")
+    # Création d'un nouvel objet de commentaire avec les données actuelles.
+    new_comment = CommentSubject(comment_content=comment_content, user_id=user_id, subject_id=subject_id)
 
-            # Créer un nouvel objet de commentaire.
-            new_comment = CommentSubject(comment_content=comment_content, user_id=user.id, subject_id=subject_id)
+    # Ajouter le nouveau commentaire à la base de données.
+    db.session.add(new_comment)
+    db.session.commit()
 
-            # Ajouter le nouveau commentaire à la table de données.
-            db.session.add(new_comment)
-            db.session.commit()
-
-            # Récupération de tous les commentaires du sujet après ajout du commentaire.
-            comment_content = CommentSubject.query.filter_by(subject_id=subject_id).first()
-
-            # Redirection sur la page d'affichage des sujets.
-            return redirect(url_for("frontend.forum_subject", subject_id=subject_id, comment_content=comment_content))
-        else:
-            # Redirection vers une autre page si l'utilisateur ou le sujet n'existe pas.
-            flash("Utilisateur ou sujet non trouvé.", "error")
-            return redirect(url_for("functional.connexion_requise"))
+    # Redirection sur la page d'affichage des sujets après ajout du commentaire.
+    return redirect(url_for("frontend.forum_subject", subject_id=subject_id))
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section forum.
@@ -475,14 +465,11 @@ def reply_form_subject(comment_id, user_pseudo):
                            comment=comment, user=user)
 
 
-# Route permettant de commenter une vidéo.
-@user_bp.route('/commentaires-vidéo/<string:user_pseudo>', methods=['GET', 'POST'])
-def comment_video(user_pseudo):
+@user_bp.route('/commentaires-vidéo/', methods=['GET', 'POST'])
+@login_required  # Assure que l'utilisateur est authentifié
+def comment_video():
     """
     Permet à un utilisateur connecté de laisser un commentaire sur une vidéo.
-
-    Args:
-        user_pseudo (str) : Le pseudo de l'utilisateur.
 
     Returns:
         redirect : Redirige vers la page de la vidéo après avoir laissé le commentaire.
@@ -490,33 +477,31 @@ def comment_video(user_pseudo):
     # Création de l'instance du formulaire.
     formcommentvideo = CommentVideoForm()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and formcommentvideo.validate_on_submit():
         # Obtention de l'id de la vidéo à partir de la requête POST.
         video_id = request.form.get("video_id")
+        comment_content = request.form.get("comment_content")
 
-        # Obtention de l'utilisateur actuel à partir du pseudo.
-        user = User.query.filter_by(pseudo=user_pseudo).first()
+        # Vérification que le video_id et le contenu du commentaire existent.
+        if not video_id or not comment_content:
+            flash("L'identifiant de la vidéo ou le contenu du commentaire est manquant.", "error")
+            return redirect(url_for("frontend.videos"))
 
-        # Vérification de l'existence de l'utilisateur et de la vidéo.
-        if user and video_id:
-            # Obtenir le contenu du commentaire à partir de la requête POST.
-            comment_content = request.form.get("comment_content")
+        # Utilisation de current_user pour obtenir l'utilisateur connecté.
+        user_id = current_user.id
 
-            # Créer un nouvel objet de commentaire.
-            new_comment = CommentVideo(comment_content=comment_content, user_id=user.id, video_id=video_id)
+        # Création d'un nouvel objet de commentaire.
+        new_comment = CommentVideo(comment_content=comment_content, user_id=user_id, video_id=video_id)
 
-            # Ajouter le nouveau commentaire à la table de données.
-            db.session.add(new_comment)
-            db.session.commit()
+        # Ajout du nouveau commentaire à la base de données.
+        db.session.add(new_comment)
+        db.session.commit()
 
-            # Récupération de tous les commentaires de la vidéo après ajout du commentaire.
-            comment_content = CommentVideo.query.filter_by(video_id=video_id).first()
+        # Redirection sur la page d'affichage de la vidéo après ajout du commentaire.
+        return redirect(url_for("frontend.display_video", video_id=video_id))
 
-            # Redirection sur la page d'affichage des sujets.
-            return redirect(url_for("frontend.display_video", video_id=video_id, comment_content=comment_content))
-        else:
-            # Redirection vers une autre page si l'utilisateur ou la vidéo n'existe pas.
-            return redirect(url_for("functional.connexion_requise"))
+    # Affichage du formulaire de commentaire si la méthode est GET ou en cas d'erreur dans le formulaire POST.
+    return render_template("user.edit_comment_subject.html", form=formcommentvideo)
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section vidéo.

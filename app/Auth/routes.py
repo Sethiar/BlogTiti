@@ -128,8 +128,8 @@ def user_connection():
         identifiants et soumis le formulaire, il est soit redirigé vers la page précédente, soit vers la page d'accueil
         en fonction de l'état de la connexion.
     """
-    # Récupération de l'URL de la page précédente à partir du référent HTTP.
-    next_url = request.referrer
+    # Récupération de l'URL de redirection depuis le paramètre `next` ou via le référent.
+    next_url = request.args.get('next') or request.referrer
     # Stockage de l'URL de redirection dans la session pour une redirection après connexion.
     session['next_url'] = next_url
 
