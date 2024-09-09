@@ -61,15 +61,15 @@ nav button a:hover {
 }
 
 .intro {
-  border: 1px solid gold;          /* Bordure dorée */
-  background-color: orange;        /* Fond orange */
-  width: 30vw;                     /* Largeur de la div */
-  height: 10vw;                    /* Hauteur égale à la largeur pour former un cercle */
-  margin: 0 auto;          /* Transforme la div en cercle */
-  display: flex;                   /* Utilise Flexbox pour centrer le contenu */
-  justify-content: center;         /* Centre le contenu horizontalement */
-  align-items: center;             /* Centre le contenu verticalement */
-  text-align: center;              /* Centre le texte dans le paragraphe */
+  border: 1px solid gold;
+  background-color: orange;
+  width: 30vw;
+  height: 10vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .intro p {

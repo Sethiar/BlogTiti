@@ -23,7 +23,7 @@ h5 {
 
 .lettre a {
   color: darkorange;
-  margin-right: 1vw;
+  margin-right: 4vw;
   transition: color 0.3s, transform 0.3s;
 }
 
@@ -31,6 +31,11 @@ h5 {
   color: gold;
   transform: scale(1.1);
   text-decoration: underline;
+}
+
+.table {
+  font-size: 16px;
+  width: 100%;
 }
 
 th {
@@ -41,8 +46,42 @@ tr {
   color: white;
 }
 
-table {
-  font-size: 16px;
+.table th, .table td {
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.col-user {
+  width: 15vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-title {
+  width: 25vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-comment {
+  width: 40vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-actions {
+  width: 20vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.subject-comment-backend {
+  text-indent: 5%;
+  max-width: 50vw;
+  font-size: 18px;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: justify;
 }
 
 .separation {

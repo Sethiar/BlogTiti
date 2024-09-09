@@ -40,7 +40,7 @@
             <tr>
                 <td>{{ user }}</td>
                 <td>{{ item.sujet.nom }}</td>
-                <td>{{ item.comment.comment_content }}</td>
+                <td class="subject-comment-backend">{{ item.comment.comment_content }}</td>
                 <td>
                     <form action="{{ url_for('admin.suppress_subject_comment', id=item.comment.id) }}" method="POST" class="btn_suppression">
                         {{ suppressform.csrf_token }}

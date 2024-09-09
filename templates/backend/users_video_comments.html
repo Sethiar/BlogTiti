@@ -27,10 +27,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Pseudo de l'utilisateur</th>
-                <th>Titre de la vidéo commentée</th>
-                <th>Commentaires</th>
-                <th>Actions</th>
+                <th class="col-user">Pseudo de l'utilisateur</th>
+                <th class="col-title">Titre du sujet commenté</th>
+                <th class="col-comment">Commentaires</th>
+                <th class="col-actions">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
             <tr>
                 <td>{{ user }}</td>
                 <td>{{ item.video.title }}</td>
-                <td>{{ item.comment.comment_content }}</td>
+                <td class="subject-comment-backend">{{ item.comment.comment_content }}</td>
                 <td>
                     <form action="{{ url_for('admin.suppress_video_comment', id=item.comment.id) }}" method="POST" class="btn_suppression">
                         {{ suppressform.csrf_token }}
