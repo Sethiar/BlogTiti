@@ -168,7 +168,8 @@ def create_app():
         Returns:
             Redirection vers la page "connexion_requise".
         """
-        print("Unauthorized handler called")  # Ajoutez cette ligne pour vérifier si le handler est appelé
+        # Vérification de l'appel de la méthode.
+        print("Unauthorized handler called")
         return redirect(url_for('auth.user_connection', next=request.url))
 
     @app.context_processor

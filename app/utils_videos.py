@@ -1,5 +1,6 @@
 """
-
+Code permettant de récupérer les vidéos selon le mois courant, les plus populaires et qui permet d'archiver les vidéos
+qui sont du mois précédent.
 """
 from datetime import datetime, date
 from app.Models.videos import Video
@@ -9,10 +10,14 @@ from app.Models.videos import Video
 def current_month_videos(videos):
     """
     Filtre les vidéos pour obtenir celles du mois courant.
+
     :param videos: Liste d'objets contenant les caractéristiques des vidéos.
     :return: Liste de vidéos du mois courant.
     """
+    # Récupération du mois et de l'année courants au format 'YYYY-MM'.
     current_month = datetime.now().strftime("%Y-%m")
+
+    # Filtrage des vidéos dont la date de publication est égale au mois courant.
     return [video for video in videos if video.published_at.strftime("%Y-%m") == current_month]
 
 
@@ -36,14 +41,25 @@ def popular_videos(videos):
 def archived_videos(videos):
     """
     Archive les vidéos qui ne sont pas du mois courant.
+
     :param videos: Liste d'objets contenant les caractéristiques des vidéos.
-    :return: Liste des vidéos archivées par mois.
+    :return: Dictionnaire où les clés sont des chaînes de caractères représentant le mois et l'année
+             au format 'YYYY-MMM', et les valeurs sont des listes de vidéos publiées durant ces mois.
     """
+    # Création du dictionnaire des archives vidéos.
     archives = {}
-    current_month = datetime.now().strftime("%Y-%m")
+    # Dictionnaire pour les noms de mois.
+    month_abbr = {
+        1: "Janvier", 2: "Février", 3: "Mars", 4: "Avril", 5: "Mai", 6: "Juin",
+        7: "Juillet", 8: "Août", 9: "Septembre", 10: "Octobre", 11: "Novembre", 12: "Décembre"
+    }
+
+    # Récupération du mois et de l'année courants au format 'YYYY-MMM'.
+    now = datetime.now()
+    current_month = now.strftime("%Y-%m")
 
     for video in videos:
-        # Vérification du type de published_at si c'est une chaîne ou un objet datetime.
+        # Vérification du type de `published_at` et conversion en objet datetime si nécessaire.
         if isinstance(video.published_at, str):
             # Si c'est une chaîne, on la convertit en datetime.
             dt_object = datetime.strptime(video.published_at, "%Y-%m-%dT%H:%M:%SZ")
@@ -55,14 +71,16 @@ def archived_videos(videos):
         else:
             continue
 
-        # Formatage pour obtenir le mois et l'année.
-        video_month = dt_object.strftime("%Y-%m")
+        # Formatage pour obtenir le mois et l'année au format 'YYYY-MMM'.
+        year = dt_object.year
+        month = month_abbr[dt_object.month]
+        video_month = f"{month} {year}"
+
         if video_month != current_month:
-            # Formatage pour affichage.
-            month_year = dt_object.strftime("%B %Y")
-            if month_year not in archives:
-                archives[month_year] = []
-            archives[month_year].append(video)
+            if video_month not in archives:
+                archives[video_month] = []
+            # Ajout de la vidéo à la liste des vidéos pour le mois et l'année correspondants.
+            archives[video_month].append(video)
 
     return archives
 
@@ -70,7 +88,9 @@ def archived_videos(videos):
 def get_videos_from_db():
     """
     Récupère les vidéos depuis la base de données.
+
     :return: Liste des vidéos.
     """
+    # Interrogation de la base de données et gestion des vidéos par date de publication décroissante.
     return Video.query.order_by(Video.published_at.desc()).all()
 
