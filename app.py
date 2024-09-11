@@ -73,6 +73,7 @@ def landing_page():
     videos = get_videos_from_db()
     # filtrage des vidéos récentes.
     current_month = current_month_videos(videos)
+    print(current_month)
     # Filtrage des vidéos les plus vues (> 3000 vues).
     popular = popular_videos(videos)
     # Récupération des vidéos archivées.
@@ -101,5 +102,5 @@ def landing_page():
 
 # Code lançant l'application.
 if __name__ == '__main__':
-    scheduled_task(app)
+    #scheduled_task(app)
     app.run(debug=True)
