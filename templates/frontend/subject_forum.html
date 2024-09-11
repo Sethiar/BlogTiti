@@ -127,7 +127,7 @@
         <h2>Vous pouvez laisser un commentaire :</h2>
         <br>
         <div class="form-comment">
-            <form method="POST" action="{{ url_for('user.comment_subject', user_pseudo=current_user.pseudo, subject_id=subject.id) }}">
+            <form id="addCommentSubject" method="POST" action="{{ url_for('user.comment_subject', user_pseudo=current_user.pseudo, subject_id=subject.id) }}">
                 {{ formcomment.csrf_token }}
                 <input type="hidden" name="subject_id" value="{{ subject.id }}">
                 <input type="hidden" name="user_pseudo" value="{{ current_user.pseudo }}">
@@ -145,4 +145,20 @@
 {% endblock %}
 {% block footer_content %}
 <script src="{{ url_for('static', filename='CSS/javascript/like_comment_subject.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('addCommentSubject');
+
+    // Variable JavaScript indiquant si l'utilisateur est connecté
+    var isAuthenticated = {{ is_authenticated|tojson }};
+
+    form.addEventListener('submit', function(event) {
+        if (!isAuthenticated) {
+            // Afficher une alerte si l'utilisateur n'est pas connecté
+            alert("Vous devez être connecté pour ajouter un commentaire à ce sujet.");
+            event.preventDefault(); // Empêche la soumission du formulaire
+            }
+    });
+});
+</script>
 {% endblock %}

@@ -60,7 +60,7 @@ class Anonyme(AnonymousUserMixin):
         Returns :
             bool: False, car l'utilisateur n'est pas authentifié.
         """
-        # L'utilisateur anonyme n'est pas authentifié
+        # L'utilisateur anonyme n'est pas authentifié.
         return False
 
     @property

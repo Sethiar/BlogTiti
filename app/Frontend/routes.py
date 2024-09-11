@@ -48,7 +48,14 @@ def forum():
     # Récupération de tous les sujets de la table de données.
     subjects = SubjectForum.query.all()
 
-    return render_template('frontend/forum.html', formsubjectforum=formsubjectforum, subjects=subjects)
+    # Passage de la valeur booléenne d'authentification au template.
+    is_authenticated = current_user.is_authenticated
+
+    # Debug: Vérification du type.
+    print("Type of is_authenticated:", type(is_authenticated))
+
+    return render_template('frontend/forum.html', formsubjectforum=formsubjectforum, subjects=subjects,
+                           is_authenticated=is_authenticated)
 
 
 # Route pour visualiser le sujet de discussion sur un sujet en particulier.
@@ -75,6 +82,12 @@ def forum_subject(subject_id):
     # Récupération du sujet spécifié par l'id depuis la base de données.
     subject = SubjectForum.query.get_or_404(subject_id)
 
+    # Passage de la valeur booléenne d'authentification au template.
+    is_authenticated = current_user.is_authenticated
+
+    # Debug: Vérification du type.
+    print("Type of is_authenticated:", type(is_authenticated))
+
     # Vérification de l'existence du sujet.
     if not subject:
         # Si le sujet n'existe pas, erreur 404 renvoyée.
@@ -98,7 +111,8 @@ def forum_subject(subject_id):
     return render_template("frontend/subject_forum.html", subject=subject, subject_id=subject_id,
                            formsuppress=formsuppress, formsuppressreply=formsuppressreply,
                            comment_subject=comment_subject, formcomment=formcomment,
-                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data)
+                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data,
+                           is_authenticated=is_authenticated)
 
 
 # Route permettant d'afficher toutes les vidéos de la chaîne Tititechnique avec pagination.
@@ -230,6 +244,12 @@ def display_video(video_id):
     # Récupération due la vidéo spécifiée par l'id depuis la base de données.
     video = Video.query.get_or_404(video_id)
 
+    # Passage de la valeur booléenne d'authentification au template.
+    is_authenticated = current_user.is_authenticated
+
+    # Debug: Vérification du type.
+    print("Type of is_authenticated:", type(is_authenticated))
+
     # Vérification de l'existence due la vidéo.
     if not video:
         # Si la vidéo n'existe pas, erreur 404 renvoyée.
@@ -253,5 +273,6 @@ def display_video(video_id):
     return render_template("frontend/video.html", video=video, video_id=video_id,
                            formsuppress=formsuppress, formsuppressreply=formsuppressreply,
                            comment_video=comment_video, formcomment=formcomment,
-                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data)
+                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data,
+                           is_authenticated=is_authenticated)
 

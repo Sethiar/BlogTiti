@@ -5,6 +5,9 @@
     et tout autre chose afin de pouvoir réaliser des petits travaux chez soi en toute sécurité.">
     <title>{% block title %}Le Blog de TitiTechnique{% endblock %}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/caroussel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/images.css') }}">
 {% endblock %}
 
 {% block main_content %}
@@ -13,7 +16,7 @@
     <p>Nombre de visites du site : <span class="number-visit">{{ total_visits }}</span></p>
 </div>
 <div id="pics_accueil">
-    <img src="../static/Images/images_bannière_logo/logo.jpg">
+    <img src="../static/Images/images_bannière_logo/logo.jpg" alt="Logo">
 </div>
 
 <div class="animation">
@@ -22,7 +25,7 @@
         <img src="../static/Images/images_accueil/terre_vierge.png" class="initial" data-next="../static/Images/images_accueil/plantes_poussees.png" data-initial="../static/Images/images_accueil/terre_vierge.png">
     </div>
     <div class="zone" id="building">
-        <div class="spritesheet" data-src="../static/Images/images_accueil/building.png') }}"></div>
+        <div class="spritesheet" data-src="../static/Images/images_accueil/building.png"></div>
     </div>
     <div class="zone" id="mechanic">
         <img src="../static/Images/images_accueil/mechanic.png" class="initial" data-next="../static/Images/images_accueil/mechanic2.png" data-initial="../static/Images/images_accueil/mechanic.png">
@@ -69,9 +72,10 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <!-- Carrousels -->
+            <!-- Carrousel des nouvelles vidéos -->
             <section class="new-videos">
                 <h2>Nouvelles vidéos</h2>
+                <br><br>
                 <div id="carousel-new-videos" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for video in current_month %}
@@ -80,19 +84,16 @@
                                 <!-- Vidéo -->
                                 <div class="video-container">
                                     <iframe width="450" height="215" src="https://www.youtube.com/embed/{{ video.video_id }}"
-                                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
-                                            picture-in-picture" allowfullscreen></iframe>
+                                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <!-- Informations à côté -->
                                 <div class="video-info ml-4">
                                     <h5>{{ video.title }}</h5>
-                                    <p>Date de publication : {{ video.published_at }}</p>
+                                    <p>Date de publication : {{ video.published_at.strftime('%d %B %Y') }}</p>
                                     <p>Vues : {{ video.view_count }}</p>
                                     <p>Likes : {{ video.like_count }}</p>
                                     <p>Commentaires : {{ video.comment_count }}</p>
-                                    <br>
                                 </div>
-                                <br>
                             </div>
                         </div>
                         {% endfor %}
@@ -107,9 +108,11 @@
                     </a>
                 </div>
             </section>
-
+            <br><br>
+            <div class="separation-space"></div>
             <section class="other-videos">
                 <h2>Vidéos les plus populaires</h2>
+                <br><br>
                 <div id="carousel-popular-videos" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for video in popular %}
@@ -124,7 +127,7 @@
                                 <!-- Informations à côté -->
                                 <div class="video-info ml-4">
                                     <h5>{{ video.title }}</h5>
-                                    <p>Date de publication : {{ video.published_at }}</p>
+                                    <p>Date de publication : {{ video.published_at.strftime('%d %B %Y') }}</p>
                                     <p>Vues : {{ video.view_count }}</p>
                                     <p>Likes : {{ video.like_count }}</p>
                                     <p>Commentaires : {{ video.comment_count }}</p>
@@ -150,6 +153,7 @@
             <!-- Aside -->
             <aside>
                 <h2>Archives</h2>
+                <br>
                 <ul>
                     {% for month_year, videos in archived.items() %}
                     <li><a href="{{ url_for('frontend.show_archived_videos', month_year=month_year) }}">{{ month_year | capitalize }}</a></li>
@@ -161,10 +165,7 @@
 </div>
 
 <br>
-<div class="separation">
-
-</div>
+<div class="separation"></div>
 <br>
 <script src="{{ url_for('static', filename='CSS/javascript/avatar_move.js') }}"></script>
-
 {% endblock %}

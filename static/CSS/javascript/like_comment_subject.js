@@ -6,7 +6,6 @@
     // Vérifier si l'utilisateur est authentifié avant d'envoyer la requête AJAX.
     if (!userPseudo) {
         alert("Vous devez être connecté pour liker ce commentaire.");
-        window.location.href = "/auth/connexion-utilisateur-formulaire";
         return;
     }
     // Utilisation de userPseudo directement passé en paramètre.

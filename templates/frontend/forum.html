@@ -32,7 +32,7 @@
     <div class="categorie">
         <h4>Ajouter un sujet sur le forum</h4>
         <br>
-        <form method="POST" action="{{ url_for('user.add_subject_forum') }}">
+        <form id="addSubjectForm" method="POST" action="{{ url_for('user.add_subject_forum') }}">
             {{ formsubjectforum.csrf_token }}
             {{ formsubjectforum.nom.label }}
             <label class="label">{{ formsubjectforum.nom(size=20) }}</label>
@@ -63,4 +63,20 @@
     {% endblock %}
 
     {% block footer_content %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('addSubjectForm');
+
+    // Variable JavaScript indiquant si l'utilisateur est connecté
+    var isAuthenticated = {{ is_authenticated|tojson }};
+
+    form.addEventListener('submit', function(event) {
+        if (!isAuthenticated) {
+            // Afficher une alerte si l'utilisateur n'est pas connecté
+            alert("Vous devez être connecté pour ajouter un sujet.");
+            event.preventDefault(); // Empêche la soumission du formulaire
+            }
+    });
+});
+</script>
     {% endblock %}

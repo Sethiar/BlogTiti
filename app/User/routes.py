@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 
 from flask_login import login_required, current_user
-from flask import request, render_template, redirect, url_for, flash, jsonify
+from flask import request, render_template, redirect, url_for, flash, jsonify, abort
 from markupsafe import escape
 
 from app.User import user_bp
@@ -132,7 +132,7 @@ def profil_photo(user_id):
 
 
 # Route permettant d'ajouter un sujet au forum une fois connecté.
-@user_bp.route("/forum/ajouter_sujet", methods=['POST'])
+@user_bp.route("/forum/ajouter-sujet", methods=['POST'])
 @login_required
 def add_subject_forum():
     """
@@ -141,12 +141,9 @@ def add_subject_forum():
     Returns :
         redirect : Redirige vers la page du forum après avoir ajouté le sujet.
     """
+
     # Création de l'instance du formulaire.
     formsubjectforum = NewSubjectForumForm()
-
-    if not current_user.is_authenticated:
-        flash("Vous devez être connecté pour faire une demande de chat vidéo.", "login")
-        return redirect(url_for('auth.user_connection', next=url_for('chat.chat_request')))
 
     if request.method == "POST":
         # Saisie du nom du sujet.
@@ -173,10 +170,11 @@ def comment_subject():
     Returns :
          redirect : Redirige vers la page du sujet du forum après avoir laissé un commentaire.
     """
-    # Vérification de l'existence de l'utilisateur connecté.
-    if not current_user.is_authenticated:
-        flash("Vous devez être connecté pour laisser un commentaire.", "warning")
-        return redirect(url_for('auth.user_connection', next=request.url))
+    # Passage de la valeur booléenne d'authentification au template.
+    is_authenticated = current_user.is_authenticated
+
+    # Debug: Vérification du type.
+    print("Type of is_authenticated:", type(is_authenticated))
 
     # Utilisation de current_user pour obtenir le pseudo et l'ID utilisateur.
     user_pseudo = current_user.pseudo
@@ -199,7 +197,7 @@ def comment_subject():
     db.session.commit()
 
     # Redirection sur la page d'affichage des sujets après ajout du commentaire.
-    return redirect(url_for("frontend.forum_subject", subject_id=subject_id))
+    return redirect(url_for("frontend.forum_subject", subject_id=subject_id, is_authenticated=is_authenticated))
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section forum.

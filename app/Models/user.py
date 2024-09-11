@@ -39,6 +39,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     date_naissance = db.Column(db.Date, nullable=False)
     profil_photo = db.Column(db.LargeBinary, nullable=False)
+    chemin_photo = db.Column(db.String(255), nullable=True)
     banned = db.Column(db.Boolean, default=False)
     date_banned = db.Column(db.DateTime, nullable=True)
     date_ban_end = db.Column(db.DateTime, nullable=True)
@@ -73,7 +74,7 @@ class User(db.Model, UserMixin):
             str: Chaîne représentant l'objet Utilisateur.
         """
         return f"User(pseudo='{self.pseudo}', email='{self.email}', date_naissance='{self.date_naissance}', " \
-               f"chemin_photo='{self.chemin_photo}, role='{self.role}', banned='{self.banned}', " \
+               f"chemin_photo='{self.chemin_photo}', role='{self.role}', banned='{self.banned}', " \
                f"date_banned='{self.date_banned}', date_ban_end='{self.date_ban_end}', count_ban='{self.count_ban})"
 
     def set_password(self, new_password):
@@ -95,6 +96,19 @@ class User(db.Model, UserMixin):
             bool: True si l'utilisateur n'est pas banni, False sinon.
         """
         return not self.banned
+
+    @property
+    def is_authenticated(self):
+        """
+        Indique si l'utilisateur est authentifié.
+        L'utilisateur est considéré authentifié s'il a un pseudo non vide.
+
+        Returns:
+            bool: True si l'utilisateur a un pseudo, False sinon.
+        """
+        # Vérifie que le pseudo existe et n'est pas vide
+        return bool(self.pseudo)
+
 
     def is_anonymous(self):
         """

@@ -93,6 +93,11 @@ button a {
   width: 90%;
 }
 
+/* Séparation avec espacement. */
+.separation-space {
+  height: 2rem; /* Contrôle la hauteur de l'espace */
+}
+
 /* Style pour la connexion utilisateur */
 #connection {
   width: 20vw;
@@ -155,6 +160,7 @@ button a {
 .visits .number-visit {
   text-decoration: none;
 }
+
 /* Style pour le conteneur principal */
 h1 {
   padding-top: 10%;
@@ -370,7 +376,7 @@ h1 {
 }
 
 #container_intro {
-  /* Pour contenir les éléments flottants */
+/* Pour contenir les éléments flottants */
   overflow: hidden;
 }
 
@@ -385,45 +391,101 @@ h1 {
   margin: 0 auto;
 }
 
+h2 {
+  text-decoration: underline;
+}
+
 /* Style de l'aside */
 aside {
   background-color: orange;
+  width: 80%;
   color: black;
   padding: 20px;
+  margin-right: 25%;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 aside h2 {
   background-color: orange;
+  text-align: center;
 }
 
 aside ul {
   list-style: none;
   background-color: orange;
-  padding: 0;
 }
 
 aside ul li {
   background-color: orange;
   margin-bottom: 10px;
+  padding-bottom: 3%;
 }
 
 aside ul li a {
   color: black;
   background-color: orange;
-  text-decoration: underline;
+}
+
+aside ul li a:hover {
+  color: white;
 }
 
 /* Style des carrousels */
 .carousel {
-  margin-bottom: 2rem;
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
 .carousel-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    display: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: transform 0.6s ease;
+}
+
+.carousel-item.active {
+    display: block;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    width: 5%;
+    height: 5%;
+    background-color: red;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.carousel-control-prev {
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.carousel-control-next {
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    color: #fff;
 }
 
 /* Empile les carrousels verticalement */
@@ -440,11 +502,11 @@ aside ul li a {
 }
 
 .video-info {
-  background-color: orange; /* Couleur de fond orange */
-  color: black; /* Couleur du texte noir */
-  padding: 1rem; /* Ajoute du padding */
-  border-radius: 25px; /* Coins arrondis */
-  width: 100%; /* Prend toute la largeur disponible */
+  background-color: orange;
+  color: black;
+  padding: 1rem;
+  border-radius: 25px;
+  width: 100%;
 }
 
 .video-info p {
@@ -454,12 +516,6 @@ aside ul li a {
 .video-info h5 {
   background-color: orange;
   text-decoration: underline;
-}
-
-/* Ajuste le comportement des contrôles du carrousel */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: rgba(0,0,0,0.5);
 }
 
 /* Style pour le footer */
