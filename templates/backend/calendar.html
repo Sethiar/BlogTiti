@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th>Pseudo de l'utilisateur</th>
+                <th>Document joint</th>
                 <th>Date choisie par l'utilisateur</th>
                 <th>heure choisie par l'utilisateur</th>
                 <th>Statue de la requête</th>
@@ -32,6 +33,11 @@
             {% for request in requests %}
             <tr>
                 <td>{{ request.pseudo }}</td>
+                <td>
+                    <a href="{{ url_for('chat.view_file', filename=filename) }}" class="btn btn-primary">
+                        Télécharger le fichier
+                    </a>
+                </td>
                 <td>{{ moment(request.date_rdv).format("DD/MM/YYYY") }}</td>
                 <td>{{ moment(request.heure).format("HH:00") }}</td>
                 <td>{{ request.status }}</td>

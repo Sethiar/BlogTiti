@@ -364,7 +364,7 @@ class NewSubjectForumForm(FlaskForm):
     """
     # Nom du sujet.
     nom = StringField("Nom du sujet", validators=[DataRequired()],
-                      render_kw={'placeholder': "Veuillez entrer le nouveau sujet"})
+                      render_kw={'placeholder': "Nouveau sujet"})
 
     # Action de soumettre le formulaire.
     submit = SubmitField("Ajouter le sujet")
@@ -525,6 +525,7 @@ class ChatRequestForm(FlaskForm):
         pseudo (StringField): Champ pour le pseudo de l'utilisateur.
         date_rdv (DateField): Champ pour sélectionner la date du chat vidéo.
         heure (TimeField): Champ pour indiquer l'heure du chat vidéo.
+        attachment (FileField): Champ pour joindre un document à la demande de chat.
         submit (SubmitField): Bouton pour soumettre le formulaire.
         csrf_token (HiddenField): Champ caché pour la protection CSRF.
 
@@ -549,6 +550,10 @@ class ChatRequestForm(FlaskForm):
     heure = TimeField("Heure souhaitée", format='%H:%M', validators=[DataRequired()],
                       render_kw={"placeholder": "12:00"})
 
+    attachment = FileField("Joindre un document", validators=[
+        FileRequired(),
+        FileAllowed(['pdf', 'doc', 'docx'], 'Seuls les fichiers PDF ou Word sont autorisés.')
+    ])
     # Action de soumettre le formulaire.
     submit = SubmitField("Soumettre la demande")
 

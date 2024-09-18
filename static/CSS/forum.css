@@ -1,23 +1,23 @@
-
-/* Style pour la section forum. */
-
+/* Style pour la section forum */
 #forum_pic {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Permet de passer en colonne sur petit écran */
 }
 
 #forum_pic div {
   flex: 1;
   display: flex;
   justify-content: center;
+  padding: 10px; /* Ajoute un espace autour des images */
 }
 
 #forum_pic_left img,
 #forum_pic_center img,
 #forum_pic_right img {
-  width: 30vw;
-  max-width: 100%;
+  width: 100%;
+  max-width: 30vw; /* La largeur maximale sera 30% de la largeur de l'écran */
 }
 
 #forum_pic_center img {
@@ -25,36 +25,45 @@
   border: 2px solid gold;
 }
 
-#forum_pic_left img {
-  width: 25vw;
-  border-radius: 25%;
-}
-
+#forum_pic_left img,
 #forum_pic_right img {
-  width: 25vw;
+  width: 100%;
+  max-width: 25vw; /* Ajuste à 25% de la largeur de l'écran */
   border-radius: 25%;
 }
 
 .categorie {
   margin: 0 auto;
   text-align: center;
-  border : 1px solid orange;
+  border: 1px solid orange;
   font-size: 16px;
-  width : 50%;
+  width: 50%;
+  max-width: 90%; /* Assure qu'il ne dépasse pas l'écran sur des petits appareils */
 }
 
 .label {
-  width: 40%;
+    display: inline-block;
+    width: 30%;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: left;
+}
+
+/* Agrandir le champ de saisie */
+input[type="text"] {
+    width: 100%; /* Largeur du champ de texte */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    font-size: 16px; /* Taille de la police dans le champ */
 }
 
 .separation {
   margin: 0 auto;
   border-bottom: 1px solid gold;
-  margin: 3% 20% 3%  20%;
+  margin: 3% 20%; /* Adapte les marges */
 }
 
 #subject {
-  width: 30%;
+  width: 80%; /* Rend plus fluide pour s'adapter à l'écran */
   margin-left: 10%;
   border-collapse: collapse;
   border: 1px solid orange;
@@ -68,8 +77,12 @@
   border-bottom: 1px solid orange;
 }
 
-h4{
-  margin-left: 10%;
+h4 {
+  margin: 0 auto;
+}
+.label {
+  max-width: 70%;
+  display: inline-block;
 }
 
 .button-subject {
@@ -82,5 +95,78 @@ h4{
   border-radius: 5px;
   box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
   cursor: pointer;
+  width: 100px; /* Largeur fixe pour éviter qu'elle s'étire */
+}
+
+/* Media queries pour les tablettes (entre 768px et 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Ajuster les images pour les tablettes */
+  #forum_pic {
+    flex-direction: row; /* Les images restent en ligne sur tablette */
+  }
+
+  #forum_pic div {
+    padding: 5px; /* Ajuster l'espacement pour éviter les débordements */
+  }
+
+  #forum_pic_left img,
+  #forum_pic_center img,
+  #forum_pic_right img {
+    width: 100%;
+    max-width: 35vw; /* Légèrement plus petit sur les tablettes pour s'adapter */
+  }
+
+  /* Adapter la taille des catégories */
+  .categorie {
+    width: 70%; /* Un peu plus large sur tablette */
+    max-width: 85%; /* Largeur maximale limitée pour éviter le débordement */
+  }
+
+  /* Adapter la taille du tableau */
+  #subject {
+    width: 70%; /* Taille réduite pour les tablettes */
+    margin-left: 15%; /* Centré sur la page */
+  }
+
+  /* Ajuster la séparation dorée */
+  .separation {
+    margin: 3% 15%; /* Marges adaptées pour le confort de lecture */
+  }
+
+  /* Bouton */
+  .button-subject {
+    width: 120px; /* Ajuster la taille du bouton pour être plus large */
+  }
+}
+
+/* Media queries pour les petits écrans */
+@media (max-width: 768px) {
+  #forum_pic {
+    flex-direction: column; /* Les images se positionnent en colonne */
+  }
+
+  #forum_pic div {
+    width: 100%; /* Chaque image occupe toute la largeur */
+  }
+
+  #forum_pic_left img,
+  #forum_pic_center img,
+  #forum_pic_right img {
+    max-width: 80%; /* Réduis la taille des images sur les petits écrans */
+  }
+
+  .categorie {
+    width: 90%; /* Adapte la catégorie pour les petits écrans */
+  }
+
+  #subject {
+    width: 90%; /* Plus flexible sur mobile */
+    margin-left: 5%;
+  }
+
+  .separation {
+    margin: 3% 10%;
+  }
 }
 

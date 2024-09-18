@@ -50,7 +50,8 @@
             <tbody>
             {% for subject in subjects %}
             <tr>
-                <td>{{ subject.nom }}</td>
+                <td style="font-weight: bold;">{{ subject.nom }}</td>
+                <td style="font-style: italic;">{{ subject.author }}</td>
                 <td><a href="{{ url_for('frontend.forum_subject', subject_id=subject.id) }}" class="button-subject">Voir le sujet</a></td>
             </tr>
             {% endfor %}

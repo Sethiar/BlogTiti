@@ -12,7 +12,7 @@
 
 <form method="POST" action="{{ url_for('auth.login_admin') }}">
 	<div class="imgcontainer">
-		<img src="../static/Images/images_formulaires/" alt="Avatar" class="avatar">
+		<img style="width: 50%;" src="../static/Images/images_bannière_logo/logo.jpg" alt="Avatar" class="avatar">
 	</div>
 	{% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

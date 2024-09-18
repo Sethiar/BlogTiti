@@ -10,6 +10,7 @@ import bcrypt
 from app.Admin import admin_bp
 
 from flask import render_template, url_for, redirect, flash, request
+from flask_login import current_user
 from PIL import Image
 from io import BytesIO
 
@@ -272,16 +273,16 @@ def list_subject_forum():
     """
     # Instanciation du formulaire de suppression.
     formsuppresssubject = SuppressSubject()
-    # Instanciation du forumlaire d'ajout.
+    # Instanciation du formulaire d'ajout.
     formsubjectforum = NewSubjectForumForm()
 
     # Récupération des sujets du forum.
-    subjects = db.session.query(SubjectForum.id, SubjectForum.nom).all()
+    subjects = db.session.query(SubjectForum.id, SubjectForum.nom, SubjectForum.author).all()
 
     # Création d'un dictionnaire permettant de récupérer les informations des sujets.
     subject_data = [
-        {'id': subject_id, 'nom': nom}
-        for subject_id, nom in subjects
+        {'id': subject_id, 'nom': nom, 'author': author}
+        for subject_id, nom, author in subjects
     ]
 
     return render_template("backend/subject_forum_list.html", subject_data=subject_data,
@@ -302,17 +303,17 @@ def add_subject_forum_back():
     if formsubjectforum.validate_on_submit():
         # Saisie du nom du sujet.
         nom_subject_forum = escape(formsubjectforum.nom.data)
-        subject_forum = SubjectForum(nom=nom_subject_forum)
+        subject_forum = SubjectForum(nom=nom_subject_forum, author='Tititechnique')
 
         # Enregistrement du sujet dans la base de données.
         db.session.add(subject_forum)
         db.session.commit()
 
-    subjects = db.session.query(SubjectForum.id, SubjectForum.nom).all()
+    subjects = db.session.query(SubjectForum.id, SubjectForum.nom, SubjectForum.author).all()
 
     subject_data = [
-        {'id': subject_id, 'nom': nom}
-        for subject_id, nom in subjects
+        {'id': subject_id, 'nom': nom, 'author': author}
+        for subject_id, nom, author in subjects
     ]
 
     # Retourne la vue avec le formulaire et les sujets mis à jour.

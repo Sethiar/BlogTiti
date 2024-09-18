@@ -338,7 +338,7 @@ def send_mail_refusal_request(user):
     msg.body = f"Bonjour {user.pseudo}, \n" \
                "\n" \
                f"Titi est dans l'impossibilité de valider votre rendez-vous. \n" \
-               f"Afin de renouveler votre demande, nous vous prions de bien vouloir"\
+               f"Afin de renouveler votre demande, nous vous prions de bien vouloir "\
                f"refaire une demande de chat vidéo. \n"\
                "\n" \
                f"Cordialement,\n" \

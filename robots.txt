@@ -1,0 +1,28 @@
+User-agent: *
+Disallow: /admin/        # Répertoire d'administration
+Disallow: /login         # Page de connexion
+Disallow: /register      # Page d'inscription
+Disallow: /chat-request  # Page ou endpoint pour la demande de chat vidéo
+Disallow: /user/settings # Paramètres utilisateur
+
+# Bloquer les requêtes dynamiques (ex : URLs avec des paramètres de session)
+Disallow: /*?*           # Bloque les URLs avec des paramètres de requête
+
+# Permettre aux robots de crawler les pages publiques, articles de blog, commentaires
+User-agent: *
+Allow: /blog/            # Répertoire du blog contenant les articles
+Allow: /comments         # URL pour les commentaires
+Allow: /replies          # URL pour les réponses aux commentaires
+Allow: /likes            # URL des "likes"
+
+# Autoriser l'exploration des fichiers CSS et JS pour une bonne indexation
+User-agent: *
+Allow: /*.css$
+Allow: /*.js$
+
+# Bloquer les fichiers sensibles
+Disallow: /private/      # Dossier contenant des fichiers privés
+Disallow: /tmp/          # Dossier temporaire
+
+# Spécifie l'emplacement du sitemap
+Sitemap: https://www.monsite.com/sitemap.xml

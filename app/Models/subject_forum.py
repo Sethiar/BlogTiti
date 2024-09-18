@@ -19,6 +19,7 @@ class SubjectForum(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50), nullable=False)
+    author = db.Column(db.String(50), nullable=False)
 
     # Relation avec les commentaires.
     comments = db.relationship('CommentSubject', back_populates='subject', cascade='all, delete-orphan')

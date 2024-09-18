@@ -33,6 +33,9 @@ class Config:
     SESSION_COOKIE_SECURE = False  # True lorsque Production.
     PERMANENT_SESSION_LIFETIME = timedelta(days=1)
 
+    # Dossier des téléchargements.
+    UPLOAD_FOLDER = 'uploads'
+
 
 # Configuration de l'environnement de production.
 class ProductConfig(Config):

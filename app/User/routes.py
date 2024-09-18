@@ -145,10 +145,17 @@ def add_subject_forum():
     # Création de l'instance du formulaire.
     formsubjectforum = NewSubjectForumForm()
 
+    # Passage de la valeur booléenne d'authentification au template.
+    is_authenticated = current_user.is_authenticated
+    author = current_user.pseudo
+
+    # Debug: Vérification du type.
+    print("Type of is_authenticated:", type(is_authenticated))
+
     if request.method == "POST":
         # Saisie du nom du sujet.
         nom_subject_forum = escape(request.form.get("nom"))
-        subject_forum = SubjectForum(nom=nom_subject_forum)
+        subject_forum = SubjectForum(nom=nom_subject_forum, author=current_user.pseudo)
 
         # Enregistrement du sujet dans la base de données.
         db.session.add(subject_forum)
@@ -157,7 +164,8 @@ def add_subject_forum():
     # Récupération de tous les sujets après l'ajout du nouveau sujet.
     subjects = SubjectForum.query.all()
 
-    return render_template("frontend/forum.html", formsubjectforum=formsubjectforum, subjects=subjects) + '#sujet'
+    return render_template("frontend/forum.html", formsubjectforum=formsubjectforum, subjects=subjects,
+                           is_authenticated=is_authenticated) + '#sujet'
 
 
 # Route permettant de commenter un sujet du forum.

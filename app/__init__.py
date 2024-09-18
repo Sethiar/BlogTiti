@@ -117,6 +117,11 @@ def create_app():
     # Pour les réponses JSON concerne l'encodage.
     app.config['JSON_AS_ASCII'] = False
 
+    # Configurations pour les dossiers des téléchargements.
+    app.config['UPLOAD_FOLDER'] = os.path.join(os.path.expanduser('~'), 'Downloads')
+    print(f"UPLOAD_FOLDER: {app.config['UPLOAD_FOLDER']}")
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
     # Lancement du processus apscheduler.
     scheduler_app = create_scheduler(app)
     scheduler_app.start()

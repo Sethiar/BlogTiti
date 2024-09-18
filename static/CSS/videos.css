@@ -21,6 +21,26 @@ h3 {
   color: orange;
 
 }
+
+.back a {
+  color: black;
+  background-color: darkorange;
+  font-size: 16px;
+  border: 1px solid orange;
+  margin-left: 2%;
+  padding: 0.5% 1%;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back a:hover {
+  background-color: gold;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* Style pour chaque élément vidéo */
 .video-item {
   border: 1px solid #ddd;

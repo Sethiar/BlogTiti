@@ -34,6 +34,7 @@ class ChatRequest(db.Model):
     request_content = db.Column(db.Text, nullable=False)
     date_rdv = db.Column(db.DateTime(timezone=True), nullable=False)
     heure = db.Column(db.Time(), nullable=False)
+    attachment = db.Column(db.String(255), nullable=True)
     status = db.Column(db.String(20), nullable=False, default='en attente')
     admin_choices = db.Column(JSON, nullable=True)  # Stocke les créneaux comme liste de strings ou datetimes
     user_choice = db.Column(db.DateTime(timezone=True), nullable=True)

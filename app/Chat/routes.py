@@ -1,13 +1,15 @@
 """
 Code permettant de gérer les routes concernant le chat vidéo du blog.
 """
+import os.path
 from datetime import datetime
 
 from app.Chat import chat_bp
 
-from flask import render_template, flash, redirect, url_for, abort
+from flask import render_template, flash, redirect, url_for, abort, request, current_app, send_file
 from flask_login import current_user, login_required
 
+from werkzeug.utils import secure_filename
 from app import db
 
 from app.Models.forms import ChatRequestForm, UserLink
@@ -19,7 +21,7 @@ from app.Models.admin import Admin
 from app.Mail.routes import send_mail_validate_request, send_mail_refusal_request, \
     send_confirmation_request_reception, send_request_admin
 
-from app.extensions import create_whereby_meeting_admin
+from app.extensions import create_whereby_meeting_admin, allowed_file
 
 
 # Route permettant d'afficher la vidéo du chat vidéo.
@@ -82,11 +84,8 @@ def chat_request():
 def send_request(user_id):
     """
     Gère la demande de chat vidéo en affichant le formulaire et en enregistrant
-    les informations dans la base de données.
-
-    Cette route permet à un utilisateur de soumettre une demande de chat vidéo.
-    Après la soumission du formulaire, les informations sont enregistrées dans la base
-    de données et des emails de confirmation sont envoyés à l'utilisateur et à un administrateur.
+    les informations dans la base de données et des emails de confirmation sont
+    envoyés à l'utilisateur et à un administrateur.
 
     Args:
         user_id (int): Identifiant de l'utilisateur qui fait la demande de chat.
@@ -97,13 +96,32 @@ def send_request(user_id):
     # Instanciation du formulaire.
     formrequest = ChatRequestForm()
 
-    # Vérification dfe la soumission du formulaire.
+    # Vérification de la soumission du formulaire.
     if formrequest.validate_on_submit():
         # Assainissement des données du formulaire.
         pseudo = formrequest.pseudo.data
         request_content = formrequest.request_content.data
         date_rdv = formrequest.date_rdv.data
         heure = formrequest.heure.data
+
+        # Traitement du fichier joint.
+        file_path = None
+        if formrequest.attachment.data:
+            file = formrequest.attachment.data
+            if allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                try:
+                    # Création du dossier si nécessaire
+                    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
+                    file.save(file_path)
+                    flash('Votre demande a été soumise avec succès et le fichier a été téléchargé.', 'success')
+                except Exception as e:
+                    flash(f"Erreur lors du téléchargement du fichier: {str(e)}", 'danger')
+                    return redirect(request.url)
+            else:
+                flash('Type de fichier non autorisé.', 'danger')
+                return redirect(request.url)
 
         # Récupération de l'utilisateur spécifié par l'user_id depuis la base de données.
         user = User.query.get(user_id)
@@ -114,7 +132,7 @@ def send_request(user_id):
             abort(404, description="Utilisateur non trouvé")
 
         # Récupération d'un administrateur pour associer la demande.
-        admin = Admin.query.first()  # Vous devez choisir comment récupérer un admin valide.
+        admin = Admin.query.first()  # Assurez-vous de bien gérer la sélection de l'admin.
 
         if not admin:
             # Si aucun administrateur n'est trouvé, vous pouvez gérer cette situation ici.
@@ -127,6 +145,7 @@ def send_request(user_id):
             request_content=request_content,
             date_rdv=date_rdv,
             heure=heure,
+            attachment=file_path,
             user_id=user_id,
             admin_id=admin.id
         )
@@ -136,15 +155,15 @@ def send_request(user_id):
             db.session.add(new_request)
             # Enregistrement dans la base de données.
             db.session.commit()
-            flash("Demande effectuée avec succès.")
+            flash("Demande effectuée avec succès.", "success")
             # Envoie du mail de confirmation à l'utilisateur.
             send_confirmation_request_reception(user)
             # Envoie d'un mail contenant la requête à l'administrateur.
-            send_request_admin(user, request_content=request_content)
+            send_request_admin(admin, request_content=request_content)
         except Exception as e:
             # Gestion des erreurs et exceptions.
             db.session.rollback()
-            flash(f"Erreur lors de l'enregistrement de la demande: {str(e)}", "error")
+            flash(f"Erreur lors de l'enregistrement de la demande: {str(e)}", "danger")
 
     return redirect(url_for('landing_page'))
 
@@ -177,6 +196,15 @@ def suppress_request(id):
         flash(f"La requête de l'utilisateur : {request.pseudo} a été supprimée.")
 
     return redirect(url_for('admin.calendar'))
+
+
+# Méthode permettant de supprimer le fichier envoyé par l'utilisateur lors de la demande de chat.
+@chat_bp.route('/visualiser-fichier/<filename>')
+def view_file(filename):
+    """
+    Visualise le fichier dans le navigateur sans forcer le téléchargement.
+    """
+    pass
 
 
 # Méthode traitant la demande en attente et la validant.

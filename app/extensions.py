@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Fonctions vérifiant les extensions des imports.
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf', 'doc', 'docx'}
 
 
 def allowed_file(filename):
