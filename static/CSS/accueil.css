@@ -16,7 +16,7 @@
 * {
   font-family: 'Comic Sans MS', cursive;
   box-sizing: border-box;
-  color: var(--color-default);
+  color: white;
   background-color: var(--background-default);
 }
 /* Style pour ordinateurs de bureau. */
@@ -398,9 +398,10 @@ h2 {
 /* Style de l'aside */
 aside {
   background-color: orange;
-  width: 80%;
+  width: 100%;
   color: black;
-  padding: 20px;
+  padding: 2%;
+  margin-left: 30%;
   margin-right: 25%;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -409,16 +410,24 @@ aside {
 aside h2 {
   background-color: orange;
   text-align: center;
+
 }
 
 aside ul {
   list-style: none;
   background-color: orange;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+aside ul li {
+  text-align: center;
 }
 
 aside ul li {
   background-color: orange;
-  margin-bottom: 10px;
+  margin-bottom: 2%;
   padding-bottom: 3%;
 }
 
@@ -463,7 +472,7 @@ aside ul li a:hover {
     width: 5%;
     height: 5%;
     background-color: red;
-    color: white;
+    color: darkorange;
     border: none;
     outline: none;
     cursor: pointer;
@@ -506,11 +515,12 @@ aside ul li a:hover {
   color: black;
   padding: 1rem;
   border-radius: 25px;
-  width: 100%;
+  width: 90%;
 }
 
 .video-info p {
   background-color: orange;
+  color: black;
 }
 
 .video-info h5 {
@@ -587,8 +597,8 @@ footer p {
   /* global */
   * {
     background-color: var(--background-default);
-    color: purple;
   }
+
   /* Header */
   header {
     height: 35vh;
@@ -635,8 +645,8 @@ footer p {
   /* Styles pour les tablettes en portrait */
   * {
     background-color: var(--background-default);
-    color: green;
   }
+
   /* Header */
   header {
     height: 35vh;
@@ -651,7 +661,6 @@ footer p {
   h1 {
     font-size: 35px;
   }
-
 
   .content-block {
     flex: 1 1 40%;
@@ -676,14 +685,18 @@ footer p {
   #end {
     font-size: 38px;
   }
+
+   aside {
+  margin :0 auto;
+  }
 }
+
 
 /* Code ajustant les styles pour les téléphones portables. */
 @media screen and (max-width: 768px) {
   /* global */
   * {
     background-color: var(--background-default);
-    color: red;
   }
 
   /* Header */
@@ -815,6 +828,44 @@ footer p {
     width: 100%;
     font-size: 20px;
     margin: 0 auto;
+    text-align: center;
+  }
+
+  .carousel-item .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .video-container iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  .video-info {
+    width: 90%;
+    text-align: center;
+  }
+
+  .col-lg-4 {
+    max-width: 100%;
+  }
+
+  aside {
+  margin :0 auto;
+  }
+
+  aside ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  aside ul li {
     text-align: center;
   }
 

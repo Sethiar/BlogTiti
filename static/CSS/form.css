@@ -1,5 +1,4 @@
-/* Style des formulaires */
-
+/* Style général du formulaire */
 * {
   font-family: 'Comic Sans MS', cursive;
   font-weight: bold;
@@ -16,6 +15,7 @@
   text-align: justify;
   padding: 2%;
 }
+
 header a {
   color: orange;
 }
@@ -41,9 +41,21 @@ form {
   text-align: center;
 }
 
-form textarea {
-  width: 70%;
-  height: 100px;
+.container-edit {
+  background-color: red;
+}
+
+/* Modification pour le textarea dans .container-edit */
+.container-edit textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  background-color: white; /* Fond blanc pour le textarea */
+  color: black; /* Texte en noir pour une bonne lisibilité */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=date] {
@@ -107,6 +119,13 @@ img.avatar {
   padding: 8%;
 }
 
+.container-edit {
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
 span.psw {
   float: right;
   padding-top: 16px;
@@ -160,4 +179,58 @@ span.psw {
   transform: translateY(-50%);
   cursor: pointer;
   color: black;
+}
+
+/* Tablettes en paysage */
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  /* Styles pour les tablettes en paysage */
+  #introduction {
+    width: 85%;
+  }
+
+  .cancelledbtn {
+    background-color: gold;
+    font-size: 25px;
+  }
+}
+
+/* Tablettes en portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Styles pour les tablettes en portrait */
+  * {
+    font-weight: normal;
+  }
+
+  #introduction {
+    font-size: 18px;
+    padding: 10px;
+    width: 85%;
+  }
+}
+
+/* Code ajustant les styles pour les téléphones portables */
+@media screen and (max-width: 768px) {
+  * {
+    font-weight: normal;
+  }
+
+  #introduction {
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px;
+    width: 80%;
+  }
+
+  form {
+    max-width: 90%; /* Réduction de la largeur pour les petits écrans */
+  }
+
+  button[type="submit"], .cancelledbtn {
+    font-size: 20px; /* Diminuer la taille de la police des boutons pour les téléphones */
+    padding: 10px 14px;
+  }
+
+  .container-edit textarea {
+    height: 120px; /* Ajustement de la hauteur du textarea pour les téléphones */
+  }
 }

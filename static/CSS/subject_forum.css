@@ -1,23 +1,23 @@
 /*Code ajustant les styles pour les grands écrans. */
 
-  /* Style pour le forum */
+/* Style pour la section forum */
 #forum-pic {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Permet de passer en colonne sur petit écran */
 }
 
 #forum-pic div {
   flex: 1;
   display: flex;
-  justify-content: center;
 }
 
 #forum-pic-left img,
 #forum-pic-center img,
 #forum-pic-right img {
-  width: 25vw;
-  max-width: 100%;
+  width: 100%;
+  max-width: 30vw;
 }
 
 #forum-pic-center img {
@@ -25,14 +25,12 @@
   border: 2px solid gold;
 }
 
-#forum-pic-left img {
-  border-radius: 25%;
-}
-
+#forum-pic-left img,
 #forum-pic-right img {
+  width: 100%;
+  max-width: 25vw;
   border-radius: 25%;
 }
-
 .separation {
     margin: 0 auto;
     border-bottom: 1px solid gold;
@@ -218,18 +216,18 @@ label {
   background-color: grey;
 }
 
-.change-comment {
-  background-color: orange;
-  border: 1px solid black;
+.change-button {
+  background-color: black;
+  border: 2px solid darkgrey;
 }
 
-.change-comment a {
- padding: 1% 2%;
-  color: black;
+.change-button a {
+  background-color: black;
+  color: orange;
 }
 
-.change-comment a:hover {
-  color: white;
+.change-button a:hover {
+  color: gold;
 }
 
 .suppress-button {
@@ -238,6 +236,7 @@ label {
 
 .suppress-button:hover {
   color: gold;
+  text-decoration: underline;
 }
 
 /* Style des réponses aux commentaires */
@@ -326,23 +325,6 @@ label {
   border-top: 1px solid black;
 }
 
-.change-reply {
-  background-color: orange;
-  border: 1px solid black;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.change-reply a {
-  padding: 1% 2%;
-  margin-left: auto;
-  color: black;
-}
-
-.change-reply a:hover {
-  color: white;
-}
-
 .content-reply {
   text-align: center;
   background-color: lightgrey;
@@ -423,5 +405,42 @@ label {
 #comment-avis button:hover {
   text-decoration: underline;
   color: gold;
+}
+
+/* Code ajustant les styles pour les téléphones portables. */
+@media screen and (max-width: 768px) {
+  /* Ajuste les images pour les tablettes */
+  #forum-pic {
+    flex-direction: row; /* Les images restent en ligne sur tablette */
+  }
+
+  #forum-pic div {
+    padding: 5px; /* Ajuste l'espacement pour éviter les débordements */
+  }
+
+  #forum-pic-left img,
+  #forum-pic-center img,
+  #forum-pic-right img {
+    width: 100%;
+    max-width: 35vw; /* Légèrement plus petit sur les tablettes pour s'adapter */
+  }
+
+  /* Style pour bouton de changement/suppression commentaires. */
+  .button-comment {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .change-button,
+  .suppress-button {
+    display: inline-block;
+    padding: 1% 1.2%;
+    border-radius: 5px;
+    font-size: 14px; /* Taille de police flexible */
+    min-width: 120px; /* Largeur minimale pour éviter que le bouton soit trop étroit */
+    text-align: center;
+  }
 }
 

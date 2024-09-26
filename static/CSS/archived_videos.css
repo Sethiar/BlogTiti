@@ -51,8 +51,26 @@
     background-color: #ddd;
     color: black;
 }
+/* Tablettes en paysage */
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  /* Styles pour les tablettes en paysage */
+  /* global */
+  * {
+    background-color: var(--background-default);
+    color: purple;
+  }
+}
 
-/* Pour les écrans plus petits, ajuster à une ou deux colonnes */
+/* Tablettes en portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Styles pour les tablettes en portrait */
+  * {
+    background-color: var(--background-default);
+    color: green;
+  }
+}
+
+/* Pour les écrans plus petits */
 @media screen and (max-width: 768px) {
     .video-container {
         grid-template-columns: repeat(2, 1fr);
