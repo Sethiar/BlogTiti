@@ -57,3 +57,16 @@ def mentions():
         Template HTML de la page de mentions légales du blog.
     """
     return render_template("functional/mentions.html")
+
+
+#  Route permettant d'accéder aux informations de l'administrateur.
+@functional_bp.route("/informations")
+def informations():
+    """
+    Accès aux informations de l'administrateur.
+
+    Returns:
+         Templates HTMl de la page des informations de l'administrateur.
+    """
+    return render_template("functional/informations.html")
+

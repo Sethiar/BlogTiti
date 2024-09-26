@@ -10,7 +10,7 @@ import bcrypt
 from app.Admin import admin_bp
 
 from flask import render_template, url_for, redirect, flash, request
-from flask_login import current_user
+
 from PIL import Image
 from io import BytesIO
 
