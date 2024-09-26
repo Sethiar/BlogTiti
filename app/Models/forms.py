@@ -25,11 +25,11 @@ class AdminConnection(FlaskForm):
         csrf_token (HiddenField) : Jeton CSRF pour la sécurité des données transmises.
     """
     pseudo = StringField("Pseudo Administrateur", validators=[DataRequired()],
-                         render_kw={"placeholder": "Veuillez renseigner votre pseudo administrateur."})
+                         render_kw={"placeholder": "Pseudo administrateur."})
     role = StringField("Rôle Administrateur", validators=[DataRequired()],
-                       render_kw={"placeholder": "Veuillez renseigner votre rôle administrateur."})
+                       render_kw={"placeholder": "Rôle administrateur."})
     password = PasswordField("Mot de passe Administrateur", validators=[DataRequired()],
-                             render_kw={"placeholder": "Veuillez renseigner votre mot de passe Administrateur."})
+                             render_kw={"placeholder": "Mot de passe Administrateur."})
     submit = SubmitField("Se connecter")
     csrf_token = HiddenField()
 
@@ -52,11 +52,11 @@ class AdminRecording(FlaskForm):
     pseudo = StringField(
         "Pseudo",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+        render_kw={"placeholder": "Votre pseudo."})
     role = StringField(
         "Rôle",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Veuillez renseigner votre rôle."})
+        render_kw={"placeholder": "Votre rôle."})
     date_naissance = DateField(
         "Date de naissance",
         validators=[DataRequired()])
@@ -67,11 +67,11 @@ class AdminRecording(FlaskForm):
     password = PasswordField(
         "Mot de passe Utilisateur",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Veuillez renseigner votre mot de passe Utilisateur."})
+        render_kw={"placeholder": "Votre mot de passe Utilisateur."})
     password2 = PasswordField(
         "Confirmer le mot de passe",
         validators=[DataRequired(), EqualTo('password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Veuillez confirmer votre mot de passe utilisateur."})
+        render_kw={"placeholder": "Confirmation mot de passe."})
     profil_photo = FileField(
         "Photo de profil souhaitée :",
         validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], "Images only !!")])
@@ -105,16 +105,16 @@ class UserSaving(FlaskForm):
     pseudo = StringField(
         "Pseudo",
         validators=[DataRequired(), Length(min=2, max=30)],
-        render_kw={"placeholder": "Entrez votre pseudo personnel"})
+        render_kw={"placeholder": "Entrez votre pseudo"})
     password = PasswordField(
         "Mot de passe Utilisateur",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Renseignez votre mot de passe Utilisateur."})
+        render_kw={"placeholder": "Mot de passe Utilisateur."})
 
     password2 = PasswordField(
         "Confirmer le mot de passe",
         validators=[DataRequired(), EqualTo('password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Confirmez votre mot de passe utilisateur."}
+        render_kw={"placeholder": "Confirmation du mot de passe."}
     )
     date_naissance = DateField(
         "Date de naissance",
@@ -189,20 +189,20 @@ class UserAdminSaving(FlaskForm):
     pseudo = StringField(
         "Pseudo",
         validators=[DataRequired(), Length(min=2, max=30)],
-        render_kw={"placeholder": "Entrez votre pseudo personnel"})
+        render_kw={"placeholder": "Votre pseudo"})
     role = StringField(
         "Rôle",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Entrez votre rôle"})
+        render_kw={"placeholder": "Votre rôle"})
     password = PasswordField(
         "Mot de passe Utilisateur",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Renseignez votre mot de passe Utilisateur."})
+        render_kw={"placeholder": "Votre mot de passe."})
 
     password2 = PasswordField(
         "Confirmer le mot de passe",
         validators=[DataRequired(), EqualTo('password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Confirmez votre mot de passe utilisateur."}
+        render_kw={"placeholder": "Confirmation du mot de passe."}
     )
     date_naissance = DateField(
         "Date de naissance",
@@ -266,9 +266,9 @@ class UserConnection(FlaskForm):
         form = UserConnection()
     """
     pseudo = StringField("Pseudo", validators=[DataRequired()],
-                         render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+                         render_kw={"placeholder": "Votre pseudo."})
     password = PasswordField("Mot de passe", validators=[DataRequired()],
-                             render_kw={"placeholder": "Veuillez renseigner votre mot de passe."})
+                             render_kw={"placeholder": "Votre mot de passe."})
     csrf_token = HiddenField()
     # Action de soumettre le formulaire.
     submit = SubmitField("se connecter")
@@ -306,11 +306,11 @@ class RenamePassword(FlaskForm):
     new_password = PasswordField(
         "Nouveau mot de passe utilisateur",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Veuiller renseigner votre nouveau mot de passe Utilisateur."})
+        render_kw={"placeholder": "Nouveau mot de passe."})
     confirm_password = PasswordField(
         "Confirmer le nouveau mot de passe",
         validators=[DataRequired(), EqualTo('new_password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Veuillez confirmer votre nouveau mot de passe utilisateur."})
+        render_kw={"placeholder": "Confirmation du nouveau mot de passe."})
     csrf_token = HiddenField()
 
 
@@ -400,11 +400,11 @@ class CommentSubjectForm(FlaskForm):
 
     # Le contenu du commentaire.
     comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+                                    render_kw={"placeholder": "Saisie du commentaire."})
 
     # Le pseudo de l'utilisateur.
     user_pseudo = StringField("Pseudo de l'utilisateur", validators=[DataRequired()],
-                              render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+                              render_kw={"placeholder": "Votre pseudo."})
 
     # Action de soumettre le formulaire.
     submit = SubmitField("Soumettre le commentaire")
@@ -423,7 +423,7 @@ class ChangeCommentSubjectForm(FlaskForm):
     """
 
     comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+                                    render_kw={"placeholder": "Saisie du commentaire."})
     submit = SubmitField("Soumettre le commentaire")
     csrf_token = HiddenField()
 
@@ -454,7 +454,7 @@ class ReplySubjectForm(FlaskForm):
     csrf_token = HiddenField()
     # Le contenu de la réponse.
     reply_content = TextAreaField("Réponse au sujet du forum", validators=[DataRequired()],
-                                  render_kw={"placeholder": "Veuillez écrire votre réponse."})
+                                  render_kw={"placeholder": "Votre réponse."})
     # Champ pour stocker l'id du commentaire parent.
     comment_id = HiddenField('ID du commentaire')
     # Action de soumettre le formulaire.
@@ -472,7 +472,7 @@ class ChangeReplySubject(FlaskForm):
     """
 
     reply_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                  render_kw={"placeholder": "Veuillez entrer votre réponse."})
+                                  render_kw={"placeholder": "Votre réponse."})
     submit = SubmitField("Soumettre la réponse.")
     csrf_token = HiddenField()
 
@@ -540,11 +540,11 @@ class ChatRequestForm(FlaskForm):
 
     # Le pseudo de l'utilisateur.
     pseudo = StringField("Pseudo de l'utilisateur", validators=[DataRequired()],
-                         render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+                         render_kw={"placeholder": "Votre pseudo."})
 
     # La date du chat vidéo.
     date_rdv = DateField("Veuillez sélectionner la date souhaitée", validators=[DataRequired()],
-                         render_kw={"placeholder": "Veuillez renseigner la date souhaitée pour le chat vidéo :"})
+                         render_kw={"placeholder": "Date souhaitée pour le chat vidéo :"})
 
     # L'heure' souhaitée.
     heure = TimeField("Heure souhaitée", format='%H:%M', validators=[DataRequired()],
@@ -575,11 +575,11 @@ class CommentVideoForm(FlaskForm):
 
     # Le contenu du commentaire.
     comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+                                    render_kw={"placeholder": "Votre commentaire."})
 
     # Le pseudo de l'utilisateur.
     user_pseudo = StringField("Pseudo de l'utilisateur", validators=[DataRequired()],
-                              render_kw={"placeholder": "Veuillez renseigner votre pseudo."})
+                              render_kw={"placeholder": "Votre pseudo."})
 
     # Action de soumettre le formulaire.
     submit = SubmitField("Soumettre le commentaire")
@@ -598,7 +598,7 @@ class ChangeCommentVideoForm(FlaskForm):
     """
 
     comment_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                    render_kw={"placeholder": "Veuillez entrer votre commentaire."})
+                                    render_kw={"placeholder": "Votre commentaire."})
     submit = SubmitField("Soumettre le commentaire")
     csrf_token = HiddenField()
 
@@ -629,7 +629,7 @@ class ReplyVideoForm(FlaskForm):
     csrf_token = HiddenField()
     # Le contenu de la réponse.
     reply_content = TextAreaField("Réponse au sujet du forum", validators=[DataRequired()],
-                                  render_kw={"placeholder": "Veuillez écrire votre réponse."})
+                                  render_kw={"placeholder": "Votre réponse."})
     # Champ pour stocker l'id du commentaire parent.
     comment_id = HiddenField('ID du commentaire')
     # Action de soumettre le formulaire.
@@ -647,7 +647,7 @@ class ChangeReplyVideo(FlaskForm):
     """
 
     reply_content = TextAreaField("Contenu du commentaire", validators=[DataRequired()],
-                                  render_kw={"placeholder": "Veuillez entrer votre réponse."})
+                                  render_kw={"placeholder": "Votre réponse."})
     submit = SubmitField("Soumettre la réponse.")
     csrf_token = HiddenField()
 
