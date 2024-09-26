@@ -41,20 +41,4 @@
 <div class="separation"></div>
 <br>
 
-<!-- Pagination -->
-<div class="pagination">
-    {% if page > 1 %}
-        <a href="{{ url_for('frontend.show_videos', page=page-1) }}">Précédent</a>
-    {% endif %}
-
-    {% for p in range(1, total_pages + 1) %}
-        <a href="{{ url_for('frontend.show_videos', page=p) }}" class="{% if page == p %}active{% endif %}">{{ p }}</a>
-    {% endfor %}
-
-    {% if page < total_pages %}
-        <a href="{{ url_for('frontend.show_videos', page=page+1) }}">Suivant</a>
-    {% endif %}
-</div>
-
-
 {% endblock %}

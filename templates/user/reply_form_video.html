@@ -19,7 +19,7 @@
     </div>
     <h3>Réponse au commentaire</h3>
     {{ formreply.csrf_token }}
-    <div class="container">
+    <div class="container-edit">
         {{ formreply.reply_content.label }} {{ formreply.reply_content() }}
         <input type="hidden" name="subject_id" value="{{ comment.subject_id }}">
         <input type="hidden" name="comment_id" value="{{ comment.id }}">

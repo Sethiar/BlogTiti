@@ -50,7 +50,7 @@
         </ul>
         {% endif %}
         <br><br>
-        {{ formrequest.request_content.label }} {{ formrequest.request_content(rows=20, cols=50) }}
+        {{ formrequest.request_content.label }} {{ formrequest.request_content(rows=20, cols=20) }}
         {% if formrequest.request_content.errors %}
         <ul>
             {% for error in formrequest.request_content.errors %}

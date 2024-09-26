@@ -47,8 +47,8 @@
                 <p><button><a href="{{ url_for('auth.user_logout') }}">Se déconnecter</a></button></p>
             <!-- Afficher d'autres contenus de la page pour les utilisateurs connectés -->
                 {% else %}
-                <p>Veuillez vous connecter afin d'accéder aux fonctionnalités des membres.</p>
-                <button><a href="{{ url_for('auth.user_connection') }}">Se connecter</a></button>
+                <p>Pour se connecter.</p>
+                <button><a href="{{ url_for('auth.user_connection') }}">Cliquer ici</a></button>
                 {% endif %}
             </div>
         </nav>
@@ -71,7 +71,7 @@
                 <h3>Liens utiles</h3>
                 <ul>
                     <li><a href="https://www.youtube.com/@titi.lebricoleur">Chaîne Youtube</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="{{ url_for('functional.informations') }}">Informations</a></li>
                 </ul>
             </div>
             <div class="footer-section col-md-3">

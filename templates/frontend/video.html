@@ -52,9 +52,9 @@
             <div class="content-comment">
                 {{ comment.comment_content | replace('\n', '<br>') | safe }}
             </div>
-            <div class="change-comment">
+            <div class="button-comment">
                 {% if comment.user_id == current_user.id %}
-                <a href="{{ url_for('user.change_comment_video', id=comment.id) }}">Modifier le commentaire</a>
+                <button class="change-button"><a href="{{ url_for('user.change_comment_video', id=comment.id) }}">Modifier le commentaire</a></button>
                 <form action="{{ url_for('user.delete_comment_video', id=comment.id) }}" method="POST" style="display:inline;">
                     {{ formsuppress.csrf_token }}
                     <input class="suppress-button" type="submit" value="Supprimer le commentaire" onclick="return confirm('Êtes vous certain de vouloir supprimer votre commentaire ?');">
@@ -112,7 +112,7 @@
                 </div>
                 <div class="change-reply">
                 {% if reply.user_id == current_user.id %}
-                    <a href="{{ url_for('user.change_reply_video', id=reply.id) }}">Modifier la réponse</a>
+                    <button class="change-button"><a href="{{ url_for('user.change_reply_video', id=reply.id) }}">Modifier la réponse</a></button>
                     <form action="{{ url_for('user.delete_reply_video', id=reply.id) }}" method="POST" style="display:inline;">
                     {{ formsuppressreply.csrf_token }}
                         <input class="suppress-button" type="submit" value="Supprimer la réponse" onclick="return confirm('Êtes vous certain de vouloir supprimer votre réponse ?');">

@@ -19,7 +19,7 @@
     </div>
     <h3>Modification de la réponse du commentaire</h3>
      {{ formchangereply.hidden_tag() }}
-    <div class="container">
+    <div class="container-edit">
         {{ formchangereply.reply_content.label }} {{ formchangereply.reply_content() }}
         <input type="hidden" name="comment_id" value="{{ reply.video_id }}">
         <input type="hidden" name="reply_id" value="{{ reply.id }}">
