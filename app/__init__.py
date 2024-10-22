@@ -30,8 +30,9 @@ from app.Models.anonymousvisit import AnonymousVisit
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
 
-# Instanciation des extensions Flask.
+# Instanciation de Flask-mail.
 mailing = Mail()
+# Instanciation de Flask-login.
 login_manager = LoginManager()
 
 
@@ -50,6 +51,7 @@ def create_app():
     # Configuration de flask-moment.
     moment = Moment(app)
 
+    # Création des blueprints pour ordonner les routes.
     from app.Admin import admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')
 
@@ -202,12 +204,12 @@ def create_app():
         session.permanent = True
 
         # Récupération de l'identifiant du visiteur depuis la session.
-        visitor_id = session.get('visitor_id')
+        visitor_id = session.get("visitor_id")
         # Si l'identifiant n'existe pas, création d'un nouveau.
         if not visitor_id:
             visitor_id = str(uuid4())
             # Stockage du nouvel identifiant dans la session.
-            session['visitor_id'] = visitor_id
+            session["visitor_id"] = visitor_id
         # L'identifiant est rendu disponible globalement dans la requête via `g`.
         g.visitor_id = visitor_id
 
@@ -222,9 +224,9 @@ def create_app():
         Args:
             response (Response): L'objet réponse HTTP généré par la requête.
         """
-        # Récupération de l'identifiant du visiteur depuis `g`.
+        # Récupération de l'identifiant du visiteur depuis 'g'.
         visitor_id = getattr(g, 'visitor_id', None)
-        # Si identifiant de visiteur existe, enregistrement de la visite.
+        # Si l'identifiant de visiteur existe, enregistrement de la visite.
         if visitor_id:
             log_visit(visitor_id)
 
@@ -237,7 +239,7 @@ def create_app():
         Args:
             visitor_id (str): L'ID unique du visiteur.
         """
-        # Vérification de l'existence de la visite, mise à jour uo enregistrement.
+        # Vérification de l'existence de la visite, mise à jour ou enregistrement.
         existing_visit = db.session.query(AnonymousVisit).filter_by(visitor_id=visitor_id).first()
         if existing_visit:
             # Mise à jour de l'horodatage de la visite existante.
