@@ -30,3 +30,4 @@ cur = conn.cursor()
 cur.execute("SELECT version();")
 version = cur.fetchone()
 print("Version : ", version, "\n")
+
