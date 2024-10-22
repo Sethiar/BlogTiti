@@ -376,8 +376,7 @@ h1 {
 }
 
 #container_intro {
-/* Pour contenir les éléments flottants */
-  overflow: hidden;
+  overflow: hidden; /* Pour contenir les éléments flottants */
 }
 
 .pics-accueil-fin {
