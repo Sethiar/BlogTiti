@@ -1,5 +1,5 @@
 """
-Déclarationd e la bvase de données pour le blog de TitiTechnique.
+Déclaration de la base de données pour le blog de TitiTechnique.
 Base de données PostGreSQL.
 
 Cette instance 'db' permet de représenter la connexion à la base de données et
@@ -10,3 +10,4 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Instanciation de la base de données.
 db = SQLAlchemy()
+

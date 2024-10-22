@@ -12,7 +12,7 @@ from app.Models.user import User
 from app.email_utils import send_email_in_background
 
 
-# Méthode qui envoie un mail de confirmation pour l'inscription d'un utilisateur."
+# Méthode qui envoie un mail de confirmation pour l'inscription d'un utilisateur.
 @mail_bp.route("/send_confirmation_email/<string:email>")
 def send_confirmation_email_user(email):
     """
@@ -40,7 +40,7 @@ def send_confirmation_email_user(email):
 # Méthode qui renvoie le mail de bon anniversaire à l'utilisateur.
 def send_birthday_email(email):
     """
-    Envoie un e-mail de souhaits d'anniversaire à un utilisateur spécifique.
+    Envoie un e-mail de souhait d'anniversaire à un utilisateur spécifique.
     """
     user = User.query.filter_by(email=email).first()
     msg = Message("Joyeux anniversaire !",
@@ -197,8 +197,8 @@ def mail_like_comment_subject(user, subject):
     """
     Envoie un mail à l'auteur du commentaire de la section forum afin de l'avertir
     qu'un utilisateur a aimé son commentaire.
-    :param user: utilisateur qui a posté le commentaire.
-    :param subject: sujet dont le commentaire a été liké.
+    :param user : utilisateur qui a posté le commentaire.
+    :param subject : sujet dont le commentaire a été liké.
     """
     msg = Message("Quelqu'un a aimé votre commentaire de la section forum.",
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
@@ -218,7 +218,7 @@ def mail_like_comment_subject(user, subject):
 def mail_reply_video_comment(email, video_title):
     """
     Envoie un mail à l'auteur du commentaire en cas de réponse à celui-ci.
-    :param email: email de l'utilisateur qui a commenté le sujet du forum.
+    :param email : email de l'utilisateur qui a commenté le sujet du forum.
     :param video_title : titre de la vidéo commentée.
     """
     user = User.query.filter_by(email=email).first()
@@ -240,8 +240,8 @@ def mail_like_comment_video(user, video):
     """
     Envoie un mail à l'auteur du commentaire de la section vidéo afin de l'avertir
     qu'un utilisateur a aimé son commentaire.
-    :param user: utilisateur qui a posté le commentaire.
-    :param video: vidéo dont le commentaire a été liké.
+    :param user : utilisateur qui a posté le commentaire.
+    :param video : vidéo dont le commentaire a été liké.
     """
     msg = Message("Quelqu'un a aimé votre commentaire de la section vidéo.",
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
@@ -260,7 +260,7 @@ def send_confirmation_request_reception(user):
     """
     Fonction qui envoie un mail de confirmation à l'utilisateur de la bonne réception de sa requête de chat vidéo.
 
-    :param user: utilisateur qui a fait la requête de chat vidéo.
+    :param user : utilisateur qui a fait la requête de chat vidéo.
     :return:
     """
     msg = Message("Confirmation de la demande de chat vidéo.",
@@ -277,13 +277,14 @@ def send_confirmation_request_reception(user):
 
 
 # Méthode envoyant un mail à l'administrateur du site s'il y a une demande de chat vidéo.
-def send_request_admin(user, request_content):
+def send_request_admin(user, request_content, attachment_data=None, attachment_name=None):
     """
     Fonction qui envoie un mail pour informer l'administration d'une requête de chat vidéo.
 
-    :param user: utilisateur qui a envoyé la demande de chat.
-    :param request_content: contenu de la requête de l'utilisateur.
-    :return:
+    :param attachment_data : Le contenu du fichier à envoyer (en mémoire)
+    :param attachment_name : Le nom du fichier à envoyer.
+    :param user : utilisateur qui a envoyé la demande de chat.
+    :param request_content : contenu de la requête de l'utilisateur.
     """
     msg = Message("Demande de chat vidéo.",
                   sender=current_app.config['MAIL_DEFAULT_SENDER'],
@@ -295,6 +296,11 @@ def send_request_admin(user, request_content):
                f"{request_content} \n" \
                "\n" \
                f"Bon courage Titi."
+
+    # Si un fichier est joint, ajout en pièce jointe depuis la mémoire.
+    if attachment_data and attachment_name:
+        msg.attach(attachment_name, "application/octet-stream", attachment_data)
+
     current_app.extensions['mail'].send(msg)
 
 
@@ -302,9 +308,9 @@ def send_request_admin(user, request_content):
 def send_mail_validate_request(user, request, chat_link):
     """
     Fonction qui envoie un mail pour informer de la validation de la requête par l'administrateur.
-    :param user: utilisateur qui a envoyé la demande de chat.
-    :param request: requête de l'utilisateur.
-    :param chat_link: lien du chat vidéo.
+    :param user : utilisateur qui a envoyé la demande de chat.
+    :param request : requête de l'utilisateur.
+    :param chat_link : lien du chat vidéo.
     :return:
     """
 
@@ -329,7 +335,7 @@ def send_mail_refusal_request(user):
     """
     Fonction qui envoie un mail pour informer du refus de la requête par l'administrateur.
 
-    :param user: utilisateur qui a envoyé la demande de chat.
+    :param user : utilisateur qui a envoyé la demande de chat.
     :return:
     """
     msg = Message("Refus de la requête de chat vidéo.",

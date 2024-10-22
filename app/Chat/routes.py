@@ -6,7 +6,7 @@ from datetime import datetime
 
 from app.Chat import chat_bp
 
-from flask import render_template, flash, redirect, url_for, abort, request, current_app, send_file
+from flask import render_template, flash, redirect, url_for, abort, request, current_app, send_from_directory
 from flask_login import current_user, login_required
 
 from werkzeug.utils import secure_filename
@@ -53,7 +53,7 @@ def video_chat(request_id):
 
 
 # Route permettant de remplir le formulaire afin de demander un chat vidéo.
-@chat_bp.route('/demande-chat-vidéo')
+@chat_bp.route('/demande-chat-vidéo', methods=['GET', 'POST'])
 @login_required
 def chat_request():
     """"
@@ -84,84 +84,77 @@ def chat_request():
 def send_request(user_id):
     """
     Gère la demande de chat vidéo en affichant le formulaire et en enregistrant
-    les informations dans la base de données et des emails de confirmation sont
-    envoyés à l'utilisateur et à un administrateur.
-
-    Args:
-        user_id (int): Identifiant de l'utilisateur qui fait la demande de chat.
-
-    Returns:
-        Response: Redirection vers la page d'accueil du blog après le traitement de la demande.
+    les informations dans la base de données, avec envoi d'emails à l'utilisateur et à l'administrateur.
     """
-    # Instanciation du formulaire.
+
     formrequest = ChatRequestForm()
 
-    # Vérification de la soumission du formulaire.
     if formrequest.validate_on_submit():
-        # Assainissement des données du formulaire.
+        # Récupération des données du formulaire.
         pseudo = formrequest.pseudo.data
         request_content = formrequest.request_content.data
         date_rdv = formrequest.date_rdv.data
         heure = formrequest.heure.data
+        datetime_rdv = datetime.combine(date_rdv, heure)
+
+        # Vérification de la disponibilité de la plage horaire
+        conflicting_request = ChatRequest.query.filter_by(date_rdv=date_rdv, heure=heure).first()
+
+        if conflicting_request:
+            flash(f"La plage horaire pour le {date_rdv} à {heure} est déjà réservée. Veuillez choisir une autre plage.",
+                  "danger")
+            return redirect(request.url)
 
         # Traitement du fichier joint.
         file_path = None
+        filename = None
         if formrequest.attachment.data:
             file = formrequest.attachment.data
+
+            # Vérification si le fichier est autorisé.
             if allowed_file(file.filename):
+                # Sécurisation du nom du fichier.
                 filename = secure_filename(file.filename)
-                file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-                try:
-                    # Création du dossier si nécessaire
-                    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
-                    file.save(file_path)
-                    flash('Votre demande a été soumise avec succès et le fichier a été téléchargé.', 'success')
-                except Exception as e:
-                    flash(f"Erreur lors du téléchargement du fichier: {str(e)}", 'danger')
-                    return redirect(request.url)
+                file_data = file.read()
             else:
-                flash('Type de fichier non autorisé.', 'danger')
+                flash("Type de fichier non autorisé.", "danger")
                 return redirect(request.url)
 
-        # Récupération de l'utilisateur spécifié par l'user_id depuis la base de données.
+        # Récupération de l'utilisateur et l'administrateur.
         user = User.query.get(user_id)
-
-        # Vérification de l'existence de l'utilisateur.
         if not user:
-            # Si l'utilisateur n'existe pas, erreur 404 renvoyée.
             abort(404, description="Utilisateur non trouvé")
 
-        # Récupération d'un administrateur pour associer la demande.
-        admin = Admin.query.first()  # Assurez-vous de bien gérer la sélection de l'admin.
-
+        admin = Admin.query.first()
         if not admin:
-            # Si aucun administrateur n'est trouvé, vous pouvez gérer cette situation ici.
             flash("Aucun administrateur disponible pour traiter la demande.", "error")
             return redirect(url_for('landing_page'))
 
-        # Création d'une nouvelle requête.
+        # Création d'une nouvelle demande de chat.
         new_request = ChatRequest(
             pseudo=pseudo,
             request_content=request_content,
             date_rdv=date_rdv,
             heure=heure,
-            attachment=file_path,
+            attachment=filename,
             user_id=user_id,
             admin_id=admin.id
         )
 
         try:
-            # Ajout à la base de données.
             db.session.add(new_request)
-            # Enregistrement dans la base de données.
             db.session.commit()
-            flash("Demande effectuée avec succès.", "success")
-            # Envoie du mail de confirmation à l'utilisateur.
+
+            # Envoi du mail à l'utilisateur.
             send_confirmation_request_reception(user)
-            # Envoie d'un mail contenant la requête à l'administrateur.
-            send_request_admin(admin, request_content=request_content)
+
+            # Envoi du mail à l'administrateur avec le fichier en pièce jointe (si fichier joint).
+            send_request_admin(admin, request_content=request_content, attachment_data=file_data,
+                               attachment_name=filename)
+
+            flash("Demande effectuée avec succès.", "success")
+
         except Exception as e:
-            # Gestion des erreurs et exceptions.
             db.session.rollback()
             flash(f"Erreur lors de l'enregistrement de la demande: {str(e)}", "danger")
 
@@ -196,15 +189,6 @@ def suppress_request(id):
         flash(f"La requête de l'utilisateur : {request.pseudo} a été supprimée.")
 
     return redirect(url_for('admin.calendar'))
-
-
-# Méthode permettant de supprimer le fichier envoyé par l'utilisateur lors de la demande de chat.
-@chat_bp.route('/visualiser-fichier/<filename>')
-def view_file(filename):
-    """
-    Visualise le fichier dans le navigateur sans forcer le téléchargement.
-    """
-    pass
 
 
 # Méthode traitant la demande en attente et la validant.

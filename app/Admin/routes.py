@@ -2,7 +2,7 @@
 Code permettant de définir les routes concernant les fonctions des administrateurs du blog comme, le bannissement des
 utilisateurs, la suppression des commentaires des différentes sections et l'accès au backend...
 """
-import os
+
 from datetime import datetime
 
 import bcrypt

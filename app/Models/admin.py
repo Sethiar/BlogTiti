@@ -42,7 +42,7 @@ class Admin(db.Model, UserMixin):
         Returns:
             str: chaîne de caractère représentant l'objet Administrateur.
         """
-        return f"<Admin(id={self.id}, pseudo='{self.pseudo}', role='{self.role}')>"
+        return f"<Admin(id='{self.id}', pseudo='{self.pseudo}', role='{self.role}')>"
 
     def is_active(self):
         """

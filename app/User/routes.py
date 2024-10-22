@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 
 from flask_login import login_required, current_user
-from flask import request, render_template, redirect, url_for, flash, jsonify, abort
+from flask import request, render_template, redirect, url_for, flash, jsonify
 from markupsafe import escape
 
 from app.User import user_bp
@@ -27,7 +27,7 @@ from app.Models.comment_video import CommentVideo
 from app.Models.likes_comment_video import CommentLikeVideo
 from app.Models.reply_video import ReplyVideo
 
-from app.Models.forms import UserSaving, NewSubjectForumForm, CommentSubjectForm, ChangeCommentSubjectForm, \
+from app.Models.forms import UserSaving, NewSubjectForumForm, ChangeCommentSubjectForm, \
     SuppressCommentForm, ReplySubjectForm, ChangeReplySubject, SuppressReplySubject, CommentVideoForm, \
     ChangeCommentVideoForm, SuppressCommentVideoForm, ReplyVideoForm, ChangeReplyVideo, SuppressReplyVideo
 
@@ -169,7 +169,7 @@ def add_subject_forum():
 
 
 # Route permettant de commenter un sujet du forum.
-@user_bp.route("/forum/commentaires_sujet", methods=['POST'])
+@user_bp.route("/forum/commentaires-sujet", methods=['POST'])
 @login_required
 def comment_subject():
     """
@@ -471,7 +471,8 @@ def reply_form_subject(comment_id, user_pseudo):
                            comment=comment, user=user)
 
 
-@user_bp.route('/commentaires-vidéo/', methods=['GET', 'POST'])
+# Route permettant de poster un commentaire dans la section vidéo du blog.
+@user_bp.route('/commentaires-vidéo', methods=['GET', 'POST'])
 @login_required  # Assure que l'utilisateur est authentifié
 def comment_video():
     """

@@ -27,7 +27,6 @@ from app.utils_videos import get_videos_from_db, archived_videos, popular_videos
 YOUTUBE_API = os.getenv('YOUTUBE_API')
 ID_CHANNEL = os.getenv('ID_CHANNEL')
 
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -51,7 +50,7 @@ def forum():
     # Passage de la valeur booléenne d'authentification au template.
     is_authenticated = current_user.is_authenticated
 
-    # Debug: Vérification du type.
+    # Debug : Vérification du type.
     print("Type of is_authenticated:", type(is_authenticated))
 
     return render_template('frontend/forum.html', formsubjectforum=formsubjectforum, subjects=subjects,
@@ -65,13 +64,13 @@ def forum_subject(subject_id):
     Route permettant d'accéder à un sujet spécifique du forum.
 
     Args:
-        subject_id (int): L'identifiant du sujet à afficher.
+        subject_id (int) : L'identifiant du sujet à afficher.
 
-    Returns:
+    Returns :
         Template HTML 'frontend/subject_forum.html' avec les détails du sujet et ses commentaires associés.
 
-    Raises:
-        404 Error: Si aucun sujet correspondant à l'ID spécifié n'est trouvé dans la base de données.
+    Raises :
+        404 Error : Si aucun sujet correspondant à l'ID spécifié n'est trouvé dans la base de données.
     """
     # Création de l'instance des formulaires.
     formcomment = CommentSubjectForm()
@@ -275,4 +274,5 @@ def display_video(video_id):
                            comment_video=comment_video, formcomment=formcomment,
                            formlikecomment=formlikecomment, comment_likes_data=comment_likes_data,
                            is_authenticated=is_authenticated)
+
 
