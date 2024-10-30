@@ -7,7 +7,10 @@
 
 {% block body_content %}
 <div id="container-error">
-    <h1>Erreur 404--Trop de pages ??</h1>
+    <div id="error-image404">
+        <img src="{{ url_for('static', filename='Images/images_error/error404.jpg') }}" alt="Image illustrative">
+    </div>
+    <h1>Erreur 404 -- Alors on est perdu ???</h1>
     <div class="error-404">
         <div class="error-message404">
             <p>Oups ! La page que vous cherchez semble être en dérangement.</p>
@@ -22,9 +25,6 @@
             </p>
         </div>
 
-    <div id="error-image404">
-        <img src="" alt="Image illustrative">
-    </div>
     <div class="separation"></div>
 </div>
 {% endblock %}
