@@ -23,7 +23,7 @@ class Config:
     WTF_CSRF_ENABLED = True
 
     # Configuration de la base de données.
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:Monolithe8@localhost:5432/db_tititechnique"
+    SQLALCHEMY_DATABASE_URI = "postgresql://meth6045:bloggeminips626#@localhost:5432/meth6045_db_tititechnique"
     SQLALCHEMY_TRACK_MODIFICATION = False
 
     # Clé secrète pour sécuriser les cookies de session.

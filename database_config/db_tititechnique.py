@@ -1,6 +1,6 @@
 """Ce script configure la connexion à la base de données du blog.
 
-Il se connecte à la base de données PostgreSQL 'db_tititechnique' en utilisant les paramètres spécifiés
+Il se connecte à la base de données PostgreSQL 'meth6045_db_tititechnique' en utilisant les paramètres spécifiés
 (user, password, host, port, database). Ensuite, il crée un curseur pour effectuer des opérations sur la base de données.
 Finalement, il affiche la version de la base de données PostgreSQL.
 
@@ -14,10 +14,10 @@ import psycopg2
 
 conn = psycopg2.connect(
     user="postgres",
-    password="Monolithe8",
+    password="bloggeminips626",
     host="localhost",
     port="5432",
-    database="db_tititechnique"
+    database="meth6045_db_tititechnique"
     )
 
 # Création du curseur pour pouvoir faire agir sur la database
