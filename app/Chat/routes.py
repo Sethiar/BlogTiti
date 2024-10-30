@@ -1,7 +1,6 @@
 """
 Code permettant de gérer les routes concernant le chat vidéo du blog.
 """
-import os.path
 from datetime import datetime
 
 from app.Chat import chat_bp
@@ -95,7 +94,6 @@ def send_request(user_id):
         request_content = formrequest.request_content.data
         date_rdv = formrequest.date_rdv.data
         heure = formrequest.heure.data
-        datetime_rdv = datetime.combine(date_rdv, heure)
 
         # Vérification de la disponibilité de la plage horaire
         conflicting_request = ChatRequest.query.filter_by(date_rdv=date_rdv, heure=heure).first()
@@ -108,6 +106,7 @@ def send_request(user_id):
         # Traitement du fichier joint.
         file_path = None
         filename = None
+        file_data = None
         if formrequest.attachment.data:
             file = formrequest.attachment.data
 
@@ -136,7 +135,7 @@ def send_request(user_id):
             request_content=request_content,
             date_rdv=date_rdv,
             heure=heure,
-            attachment=filename,
+            attachment=filename,  # La pièce jointe peut être None si aucun fichier n'est joint.
             user_id=user_id,
             admin_id=admin.id
         )

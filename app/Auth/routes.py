@@ -357,7 +357,23 @@ def recording_new_password(token):
     return render_template('functional/recording_password.html', formpassword=formpassword, token=token)
 
 
+# Route renvoyant l'utilisateur banni devant le template d'information concernant le bannissement.
+@auth_bp.route("/utilisateur-banni-informations/<int:user_id>")
+def user_banned(user_id):
+    """
+    Fonction qui renvoie la page d'information concernant le bannissement d'un utilisateur.
 
+    :param user_id: ID de l'utilisateur qui est banni.
+    :return: Functional/user_banned.html
+    """
+    # Recherche du pseudo de l'utilisateur banni dans la table de données User.
+    user = User.query.filter_by(id=user_id).first()
+    # Vérification de l'utilisateur dans la table de données.
+    if not user:
+        # Gestion du cas où l'utilisateur n'existe pas.
+        return "Utilisateur non trouvé", 404
+
+    return render_template("Functional/user_banned.html", user=user)
 
 
 
