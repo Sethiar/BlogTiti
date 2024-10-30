@@ -555,6 +555,7 @@ class CommentLike(FlaskForm):
     submit = SubmitField()
     csrf_token = HiddenField()
 
+
 # Formulaire permettant de demander un chat vidéo à l'administrateur.
 class ChatRequestForm(FlaskForm):
     """
@@ -586,7 +587,6 @@ class ChatRequestForm(FlaskForm):
     heure = TimeField("Heure souhaitée", format='%H:%M', validators=[DataRequired()],
                       render_kw={"placeholder": "12:00"})
     attachment = FileField("Joindre un document", validators=[
-        FileRequired(),
         FileAllowed(['pdf', 'doc', 'docx'], 'Seuls les fichiers PDF ou Word sont autorisés.')
     ])
     # Action de soumettre le formulaire.
@@ -666,6 +666,7 @@ class ReplyVideoForm(FlaskForm):
     # Action de soumettre le formulaire.
     submit = SubmitField()
     csrf_token = HiddenField()
+
 
 # Formulaire permettant à un utilisateur de modifier sa réponse à un commentaire dans la section vidéo.
 class ChangeReplyVideo(FlaskForm):
