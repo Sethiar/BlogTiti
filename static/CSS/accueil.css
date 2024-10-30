@@ -146,7 +146,6 @@ button a {
 .visits p {
   color: darkorange;
   font-size: 18px;
-
 }
 
 .number-visit {
@@ -612,7 +611,6 @@ footer p {
   h1 {
     font-size: 35px;
   }
-
 
   .content-block {
     flex: 1 1 40%;

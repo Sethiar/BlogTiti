@@ -23,7 +23,18 @@ h2 {
   font-size: 22px;
 }
 
-#container_politique {
+.back a {
+  color: darkorange;
+}
+.back a:hover {
+  color: gold;
+}
+
+#container-info {
+  border : 2px solid orange;
+}
+
+#container-politique {
   width: 70%;
   margin: 0 auto;
   padding-right: 5%;
