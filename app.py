@@ -10,6 +10,7 @@ from flask import render_template, session, send_from_directory
 from app import create_app
 
 from app.Models import db
+from app.Models.user import User
 from app.Models.anonymousvisit import AnonymousVisit
 
 from app.utils_videos import get_videos_from_db
@@ -45,6 +46,7 @@ def page_not_found(error):
     return render_template("Error/404.html"), 404
 
 
+# Route renvoyant l'erreur 401.
 @app.errorhandler(401)
 def no_authenticated(error):
     """
