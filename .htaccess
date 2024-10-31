@@ -1,0 +1,64 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/meth6045/BlogTitiTechnique"
+PassengerBaseURI "/"
+PassengerPython "/home/meth6045/virtualenv/BlogTitiTechnique/3.11/bin/python"
+PassengerAppLogFile "/home/meth6045/logs"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# Configuration de compression, indexation, et protection XSS
+
+# Activer la compression gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Contrôle de l'indexation
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+# Protection contre les attaques XSS
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set Content-Security-Policy "default-src 'self';"
+</IfModule>
+
+# Protection des fichiers sensibles
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protection contre les injections SQL
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{QUERY_STRING} (union|select|insert|drop|delete|update) [NC]
+    RewriteRule .* - [F]
+
+    # Redirections
+    # Rediriger toutes les requêtes vers www
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
+
+    # Redirection HTTP vers HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Réécriture d'URL (facultatif)
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
