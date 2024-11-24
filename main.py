@@ -81,4 +81,4 @@ def landing_page():
 
 
 # Code lançant les tâches planifiées.
-#scheduled_task(application)
+scheduled_task(application)
