@@ -1,9 +1,10 @@
 {% extends 'base.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Videos archivées du blog ne correspondant pas au mois courant.">
+    <meta name="description" content="Vidéos archivées du blog ne correspondant pas au mois courant.">
     <title>{% block title %}Archives des videos{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/videos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/subject_forum.css') }}">
 {% endblock %}
 
     {% block header_content %}
@@ -16,14 +17,13 @@
 <br><br>
 <div class="separation"></div>
 <h1>Archives des vidéos de TitiTechnique pour {{ month_year }}</h1>
-<div class="video-container">
-    {% for video in archived %}
+<div class="container-vidéo">
+    {% for video in videos %}
     <div class="video-item">
         <h3>{{ video.title }}</h3>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
                 frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
-        <div class="separation"></div>
         <br>
         <div class="informations">
             <p>Date de publication : {{ video.published_at }}</p>
@@ -34,6 +34,7 @@
         <br>
         <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
     </div>
+    <br><br>
     {% endfor %}
 </div>
 

@@ -52,7 +52,7 @@ def video_chat(request_id):
 
 
 # Route permettant de remplir le formulaire afin de demander un chat vidéo.
-@chat_bp.route('/demande-chat-vidéo', methods=['GET', 'POST'])
+@chat_bp.route('/demande-chat-video', methods=['GET', 'POST'])
 @login_required
 def chat_request():
     """"
@@ -156,6 +156,10 @@ def send_request(user_id):
         except Exception as e:
             db.session.rollback()
             flash(f"Erreur lors de l'enregistrement de la demande: {str(e)}", "danger")
+        finally:
+            # Supprime la session pour garantir une libération des ressources.
+            db.session.remove()  
+    
 
     return redirect(url_for('landing_page'))
 

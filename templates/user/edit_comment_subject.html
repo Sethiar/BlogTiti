@@ -14,9 +14,7 @@
     <p>Voici le formulaire pour modifier un commentaire.</p>
 </div>
 <form method="POST" action="{{ url_for('user.change_comment', id=comment.id) }}">
-    <div class="imgcontainer">
-        <img src="" alt="Avatar" class="avatar">
-    </div>
+    
     <h3>Modification du commentaire</h3>
      {{ formchange.hidden_tag() }}
     <div class="container-edit">

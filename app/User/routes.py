@@ -64,34 +64,39 @@ def user_recording():
 
         # Vérification de la soumission du fichier.
         if 'profil_photo' not in request.files or request.files['profil_photo'].filename == '':
-            flash("Aucune photo de profil fournie.", "error")
-            return redirect(url_for('user.user_recording'))
-
-        profil_photo = request.files['profil_photo']
-        if profil_photo and allowed_file(profil_photo.filename):
-            photo_data = profil_photo.read()
-
-            # Redimensionnement de l'image avec Pillow.
+            # Charger une image par défaut si aucune n'est fournie.
             try:
-                img = Image.open(BytesIO(photo_data))
-                img.thumbnail((75, 75))
-                img_format = img.format if img.format else 'JPEG'
-                output = BytesIO()
-                img.save(output, format=img_format)
-                photo_data_resized = output.getvalue()
-            except Exception as e:
-                flash(f"Erreur lors du redimensionnement de l'image : {str(e)}", "error")
-                return redirect(url_for("user.user_recording"))
+                with open("static/Images/images_profil/default.png", "rb") as default_image:
+                    photo_data = default_image.read()
+                    photo_data_resized = photo_data  # Pas besoin de redimensionner une image déjà optimisée.
+            except FileNotFoundError:
+                flash("Image par défaut introuvable. Veuillez contacter l'administrateur.", "error")
+                return redirect(url_for('user.user_recording'))
+        else:
+            profil_photo = request.files['profil_photo']
+            if profil_photo and allowed_file(profil_photo.filename):
+                photo_data = profil_photo.read()
 
-            if len(photo_data_resized) > 5 * 1024 * 1024:  # 5 Mo
-                flash("Le fichier est trop grand (maximum 5 Mo).", "error")
+                # Redimensionnement de l'image avec Pillow.
+                try:
+                    img = Image.open(BytesIO(photo_data))
+                    img.thumbnail((75, 75))
+                    img_format = img.format if img.format else 'JPEG'
+                    output = BytesIO()
+                    img.save(output, format=img_format)
+                    photo_data_resized = output.getvalue()
+                except Exception as e:
+                    flash(f"Erreur lors du redimensionnement de l'image : {str(e)}", "error")
+                    return redirect(url_for("user.user_recording"))
+
+                if len(photo_data_resized) > 5 * 1024 * 1024:  # 5 Mo
+                    flash("Le fichier est trop grand (maximum 5 Mo).", "error")
+                    return redirect(url_for('user.user_recording'))
+            else:
+                flash("Type de fichier non autorisé.", "error")
                 return redirect(url_for('user.user_recording'))
 
-            photo_data = profil_photo.read()
-        else:
-            flash("Type de fichier non autorisé.", "error")
-            return redirect(url_for('user.user_recording'))
-
+        # Création de l'objet utilisateur.
         new_user = User(
             pseudo=pseudo,
             password_hash=password_hash,
@@ -111,7 +116,8 @@ def user_recording():
             db.session.rollback()
             flash(f"Erreur lors de l'enregistrement de l'utilisateur: {str(e)}", "error")
 
-    return render_template("User/form_user.html", form=form)
+    # Retourner le formulaire si la validation échoue.
+    return render_template("user/form_user.html", form=form)
 
 
 # Méthode permettant de visualiser la photo de l'utilisateur.
@@ -146,7 +152,7 @@ def add_subject_forum():
     formsubjectforum = NewSubjectForumForm()
 
     # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
+    is_authenticated = bool(current_user.is_authenticated)
     author = current_user.pseudo
 
     # Debug: Vérification du type.
@@ -154,7 +160,7 @@ def add_subject_forum():
 
     if request.method == "POST":
         # Saisie du nom du sujet.
-        nom_subject_forum = escape(request.form.get("nom"))
+        nom_subject_forum = request.form.get("nom")
         subject_forum = SubjectForum(nom=nom_subject_forum, author=current_user.pseudo)
 
         # Enregistrement du sujet dans la base de données.
@@ -467,12 +473,12 @@ def reply_form_subject(comment_id, user_pseudo):
     # Récupération des utilisateurs qui ont posté sur le sujet.
     user = User.query.filter_by(pseudo=user_pseudo).first()
 
-    return render_template("User/reply_form_subject.html", formsubjectreply=formsubjectreply,
+    return render_template("user/reply_form_subject.html", formsubjectreply=formsubjectreply,
                            comment=comment, user=user)
 
 
 # Route permettant de poster un commentaire dans la section vidéo du blog.
-@user_bp.route('/commentaires-vidéo', methods=['GET', 'POST'])
+@user_bp.route('/commentaires-video', methods=['GET', 'POST'])
 @login_required  # Assure que l'utilisateur est authentifié
 def comment_video():
     """
@@ -512,7 +518,7 @@ def comment_video():
 
 
 # Route permettant à un utilisateur de modifier son commentaire dans la section vidéo.
-@user_bp.route('/modification-commentaire-utilisateur-vidéo/<int:id>', methods=['GET', 'POST'])
+@user_bp.route('/modification-commentaire-utilisateur-video/<int:id>', methods=['GET', 'POST'])
 @login_required
 def change_comment_video(id):
     """
@@ -545,7 +551,7 @@ def change_comment_video(id):
 
 
 # Route permettant à un utilisateur de supprimer son commentaire dans la section vidéo.
-@user_bp.route('/suppression-commentaire-utilisateur-vidéo/<int:id>', methods=['POST'])
+@user_bp.route('/suppression-commentaire-utilisateur-video/<int:id>', methods=['POST'])
 @login_required
 def delete_comment_video(id):
     """
@@ -630,7 +636,7 @@ def comment_replies_video(comment_video_id, user_pseudo):
 
 
 # Route permettant à un utilisateur de modifier sa réponse à un commentaire de la section vidéo.
-@user_bp.route('/modification-réponse-utilisateur-vidéo/<int:id>', methods=['GET', 'POST'])
+@user_bp.route('/modification-reponse-utilisateur-video/<int:id>', methods=['GET', 'POST'])
 @login_required
 def change_reply_video(id):
     """
@@ -663,7 +669,7 @@ def change_reply_video(id):
 
 
 # Route permettant à un utilisateur de supprimer sa réponse à un commentaire.
-@user_bp.route('/suppression-réponse-utilisateur-vidéo/<int:id>', methods=['POST'])
+@user_bp.route('/suppression-reponse-utilisateur-video/<int:id>', methods=['POST'])
 @login_required
 def delete_reply_video(id):
     """
@@ -770,5 +776,5 @@ def reply_form_video(comment_id, user_pseudo):
     # Récupération des utilisateurs qui ont posté sur le sujet.
     user = User.query.filter_by(pseudo=user_pseudo).first()
 
-    return render_template("User/reply_form_video.html", formreply=formreply,
+    return render_template("user/reply_form_video.html", formreply=formreply,
                            comment=comment, user=user)

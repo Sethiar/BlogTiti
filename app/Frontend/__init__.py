@@ -4,6 +4,6 @@ Code permettant de définir l'accès aux routes concernant les fonctions utilisa
 
 from flask import Blueprint
 
-frontend_bp = Blueprint('frontend', __name__)
+frontend_bp = Blueprint('frontend', __name__,)
 
 from app.Frontend import routes

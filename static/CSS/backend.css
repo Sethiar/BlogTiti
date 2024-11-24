@@ -1,14 +1,20 @@
 /* Style pour la page d'accueil du back-end */
 
+/* Styles globaux. */
+* {
+  font-size: 20px;  
+}
+
 html, body {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    color: white;
-    font-size: 14px;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: white;
+  font-family: "Sour Gummy", sans-serif;
 }
 
 h1 {
+  font-size: 24px;      
   padding: 3%;
   display: flex;
   flex-direction: column;

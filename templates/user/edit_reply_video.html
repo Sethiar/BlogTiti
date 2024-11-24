@@ -14,9 +14,7 @@
     <p>Voici le formulaire pour modifier une réponse à un commentaire d'une vidéo.</p>
 </div>
 <form method="POST" action="{{ url_for('user.change_reply_video', id=reply.id) }}">
-    <div class="imgcontainer">
-        <img src="" alt="Avatar" class="avatar">
-    </div>
+    
     <h3>Modification de la réponse du commentaire</h3>
      {{ formchangereply.hidden_tag() }}
     <div class="container-edit">

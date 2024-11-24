@@ -1,5 +1,5 @@
 """
-Routes permettant le mailing de l'application.
+Routes permettant le mailing de l'application.py.
 """
 
 from app.Mail import mail_bp
@@ -31,7 +31,7 @@ def send_confirmation_email_user(email):
                f"Merci {user.pseudo} de votre confiance. \n" \
                "\n" \
                f"Cordialement, \n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
 
     current_app.extensions['mail'].send(msg)
     return redirect(url_for('landing_page'))
@@ -51,7 +51,7 @@ def send_birthday_email(email):
                f"Nous vous souhaitons un très joyeux anniversaire !\n" \
                "\n" \
                f"\nCordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -74,7 +74,7 @@ def mail_banned_user(email):
                f"à nouveau les règles du blog, vous serez banni définitivement.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -96,7 +96,7 @@ def mail_deban_user(email):
                f"À bientôt.\n" \
                "\n" \
                f"Cordialement, \n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
 
     current_app.extensions['mail'].send(msg)
 
@@ -121,7 +121,7 @@ def definitive_banned(email):
                f"règles établies.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -147,7 +147,7 @@ def reset_password_mail(email, reset_url):
                f' pour réinitialiser votre mot de passe, cliquez sur le lien suivant : {reset_url}' \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -166,7 +166,7 @@ def password_reset_success_email(user):
                f"Votre mot de passe a été réinitialisé avec succès.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -188,7 +188,7 @@ def mail_reply_forum_comment(email, subject_nom):
                f"Un utilisateur a répondu à votre commentaire de la section forum dont le sujet est {subject_nom}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -209,7 +209,7 @@ def mail_like_comment_subject(user, subject):
                f"concernant le sujet suivant : {subject.nom}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     send_email_in_background(current_app._get_current_object(), msg)
 
 
@@ -231,7 +231,7 @@ def mail_reply_video_comment(email, video_title):
                f"Un utilisateur a répondu à votre commentaire de la section vidéo dont le titre est {video_title}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -251,7 +251,7 @@ def mail_like_comment_video(user, video):
                f"concernant le sujet suivant : {video.title}.\n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     send_email_in_background(current_app._get_current_object(), msg)
 
 
@@ -272,7 +272,7 @@ def send_confirmation_request_reception(user):
                f"afin de valider votre rendez-vous. \n" \
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -299,7 +299,7 @@ def send_request_admin(user, request_content, attachment_data=None, attachment_n
 
     # Si un fichier est joint, ajout en pièce jointe depuis la mémoire.
     if attachment_data and attachment_name:
-        msg.attach(attachment_name, "application/octet-stream", attachment_data)
+        msg.attach(attachment_name, "application.py/octet-stream", attachment_data)
 
     current_app.extensions['mail'].send(msg)
 
@@ -326,7 +326,7 @@ def send_mail_validate_request(user, request, chat_link):
                f"avant le rendez-vous afin d'être prêt pour le chat vidéo.\n" \
                "\n"\
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 
 
@@ -348,6 +348,6 @@ def send_mail_refusal_request(user):
                f"refaire une demande de chat vidéo. \n"\
                "\n" \
                f"Cordialement,\n" \
-               f"L'équipe du blog de Titiechnique."
+               f"L'équipe du blog de Tititechnique."
     current_app.extensions['mail'].send(msg)
 

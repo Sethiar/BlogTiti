@@ -6,8 +6,8 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, EmailField, DateField, FileField, \
-    TextAreaField, TimeField
-from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo
+    TextAreaField, TimeField, IntegerField
+from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo, NumberRange
 
 from app.Models.user import User
 
@@ -565,7 +565,7 @@ class ChatRequestForm(FlaskForm):
         request_content (TextAreaField): Champ pour le contenu de la demande.
         pseudo (StringField): Champ pour le pseudo de l'utilisateur.
         date_rdv (DateField): Champ pour sélectionner la date du chat vidéo.
-        heure (TimeField): Champ pour indiquer l'heure du chat vidéo.
+        heure (IntegerField): Champ pour indiquer l'heure du chat vidéo.
         attachment (FileField): Champ pour joindre un document à la demande de chat.
         submit (SubmitField): Bouton pour soumettre le formulaire.
         csrf_token (HiddenField): Champ caché pour la protection CSRF.
@@ -584,8 +584,12 @@ class ChatRequestForm(FlaskForm):
     date_rdv = DateField("Veuillez sélectionner la date souhaitée", validators=[DataRequired()],
                          render_kw={"placeholder": "Date souhaitée pour le chat vidéo :"})
     # L'heure souhaitée.
-    heure = TimeField("Heure souhaitée", format='%H:%M', validators=[DataRequired()],
-                      render_kw={"placeholder": "12:00"})
+    heure = TimeField("Heure souhaitée", validators=[DataRequired(message="Veuillez indiquer une heure valide.")],
+        # Force le format HH:mm.
+        format='%H:%M',  
+        render_kw={"step": "1", "placeholder": "HH:mm", "type": "time"})
+    
+    # Joindre un fichier si besoin.
     attachment = FileField("Joindre un document", validators=[
         FileAllowed(['pdf', 'doc', 'docx'], 'Seuls les fichiers PDF ou Word sont autorisés.')
     ])

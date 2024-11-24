@@ -11,7 +11,7 @@
 {% block body_content %}
     <form method="POST" action="{{ url_for('auth.login', next_url=next_url) }}">
         <div class="imgcontainer">
-            <img src="../static/Images/images_formulaires/connexion1.jpg" alt="Avatar" class="avatar">
+            <img src="../static/Images/images_formulaires/connexion1.png" alt="Avatar" class="avatar">
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

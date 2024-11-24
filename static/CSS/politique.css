@@ -1,6 +1,6 @@
 /* Définition d'un style pour tous les éléments de la page */
 * {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: "Sour Gummy", sans-serif;
   font-size: 16px;
   color: white;
 }
@@ -126,7 +126,6 @@ footer ul li a {
 @media screen and (min-width: 600px) and (max-width: 900px) {
   /* Définition d'un style pour tous les éléments de la page */
   * {
-    font-family: 'Comic Sans MS', cursive;
     font-size: 16px;
     color: white;
   }
@@ -197,7 +196,6 @@ footer ul li a {
 @media screen and (max-width: 600px) {
   /* Définition d'un style pour tous les éléments de la page */
   * {
-    font-family: 'Comic Sans MS', cursive;
     font-size: 16px;
     color: white;
   }
@@ -220,11 +218,11 @@ footer ul li a {
     font-size: 22px;
   }
 
-  #container_politique {
-    width: 70%;
+  #container-politique {
+    width: 90%;
     margin: 0 auto;
-    padding-right: 5%;
-    padding-left: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
     padding-top: 2%;
     border: 1px solid gold;
     text-align: justify;

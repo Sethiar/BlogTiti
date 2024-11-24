@@ -3,23 +3,11 @@ Code permettant de définir les routes concernant les fonctions cachées, erreur
 politique du blog.
 """
 
-import uuid
-
 from flask import render_template, session
 from flask_login import current_user
 
 from app.Functional import functional_bp
 
-
-# Fonction qui gère les utilisateurs anonymes.
-def generate_unique_id():
-    """
-    Génère un identifiant unique au format UUID pour les utilisateurs anonymes.
-
-    Returns:
-        str: Identifiant unique généré au format UUID.
-    """
-    return str(uuid.uuid4())
 
 
 # Route permettant à l'utilisateur de bien se connecter au blog.
@@ -36,7 +24,7 @@ def connexion_requise():
 
 
 #  Route permettant d'accéder à la politique de confidentialité.
-@functional_bp.route("/Politique-de-confidentialité")
+@functional_bp.route("/politique-de-confidentialite")
 def politique():
     """
     Accès à la Politique de confidentialité du blog.
@@ -44,11 +32,11 @@ def politique():
     Returns:
         Template HTML de la page de politique de confidentialité du blog.
     """
-    return render_template("Functional/politique.html")
+    return render_template("functional/politique.html")
 
 
 #  Route permettant d'accéder aux mentions légales.
-@functional_bp.route("/mentions-légales")
+@functional_bp.route("/mentions-legales")
 def mentions():
     """
     Accès aux Mentions légales du blog.

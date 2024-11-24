@@ -1,10 +1,10 @@
 """
-Ceci est le code pour la configuration de l'application du blog de tititechnique.
+Ceci est le code pour la configuration de l'application.py du blog de tititechnique.
 """
 import os
 
 from datetime import timedelta
-
+from sqlalchemy import create_engine
 
 # Configuration des fichiers uploadés.
 UPLOAD_FOLDER = "static/Images/images_profil"
@@ -13,9 +13,9 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 class Config:
     """
-    Configuration de base de l'application.
+    Configuration de base de l'app.py.
 
-    Cette classe définit les paramètres de configuration de base pour l'application flask concernant le Testing,
+    Cette classe définit les paramètres de configuration de base pour l'app.py flask concernant le Testing,
     le développement et la mise en production.
     """
     DEBUG = True
@@ -23,14 +23,16 @@ class Config:
     WTF_CSRF_ENABLED = True
 
     # Configuration de la base de données.
-    SQLALCHEMY_DATABASE_URI = "postgresql://meth6045:bloggeminips626#@localhost:5432/meth6045_db_tititechnique"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://meth6045_Nono:bloggeminips626@grebe.o2switch.net:3306/meth6045_db_tititechnique"
     SQLALCHEMY_TRACK_MODIFICATION = False
+    
+    engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True, pool_size=10, pool_recycle=200, max_overflow=20)
 
     # Clé secrète pour sécuriser les cookies de session.
     SECRET_KEY = os.getenv('SECRET_KEY')
 
     # Paramètres de sécurité des cookies de session.
-    SESSION_COOKIE_SECURE = False  # True lorsque Production.
+    SESSION_COOKIE_SECURE = True  # True lorsque Production.
     PERMANENT_SESSION_LIFETIME = timedelta(days=1)
 
     # Dossier des téléchargements.

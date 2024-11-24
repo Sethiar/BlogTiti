@@ -24,8 +24,8 @@ def current_month_videos(videos):
 # Fonction qui affiche les vidéos de plus de 3000 vues.
 def popular_videos(videos):
     """
-    Filtre les vidéos pour obtenir celles avec plus de 3000 vues,
-    puis les trie par nombre de vues décroissant.
+    Filtrage les vidéos pour obtenir celles avec plus de 3000 vues,
+    puis un tri est fait par nombre de vues décroissant.
 
     :param videos: Liste d'objets contenant les caractéristiques des vidéos.
     :return: Liste des vidéos les plus populaires triées par nombre de vues.
@@ -40,11 +40,11 @@ def popular_videos(videos):
 # Fonction qui affiche les vidéos archivées par mois.
 def archived_videos(videos):
     """
-    Archive les vidéos qui ne sont pas du mois courant.
+    Archivages des vidéos qui ne sont pas du mois courant.
 
     :param videos: Liste d'objets contenant les caractéristiques des vidéos.
     :return: Dictionnaire où les clés sont des chaînes de caractères représentant le mois et l'année
-             au format 'YYYY-MMM', et les valeurs sont des listes de vidéos publiées durant ces mois.
+             au format 'MM-YYYY', et les valeurs sont des listes de vidéos publiées durant ces mois.
     """
     # Création du dictionnaire des archives vidéos.
     archives = {}
@@ -71,7 +71,7 @@ def archived_videos(videos):
         else:
             continue
 
-        # Formatage pour obtenir le mois et l'année au format 'YYYY-MMM'.
+        # Formatage pour obtenir le mois et l'année au format 'MM-YYYY'.
         year = dt_object.year
         month = month_abbr[dt_object.month]
         video_month = f"{month} {year}"

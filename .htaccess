@@ -1,20 +1,13 @@
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
-PassengerAppRoot "/home/meth6045/BlogTitiTechnique"
+PassengerAppRoot "/home/meth6045/BlogTitiMySQL"
 PassengerBaseURI "/"
-PassengerPython "/home/meth6045/virtualenv/BlogTitiTechnique/3.11/bin/python"
-PassengerAppLogFile "/home/meth6045/logs"
+PassengerPython "/home/meth6045/virtualenv/BlogTitiMySQL/3.11/bin/python"
+PassengerAppLogFile "/home/meth6045/logs/log.txt"
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
-
 # Configuration de compression, indexation, et protection XSS
-
 # Activer la compression gzip
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
-</IfModule>
-
-# Contrôle de l'indexation
-<IfModule mod_headers.c>
-    Header set X-Robots-Tag "noindex, nofollow"
 </IfModule>
 
 # Protection contre les attaques XSS
@@ -22,7 +15,12 @@ PassengerAppLogFile "/home/meth6045/logs"
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "DENY"
-    Header set Content-Security-Policy "default-src 'self';"
+    
+    # Mise à jour de la Content Security Policy
+    Header set Content-Security-Policy "default-src 'self' https://www.youtube.com 'unsafe-inline'; style-src 'self' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src-attr 'unsafe-inline'; script-src 'self' https://cdnjs.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com 'unsafe-inline'; frame-src 'self' https://www.youtube.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:;"
+    
+    # Permissions Policy - restreindre ou omettre les fonctionnalités non utilisées
+    Header set Permissions-Policy "fullscreen=(self); geolocation=(self); microphone=(); camera=();"
 </IfModule>
 
 # Protection des fichiers sensibles
@@ -30,8 +28,7 @@ PassengerAppLogFile "/home/meth6045/logs"
     Order Allow,Deny
     Deny from all
 </Files>
-
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|.env)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
@@ -41,24 +38,11 @@ PassengerAppLogFile "/home/meth6045/logs"
     RewriteEngine On
     RewriteCond %{QUERY_STRING} (union|select|insert|drop|delete|update) [NC]
     RewriteRule .* - [F]
-
     # Redirections
     # Rediriger toutes les requêtes vers www
     RewriteCond %{HTTP_HOST} !^www\. [NC]
     RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
-
     # Redirection HTTP vers HTTPS
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
-
-# Réécriture d'URL (facultatif)
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-
-# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
-<IfModule Litespeed>
-</IfModule>
-# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

@@ -35,54 +35,102 @@
 
     <form method="POST" action="{{ url_for('chat.send_request', user_id=current_user.id) }}" enctype="multipart/form-data">
     <div class="imgcontainer">
-        <img src="{{ url_for('static', filename='Images/images_chat/avatar.png') }}" alt="Avatar" class="avatar">
+        <img src="{{ url_for('static', filename='Images/images_chat/chat.png') }}" alt="Avatar" class="avatar">
     </div>
+    
     <h3>Demande de chat vidéo</h3>
     {{ formrequest.csrf_token }}
+    
     <div class="container">
-        {{ formrequest.pseudo.label }}
-        {{ formrequest.pseudo(class="form-control", readonly=True) }}
-        {% if formrequest.pseudo.errors %}
-        <ul>
-            {% for error in formrequest.pseudo.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        <!-- Pseudo -->
+        <div>
+            {{ formrequest.pseudo.label }}
+            {{ formrequest.pseudo(class="form-control", readonly=True) }}
+            {% if formrequest.pseudo.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for error in formrequest.pseudo.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        
         <br><br>
-        {{ formrequest.request_content.label }} {{ formrequest.request_content(rows=20, cols=20) }}
-        {% if formrequest.request_content.errors %}
-        <ul>
-            {% for error in formrequest.request_content.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
+        <!-- Contenu de la demande -->
+        <div>
+            {{ formrequest.request_content.label }}
+            {{ formrequest.request_content(class="form-control", rows=5, cols=40) }}
+            {% if formrequest.request_content.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for error in formrequest.request_content.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        
         <br><br>
-        {{ formrequest.date_rdv.label }} {{ formrequest.date_rdv() }}
-        {% if formrequest.date_rdv.errors %}
-        <ul>
-            {% for error in formrequest.date_rdv.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
+        <!-- Date -->
+        <div>
+            {{ formrequest.date_rdv.label }}
+            {{ formrequest.date_rdv(class="form-control") }}
+            {% if formrequest.date_rdv.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for error in formrequest.date_rdv.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        
         <br><br>
-        {{ formrequest.heure.label }}
-        {{ formrequest.heure() }}
-        {% if formrequest.heure.errors %}
-        <ul>
-            {% for error in formrequest.periode.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <ul>
-            {{ formrequest.attachment.label }} {{ formrequest.attachment() }}
-        </ul>
+
+        <!-- Heure -->
+        <div>
+            {{ formrequest.heure.label }}
+            {{ formrequest.heure(class="form-control") }}
+            {% if formrequest.heure.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for error in formrequest.heure.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        
+        <br><br>
+
+        <!-- Pièce jointe -->
+        <div>
+            {{ formrequest.attachment.label }}
+            {{ formrequest.attachment(class="form-control") }}
+            {% if formrequest.attachment.errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for error in formrequest.attachment.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        
         <br><br>
     </div>
+    
     <div class="separation"></div>
+    
+    <!-- Boutons -->
     <div class="container" style="background-color:black">
         <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la demande</button>
         <button type="button" class="cancelledbtn">

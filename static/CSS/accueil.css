@@ -8,29 +8,34 @@
   --color-mobile: black;
 
   --background-default: black;
-  --background-tablet; lightgrey;
+  --background-tablet: lightgrey;
   --background-mobile: lightblue;
 }
 
 /* Styles Globaux */
 * {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: "Sour Gummy", sans-serif;
   box-sizing: border-box;
   color: white;
   background-color: var(--background-default);
 }
+
 /* Style pour ordinateurs de bureau. */
 
 /* Header */
 header {
   position: relative;
-  width: 120%;
+  width: 100%;
   margin: 0 auto;
-  height: 250px;
-  background-image: url('../Images/images_bannière_logo/bannière_titi.jpg');
+  height: 35vh; /* Utilisation de vh pour rendre la hauteur relative à la hauteur de la fenêtre */
+  background-image: url('../Images/images_bannière_logo/bannière_titi.png');
   background-position: center;
-  background-size: 100% 100%;
-  z-position: -1;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+#navbar {
+  width: 100%;
 }
 
 #navbar .nav-links {
@@ -102,15 +107,17 @@ button a {
 #connection {
   width: 20vw;
   border: 1px solid gold;
-  border-radius: 5px;
-  background-color: orange;
-  position: absolute;
+  border-radius: 25px;
+  background-color: darkorange;
+  position: fixed;
   right: 3%;
+  top: 50px; /* Ajout d'un peu de marge du haut */
+  z-index: 10;
 }
 
 #connection p {
   color: black;
-  background-color: orange;
+  background-color: darkorange;
   text-indent: 10%;
   padding-top: 3%;
   padding-right: 10%;
@@ -137,27 +144,6 @@ button a {
 
 #connection a:hover {
   color: white;
-}
-
-.visits {
-  padding-left: 5vw;
-}
-
-.visits p {
-  color: darkorange;
-  font-size: 18px;
-}
-
-.number-visit {
-  border: 1px solid gold;
-  margin: 2vw;
-  color: gold;
-  padding: 0.5vw;
-  text-decoration: none;
-}
-
-.visits .number-visit {
-  text-decoration: none;
 }
 
 /* Style pour le conteneur principal */
@@ -694,12 +680,12 @@ footer p {
   /* global */
   * {
     background-color: var(--background-default);
+    font-family: "Gaegu", sans-serif;
   }
 
   /* Header */
   header {
-    height: 25vw;
-    margin: 0 auto;
+    height: auto;
   }
 
   #navbar .nav-links {
@@ -753,20 +739,25 @@ footer p {
 
   /* Style pour la connexion utilisateur */
   #connection {
-    width: 25vw;
-    border: 1px solid gold;
-    border-radius: 5px;
-    background-color: orange;
-    position: absolute;
-    right: 3%;
+    width: 40%;
+    height: 25%;
+    top: 60%;
+    position: fixed;
+    z-index: 1000;
+    padding: 10px 10px;
+    border-radius: 25px;
+  }
+
+  #connection button {
+    width: 100%;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 30, 0.7);
   }
 
   #connection p {
     color: black;
-    background-color: orange;
-    text-indent: 5%;
-    padding-right: 5%;
-    text-align: justify;
+    background-color: darkorange;
+    text-align: center;
   }
 
   #connection button {
@@ -774,7 +765,6 @@ footer p {
     background-color: gold;
     border: 1px solid black;
     text-align: center;
-    margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 30, 1);
   }
@@ -789,15 +779,20 @@ footer p {
     color: white;
   }
 
+  /* Styles pour animation portable. */
+  .animation {
+      display: None;
+  }
+
 /* Style pour le conteneur principal */
   h1 {
     padding-top: 10%;
-    width: 60%;
+    width: 80%;
     font-size: 22px;
     margin: 0 auto;
     text-align: center;
   }
-
+  
   .pics-accueil {
     border-radius: 50%;
     margin: 0 auto;
@@ -859,7 +854,6 @@ footer p {
   aside ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
   }
 
   aside ul li {

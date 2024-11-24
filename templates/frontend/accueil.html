@@ -7,16 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/caroussel.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/images.css') }}">
 {% endblock %}
 
 {% block main_content %}
 <br>
-<div class="visits">
-    <p>Nombre de visites du site : <span class="number-visit">{{ total_visits }}</span></p>
-</div>
 <div id="pics_accueil">
-    <img src="../static/Images/images_bannière_logo/logo.jpg" alt="Logo">
+    <img src="../static/Images/images_bannière_logo/logo.jpg" alt="Logo" loading="lazy">
 </div>
 
 <div class="animation">
@@ -39,25 +35,27 @@
     <br><br>
     <div id="middle">
         <div class="content-block">
-            <img class="pics-accueil" src="../static/Images/images_accueil/jardin1.jpg" alt="Image de jardinage">
-            <p class="text-accueil">Si vous voulez tout savoir et plus encore sur le jardinage, je vous donnerai tous les conseils nécessaires</p>
+            <img class="pics-accueil" src="../static/Images/images_accueil/jardin1.png" alt="Image de jardinage" loading="lazy">
+            <p class="text-accueil">Si vous voulez tout savoir et plus encore sur le jardinage, je vous donnerai tous les conseils nécessaires.</p>
         </div>
         <div class="content-block">
-            <img class="pics-accueil" src="../static/Images/images_accueil/brico1.jpg" alt="Image de bricolage">
+            <img class="pics-accueil" src="../static/Images/images_accueil/brico1.png" alt="Image de bricolage" loading="lazy">
             <p>Je vous propose de vous apprendre à bricoler de manière efficace. Et surtout, sans vous prendre la tête.</p>
         </div>
         <div class="content-block">
-            <img class="pics-accueil" src="../static/Images/images_accueil/divers1.jpg" alt="Image de titi pour videos Youtube">
+            <img class="pics-accueil" src="../static/Images/images_accueil/divers1.png" alt="Image de titi pour videos Youtube" loading="lazy">
             <p>Depuis ce blog, vous allez avoir accès à toutes les vidéos de ma chaîne <b><a href="https://www.youtube.com/@titi.lebricoleur">Youtube</a></b>. Ainsi que la possibilité de poster vos commentaires et vos likes.</p>
         </div>
         <div class="content-block">
-            <img class="pics-accueil" src="../static/Images/images_accueil/forum1.jpg" alt="Image de titi pour forum">
+            <img class="pics-accueil" src="../static/Images/images_accueil/forum1.png" alt="Image de titi pour forum" loading="lazy">
             <p>Et surtout, nous pourrons échanger tous ensemble dans la section <b><a href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de manière plus directe et plus sympathiquement surtout.</p>
         </div>
-        <div class="separation"></div>
         <br><br>
         <div class="content-block">
-            <img class="pics-accueil-fin" src="../static/Images/images_accueil/bienvenue.jpg" alt="image de bienvenue">
+            <img class="pics-accueil-fin" src="../static/Images/images_accueil/bienvenue.png" alt="image de bienvenue" loading="lazy">
+            <p>Vous avez aussi la possibilité de faire une demande de chat si vous avez un problème et que la voie des mails vous paraît longue et pas très adaptée aux difficultés que vous rencontrez.
+            <b><a href="{{ url_for('chat.chat_request') }}">"Visio avec Tititechnique"</a></b>. Nous pourrons alors parler en direct et nous pourrons régler, ensemble, votre problème.</p>
+        
         </div>
     </div>
 </div>
@@ -152,13 +150,21 @@
         <br>
         <div class="col-lg-4">
             <br><br>
-            <!-- Aside -->
+            <!-- Aside des vidéos archiivées -->
             <aside>
                 <h2>Archives</h2>
                 <br>
                 <ul>
                     {% for month_year, videos in archived.items() %}
-                    <li><a href="{{ url_for('frontend.show_archived_videos', month_year=month_year) }}">{{ month_year | capitalize }}</a></li>
+                    {% set month_name, year = month_year.split() %}
+                    {% set month_name_url = month_name | lower | replace(" ", "-") %}
+                    {% set month_year_url = month_name_url | lower ~ '-' ~ year %}  {# Formate en "mmm-yyyy" #}
+            
+                    <li>
+                        <a href="{{ url_for('frontend.show_archived_videos', month_year=month_year_url) }}">
+                            {{ month_name | capitalize }} {{ year }}
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </aside>
@@ -170,4 +176,5 @@
 <div class="separation"></div>
 <br>
 <script src="{{ url_for('static', filename='CSS/javascript/avatar_move.js') }}"></script>
+
 {% endblock %}

@@ -1,5 +1,5 @@
 """
-Fichier d'initialisation de l'application Blog TitiTechnique.
+Fichier d'initialisation de l'application.py Blog TitiTechnique.
 """
 import os
 import secrets
@@ -25,7 +25,6 @@ from app.Models import db
 from app.scheduler import create_scheduler
 
 from app.Models.anonyme import Anonyme
-from app.Models.anonymousvisit import AnonymousVisit
 
 # Chargement des variables d'environnement depuis le fichier .env.
 load_dotenv()
@@ -36,16 +35,16 @@ mailing = Mail()
 login_manager = LoginManager()
 
 
-# Fonction créant l'initialisation de l'application.
+# Fonction créant l'initialisation de l'application.py.
 def create_app():
     """
-    Crée et configure l'application Flask pour le blog TitiTechnique.
+    Crée et configure l'application.py Flask pour le blog TitiTechnique.
 
     Returns:
-        Flask app: Instance de l'application Flask configurée.
+        Flask app: Instance de l'application.py Flask configurée.
     """
 
-    # Création de l'application Flask.
+    # Création de l'application.py Flask.
     app = Flask("TititechniqueBlog")
 
     # Configuration de flask-moment.
@@ -95,7 +94,7 @@ def create_app():
     else:
         app.config.from_object(config.config.ProductConfig)
 
-    # Configuration de l'environnement de l'application.
+    # Configuration de l'environnement de l'application.py.
     app.config.from_object(Config)
 
     app.config["SESSION_COOKIE_SECURE"] = True
@@ -113,6 +112,7 @@ def create_app():
 
     # Initialisation de la base de données.
     db.init_app(app)
+    
     # Instanciation de flask-Migrate.
     Migrate(app, db)
 
@@ -129,7 +129,7 @@ def create_app():
     scheduler_app.start()
     atexit.register(lambda: scheduler_app.shutdown())
 
-    # Configuration de l'application pour utiliser la protection CSRF.
+    # Configuration de l'application.py pour utiliser la protection CSRF.
     csrf = CSRFProtect()
     csrf.init_app(app)
 
@@ -190,68 +190,7 @@ def create_app():
         logged_in = session.get("logged_in", False)
         pseudo = session.get("pseudo", None)
         return dict(logged_in=logged_in, pseudo=pseudo)
-
-    # Gestion des visites anonymes.
-    @app.before_request
-    def before_request():
-        """
-        Fonction exécutée avant chaque requête.
-
-        Cette fonction est utilisée pour gérer les visiteurs anonymes en attribuant
-        un identifiant unique à chaque utilisateur anonyme s'il n'en a pas déjà un
-        """
-        # La session est rendue permanente pour que sa durée de vie suive la configuration.
-        session.permanent = True
-
-        # Récupération de l'identifiant du visiteur depuis la session.
-        visitor_id = session.get("visitor_id")
-        # Si l'identifiant n'existe pas, création d'un nouveau.
-        if not visitor_id:
-            visitor_id = str(uuid4())
-            # Stockage du nouvel identifiant dans la session.
-            session["visitor_id"] = visitor_id
-        # L'identifiant est rendu disponible globalement dans la requête via `g`.
-        g.visitor_id = visitor_id
-
-    @app.after_request
-    def after_request(response):
-        """
-        Fonction exécutée après chaque requête.
-
-        Cette fonction enregistre ou met à jour les informations de visite du visiteur anonyme
-        dans la base de données après que la requête a été traitée.
-
-        Args:
-            response (Response): L'objet réponse HTTP généré par la requête.
-        """
-        # Récupération de l'identifiant du visiteur depuis 'g'.
-        visitor_id = getattr(g, 'visitor_id', None)
-        # Si l'identifiant de visiteur existe, enregistrement de la visite.
-        if visitor_id:
-            log_visit(visitor_id)
-
-        return response
-
-    def log_visit(visitor_id):
-        """
-        Vérification de l'existence de la visite, mise à jour ou enregistrement.
-
-        Args:
-            visitor_id (str): L'ID unique du visiteur.
-        """
-        # Vérification de l'existence de la visite, mise à jour ou enregistrement.
-        existing_visit = db.session.query(AnonymousVisit).filter_by(visitor_id=visitor_id).first()
-        if existing_visit:
-            # Mise à jour de l'horodatage de la visite existante.
-            existing_visit.visit_time = datetime.now()
-        else:
-            # Création d'un nouvel enregistrement de visite sans redéfinir le constructeur.
-            new_visit = AnonymousVisit(visitor_id=visitor_id)
-            db.session.add(new_visit)
-
-        # Sauvegarde des modifications dans la base de données.
-        db.session.commit()
-
+    
     # Configuration de la journalisation.
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
     handler = logging.FileHandler("fichier.log")

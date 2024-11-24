@@ -14,9 +14,7 @@
     <p>Voici le formulaire pour écrire une réponse aux commentaires des vidéos du blog.</p>
 </div>
 <form method="POST" action="{{ url_for('user.comment_replies_video', comment_video_id=comment.id, user_pseudo=current_user.pseudo) }}">
-    <div class="imgcontainer">
-        <img src="" alt="Avatar" class="avatar">
-    </div>
+    
     <h3>Réponse au commentaire</h3>
     {{ formreply.csrf_token }}
     <div class="container-edit">

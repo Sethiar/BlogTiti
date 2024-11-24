@@ -33,7 +33,7 @@ load_dotenv()
 
 
 # Route permettant d'accéder au forum du blog.
-@frontend_bp.route('/accès-forum')
+@frontend_bp.route('/acces-forum')
 def forum():
     """
     Route permettant d'accéder à la page du forum du blog.
@@ -48,7 +48,7 @@ def forum():
     subjects = SubjectForum.query.all()
 
     # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
+    is_authenticated = bool(current_user.is_authenticated)
 
     # Debug : Vérification du type.
     print("Type of is_authenticated:", type(is_authenticated))
@@ -58,7 +58,7 @@ def forum():
 
 
 # Route pour visualiser le sujet de discussion sur un sujet en particulier.
-@frontend_bp.route('/accès-sujet-forum/<int:subject_id>', methods=['GET', 'POST'])
+@frontend_bp.route('/acces-sujet-forum/<int:subject_id>', methods=['GET', 'POST'])
 def forum_subject(subject_id):
     """
     Route permettant d'accéder à un sujet spécifique du forum.
@@ -82,7 +82,7 @@ def forum_subject(subject_id):
     subject = SubjectForum.query.get_or_404(subject_id)
 
     # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
+    is_authenticated = bool(current_user.is_authenticated)
 
     # Debug: Vérification du type.
     print("Type of is_authenticated:", type(is_authenticated))
@@ -176,7 +176,7 @@ def show_popular_videos():
 
 
 # Route permettant d'afficher les vidéos archivées.
-@frontend_bp.route('video/archives/<month_year>')
+@frontend_bp.route('/video/archives/<month_year>')
 def show_archived_videos(month_year):
     """
     Affiche les vidéos archivées pour un mois et une année donnés.
@@ -193,30 +193,25 @@ def show_archived_videos(month_year):
         - Récupère les vidéos archivées à partir de la base de données en utilisant la fonction `archived_videos`.
         - Filtre les vidéos pour obtenir celles correspondant au mois et à l'année fournis.
     """
-    # Nombre de vidéos par page
-    per_page = 9
-    # Récupération du numéro de page, par défaut 1
-    page = request.args.get('page', 1, type=int)
-
     # Utiliser la méthode archived_videos pour récupérer les vidéos archivées.
     # Récupération de toutes les vidéos.
     videos = get_videos_from_db()
+    
     # Création du dictionnaire des vidéos archivées.
     archived = archived_videos(videos)
-    archived = archived.get(month_year, [])
+    
+    # Normalisation de la clé mois-année.
+    # Exemple: juin-2024 -> Juin 2024.
+    normalized_month_year = month_year.capitalize().replace('-', ' ')
+    
+    # Récupération des vidéos archivées pour le mois et l'année donnés.
+    archived_videos_for_month = archived.get(normalized_month_year, [])
 
-    # Calcul de l'index des vidéos à afficher.
-    start = (page - 1) * per_page
-    end = start + per_page
+    # Log des vidéos pour ce mois spécifique.
+    print(f"Videos for {normalized_month_year}:", archived_videos_for_month)
 
-    paginated_videos = archived[start:end]
-
-    # Calcul du nombre total de pages.
-    total_pages = (len(archived) + per_page - 1) // per_page
-
-    return render_template('frontend/archived_videos.html', month_year=month_year, archived=archived,
-                           videos=paginated_videos, page=page, total_pages=total_pages
-                           )
+    return render_template('frontend/archived_videos.html', archived=archived, 
+    videos=archived_videos_for_month)
 
 
 # Route permettant de visualiser une vidéo en particulier afin de laisser un commentaire.

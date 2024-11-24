@@ -33,6 +33,7 @@
             {% for request in requests %}
             <tr>
                 <td>{{ request.pseudo }}</td>
+                <td>{{ request.filename }}</td>
                 <td>{{ moment(request.date_rdv).format("DD/MM/YYYY") }}</td>
                 <td>{{ moment(request.heure).format("HH:00") }}</td>
                 <td>{{ request.status }}</td>
@@ -96,11 +97,12 @@
     var rdvData = [
         {% for rdv in rdv_data %}
         {
-            title: '{{ rdv.pseudo|replace("'", "\\'") }} - {{ rdv.status|replace("'", "\\'") }}',
+            title: '{{ rdv.pseudo|tojson }} - {{ rdv.status|tojson }}',
             start: '{{ rdv.date_rdv.strftime("%Y-%m-%dT%H:%M:%S") }}',
             allDay: false,
-            content: '{{ rdv.content|replace("'", "\\'") }}'
-        }{% if not loop.last %},{% endif %}
+            content: '{{ rdv.content|tojson }}'
+        }
+        {% if not loop.last %},{% endif %}
         {% endfor %}
     ];
 

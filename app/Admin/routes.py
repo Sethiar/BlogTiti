@@ -57,7 +57,7 @@ def back_end():
 
 
 # Route permettant d'afficher la liste de toutes les vidéos.
-@admin_bp.route('/backend/liste-vidéos')
+@admin_bp.route('/backend/liste-videos')
 @admin_required
 def videos_list():
     """
@@ -161,7 +161,7 @@ def suppress_user(id):
 
 
 # Route permettant de bannir un utilisateur.
-@admin_bp.route("/backend/bannir_utilisateur/<int:id>", methods=['GET', 'POST'])
+@admin_bp.route("/backend/bannir-utilisateur/<int:id>", methods=['GET', 'POST'])
 @admin_required
 def banning_user(id):
     """
@@ -204,7 +204,7 @@ def banning_user(id):
 
 
 # Route permettant de bannir un utilisateur.
-@admin_bp.route("/backend/débannir_utilisateur/<int:id>", methods=['GET', 'POST'])
+@admin_bp.route("/backend/debannir-utilisateur/<int:id>", methods=['GET', 'POST'])
 @admin_required
 def unbanning_user(id):
     """
@@ -302,7 +302,7 @@ def add_subject_forum_back():
 
     if formsubjectforum.validate_on_submit():
         # Saisie du nom du sujet.
-        nom_subject_forum = escape(formsubjectforum.nom.data)
+        nom_subject_forum = formsubjectforum.nom.data
         subject_forum = SubjectForum(nom=nom_subject_forum, author='Tititechnique')
 
         # Enregistrement du sujet dans la base de données.
@@ -322,7 +322,7 @@ def add_subject_forum_back():
 
 
 # Route permettant de supprimer un sujet du forum.
-@admin_bp.route("/backend/supprimer_sujet/<int:id>", methods=["POST"])
+@admin_bp.route("/backend/supprimer-sujet/<int:id>", methods=["POST"])
 @admin_required
 def suppress_subject(id):
     """
@@ -566,6 +566,9 @@ def calendar():
     # Instanciation du formulaire pour le lien su chat vidéo.
     formlink = UserLink()
 
+    # Déclaration si fichier joint dans la requête.
+    # filename = attachment_data
+
     # Préparation des données des rendez-vous pour le calendrier.
     rdv_data = []
 
@@ -587,10 +590,14 @@ def calendar():
                                    formrequest=formrequest,
                                    requests=requests,
                                    formlink=formlink,
-                                   rdv_data=rdv_data)
+                                   rdv_data=rdv_data,
+                                   #filename=filename
+            )
 
     return render_template('backend/calendar.html', formrequest=formrequest, requests=requests,
-                           rdv_data=rdv_data, formlink=formlink)
+                           rdv_data=rdv_data, formlink=formlink,
+                           #filename=filename
+         )
 
 
 # Route permettant de joindre le formulaire pour enregistrer un utilisateur avec le rôle administrateur.

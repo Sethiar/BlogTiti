@@ -5,9 +5,6 @@ Disallow: /register      # Page d'inscription
 Disallow: /chat-request  # Page ou endpoint pour la demande de chat vidéo
 Disallow: /user/settings # Paramètres utilisateur
 
-# Blocage des requêtes dynamiques (ex : URLs avec des paramètres de session).
-Disallow: /*?*           # Bloque les URLs avec des paramètres de requête
-
 # Permet aux robots de crawler les pages publiques, articles de blog, commentaires
 User-agent: *
 Allow: /blog/            # Répertoire du blog contenant les articles
@@ -25,4 +22,4 @@ Disallow: /private/      # Dossier contenant des fichiers privés
 Disallow: /tmp/          # Dossier temporaire
 
 # Spécification de l'emplacement du sitemap.
-Sitemap: https://www.blog-tititechnique.fr/sitemap.xml
+Sitemap: https://www.tititechnique.fr/sitemap.xml

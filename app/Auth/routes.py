@@ -89,7 +89,7 @@ def login_admin():
 
 
 # Route permettant à l'administrateur de se déconnecter.
-@auth_bp.route('/backend/déconnexion-administrateur')
+@auth_bp.route('/backend/deconnexion-administrateur')
 def logout_admin():
     """
     Déconnecte l'administrateur actuellement authentifié.
@@ -135,7 +135,7 @@ def user_connection():
 
     # Instanciation du formulaire.
     form = UserConnection()
-    return render_template("User/user_connection.html", form=form, next_url=next_url)
+    return render_template("user/user_connection.html", form=form, next_url=next_url)
 
 
 # Route permettant de se connecter en tant qu'utilisateur.
@@ -195,7 +195,7 @@ def login():
             # Redirection vers l'URL précédente ou la page d'accueil.
             return redirect(next_url or url_for('landing_page'))
 
-    return render_template("User/user_connection.html", form=form)
+    return render_template("user/user_connection.html", form=form)
 
 
 # Route permettant à l'utilisateur de joindre le formulaire de connexion suite à une déconnexion.
@@ -218,11 +218,11 @@ def user_connection_error():
     """
     # Instanciation du formulaire.
     form = UserConnection()
-    return render_template("User/user_connection.html", form=form)
+    return render_template("user/user_connection.html", form=form)
 
 
 # Route permettant à l'utilisateur de se déconnecter.
-@auth_bp.route("/déconnexion-utilisateur")
+@auth_bp.route("/deconnexion-utilisateur")
 @login_required
 def user_logout():
     """
@@ -245,7 +245,7 @@ def user_logout():
 
 
 # Route permettant de réinitialiser le mot de passe utilisateur.
-@auth_bp.route("/réinitialisation-password", methods=['GET', 'POST'])
+@auth_bp.route("/reinitialisation-password", methods=['GET', 'POST'])
 def password_reset():
     """
     Réinitialise le mot de passe utilisateur.
@@ -373,7 +373,7 @@ def user_banned(user_id):
         # Gestion du cas où l'utilisateur n'existe pas.
         return "Utilisateur non trouvé", 404
 
-    return render_template("Functional/user_banned.html", user=user)
+    return render_template("functional/user_banned.html", user=user)
 
 
 

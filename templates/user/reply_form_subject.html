@@ -14,10 +14,9 @@
     <p>Voici le formulaire pour écrire une réponse aux sujets postés sur le forum.</p>
 </div>
 <form method="POST" action="{{ url_for('user.comment_replies_subject', comment_subject_id=comment.id, user_pseudo=current_user.pseudo) }}">
-    <div class="imgcontainer">
-        <img src="" alt="Avatar" class="avatar">
-    </div>
+    
     <h3>Réponse au commentaire</h3>
+    
     {{ formsubjectreply.csrf_token }}
     <div class="container-edit">
         {{ formsubjectreply.reply_content.label }} {{ formsubjectreply.reply_content() }}

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const avatarWidth = avatar.offsetWidth;
             const avatarHeight = avatar.offsetHeight;
 
-            // Calculer les positions avec correction pour le défilement et de la zone.
+            // Calcul des positions avec correction pour le défilement et de la zone.
             if (zone.id === 'gardening') {
                 // Centrer l'avatar dans la zone gardening
                 newLeft = rect.left + window.pageXOffset - avatar.parentElement.offsetLeft + avatarWidth;
