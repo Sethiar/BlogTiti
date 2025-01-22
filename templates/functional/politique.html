@@ -2,116 +2,134 @@
 
 {% block main_content %}
 
-<h1>Politique de Confidentialité</h1>
-<br>
-<p>Dernière mise à jour : 1 octobre 2024</p>
-<a href="{{ url_for('landing_page') }}">Retour à l'accueil</a>
+<!-- Bordure extérieure -->
+<div class="outer-frame-politique">
 
-<div class="separation">
+    <!-- Bordure intérieure -->
+    <div class="inner-frame-politique">
 
-</div>
-<br>
-<div id="container-politique">
-    <div id="politique">
-        <p class="intro">Bienvenue sur notre blog <b>Tititechnique</b>. Nous nous engageons à protéger votre vie privée et à respecter vos droits en matière de confidentialité.
-            Cette politique de confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations personnelles lorsque vous utilisez notre site web.</p>
-    </div>
-    <br>
-    <div>
-        <h2>1. Informations que Nous Collectons</h2>
-        <br>
-        <p>Nous pouvons collecter les types d'informations suivants lorsque vous utilisez notre site :</p>
-        <p>Informations d'identification personnelle : adresse email, pseudo, date de naissance.</p>
-        <p>Informations non personnelles : adresse IP, type de navigateur,
-            informations de navigation, informations collectées via les cookies et autres technologies similaires.</p>
-        <p>Nous ne collectons aucune information bancaire ou financière.</p>
-    </div>
-    <br>
-    <div>
-        <h2>2. Utilisation des Informations</h2>
-        <br>
-        <p>Nous utilisons les informations que nous collectons pour :</p>
-        <ul>
-            <li>Fournir et gérer nos services.</li>
-            <li>Améliorer l'expérience utilisateur sur notre site.</li>
-            <li>Communiquer avec vous, y compris pour répondre à vos demandes de support.</li>
-            <li>Envoyer des newsletters, mises à jour et autres communications promotionnelles (avec votre consentement).</li>
-            <li>Analyser l'utilisation de notre site pour améliorer nos services et contenu.</li>
-        </ul>
-    </div>
-    <br>
-    <div>
-        <h2>3. Gestion des identifiants</h2>
-        <p>Les identifiants (pseudo et mot de passe) sont stockés de manière sécurisée en utilisant des techniques de hachage
-            et de salage pour protéger vos informations.</p>
-    </div>
-    <br>
-    <div>
-        <h2>4. Partage des Informations</h2>
-        <br>
-        <p><b>Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des tiers. Nous pouvons partager vos informations avec :</b></p>
-        <p>Fournisseurs de services : Tiers qui fournissent des services en notre nom, comme l'hébergement web, l'analyse des données, le traitement des paiements et l'assistance client.</p>
-        <p>Obligations légales : Si nous sommes tenus de divulguer vos informations pour nous conformer à la loi ou répondre à une procédure judiciaire.</p>
-    </div>
-    <br>
-    <div>
-        <h2>5. Cookies et Technologies Similaires</h2>
-        <br>
-        <p class="first">Nous utilisons des cookies et des technologies similaires pour :</p>
-        <ul>
-            <li>Mémoriser vos préférences et paramètres afin de maintenir votre connexion à notre site.</li>
-            <li>Comprendre et analyser l'utilisation de notre site.</li>
-            <li>Améliorer nos services et votre expérience utilisateur.</li>
-        </ul>
-        <p class="first">Vous pouvez configurer votre navigateur pour refuser les cookies, mais cela pourrait limiter certaines fonctionnalités de notre site.</p>
-    </div>
-    <br>
-    <div>
-        <h2>6. Sécurité des Informations</h2>
-        <br>
-        <p class="first">Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos informations contre tout accès non autorisé,
-            modification, divulgation ou destruction. Cependant, aucune méthode de transmission sur Internet ou de stockage électronique n'est totalement sécurisée,
-            et nous ne pouvons garantir une sécurité absolue.</p>
-    </div>
-    <br>
-    <div>
-        <h2>7. Vos Droits</h2>
-        <br>
-        <p>Vous avez le droit de :</p>
-        <ul>
-            <li>Accéder à vos informations personnelles que nous détenons.</li>
-            <li>Demander la correction de toute information inexacte.</li>
-            <li>Demander la suppression de vos informations personnelles (sous réserve de certaines exceptions légales).</li>
-            <li>Pour exercer ces droits, veuillez nous contacter à l'adresse e-mail fournie ci-dessous. </li>
-        </ul>
-    </div>
-    <br>
-    <div>
-        <h2>8. Modifications de cette Politique</h2>
-        <br>
-        <p class="first">Nous pouvons mettre à jour cette politique de confidentialité de temps en temps
-            pour refléter les changements apportés à nos pratiques de traitement des informations.
-            Nous vous informerons de tout changement important en publiant la nouvelle politique sur notre site avec une date de mise à jour révisée.</p>
-    </div>
-    <br>
-    <div>
-        <h2>9. Nous Contacter</h2>
-        <br>
-        <p class="first">Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité
-            ou nos pratiques en matière de protection des données, veuillez nous contacter à :</p>
-        <a href="mailto:titimenageou@outlook.fr">titimenageou@outlook.fr</a>
-    </div>
-    <br>
-    <div class="separation">
+        <!-- Conteneur principal -->
+        <main class="politique-main">
 
+            <!-- Cadrage du conteneur principal -->
+            <div class="politique-border">
+
+                <!--titre -->
+                <h1 class="politique-title">Politique de Confidentialité</h1>
+
+                <!-- Section : Mise à jour et retour -->
+                <div class="politique-header">
+                    <p class="politique-update">Dernière mise à jour : 1 janvier 2025</p>
+                    <a href="{{ url_for('landing_page') }}" class="politique-home-link">Retour à l'accueil</a>
+                </div>
+            </div>
+
+            <!-- Séparation -->
+            <hr class="politique-divider">
+
+            <!-- Logo -->
+            <div class="politique-logo">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/inscrip_titi.png') }}"
+                     alt="Image de Titi"
+                     class="politique-logo-img">
+            </div>
+            <!-- Contenu principal -->
+            <div class="politique-content">
+
+                <!-- Introduction -->
+                <section class="politique-section">
+                    <p class="politique-intro">
+                        Bienvenue sur notre blog <b>Tititechnique</b>. Nous nous engageons à protéger votre
+                        vie privée et à respecter vos droits en matière de confidentialité.
+                        Cette politique de confidentialité explique comment nous collectons, utilisons, divulguons et
+                        protégeons vos informations personnelles lorsque vous utilisez notre site web.
+                    </p>
+                </section>
+
+                <!-- Sections des informations -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">1. Informations que nous Collectons</h2>
+                    <ul class="politique-list">
+                        <li>Informations d'identification personnelle : adresse email, pseudo.</li>
+                        <li>Informations non personnelles : adresse IP, type de navigateur, informations de navigation,
+                            etc.
+                        </li>
+                        <li>Nous ne collectons aucune information bancaire ou financière.</li>
+                    </ul>
+                </section>
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">2. Utilisation des Informations</h2>
+                    <ul class="politique-list">
+                        <li>Fournir et gérer nos services.</li>
+                        <li>Améliorer l'expérience utilisateur sur notre site.</li>
+                        <li>Communiquer avec vous pour répondre à vos demandes de support.</li>
+                        <li>Envoyer des newsletters, mises à jour, et autres communications (avec votre consentement).
+                        </li>
+                        <li>Analyser l'utilisation de notre site pour améliorer nos services.</li>
+                    </ul>
+                </section>
+                <!-- Ajout des autres sections -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">3. Gestion des Identifiants</h2>
+                    <p>Les identifiants (pseudo et mot de passe) sont stockés de manière sécurisée en utilisant des
+                        techniques de hachage et de salage.</p>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">4. Partage des Informations</h2>
+                    <p><strong>Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des
+                        tiers.</strong></p>
+                    <p>Toutefois, nous pouvons les partager avec :</p>
+                    <ul class="politique-list">
+                        <li>Fournisseurs de services (hébergement web, analyse, assistance client).</li>
+                        <li>Autorités légales si nécessaire.</li>
+                    </ul>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">5. Cookies et Technologies Similaires</h2>
+                    <ul class="politique-list">
+                        <li>Mémoriser vos préférences et paramètres.</li>
+                        <li>Analyser l'utilisation de notre site pour l'améliorer.</li>
+                        <li>Améliorer votre expérience utilisateur.</li>
+                    </ul>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">6. Sécurité des Informations</h2>
+                    <p>Nous mettons en œuvre des mesures de sécurité pour protéger vos informations. Cependant, aucune
+                        méthode n'est totalement sécurisée.</p>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">7. Vos Droits</h2>
+                    <ul class="politique-list">
+                        <li>Accéder à vos informations personnelles.</li>
+                        <li>Demander la correction d'informations inexactes.</li>
+                        <li>Demander la suppression de vos données, sous réserve d'exceptions légales.</li>
+                    </ul>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">8. Modifications de cette Politique</h2>
+                    <p>Nous pouvons mettre à jour cette politique en publiant la nouvelle version sur notre site.</p>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">9. Nous Contacter</h2>
+                    <p>Pour toute question, contactez-nous à : <a href="mailto:titimenageou@outlook.fr">titimenageou@outlook.fr</a>.
+                    </p>
+                </section>
+
+                <div class="politique-footer">
+                    <p>Merci d'utiliser notre site et de nous faire confiance.</p>
+                </div>
+            </div>
+        </main>
     </div>
-    <br>
-    <div>
-        <p>Nous vous remercions d'utiliser notre blog et de nous faire confiance concernant la protection de votre vie privée.</p>
-    </div>
-    <br>
 </div>
 
 {% endblock %}
+
 {% block footer_content %}
 {% endblock %}

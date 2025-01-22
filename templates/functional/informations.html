@@ -1,13 +1,28 @@
 {% extends 'base2.html.jinja2' %}
 
+{% block head_content %}
+<meta name="description" content="Page de d'informations du site de Tititechnique.">
+<title>{% block title %}Informations{% endblock %}</title>
+{% endblock %}
+
 {% block main_content %}
-<div class="back">
-    <a href="{{ url_for('landing_page') }}">Retour à la page d'accueil</a>
-</div>
-<h1>Informations de l'administrateur</h1>
-<br>
-<div id="container-info">
-    <div>
+
+<!-- Titre de la page -->
+<h1>Informations</h1>
+
+<div class="space"></div>
+
+<!-- Dernière mise à jour du site -->
+<p>Dernière mise à jour : 1 janvier 2025</p>
+
+<!--Lien de retour à l'accueil -->
+<a href="{{ url_for('landing_page') }}">Retour à l'accueil</a>
+
+<div class="separation"></div>
+
+<!-- Conteneur principal des informations de l'administrateur -->
+<div class="container-informations">
+    <div class="container-infos-bis">
         <h2>-- Formations et diplômes</h2>
         <p class="first">
             Blala blala
@@ -16,7 +31,7 @@
             Blala blala
         </p>
     </div>
-    <div>
+    <div class="container-infos-bis">
         <h2>-- Expériences</h2>
         <p class="first">
             Blala blala
@@ -26,7 +41,6 @@
         </p>
     </div>
 </div>
-
 
 {% endblock %}
 {% block footer_content %}

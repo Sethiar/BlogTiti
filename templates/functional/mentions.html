@@ -1,95 +1,191 @@
 {% extends 'base2.html.jinja2' %}
 
+{% block head_content %}
+<meta name="description" content="Mentions légales du site de l'entreprise SethiarWorks.">
+<title>{% block title %}Mentions légales{% endblock %}</title>
+{% endblock %}
+
 {% block main_content %}
 
-<h1>Mentions Légales</h1>
-<br>
-<p>Dernière mise à jour : 1 octobre 2024</p>
-<a href="{{ url_for('landing_page') }}">Retour à l'accueil</a>
-<div class="separation">
+<!-- Bordure extérieure -->
+<div class="outer-frame-politique">
 
-</div>
-<br>
-<div id="container-politique">
-    <div id="politique">
-        <p class="intro">Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N.,
-            il est porté à la connaissance des utilisateurs et visiteurs du site Blog TitiTechnique les présentes mentions légales.</p>
-        <p>La connexion et la navigation sur le site ([URL du site]) par l’utilisateur implique acceptation intégrale et sans réserve des présentes mentions légales.</p>
-    </div>
-    <br>
-    <h2>1. Informations sur l’Éditeur</h2>
-    <br>
-    <p>Éditeur du site :</p>
-    <ul>
-        <li>Nom : SethiarWorks</li>
-        <li>E-mail : <a href="mailto:alefetey123@gmail.com">Mail de Sethiar</a></li>
-        <li>N° SIRET : 92746584900010</li>
-    </ul>
-    <br>
-    <div>
-        <h2>2. Hébergement</h2>
-        <p>Hébergeur :</p>
-        <ul>
-            <li>Nom : [Nom de l'Hébergeur]</li>
-            <li>Adresse : [Adresse de l'Hébergeur]</li>
-            <li>Téléphone : [Numéro de Téléphone de l'Hébergeur]</li>
-            <li>E-mail : [Adresse E-mail de l'Hébergeur]</li>
-        </ul>
-    </div>
-    <br>
-    <div>
-        <h2>3. Propriété Intellectuelle</h2>
-        <p class="first">Le site, son contenu et tous les éléments qui le composent (textes, images, vidéos, logos, etc.) sont protégés par le droit de la propriété intellectuelle.
-            Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite,
-            sauf autorisation écrite préalable de l'éditeur.
-    </div>
-    <br>
-    <div>
-        <h2>4. Responsabilité</h2>
-        <p>Responsabilité de l'Éditeur :</p>
-        <p class="first">L'éditeur s'efforce de fournir des informations aussi précises que possible sur le site. Cependant, il ne pourra être tenu responsable des omissions,
-            des inexactitudes et des carences dans la mise à jour, qu'elles soient de son fait ou du fait des tiers partenaires qui lui fournissent ces informations.</p>
+    <!-- Bordure intérieure -->
+    <div class="inner-frame-politique">
 
-        <p>Liens Hypertextes :</p>
-        <p class="first">Le site peut contenir des liens hypertextes vers d'autres sites. L'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+        <!-- Conteneur principal -->
+        <main class="politique-main">
 
-        <p>Disponibilité du Site :</p>
-        <p class="first">Le site est normalement accessible aux utilisateurs 24/24h, 7/7j, sauf interruption, programmée ou non, pour des besoins de maintenance ou en cas de force majeure.
-            En cas d’impossibilité d’accès au service, l'éditeur s’engage à faire son maximum pour rétablir l’accès au service. Le site ne saurait être tenu pour responsable de tout dommage,
-            quelle qu'en soit la nature, résultant de son indisponibilité.</p>
-        <br>
-    </div>
-    <div>
-        <h2>5. Données Personnelles</h2>
-        <p class="first">Les données personnelles collectées sur le site sont traitées conformément à la politique de confidentialité disponible ici : <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32016R0679" target="_blank">Lien vers le RGPD</a>.
-            Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au Règlement Général sur la Protection des Données (RGPD), vous disposez de droits d’accès,
-            de rectification, de suppression et d’opposition aux données personnelles vous concernant. Pour exercer ces droits, veuillez contacter : <a href="mailto:titimenageou@outlook.fr">Email de TitiTechnique</a></p>
-    </div>
-    <br>
-    <div>
-        <h2>6. Cookies</h2>
-        <p class="first">Le site utilise des cookies pour améliorer l'expérience utilisateur, analyser le trafic et personnaliser le contenu.
-            Ces cookies sont uniquement utilisés pour la gestion des sessions utilisateur. Les cookies sont des fichiers texte qui sont stockés
-            sur votre appareil pour maintenir votre connexion pendant votre visite. Aucune autre forme de suivi ou de publicité n'est utilisée.
-            Vous pouvez gérer vos préférences en matière de cookies via les paramètres de votre navigateur.</p>
-    </div>
-    <br>
-    <div>
-        <h2>7. Droit Applicable et Attribution de Juridiction</h2>
-        <p class="first">Tout litige en relation avec l’utilisation du site -Blog de TitiTechnique- est soumis au droit français.
-            Il est fait attribution exclusive de juridiction aux tribunaux compétents de Cherbourg.</p>
-    </div>
-    <br>
-    <div>
-        <h2>8. Contact</h2>
-        <p class="first">Pour toute question ou information concernant le site, veuillez contacter :</p>
-    <ul class="infoperso">
-        <li>Nom : TitiTechnique</li>
-        <li>E-mail : titimenageou@outlook.fr</li>
-    </ul>
+            <!-- Cadrage du conteneur principal -->
+            <div class="politique-border">
+
+                <!--titre -->
+                <h1 class="politique-title">Mentions Légales</h1>
+
+                <!-- Section : Mise à jour et retour -->
+                <div class="politique-header">
+                    <p class="politique-update">Dernière mise à jour : 1 janvier 2025</p>
+                    <a href="{{ url_for('landing_page') }}" class="politique-home-link">Retour à l'accueil</a>
+                </div>
+            </div>
+
+            <!-- Séparation -->
+            <hr class="politique-divider">
+
+            <!-- Logo -->
+            <div class="politique-logo">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/inscrip_titi.png') }}"
+                     alt="Image de Titi"
+                     class="politique-logo-img">
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="politique-content">
+
+                <!-- Introduction -->
+                <section class="politique-section">
+                    <p class="politique-intro">
+                        Conformément aux dispositions des Articles 6-III et 19 de la Loi
+                        n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N.,
+                        il est porté à la connaissance des utilisateurs et visiteurs du site
+                        <u>https://www.tititechnique.fr</u> les
+                        présentes mentions légales.
+                    </p>
+                    <p>
+                        La connexion et la navigation sur le site <u>https://www.tititechnique.fr</u> par l’utilisateur
+                        implique
+                        acceptation intégrale et sans réserve des présentes mentions légales.
+                    </p>
+                </section>
+
+                <!-- Sections des informations -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">1. Informations sur l’Éditeur</h2>
+                    <br>
+                    <p>Éditeur du site :</p>
+                    <ul>
+                        <li>Nom : Tititechnique</li>
+                        <li>E-mail : <a href="mailto:titimenageou@outlook.fr">Mail de Tititechnique</a></li>
+                    </ul>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">2. Hébergement</h2>
+                    <p>Hébergeur :</p>
+                    <ul class="politique-list">
+                        <li>Nom : o2switch</li>
+                        <li>Adresse : Chemin des Pardiaux, 63000 Clermont-Ferrand, France</li>
+                        <li>Téléphone : 04 44 44 60 40</li>
+                        <li>E-mail : support@o2switch.fr</li>
+                    </ul>
+                </section>
+
+                <!-- Sections de la propriété intellectuelle -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">3. Propriété Intellectuelle</h2>
+                    <p class="politique-intro">
+                        Le site, son contenu et tous les éléments qui le composent
+                        (textes, images, vidéos, logos, etc.) sont protégés par le droit de la propriété intellectuelle.
+                        Toute reproduction, représentation, modification, publication, adaptation de tout ou
+                        partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite,
+                        sauf autorisation écrite préalable de l'éditeur.
+                    </p>
+                </section>
+
+                <!-- Sections de la responsabilité -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">4. Responsabilité</h2>
+                    <p>
+                        Responsabilité de l'Éditeur :
+                    </p>
+                    <p class="politique-intro">
+                        L'éditeur s'efforce de fournir des informations aussi précises
+                        que possible sur le site. Cependant, il ne pourra être tenu responsable des omissions,
+                        des inexactitudes et des carences dans la mise à jour, qu'elles soient de son fait ou du
+                        fait des tiers partenaires qui lui fournissent ces informations.
+                    </p>
+                    <p>
+                        Liens Hypertextes :
+                    </p>
+                    <p class="politique-intro">
+                        Le site peut contenir des liens hypertextes vers d'autres sites.
+                        L'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur
+                        contenu.
+                    </p>
+                    <p>
+                        Disponibilité du Site :
+                    </p>
+                    <p class="politique-intro">
+                        Le site est normalement accessible aux utilisateurs 24/24h, 7/7j,
+                        sauf interruption, programmée ou non, pour des besoins de maintenance ou en cas de force
+                        majeure.
+                        En cas d’impossibilité d’accès au service, l'éditeur s’engage à faire son maximum pour
+                        rétablir l’accès au service. Le site ne saurait être tenu pour responsable de tout dommage,
+                        quelle qu'en soit la nature, résultant de son indisponibilité.
+                    </p>
+                </section>
+
+                <!-- Sections du respect dela vie privée -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">5. Données Personnelles</h2>
+                    <p class="politique-intro">
+                        Les données personnelles collectées sur le site sont traitées
+                        conformément à la politique de confidentialité disponible ici :
+                        <a class="links" href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32016R0679"
+                           target="_blank">
+                            Lien vers le RGPD
+                        </a>.
+                        Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au
+                        Règlement Général sur la Protection des Données (RGPD), vous disposez de droits d’accès,
+                        de rectification, de suppression et d’opposition aux données personnelles vous
+                        concernant. Pour exercer ces droits, veuillez contacter : <a
+                            href="mailto:titimenageou@outlook.fr">Email
+                        de
+                    </a>
+                    </p>
+                </section>
+
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">6. Cookies</h2>
+                    <p class="politique-intro">
+                        Le site utilise des cookies pour améliorer l'expérience utilisateur, analyser le trafic et
+                        personnaliser le contenu.
+                        Ces cookies sont uniquement utilisés pour la gestion des sessions utilisateur. Les
+                        cookies sont des fichiers texte qui sont stockés sur votre appareil pour maintenir votre
+                        connexion pendant votre visite. Aucune autre
+                        forme de suivi ou de publicité n'est utilisée. Vous pouvez gérer vos préférences en matière de
+                        cookies via les paramètres de votre navigateur.
+                    </p>
+                </section>
+
+                <!-- Sections du droit et juridiction -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">7. Droit Applicable et Attribution de Juridiction</h2>
+                    <p class="politique-intro">
+                        Tout litige en relation avec l’utilisation du site - Blog de TitiTechnique - est soumis au droit
+                        français.
+                        Il est fait attribution exclusive de juridiction aux tribunaux compétents de Caen.</p>
+                </section>
+
+                <!-- Sections des contacts -->
+                <section class="politique-section">
+                    <h2 class="politique-subtitle">8. Contact</h2>
+                    <p class="first-politique">Pour toute question ou information concernant le site, veuillez contacter
+                        :</p>
+                    <ul class="politique-list">
+                        <li>Nom : TitiTechnique</li>
+                        <li>E-mail : titimenageou@outlook.fr</li>
+                    </ul>
+                </section>
+                <div class="politique-footer">
+                    <p>Merci d'utiliser notre site et de nous faire confiance.</p>
+                </div>
+            </div>
+        </main>
     </div>
 </div>
 
 {% endblock %}
+
 {% block footer_content %}
 {% endblock %}
