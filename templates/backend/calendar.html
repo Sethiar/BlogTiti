@@ -33,6 +33,7 @@
             {% for request in requests %}
             <tr>
                 <td>{{ request.pseudo }}</td>
+                <td>{{ request.filename }}</td>
                 <td>{{ moment(request.date_rdv).format("DD/MM/YYYY") }}</td>
                 <td>{{ moment(request.heure).format("HH:00") }}</td>
                 <td>{{ request.status }}</td>
