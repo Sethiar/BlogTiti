@@ -5,6 +5,7 @@ import os
 import locale
 
 from flask import render_template, send_from_directory
+from flask_login import current_user
 
 from app import create_app
 
@@ -73,12 +74,15 @@ def landing_page():
     popular = popular_videos(videos)
     archived = archived_videos(videos)
 
+    # Récupération de l'utilisateur connecté.
+    user = current_user
+
     return render_template(
         'frontend/accueil.html', current_month=current_month, popular=popular,
-        archived=archived)
+        archived=archived, user=user)
 
 
 # Code lançant l'application.py.
 if __name__ == '__main__':
-    scheduled_task(app)
+    #scheduled_task(app)
     app.run()

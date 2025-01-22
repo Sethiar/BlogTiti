@@ -2,6 +2,7 @@
 PassengerAppRoot "/home/meth6045/BlogTitiTechnique"
 PassengerBaseURI "/"
 PassengerPython "/home/meth6045/virtualenv/BlogTitiTechnique/3.11/bin/python"
+PassengerAppEnv production
 PassengerAppLogFile "/home/meth6045/logs"
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
 
