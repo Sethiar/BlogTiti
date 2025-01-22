@@ -1,0 +1,135 @@
+// Importation des variables.
+@use 'variables' as *;
+
+// Reset CSS - base/base-reset.scss
+
+/* Réinitialiser les marges, le padding et la box-sizing */
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+figure,
+figcaption,
+footer,
+header,
+section,
+article,
+main,
+aside {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Utiliser box-sizing border-box par défaut */
+}
+
+/* Éviter que le texte soit hérité de styles non désirés */
+body {
+  line-height: 1.6;
+  font-family: 'Calibri', 'Arial', sans-serif;
+}
+
+/* Réinitialiser les styles pour les liens */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Réinitialiser les styles pour les listes */
+ul,
+li {
+  list-style: none;
+}
+
+/* Réinitialiser les bordures */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid $color-accent-darkorange;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+th {
+  color: $color-secondary;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+}
+
+td,
+th {
+  padding: 1rem;
+  text-align: left;
+}
+
+/* Assurez-vous que les boutons sont sans styles par défaut */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Empêcher les comportements par défaut des formulaires */
+input,
+textarea {
+  outline: none;
+}
+
+/* Contrôler les valeurs par défaut des images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Media Queries pour la Responsivité */
+
+/* Mobile - Portrait (max-width: 599px) */
+@media (max-width: 599px) {
+  html,
+  body {
+    font-size: $font-size-xl;
+  }
+
+  /* Ajouter d'autres ajustements pour les mobiles ici si nécessaire */
+}
+
+/* Mobile - Paysage (min-width: 600px et max-width: 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+  html,
+  body {
+    font-size: $font-size-xl;
+  }
+
+  /* Ajouter d'autres ajustements pour les mobiles paysage ici */
+}
+
+/* Tablette - Portrait (min-width: 900px et max-width: 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  html,
+  body {
+    font-size: $font-size-xl;
+  }
+
+  /* Ajouter d'autres ajustements pour les tablettes portrait ici */
+}
+
+/* Tablette - Paysage (min-width: 1200px et max-width: 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  html,
+  body {
+    font-size: $font-size-xxl;
+  }
+}

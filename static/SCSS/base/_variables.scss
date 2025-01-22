@@ -1,0 +1,83 @@
+/* Variables CSS - base/variables.scss */
+
+
+// Variables globales.
+
+
+// Taille des polices
+$font-size-small: 0.8rem;    // Taille petite (12.8px)
+$font-size-sm: 0.875rem;     // Taille petite (14px)
+$font-size-base: 1rem;       // Taille de base (16px)
+$font-size-lg: 1.25rem;      // Taille grande (20px)
+$font-size-xl: 1.5rem;       // Taille extra-large (24px)
+$font-size-xxl: 2rem;        // Taille super large (32px)
+$font-size-xxxl: 3rem;       // Taille extra-super large (40px)
+$font-size-title: 4rem;      // Taille de caractères de titre (48px)
+
+
+// === Couleurs globales ===
+/* Noir */
+$color-primary: #000000;
+/* Blanc */
+$color-secondary: #ffffff;
+
+
+// Couleur background produits
+/* Antracite */
+$color-background-product: #1e1e1e;
+
+
+// Couleur Texte landing_page
+/* Blanc pur */
+$color-text-product: #fff;
+/* Blanc cassé */
+$color-text-product-card-h3: #f4f4f4;
+/* Gris très très clair */
+$color-text-product-p: #ddd;
+
+// Couleur background hover
+/* Gris foncé */
+$color-background-product-hover:#292929;
+
+// Couleur background card hover
+/* Orange plus clair */
+$color-background-productcard-hover: #ff9c00;
+
+
+/* Accents */
+$color-accent-orange: #ffa500; // Orange
+$color-accent-darkred: darkred; // Rouge foncé
+$color-accent-darkorange: #ff8c00; // Orange foncé
+
+
+
+/* Neutres */
+$color-neutral-darkgrey: #a9a9a9; // Gris foncé
+$color-neutral-gold: #ffd700; // Or
+$color-lightgrey: #f2f2f2; // Gris clair
+
+
+/* Spécifique */
+$color-footer: #212f3d; // Couleur pour le pied de page
+
+
+// === Couleurs d'alerte ===
+/* Erreur */
+$color-alert-error-text: #a94442; // Texte
+$color-alert-error-background: #f2dede; // Fond
+$color-alert-error-border: #ebccd1; // Bordure
+
+/* Avertissement */
+$color-alert-warning-text: #8a6d3b; // Texte
+$color-alert-warning-background: #fcf8e3; // Fond
+$color-alert-warning-border: #faebcc; // Bordure
+
+/* Succès */
+$color-alert-success-text: #3c763d; // Texte
+$color-alert-success-background: #dff0d8; // Fond
+$color-alert-success-border: #d6e9c6; // Bordure
+
+// Polices
+$font-primary: 'Arial', sans-serif;
+$font-secondary: 'Comic Sans MS', cursive;
+
