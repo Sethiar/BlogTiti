@@ -1,0 +1,75 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+
+// Image du header
+/* Logo */
+.logo img {
+  width: 350px;
+  height: auto;
+  border: 1px solid $color-accent-orange;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+
+  /* Effet au survol */
+  &:hover {
+    transform: scale(1.1); /* Zoom au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Bannière */
+.banniere img {
+  width: 70%;
+  height: auto;
+  border: 1px solid $color-accent-orange;
+  border-radius: 24px;
+  transition: transform 0.3s ease-in-out;
+  margin: 0 auto;
+
+  /* Effet au survol */
+  &:hover {
+    transform: scale(1.1); /* Zoom au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Section d'accueil */
+.pics-accueil {
+  margin: 0 auto;
+  text-align: center;
+  width: 70%;
+  border-radius: 50%;
+
+  img {
+    /* Spécifique à cette section */
+    border-radius: 75%;
+  }
+}
+
+/* Contenu flexible */
+.content-block {
+  flex: 1 1 20%;
+  margin: 10px;
+  text-align: center;
+}
+
+/* Fin de section */
+.end {
+  width: 100%;
+  font-size: 38px;
+  text-align: center;
+}
+
+/* Section avec bordure et vidéo */
+.pics-accueil-fin {
+  overflow: hidden;
+  width: 50vw;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 3px solid orange;
+  margin: 0 auto;
+}

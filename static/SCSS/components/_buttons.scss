@@ -1,0 +1,182 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+
+/* Button CSS - Components/Buttons.scss */
+
+/* Regroupement des styles communs aux boutons */
+%btn-common {
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+.btn-primary-forum {
+  display: flex;
+  margin: 0 auto;
+}
+
+.btn-primary, .btn-primary-forum, .btn-primary-registration {
+  @extend %btn-common;
+  padding: 2% 4%;
+  font-size: $font-size-base;
+  background-color: $color-accent-darkorange;
+  color: $color-primary;
+
+  &:hover {
+    background-color: $color-primary;
+    border: 2px solid $color-neutral-gold;
+    color: $color-accent-darkorange;
+  }
+}
+
+.btn-primary-registration {
+  display: block;
+  margin: 0 auto;
+  width: 60%;  // Ajuste pour des écrans plus larges
+}
+
+.btn-secondary, .btn-secondary-forum, .reply-button, .change-button, .delete-comment-form button {
+  @extend %btn-common;
+  padding: 2% 3%;
+  font-size: $font-size-lg;
+  background-color: $color-lightgrey;
+  color: $color-primary;
+
+  &:hover {
+    background-color: $color-neutral-darkgrey;
+    color: $color-neutral-gold;
+  }
+}
+
+.delete-comment-form button {
+  background-color: $color-accent-darkorange;
+  &:hover {
+    background-color: $color-accent-darkred;
+    color: $color-secondary;
+  }
+}
+
+.back-forum {
+  @extend %btn-common;
+  background-color: $color-accent-orange;
+  color: $color-primary;
+  padding: 2px 7px;
+  text-align: center;
+  font-style: italic;
+  font-size: $font-size-lg;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+    color: $color-primary;
+  }
+}
+
+// Form Buttons
+.cancelled-btn, .validated-btn {
+  @extend %btn-common;
+  display: inline-block;
+  width: 80%;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: $font-size-xl;
+  cursor: pointer;
+}
+
+.cancelled-btn {
+  background-color: $color-neutral-gold;
+
+  &:hover {
+    background-color: $color-accent-darkred;
+    color: $color-secondary;
+  }
+}
+
+.validated-btn {
+  background-color: $color-accent-darkorange;
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-neutral-gold;
+    border: 1px solid $color-neutral-gold;
+    transform: scale(1.05);
+  }
+}
+
+// Backend buttons
+nav button {
+  @extend %btn-common;
+  background-color: $color-accent-orange;
+  color: $color-primary;
+  border: 2px solid $color-neutral-gold;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: $color-neutral-gold;
+    border: 2px solid $color-accent-orange;
+  }
+}
+
+// Button containers
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.button-container button {
+  width: 70%;
+  padding: 10px 20px;
+  background-color: $color-accent-orange;
+  color: $color-primary;
+  border: none;
+  font-size: $font-size-base;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button a {
+  text-decoration: none;
+  color: $color-primary;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+  &:hover {
+    background-color: $color-accent-darkorange;
+    border: 2px solid $color-neutral-gold;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .btn-primary-registration {
+    width: 80%;  // Plus large sur les tablettes
+  }
+
+  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
+    padding: 2% 5%;
+    font-size: $font-size-base;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-primary-registration {
+    width: 100%;  // S'adapte complètement sur mobile
+  }
+
+  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
+    font-size: $font-size-base;
+  }
+
+  .button-container button {
+    width: 100%;  // Les boutons prennent toute la largeur de l'écran
+  }
+}

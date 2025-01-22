@@ -1,0 +1,446 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+// Styles de la page forum
+
+/* Styles pour centrer tout le contenu du h2 */
+.container-subject-forum h2 {
+  margin: 0 auto;
+  font-size: $font-size-xxl;
+  width: 70%;
+  height: 10vh;
+  color: black;
+  background-color: $color-accent-orange;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Styles pour formulaire d'ajout de sujet */
+#addSubjectForm label {
+  font-size: $font-size-xl;
+}
+
+/* Centrer uniquement le texte de .subject-name et ajouter un espace */
+.subject-name {
+  margin-left: 2%;
+}
+
+/* Styles de la section commentaire */
+.form-comment {
+  display: flex;
+  padding-left: 5%;
+}
+
+/* Conteneur des commentaires */
+.container-comment {
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+  padding: 2%;
+  background-color: $color-background-product-hover;
+  border: 1px solid $color-accent-darkorange;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Ajoute une légère ombre */
+}
+
+/* Titre de la section laisser un commentaire */
+.forum-subtitle {
+  text-align: center; /* Centre le texte horizontalement */
+}
+
+
+/* Section du titre */
+.comment-avis {
+  margin-bottom: 1.5rem; /* Ajoute un espacement sous le titre */
+  text-align: center; /* Centre le texte horizontalement */
+}
+
+.comment-avis h3 {
+  font-size: $font-size-xl;
+  color: black;
+  background-color: $color-accent-orange;
+  padding: 2%;
+  border-radius: 5px; /* Coins arrondis */
+}
+
+/* Bouton postant le commentaire */
+.btn-comment {
+  background-color: $color-accent-darkorange;
+  border-radius: 8px;
+  text-align: center;
+  font-size: $font-size-xl;
+  margin: 1%;
+  padding: 2%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+  transform: scale(1.1);
+  }
+}
+
+/* Conteneur du formulaire */
+.form-comment {
+  display: flex;
+  flex-direction: column; /* Aligne les éléments en colonne */
+  align-items: center; /* Centre horizontalement les éléments */
+  gap: 1rem; /* Ajoute un espace entre les éléments */
+}
+
+/* Champ de texte */
+textarea {
+  width: 80%;
+  height: 15vh;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: $font-size-lg;
+  border: 1px solid $color-accent-orange;
+  border-radius: 5px; /* Coins arrondis */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet au survol */
+textarea:hover {
+  transform: scale(1.05); /* Agrandit légèrement */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Commentaire individuel */
+.comment {
+  background-color: $color-neutral-darkgrey;
+  border: 1px solid $color-text-product-p;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: $font-size-xl;
+  border-radius: 8px;
+  padding: 1%;
+  margin-bottom: 2%;
+}
+
+/* Photo des utilisateurs ayant posté */
+.comment-header {
+  background-color: $color-neutral-darkgrey;
+  display: flex;
+  align-items: center;
+  gap: 1%;
+  color: $color-primary;
+  margin-bottom: 1%;
+}
+
+/* Photo Utilisateur */
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $color-neutral-darkgrey;
+  border: 1px solid $color-neutral-gold;
+  object-fit: cover;
+
+  &:hover {
+    transform: scale(1.1); /* Agrandit légèrement l'image */
+  }
+}
+
+/* Info utilisateur */
+.comment-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Pseudo de l'utilisateur */
+.user-pseudo {
+    font-weight: bold;
+    color: $color-primary;
+}
+
+/* Rôle de l'utilisateur */
+.user-role {
+  color: $color-primary;
+  background-color: transparent;
+  font-size: $font-size-xl;
+}
+
+/* Date du commentaire */
+.comment-date {
+  color: $color-primary;
+  background-color: transparent;
+  border-top: 1px solid $color-primary;
+}
+/* Conteneur du contenu du commentaire */
+.comment-body {
+  margin-bottom: 1%;
+}
+
+/* Contenu du commentaire */
+.content-comment {
+  text-indent: 5%;
+  text-align: justify;
+  background-color: transparent;
+  color: $color-primary;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+// Conteneur des likes
+
+.like-section {
+  display: inline-flex;
+  align-items: left;
+  background-color: $color-primary;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover {
+    font-size: $font-size-xxxl;
+    transform: scale(1.1); /* Zoom au survol */
+    background-color: transparent;
+  }
+}
+
+/* Conteneur de l'icôpne */
+.like-icon {
+  color: $color-accent-orange;
+  cursor: pointer;
+  font-size: $font-size-xxl;
+  margin-left: 1%;
+}
+
+.liked-users {
+  font-size: $font-size-xl;
+  color: $color-secondary;
+  margin-left: 5%;
+}
+
+.comment-reply {
+  text-indent: 5%;
+  background-color: $color-lightgrey;
+  color: $color-primary;
+  font-size: $font-size-xl;
+  height: auto;
+  border: 1px solid $color-text-product;
+  border-radius: 5px;
+}
+
+/* Style des réponses aux commentaires */
+.reply-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Conteneur principal des réponses */
+.replies-container {
+    margin-top: 5%;
+    padding-left: 7%;
+    border-left: 2px solid $color-text-product-p;
+}
+
+/* Conteneur d'une réponse individuelle */
+.reply-card {
+    background: $color-lightgrey;
+    border: 1px solid $color-text-product-p;
+    border-radius: 8px;
+    padding: 1%;
+    margin-bottom: 1.5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Entête des réponses */
+.reply-header {
+  background-color: $color-lightgrey;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  gap: 1%;
+  margin-bottom: 1%;
+  margin-left: 10%;
+}
+
+/* Image de la section de réponse */
+.reply-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $color-neutral-gold;
+  background-color: $color-lightgrey;
+  color: $color-primary;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide pour le zoom et l'ombre */
+
+  &:hover {
+    transform: scale(1.1); /* Agrandit légèrement l'image */
+  }
+}
+
+/* Infos utilisateur */
+.reply-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-indent: 10%;
+  background-color: $color-lightgrey;
+  font-size: $font-size-xl;
+  color: $color-primary;
+}
+
+.reply-user-pseudo {
+  font-weight: bold;
+  background-color: $color-lightgrey;
+  font-size: $font-size-xl;
+  color: $color-primary;
+}
+
+.reply-user-role {
+  font-size: $font-size-xl;
+  background-color: $color-lightgrey;
+  color: $color-primary
+}
+
+.reply-date {
+  text-indent: 10%;
+  background-color: $color-lightgrey;
+  font-size: $font-size-lg;
+  color: $color-primary;
+  border-top: 1px solid $color-primary;
+}
+
+/* Contenu de la réponse */
+.reply-body {
+  margin-bottom: 1.2%;
+}
+
+.reply-content {
+  text-align: center;
+  background-color: $color-lightgrey;
+  color: $color-primary;
+  line-height: 1.5;
+  padding-right: 4%;
+  padding-bottom: 2%;
+  font-size: $font-size-xl;
+  margin-left: 7%;
+  margin-right: 7%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.8%;
+  box-sizing: border-box;
+}
+
+// Media Queries pour rendre le design responsive
+
+@media only screen and (max-width: 1024px) {
+  .container-subject-forum h2 {
+    width: 85%;
+    font-size: $font-size-xl;
+  }
+
+  .profile-picture {
+    width: 40px;
+    height: 40px;
+  }
+
+  .comment {
+    font-size: $font-size-lg;
+  }
+
+  .btn-comment {
+    font-size: $font-size-lg;
+  }
+
+  textarea {
+    width: 90%;
+    height: 12vh;
+  }
+
+  .comment-avis h3 {
+    font-size: $font-size-lg;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container-subject-forum h2 {
+    width: 95%;
+    font-size: $font-size-lg;
+  }
+
+  .comment {
+    font-size: $font-size-base;
+  }
+
+  .btn-comment {
+    font-size: $font-size-base;
+  }
+
+  textarea {
+    width: 95%;
+    height: 10vh;
+  }
+
+  .comment-avis h3 {
+    font-size: $font-size-base;
+  }
+
+  .reply-profile-picture {
+    width: 35px;
+    height: 35px;
+  }
+
+  .reply-content {
+    font-size: $font-size-lg;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container-subject-forum h2 {
+    width: 100%;
+    font-size: $font-size-lg;
+  }
+
+  .comment {
+    font-size: $font-size-base;
+  }
+
+  .btn-comment {
+    font-size: $font-size-base;
+  }
+
+  textarea {
+    width: 100%;
+    height: 8vh;
+  }
+
+  .comment-avis h3 {
+    font-size: $font-size-base;
+  }
+
+  .reply-profile-picture {
+    width: 30px;
+    height: 30px;
+  }
+
+  .reply-content {
+    font-size: $font-size-sm;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}

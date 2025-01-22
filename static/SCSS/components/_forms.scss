@@ -1,0 +1,209 @@
+// Importation des variables.
+@use '../base/variables' as *;
+
+// Forms CSS - Components/forms.scss
+
+/* Style général des formulaires */
+
+.annonce {
+  color: $color-primary;
+  border: 1px solid $color-accent-darkorange;
+  font-size: $font-size-xxl;
+  padding: 2%; /* Ajout d'espacement interne */
+  text-align: justify; /* Alignement justifié du texte */
+  text-indent: 2em; /* Indentation de la première ligne */
+  justify-content: center; /* Centrage horizontal */
+  align-items: center; /* Centrage vertical */
+  height: auto; /* Hauteur adaptable au contenu */
+  margin: 0 auto; /* Centrage horizontal du conteneur */
+  max-width: 80%; /* Largeur maximale pour ne pas déborder */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour style */
+  border-radius: 10px; /* Coins arrondis */
+  background-color: $color-neutral-darkgrey; /* Fond optionnel */
+}
+
+/* Styles du logo du formulaire. */
+.imgcontainer-form {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 12px 0;
+}
+
+/* Image avatar dans le formulaire */
+img.avatar-form {
+  width: 45%;
+  align-items: center;
+  border-radius: 50%;
+  /* Animation fluide pour le zoom et l'ombre */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1); /* Agrandit l'image à 110% de sa taille originale */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Ajoute une ombre au survol */
+  }
+}
+
+.space-form {
+  height: 5vh;
+}
+
+/* Titre du formulaire */
+.h2-form {
+  color: $color-accent-darkorange;
+  text-align: center;
+}
+
+.h3-form {
+  text-decoration: underline;
+  color: $color-accent-orange;
+  text-align : center;
+}
+
+/* Conteneur de l'image */
+.form-base {
+  background-color: $color-primary;
+  border: 2px solid $color-accent-orange;
+  padding: 20px;
+  font-size: $font-size-xl;
+  max-width: 30vw;
+  margin: 5% auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Conteneur des champs */
+.form-container {
+  margin-bottom: 1%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Augmente l'écart entre les champs */
+
+  .form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Pour s'assurer que chaque groupe de champs occupe toute la largeur disponible */
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: $color-secondary;
+      margin-bottom: 1.5%;
+      background-color: transparent;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 12px;
+      display: inline-block;
+      box-sizing: border-box;
+      font-size: $font-size-xl;
+      background-color: lightgrey;
+      color: $color-primary;
+
+      &:hover {
+        background-color: white;
+        border: 1px solid $color-accent-darkorange;
+      }
+    }
+  }
+
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: 7%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: $color-primary;
+    font-size: $font-size-xl;
+  }
+}
+
+/* Lien pour mot de passe oublié */
+.forgot-password {
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.forgot-password-a {
+  color: $color-accent-darkorange;
+  padding: 2% 3%;
+}
+
+.container-btn {
+  border: 1px solid $color-lightgrey;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .annonce {
+    max-width: 100%; /* Prend toute la largeur de l'écran */
+    padding: 5%; /* Espacement interne suffisant */
+    margin: 0; /* Pas de marges externes */
+  }
+
+  /* Enlever les styles qui forcent les marges et la largeur pour mobile */
+  .form-base {
+    max-width: 100%; /* Laisser le formulaire occuper toute la largeur */
+    margin: 0; /* Pas de marges externes */
+  }
+
+  .form-container {
+    gap: 8px; /* Espacement réduit pour les champs */
+  }
+
+  .form-group {
+    label {
+      font-size: $font-size-lg; /* Ajustement de la taille du texte */
+    }
+
+    input {
+      font-size: $font-size-lg; /* Ajuste la taille des champs */
+    }
+  }
+
+  .container-btn {
+    padding: 1.2%; /* Ajustement du padding du bouton */
+  }
+}
+
+/* Tablettes en paysage */
+@media (max-width: 1024px) {
+  .annonce {
+    max-width: 90%; /* Réduit légèrement la largeur par rapport aux tablettes en portrait */
+    padding: 4%;
+  }
+
+  .form-base {
+    max-width: 90vw; /* Ajuste la largeur pour ne pas trop prendre de place */
+    margin: 5% auto; /* Ajuste la marge */
+  }
+
+  .form-container {
+    gap: 10px; /* Espacement réduit entre les champs */
+  }
+
+  .form-group {
+    label {
+      font-size: $font-size-lg;
+    }
+
+    input {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .container-btn {
+    padding: 1.4%;
+  }
+}

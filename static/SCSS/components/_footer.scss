@@ -1,0 +1,176 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+
+// Footer styles globaux
+/* footer */
+footer {
+  background-color: $color-footer;
+  width: 70%;
+  /* Décale le footer vers la droite */
+  margin-left: auto;
+  margin-right: 0;
+  color: $color-secondary;
+  /* Augmente le padding pour les petites résolutions */
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  /* Centre le contenu */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenu principal du pied de page */
+.footer-content {
+  display: flex;
+  /* Distribue l'espace entre les sections */
+  justify-content: space-between;
+  /* Espacement entre les éléments */
+  gap: 2rem;
+  padding: 2rem;
+  /* Permet aux sections de passer à la ligne en cas de petite taille d'écran */
+  flex-wrap: wrap;
+}
+
+/* Chaque section du footer */
+.footer-section {
+  flex: 1;
+  /* Garantit que chaque section ait une taille minimale */
+  min-width: 200px;
+  /* Ajoute de l'espace entre les sections */
+  margin: 0 1rem;
+}
+
+/* Titres des sections */
+footer h3 {
+  font-size: $font-size-xxl;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  color: $color-accent-orange;
+}
+
+/* Listes */
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer ul li {
+  /* Espace plus important entre les éléments de liste */
+  margin-bottom: 1rem;
+  font-size: $font-size-xl;
+
+  a {
+    font-size: $font-size-xl;
+    text-decoration: none;
+    color: $color-secondary;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+
+    &:hover {
+      color: $color-accent-orange;
+      text-decoration: none;
+    }
+  }
+}
+
+footer ul li p {
+  font-size: $font-size-xl;
+  color: $color-secondary;
+
+  a {
+    font-size: $font-size-xl;
+    text-decoration: none;
+    color: $color-accent-orange;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-accent-orange;
+    }
+  }
+}
+
+/* Texte simple */
+footer p {
+  margin-bottom: 1.5%;
+  color: $color-accent-orange;
+}
+
+/* Bas de la section */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xl;
+  padding: 2%;
+  color: $color-accent-darkorange;
+}
+
+
+/* Adaptation mobile */
+@media (max-width: 1024px) {
+  footer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    /* Les sections s'affichent verticalement sur mobile */
+    flex-direction: column;
+    /* Réduit le padding */
+    padding: 1.5rem;
+  }
+
+  .footer-section {
+    /* Chaque section prend toute la largeur */
+    width: 100%;
+    /* Ajoute un espace vertical entre les sections */
+    margin: 0 0 1.5rem 0;
+  }
+
+  footer h3 {
+    /* Réduit la taille des titres pour les petits écrans */
+    font-size: $font-size-xl;
+    margin-bottom: 1rem;
+  }
+
+  footer ul li {
+    /* Réduit la taille des items de liste */
+    font-size: $font-size-lg;
+  }
+
+  footer p {
+    /* Réduit la taille du texte simple */
+    font-size: $font-size-lg;
+  }
+}
+
+/* Adaptation très petit écran (téléphones) */
+@media (max-width: 480px) {
+  footer {
+    padding: 2rem 0;
+  }
+
+  .footer-content {
+    /* Les sections s'affichent verticalement */
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  footer h3 {
+    /* Réduit encore la taille des titres */
+    font-size: $font-size-xl;
+  }
+
+  footer ul li {
+    /* Réduit la taille des items de liste */
+    font-size: $font-size-lg;
+  }
+
+  footer p {
+    /* Réduit la taille du texte simple */
+    font-size: $font-size-lg;
+  }
+}
