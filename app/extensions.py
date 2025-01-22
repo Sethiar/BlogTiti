@@ -77,4 +77,3 @@ def create_whereby_meeting_admin():
         print(f"Erreur: {err}")
         return None
 
-

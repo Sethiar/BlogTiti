@@ -11,7 +11,7 @@ ID_CHANNEL = os.getenv('ID_CHANNEL')
 def create_scheduler(app):
     """
     Crée et retourne une instance de BackgroundScheduler.
-    :param app: Instance de l'application Flask.
+    :param app: Instance de l'application.py Flask.
     :return:
     """
     scheduler = BackgroundScheduler()
@@ -31,10 +31,10 @@ def create_scheduler(app):
 
 def scheduled_task(app):
     """
-    Tâche programmée qui s'exécute avec le contexte de l'application.
-    :param app: Instance de l'application Flask.
+    Tâche programmée qui s'exécute avec le contexte de l'application.py.
+    :param app: Instance de l'application.py Flask.
     """
-    # Utilisation du contexte d'application.
+    # Utilisation du contexte d'application.py.
     with app.app_context():
         from app.videos import save_videos_to_db, YouTubeManager
 

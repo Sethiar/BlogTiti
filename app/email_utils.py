@@ -6,10 +6,10 @@ from threading import Thread
 
 def send_async_email(app, msg):
     """
-    Envoie un email de manière asynchrone en utilisant le contexte de l'application Flask.
+    Envoie un email de manière asynchrone en utilisant le contexte de l'application.py Flask.
 
     Args:
-        app (Flask): L'instance de l'application Flask.
+        app (Flask): L'instance de l'application.py Flask.
         msg (Message): L'objet Message contenant les détails de l'email à envoyer.
     """
     with app.app_context():
@@ -21,7 +21,7 @@ def send_email_in_background(app, msg):
     Lance l'envoi d'un email dans un thread séparé.
 
     Args:
-        app (Flask): L'instance de l'application Flask.
+        app (Flask): L'instance de l'application.py Flask.
         msg (Message): L'objet Message contenant les détails de l'email à envoyer.
     """
     Thread(target=send_async_email, args=(app, msg)).start()

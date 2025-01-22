@@ -1,5 +1,5 @@
 """
-Fichier configurant les décorateurs de l'application.
+Fichier configurant les décorateurs de l'application.py.
 """
 
 from functools import wraps
