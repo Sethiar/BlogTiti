@@ -180,25 +180,52 @@ class UserSaving(FlaskForm):
         return f"UserSaving(pseudo='{self.pseudo}', email='{self.email.data}', date de naissance='{self.date_naissance}')"
 
 
+# Formulaire de désinscription utilisateur.
+class UserUnsubscribe(FlaskForm):
+    """
+    Formulaire de désinscription pour les utilisateurs du site.
+
+    Attributes:
+        email (EmailField): Champ pour l'adresse e-mail de l'utilisateur.
+        password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
+    """
+    # Email de l'utilisateur.
+    email = EmailField(
+        "Email",
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Entrez votre email"})
+
+    # Password donné par l'utilisateur.
+    password = PasswordField(
+        "Mot de passe utilisateur",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Votre mot de passe."})
+
+    # Action de soumission du formulaire.
+    submit = SubmitField(
+        "Souscrire aux conditions générales du blog.")
+    csrf_token = HiddenField()
+
+
 # Code permettant d'enregistrer un administrateur.
 class UserAdminSaving(FlaskForm):
     """
-        Formulaire d'inscription pour les utilisateurs administrateurs du site.
+    Formulaire d'inscription pour les utilisateurs administrateurs du site.
 
-        Attributes:
-            email (EmailField): Champ pour l'adresse e-mail de l'utilisateur.
-            pseudo (StringField) : Champ pour le pseudo unique de l'utilisateur.
-            role (StringField): Champ pour le rôle de l'utilisateur.
-            password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
-            password2 (PasswordField) : Champ pour la confirmation du mot de passe de l'utilisateur.
-            profil_photo (FileField) : Champ pour télécharger la photo de profil de l'utilisateur.
-            date_naissance (DateField) : Champ pour la date de naissance de l'utilisateur.
-            submit (SubmitField): Bouton de soumission du formulaire.
-            csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
+    Attributes:
+        email (EmailField): Champ pour l'adresse e-mail de l'utilisateur.
+        pseudo (StringField) : Champ pour le pseudo unique de l'utilisateur.
+        role (StringField): Champ pour le rôle de l'utilisateur.
+        password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
+        password2 (PasswordField) : Champ pour la confirmation du mot de passe de l'utilisateur.
+        profil_photo (FileField) : Champ pour télécharger la photo de profil de l'utilisateur.
+        date_naissance (DateField) : Champ pour la date de naissance de l'utilisateur.
+        submit (SubmitField): Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
 
-        Example:
-            form = UserSaving()
-        """
+    Example:
+        form = UserSaving()
+    """
     # Email de l'administrateur.
     email = EmailField(
         "Email",
@@ -214,9 +241,9 @@ class UserAdminSaving(FlaskForm):
         "Rôle",
         validators=[DataRequired()],
         render_kw={"placeholder": "Votre rôle"})
-    # password donnée par l'administrateur.
+    # Password donné par l'administrateur.
     password = PasswordField(
-        "Mot de passe Utilisateur",
+        "Mot de passe utilisateur",
         validators=[DataRequired()],
         render_kw={"placeholder": "Votre mot de passe."})
     # Champ vérifiant le password donnée par l'administrateur.

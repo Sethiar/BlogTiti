@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 class User(db.Model, UserMixin):
     """
-    Modèle de données représentant un utilisateur de l'application.
+    Modèle de données représentant un utilisateur de l'application.py.
 
     Attributes:
         id (int) : Identifiant unique de l'utilisateur.

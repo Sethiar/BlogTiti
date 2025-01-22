@@ -31,7 +31,7 @@ class Video(db.Model):
     view_count = db.Column(db.Integer)
     like_count = db.Column(db.Integer)
     comment_count = db.Column(db.Integer)
-    tags = db.Column(db.Text)
+    tags = db.Column(db.JSON)
 
     # Relation avec les commentaires.
     comments_video = db.relationship('CommentVideo', back_populates='video', cascade='all, delete-orphan')
