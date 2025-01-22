@@ -2,33 +2,43 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="language" content="fr-FR">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel='stylesheet' type="text/CSS" href="{{ url_for('static',filename='CSS/backend.css') }}">
+
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='gen/style.css') }}?v=1.0">
+
     {{ moment.include_moment() }}
     {% block head_content %}
     {% endblock %}
 </head>
 <body>
-<h1>Bienvenue sur la page administrateur du blog</h1>
-<header>
+<div class="space"></div>
+<h1 class="h1-backend">Bienvenue sur la page administrateur du blog</h1>
+<header class="header-backend">
     {% block header_content %}
-    <nav>
-        <button class="logout-admin"><a href="{{ url_for('auth.logout_admin') }}">Se déconnecter en tant qu'administrateur</a></button>
-        <button class="back-frontend"><a href="{{ url_for('landing_page') }}">Aller sur la page d'accueil du blog</a></button>
-        <button class="back-backend"><a href="{{ url_for('admin.back_end') }}">Retour au back-end</a></button>
-        <button><a href="{{ url_for('admin.create_admin_user_form') }}">Créer l'utilisateur administrateur</a></button>
+    <nav class="nav-backend">
+        <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter en tant qu'administrateur</a></button>
+        <a class="btn-primary" href="{{ url_for('landing_page') }}">Aller sur la page d'accueil du blog</a></button>
+        <a class="btn-primary" href="{{ url_for('admin.back_end') }}">Retour au back-end</a></button>
+        <a class="btn-primary" href="{{ url_for('admin.create_admin_user_form') }}">Créer l'utilisateur administrateur</a></button>
     </nav>
     {% endblock %}
 </header>
 
 {% block body_content %}
 <div class="space"></div>
-    <div class="intro">
+    <div class="annonce-back">
         {% if logged_in %}
             {% for admin in admin %}
                 <p>Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
@@ -37,13 +47,13 @@
     </div>
 <div class="space"></div>
 <div class="button-container">
-    <button><a href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a></button>
-    <button><a href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a></button>
-    <button><a href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a></button>
-    <button><a href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des vidéos des utilisateurs</a></button>
-    <button><a href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a></button>
-    <button><a href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux sujets du forum</a></button>
-    <button><a href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a></button>
+    <a href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des vidéos des utilisateurs</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux sujets du forum</a></button>
+    <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a></button>
 </div>
 {% endblock %}
 
