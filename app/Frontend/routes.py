@@ -33,7 +33,7 @@ load_dotenv()
 
 
 # Route permettant d'accéder au forum du blog.
-@frontend_bp.route('/accès-forum')
+@frontend_bp.route('/acces-forum')
 def forum():
     """
     Route permettant d'accéder à la page du forum du blog.

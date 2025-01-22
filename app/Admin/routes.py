@@ -566,6 +566,9 @@ def calendar():
     # Instanciation du formulaire pour le lien su chat vidéo.
     formlink = UserLink()
 
+    # Déclaration si fichier joint dans la requête.
+    # filename = attachment_data
+
     # Préparation des données des rendez-vous pour le calendrier.
     rdv_data = []
 
@@ -587,10 +590,14 @@ def calendar():
                                    formrequest=formrequest,
                                    requests=requests,
                                    formlink=formlink,
-                                   rdv_data=rdv_data)
+                                   rdv_data=rdv_data,
+                                   #filename=filename
+            )
 
     return render_template('backend/calendar.html', formrequest=formrequest, requests=requests,
-                           rdv_data=rdv_data, formlink=formlink)
+                           rdv_data=rdv_data, formlink=formlink,
+                           #filename=filename
+         )
 
 
 # Route permettant de joindre le formulaire pour enregistrer un utilisateur avec le rôle administrateur.

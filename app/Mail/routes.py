@@ -1,5 +1,5 @@
 """
-Routes permettant le mailing de l'application.
+Routes permettant le mailing de l'application.py.
 """
 
 from app.Mail import mail_bp
@@ -29,6 +29,35 @@ def send_confirmation_email_user(email):
                f"Merci de vous être inscrit sur notre site. Votre inscription a été confirmée avec succès.\n" \
                f"Nous espérons que nous vous retrouverons bientôt afin d'entendre votre voix sur notre blog.\n" \
                f"Merci {user.pseudo} de votre confiance. \n" \
+               "\n" \
+               f"Cordialement, \n" \
+               f"L'équipe du blog de Titiechnique."
+
+    current_app.extensions['mail'].send(msg)
+    return redirect(url_for('landing_page'))
+
+
+# Méthode qui envoie un mail de confirmation pour la désinscription d'un utilisateur.
+@mail_bp.route("/send-confirmation-desinscription-email/<string:email>")
+def send_confirmation_unsubscribe_email_user(email):
+    """
+    Envoie un e-mail de confirmation de désinscription à un nouvel utilisateur.
+    """
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        flash("Utilisateur non trouvé.", "attention")
+        return redirect(url_for('landing_page'))
+
+    msg = Message("Confirmation de désinscription", sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
+    msg.body = f"Bonjour {user.pseudo} \n" \
+               "\n" \
+               f"Merci de vous être inscrit sur notre site. Votre désinscription a été confirmée avec succès.\n" \
+               f"N'hésitez pas à nous faire savoir pourquoi vous avez décidé de vous désinscrire.\n" \
+               f"Cela nous permettra d'améliorer votre expérience utilisateur.\n" \
+               f"Nous vous souhaitons une bonne continuation et nous espérons que nous vous retrouverons \n" \
+               f"bientôt afin d'entendre, de nouveau, votre voix sur notre blog.\n" \
+               "\n" \
+               f"Merci {user.pseudo} de votre confiance.\n" \
                "\n" \
                f"Cordialement, \n" \
                f"L'équipe du blog de Titiechnique."
@@ -299,7 +328,7 @@ def send_request_admin(user, request_content, attachment_data=None, attachment_n
 
     # Si un fichier est joint, ajout en pièce jointe depuis la mémoire.
     if attachment_data and attachment_name:
-        msg.attach(attachment_name, "application/octet-stream", attachment_data)
+        msg.attach(attachment_name, "application.py/octet-stream", attachment_data)
 
     current_app.extensions['mail'].send(msg)
 

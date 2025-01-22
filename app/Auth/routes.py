@@ -8,15 +8,15 @@ from app.Auth import auth_bp
 
 from flask import render_template, session, request, current_app, redirect, url_for, \
     flash
-from flask_login import logout_user, login_user, login_required
+from flask_login import logout_user, login_user, login_required, current_user
 
 from app.Models import db
 
 from app.Models.admin import Admin
 from app.Models.user import User
-from app.Models.forms import AdminConnection, AdminRecording, UserConnection, ForgetPassword, RenamePassword
+from app.Models.forms import AdminConnection, UserConnection, ForgetPassword, RenamePassword, UserUnsubscribe
 
-from app.Mail.routes import reset_password_mail, password_reset_success_email
+from app.Mail.routes import reset_password_mail, password_reset_success_email, send_confirmation_unsubscribe_email_user
 
 
 # Route permettant à l'administrateur de joindre le formulaire de connexion.
@@ -196,6 +196,79 @@ def login():
             return redirect(next_url or url_for('landing_page'))
 
     return render_template("User/user_connection.html", form=form)
+
+
+# Route permettant d'afficher le formulaire pour la description.
+@auth_bp.route("acces-formulaire-desinscription", methods=['GET', 'POST'])
+@login_required
+def unsubscribe_acces():
+    """
+    Cette route permet d'accéder au formulaire afin de se désinscrire du blog de Tititechnique.
+
+    Returns:
+        Response: Une redirection vers la page de désinscription avec un message
+                  d'alerte concernant la suppression du compte utilisateur.
+    """
+    # Instanciation du formulaire.
+    form_unsubscribe = UserUnsubscribe()
+
+    return render_template('user/confirm_unsubscribe.html', form_unsubscribe=form_unsubscribe)
+
+
+# Route permettant à un utilisateur de se désinscrire du blog.
+@auth_bp.route("désinscription-utilisateur", methods=['GET', 'POST'])
+@login_required
+def user_unsubscribe():
+    """
+    Supprime définitivement un utilisateur du système en utilisant son ID.
+
+    Cette route permet à l'utilisateur de se supprimer en tant qu'un utilisateur spécifique en le retirant
+    complètement de la base de données. La suppression est effectuée via une requête POST, et après
+    la suppression, un meail est envoyé à l'utilisateur et il est redirigé vers
+    la page d'accueil.
+
+    Args:
+        id (int): L'identifiant unique de l'utilisateur à supprimer.
+
+    Context:
+        user (User): Instance de l'utilisateur récupéré depuis la base de données à l'aide de l'ID fourni.
+
+    Returns:
+        Response: Une redirection vers la page d'accueil après la suppression, avec un message
+                  de confirmation du succès de l'opération.
+    """
+    # Instanciation du formulaire.
+    form_unsubscribe = UserUnsubscribe()
+
+    if form_unsubscribe.validate_on_submit():
+        # Récupération des données utilisateur.
+        email = form_unsubscribe.email.data
+        password = form_unsubscribe.password.data
+        # Récupération de l'utilisateur actuel
+        user = current_user
+
+        # Vérification des informations d'identification avant la suppression suppression.
+        if user.is_authenticated and user.email == email and bcrypt.checkpw(password.encode('utf-8'),
+                                                                            user.password_hash):
+            # Envoi de mail garantissant la véracité de la suppression.
+            send_confirmation_unsubscribe_email_user(email)
+
+            # Suppression de l'utilisateur.
+            db.session.delete(user)
+            db.session.commit()
+
+            # Déconnexion de l'utilisateur
+            logout_user()
+            session.clear()
+
+            flash('Votre compte a été supprimé avec succès.', "success")
+            return redirect(url_for('landing_page'))  # Redirection après suppression
+
+        else:
+            flash("Les informations d'identification sont incorrectes.", "error")
+
+    # Si le formulaire n'est pas soumis ou invalide
+    return render_template("user/confirm_unsubscribe.html", form_unsubscribe=form_unsubscribe)
 
 
 # Route permettant à l'utilisateur de joindre le formulaire de connexion suite à une déconnexion.
