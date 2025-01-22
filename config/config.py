@@ -1,5 +1,5 @@
 """
-Ceci est le code pour la configuration de l'application du blog de tititechnique.
+Ceci est le code pour la configuration de l'application.py du blog de tititechnique.
 """
 import os
 
@@ -13,9 +13,9 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 class Config:
     """
-    Configuration de base de l'application.
+    Configuration de base de l'application.py.
 
-    Cette classe définit les paramètres de configuration de base pour l'application flask concernant le Testing,
+    Cette classe définit les paramètres de configuration de base pour l'application.py flask concernant le Testing,
     le développement et la mise en production.
     """
     DEBUG = True
@@ -23,7 +23,7 @@ class Config:
     WTF_CSRF_ENABLED = True
 
     # Configuration de la base de données.
-    SQLALCHEMY_DATABASE_URI = "postgresql://meth6045:bloggeminips626#@localhost:5432/meth6045_db_tititechnique"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://meth6045_Nono:bloggeminips626@grebe.o2switch.net:3306/meth6045_db_tititechnique"
     SQLALCHEMY_TRACK_MODIFICATION = False
 
     # Clé secrète pour sécuriser les cookies de session.
@@ -81,5 +81,5 @@ class TestingConfig(Config):
     paramètres spécifiques à l'environnement de test.
     """
     TESTING = True
-    WTF_CRSF_ENABLED = False
+    WTF_CSRF_ENABLED = False
 
