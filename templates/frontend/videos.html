@@ -1,54 +1,85 @@
 {% extends 'base.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Toutes les vidéos de la chaîne Youtube de TitiTechnique.">
-    <title>{% block title %}Accès à toutes les vidéos de la chaîne de Titi{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/videos.css') }}">
-    {% endblock %}
+<meta name="description" content="Toutes les vidéos de la chaîne Youtube de TitiTechnique.">
+<title>{% block title %}Accès à toutes les vidéos de la chaîne de Titi{% endblock %}</title>
+{% endblock %}
 
+<!-- body -->
+{% block body_content %}
+
+<!-- main -->
 {% block main_content %}
+<div class="main-content">
+    <div class="separation"></div>
+    <div class="space"></div>
 
-<br><br>
-<div class="separation"></div>
-<h1>Vidéos de TitiTechnique</h1>
-<div class="video-container">
-    {% for video in videos %}
-    <div class="video-item">
-        <h3>{{ video.title }}</h3>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
-                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-        <div class="separation"></div>
-        <br>
-        <div class="informations">
-            <p>Date de publication : {{ moment(video.published_at).format('DD-MM-YYYY') }}</p>
-            <p>Vues : {{ video.view_count }}</p>
-            <p>Likes : {{ video.like_count }}</p>
-            <p>Commentaires : {{ video.comment_count }}</p>
-        </div>
-        <br>
-        <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
+    <!-- Conteneur titre -->
+    <div class="title-container-landing">
+        <h1 class="h1-landing">Vidéos de TitiTechnique</h1>
     </div>
-    {% endfor %}
+
+    <div class="space"></div>
+    <div class="separation"></div>
+
+    <!-- Conteneur de la section principal -->
+    <div class="content-section-landing">
+        <!-- cadre extérieur -->
+        <div class="outer-frame">
+
+            <!-- cadre intérieur -->
+            <div class="inner-frame">
+
+                <!-- Conteneur des vidéos -->
+                <div class="video-container">
+                    {% for video in videos %}
+                    <div class="video-item">
+                        <h3 class="h3-main">{{ video.title }}</h3>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        <div class="separation"></div>
+                        <div class="space2"></div>
+
+                        <div class="informations">
+                            <p>Date de publication : {{ moment(video.published_at).format('DD-MM-YYYY') }}</p>
+                            <p>Vues : {{ video.view_count }}</p>
+                            <p>Likes : {{ video.like_count }}</p>
+                            <p>Commentaires : {{ video.comment_count }}</p>
+                        </div>
+
+                        <div class="space2"></div>
+
+                        <a href="{{ url_for('frontend.display_video', video_id=video.id) }}">Commenter la vidéo</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="space"></div>
+                <div class="separation"></div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    {% if page > 1 %}
+                    <a href="{{ url_for('frontend.show_videos', page=page-1) }}">Précédent</a>
+                    {% endif %}
+
+                    {% for p in range(1, total_pages + 1) %}
+                    <a href="{{ url_for('frontend.show_videos', page=p) }}" class="{% if page == p %}active{% endif %}">{{
+                        p
+                        }}</a>
+                    {% endfor %}
+
+                    {% if page < total_pages %}
+                    <a href="{{ url_for('frontend.show_videos', page=page+1) }}">Suivant</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<br>
-<div class="separation"></div>
-<br>
-
-<!-- Pagination -->
-<div class="pagination">
-    {% if page > 1 %}
-        <a href="{{ url_for('frontend.show_videos', page=page-1) }}">Précédent</a>
-    {% endif %}
-
-    {% for p in range(1, total_pages + 1) %}
-        <a href="{{ url_for('frontend.show_videos', page=p) }}" class="{% if page == p %}active{% endif %}">{{ p }}</a>
-    {% endfor %}
-
-    {% if page < total_pages %}
-        <a href="{{ url_for('frontend.show_videos', page=page+1) }}">Suivant</a>
-    {% endif %}
-</div>
-
+{% endblock %}
 {% endblock %}
