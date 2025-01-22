@@ -1,8 +1,8 @@
 {% extends 'baseform.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Formulaire de réponse par un utilisateur au sujet posté sur le forum du blog.">
-    <title>{% block title %}Réponse au sujet du forum du blog{% endblock %}</title>
+<meta name="description" content="Formulaire de réponse par un utilisateur au sujet posté sur le forum du blog.">
+<title>{% block title %}Réponse au sujet du forum du blog{% endblock %}</title>
 {% endblock %}
 
 {% block header_content %}
@@ -10,24 +10,45 @@
 {% endblock %}
 
 {% block body_content %}
-<div id="introduction">
-    <p>Voici le formulaire pour écrire une réponse aux sujets postés sur le forum.</p>
+<!-- Bordure extérieure -->
+<div class="outer-frame">
+
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
+
+        <!-- Titre du formulaire -->
+        <h2 class="h2-form">Voici le formulaire pour écrire une réponse aux sujets postés sur le forum. </h2>
+
+        <!-- Conteneur du formulaire -->
+        <form method="POST" class="form-base"
+              action="{{ url_for('user.comment_replies_subject', comment_subject_id=comment.id, user_pseudo=current_user.pseudo) }}">
+
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/connexion1.png') }}"
+                     alt="Titi à son ordinateur" class="avatar-form">
+            </div>
+
+            <!-- Titre de la section du formulaire -->
+            <h3 class="h3-form">Réponse au commentaire</h3>
+
+            <!-- hidden_tag pour génération du token CSRF pour la sécurité -->
+            {{ formsubjectreply.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur de la réponse au commentaire -->
+            <div class="form-group">
+                {{ formsubjectreply.reply_content.label }} {{ formsubjectreply.reply_content() }}
+                <input type="hidden" name="subject_id" value="{{ comment.subject_id }}">
+                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                <div class="container-btn">
+                    <button type="submit" class="validated-btn" aria-label="Valider la réponse">Soumettre la réponse
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-<form method="POST" action="{{ url_for('user.comment_replies_subject', comment_subject_id=comment.id, user_pseudo=current_user.pseudo) }}">
-    <div class="imgcontainer">
-        <img src="" alt="Avatar" class="avatar">
-    </div>
-    <h3>Réponse au commentaire</h3>
-    {{ formsubjectreply.csrf_token }}
-    <div class="container-edit">
-        {{ formsubjectreply.reply_content.label }} {{ formsubjectreply.reply_content() }}
-        <input type="hidden" name="subject_id" value="{{ comment.subject_id }}">
-        <input type="hidden" name="comment_id" value="{{ comment.id }}">
-
-        <div class="container">
-             <button type="submit" class="validatedbtn">Soumettre la réponse</button>
-        </div>
-    </div>
-</form>
-
 {% endblock %}

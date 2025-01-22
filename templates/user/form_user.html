@@ -1,97 +1,127 @@
 {% extends 'baseform.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Formulaire d'adhésion aux conditions générales du blog.">
-    <title>{% block title %}Formulaire d'adhésion pour s'inscrire faire parti de la communauté de <b>Titi Technique</b>>.{% endblock %}</title>
-    {% endblock %}
+<meta name="description" content="Formulaire d'adhésion aux conditions générales du blog de TitiTechnique.">
+<title>{% block title %}Formulaire d'adhésion pour faire parti de la communauté de <b>Titi Technique</b>>.{% endblock
+    %}</title>
+{% endblock %}
 
 {% block body_content %}
-    <header>
-        <div id="introduction">
-            <p>Bienvenue aux nouveaux membres, veuillez remplir ce formulaire afin de vous inscrire.</p>
-            <p>Vous pourrez alors en toute liberté accéder au forum, choisir un sujet et débattre
-                avec les autres utilisateurs, vous pourrez aussi laisser des commentaires
-                sur les vidéos publiés.</p>
-            <p>Pour tout renseignement supplémentaire, vous pouvez consulter nos
+<!-- Bordure extérieure -->
+<div class="outer-frame">
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
+
+        <!-- Introduction des formulaires -->
+        <div class="annonce">
+            <p>
+                Bienvenue aux nouveaux membres, Veuillez remplir ce formulaire afin de vous inscrire.
+            </p>
+            <p>
+                Vous pourrez alors, en toute liberté, poster un commentaire, mais aussi demander un chat vidéo avec le
+                responsable du site.
+            </p>
+            <p>
+                Pour tout renseignement supplémentaire, vous pouvez consulter nos
                 <b><a href="{{url_for('functional.politique')}}">conditions générales d'utilisation</a></b>
-                ou nos <b><a href="{{url_for('functional.mentions')}}">mentions légales</a></b>.</p>
-        </div>
-    </header>
-
-    <form method="POST" action="{{ url_for('user.user_recording') }}" enctype="multipart/form-data">
-        <div class="imgcontainer">
-            <img src="../static/Images/images_formulaires/inscrip_titi.jpg" alt="Avatar" class="avatar">
+                ou nos <b><a href="{{url_for('functional.mentions')}}">mentions légales</a></b>.
+            </p>
         </div>
 
-        <h3>Enregistrement Membre</h3>
-        {{ form.csrf_token }}
-        <div class="container">
-            {{ form.pseudo.label }} {{ form.pseudo() }}
-            {% if form.pseudo.errors %}
-            <ul>
-                {% for error in form.pseudo.errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <br><br>
-            <div>
-                {{ form.email.label }} {{ form.email() }}
-                {% if form.email.errors %}
-                <ul>
-                    {% for error in form.email.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+        <!-- Conteneur du formulaire -->
+        <form method="POST" action="{{ url_for('user.user_recording') }}" class="form-base"
+              enctype="multipart/form-data">
+
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="../static/Images/images_formulaires/inscrip_titi.png" alt="Image de Titi s'inscrivant"
+                     class="avatar-form">
             </div>
-            <br><br>
-            <div class="password-container">
-                {{ form.password.label }} {{ form.password() }}
-                <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
-                {% if form.password.errors %}
-                <ul>
-                    {% for error in form.password.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+
+            <!-- Titre du formulaire -->
+            <h3 class="h3-form">Enregistrement Membre</h3>
+
+            <!-- Token CSRF pour la sécurité -->
+            {{ form.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
+
+                <!-- Champ pour le pseudo -->
+                <div class="form-group">
+                    {{ form.pseudo.label }} {{ form.pseudo() }}
+                    {% if form.pseudo.errors %}
+                    <ul>
+                        {% for error in form.pseudo.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour le mot de passe -->
+                <div class="form-group">
+                    {{ form.password.label }} {{ form.password() }}
+                    <span class="toggle-password" onclick="togglePassword('password')" aria-controls="password">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    {% if form.password.errors %}
+                    <ul>
+                        {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour la vérification du mot de passe -->
+                <div class="form-group">
+                    {{ form.password2.label }} {{ form.password2() }}
+                    <span class="toggle-password" onclick="togglePassword('password2')"><i
+                            class="fas fa-eye"></i></span>
+                    {% if form.password2.errors %}
+
+                    <ul>{% for error in form.password2.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <!-- Champ pour la date de naissance -->
+                <div class="form-group">
+                    {{ form.date_naissance.label }} {{ form.date_naissance() }}
+                    {% if form.date_naissance.errors %}
+                    <ul>
+                        {% for error in form.date_naissance.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour la photo de profil -->
+                <div class="form-group">
+                    <ul>
+                        {{ form.profil_photo.label }}
+                        {{ form.profil_photo }}
+                    </ul>
+                </div>
             </div>
-            <div class="password-container">
-                {{ form.password2.label }} {{ form.password2() }}
-                <span class="toggle-password" onclick="togglePassword('password2')"><i class="fas fa-eye"></i></span>
-                {% if form.password2.errors %}
-                <ul>
-                    {% for error in form.password2.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+
+            <div class="separation1"></div>
+
+            <!-- Champ pour les boutons du formulaire -->
+            <div class="container-btn">
+                <button type="submit" class="validated-btn" aria-label="Valider l'inscription">Validation de la
+                    souscription
+                </button>
+                <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
             </div>
-            <br><br>
-            <div>
-                {{ form.date_naissance.label }} {{ form.date_naissance() }}
-                {% if form.date_naissance.errors %}
-                <ul>
-                    {% for error in form.date_naissance.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            <br><br>
-            <div class="photo">
-                <ul>
-                    {{ form.profil_photo.label }}
-                    {{ form.profil_photo }}
-                </ul>
-            </div>
-        </div>
-        <div class="separation"></div>
-        <div class="container" style="background-color:black">
-            <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la souscription</button>
-            <button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de la souscription et retour à l'accueil</a></button>
-        </div>
-    </form>
+        </form>
+
+    </div>
+</div>
 
 {% endblock %}

@@ -1,49 +1,86 @@
 {% extends 'baseform.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Connexion utilisateur au blog">
-    <title>{% block title %}Authentification Utilisateur{% endblock %}</title>
+<meta name="description" content="Connexion utilisateur au blog de Tititechnique">
+<title>{% block title %}Authentification Utilisateur{% endblock %}</title>
 {% endblock %}
 
 {% block header_content %}
 {% endblock %}
 
 {% block body_content %}
-    <form method="POST" action="{{ url_for('auth.login', next_url=next_url) }}">
-        <div class="imgcontainer">
-            <img src="../static/Images/images_formulaires/connexion1.jpg" alt="Avatar" class="avatar">
-        </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == 'login' %}
-                <div class="alert alert-{{ category }}">
-                    {{ message }}
-                </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-        <h3>Authentification Utilisateur</h3>
-        {{ form.csrf_token }}
-        <div class="container">
-            {{ form.pseudo.label }} {{ form.pseudo() }}
-            <div class="password-container">
-                <br><br>
-                {{ form.password.label }} {{ form.password() }}
-                <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+<!-- Bordure extérieure -->
+<div class="outer-frame">
+
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
+
+        <!-- Conteneur de formulaire -->
+        <form method="POST" action="{{ url_for('auth.login', next_url=next_url) }}" class="form-base"
+              enctype="multipart/form-data">
+
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/connexion1.png') }}"
+                     alt="Image de Titi de bienvenue" class="avatar-form">
             </div>
-        </div>
-        <div id="forgot-password">
-            <a href="{{ url_for('auth.password_reset') }}">Mot de passe oublié</a>
-        </div>
-        <br><br>
-        <div class="separation"></div>
-        <div class="container" style="background-color:black">
-            <button type="submit" class="validatedbtn" style="font-weight: normal;">Connexion au compte utilisateur</button>
-            <button type="button" class="cancelledbtn"><a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de l'authentification utilisateur</a></button>
-        </div>
-    </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if category == 'login' %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!-- Titre du formulaire -->
+            <h3 class="h3-form">Authentification Utilisateur</h3>
+            <!-- Token CSRF pour la sécurité -->
+            {{ form.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
+
+                <!-- Champ pour le pseudo -->
+                <div class="form-group">
+                    {{ form.pseudo.label }}
+                    {{ form.pseudo() }}
+                </div>
+
+                <!-- Champ pour le mot de passe -->
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-group", id="password") }}
+                    <span class="toggle-password" onclick="togglePassword('password')">
+                    <i class="fas fa-eye"></i>
+                </span>
+                </div>
+            </div>
+
+            <!-- Lien pour le mot de passe oublié -->
+            <div class="forgot-password">
+                <a class="forgot-password-a" href="{{ url_for('auth.password_reset') }}">Mot de passe oublié</a>
+            </div>
+
+            <!-- Séparation -->
+            <div class="separation"></div>
+
+            <!-- Boutons d'action -->
+            <div class="space-form"></div>
+
+            <!-- Conteneur des boutons du formulaire -->
+            <div class="container-btn">
+                <button type="submit" class="validated-btn" aria-label="Valider la connexion">Connexion au compte utilisateur</button>
+                <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
 
 {% block footer_content %}
