@@ -13,7 +13,7 @@
     <div class="inner-frame">
 
         <!-- Introduction des formulaires -->
-        <div class="annonce">
+        <div class="politique-intro">
             <p>
                 Bienvenue aux nouveaux membres, Veuillez remplir ce formulaire afin de vous inscrire.
             </p>
@@ -34,9 +34,20 @@
 
             <!-- Image du logo -->
             <div class="imgcontainer-form">
-                <img src="../static/Images/images_formulaires/inscrip_titi.png" alt="Image de Titi s'inscrivant"
+                <img src="{{ url_for('static', filename='/Images/images_formulaires/inscrip_titi.png') }}" alt="Image de Titi s'inscrivant"
                      class="avatar-form">
             </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if category == 'user_recording' %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
             <!-- Titre du formulaire -->
             <h3 class="h3-form">Enregistrement Membre</h3>
@@ -51,54 +62,38 @@
 
                 <!-- Champ pour le pseudo -->
                 <div class="form-group">
-                    {{ form.pseudo.label }} {{ form.pseudo() }}
-                    {% if form.pseudo.errors %}
-                    <ul>
-                        {% for error in form.pseudo.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                    {{ form.pseudo.label }}
+                    {{ form.pseudo() }}
                 </div>
 
                 <!-- Champ pour le mot de passe -->
                 <div class="form-group">
-                    {{ form.password.label }} {{ form.password() }}
+                    {{ form.password.label }}
+                    {{ form.password() }}
                     <span class="toggle-password" onclick="togglePassword('password')" aria-controls="password">
                         <i class="fas fa-eye"></i>
                     </span>
-                    {% if form.password.errors %}
-                    <ul>
-                        {% for error in form.password.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
                 </div>
 
                 <!-- Champ pour la vérification du mot de passe -->
                 <div class="form-group">
-                    {{ form.password2.label }} {{ form.password2() }}
+                    {{ form.password2.label }}
+                    {{ form.password2() }}
                     <span class="toggle-password" onclick="togglePassword('password2')"><i
-                            class="fas fa-eye"></i></span>
-                    {% if form.password2.errors %}
-
-                    <ul>{% for error in form.password2.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                            class="fas fa-eye"></i>
+                    </span>
                 </div>
+
+                <!-- Champ pour l'email -->
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email() }}
+                </div>
+
                 <!-- Champ pour la date de naissance -->
                 <div class="form-group">
-                    {{ form.date_naissance.label }} {{ form.date_naissance() }}
-                    {% if form.date_naissance.errors %}
-                    <ul>
-                        {% for error in form.date_naissance.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                    {{ form.date_naissance.label }}
+                    {{ form.date_naissance() }}
                 </div>
 
                 <!-- Champ pour la photo de profil -->
@@ -110,7 +105,7 @@
                 </div>
             </div>
 
-            <div class="separation1"></div>
+            <div class="separation"></div>
 
             <!-- Champ pour les boutons du formulaire -->
             <div class="container-btn">
@@ -120,7 +115,6 @@
                 <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
             </div>
         </form>
-
     </div>
 </div>
 

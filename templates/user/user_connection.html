@@ -5,9 +5,6 @@
 <title>{% block title %}Authentification Utilisateur{% endblock %}</title>
 {% endblock %}
 
-{% block header_content %}
-{% endblock %}
-
 {% block body_content %}
 <!-- Bordure extérieure -->
 <div class="outer-frame">
@@ -16,7 +13,8 @@
     <div class="inner-frame">
 
         <!-- Conteneur de formulaire -->
-        <form method="POST" action="{{ url_for('auth.login', next_url=next_url) }}" class="form-base"
+        <form method="POST" action="{{ url_for('auth.login', next_url=next_url) }}"
+              class="form-base"
               enctype="multipart/form-data">
 
             <!-- Image du logo -->
@@ -38,6 +36,7 @@
 
             <!-- Titre du formulaire -->
             <h3 class="h3-form">Authentification Utilisateur</h3>
+
             <!-- Token CSRF pour la sécurité -->
             {{ form.csrf_token }}
 
@@ -81,7 +80,4 @@
         </form>
     </div>
 </div>
-{% endblock %}
-
-{% block footer_content %}
 {% endblock %}
