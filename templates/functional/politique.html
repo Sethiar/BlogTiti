@@ -15,14 +15,17 @@
             <div class="politique-border">
 
                 <!--titre -->
-                <h1 class="politique-title">Politique de Confidentialité</h1>
+                <h1 class="h1-politique">Politique de Confidentialité</h1>
 
                 <!-- Section : Mise à jour et retour -->
                 <div class="politique-header">
                     <p class="politique-update">Dernière mise à jour : 1 janvier 2025</p>
-                    <a href="{{ url_for('landing_page') }}" class="politique-home-link">Retour à l'accueil</a>
                 </div>
             </div>
+            <a href="{{ url_for('landing_page') }}"
+               class="politique-home-link"
+               aria-label="Retourner à la page d'accueil">Retour à l'accueil</a>
+
 
             <!-- Séparation -->
             <hr class="politique-divider">
@@ -38,87 +41,120 @@
 
                 <!-- Introduction -->
                 <section class="politique-section">
-                    <p class="politique-intro">
-                        Bienvenue sur notre blog <b>Tititechnique</b>. Nous nous engageons à protéger votre
-                        vie privée et à respecter vos droits en matière de confidentialité.
-                        Cette politique de confidentialité explique comment nous collectons, utilisons, divulguons et
-                        protégeons vos informations personnelles lorsque vous utilisez notre site web.
-                    </p>
+                    <div class="politique-intro">
+                        <p>
+                            Bienvenue sur notre blog <b>Tititechnique</b>. Nous nous engageons à protéger votre
+                            vie privée et à respecter vos droits en matière de confidentialité.
+                            Cette politique de confidentialité explique comment nous collectons, utilisons, divulguons
+                            et
+                            protégeons vos informations personnelles lorsque vous utilisez notre site web.
+                        </p>
+                    </div>
                 </section>
 
                 <!-- Sections des informations -->
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">1. Informations que nous Collectons</h2>
-                    <ul class="politique-list">
-                        <li>Informations d'identification personnelle : adresse email, pseudo.</li>
-                        <li>Informations non personnelles : adresse IP, type de navigateur, informations de navigation,
-                            etc.
-                        </li>
-                        <li>Nous ne collectons aucune information bancaire ou financière.</li>
-                    </ul>
+                    <h2 class="h2-politique">1. Informations que nous Collectons</h2>
+                    <div class="politique-intro">
+                        <ul class="politique-list">
+                            <li><b>Informations d'identification personnelle :</b> adresse email, pseudo.</li>
+                            <li><b>Informations non personnelles :</b> adresse IP, type de navigateur, informations de
+                                navigation,
+                                etc.
+                            </li>
+                            <li><b>Nous ne collectons aucune information bancaire ou financière.</b></li>
+                        </ul>
+                    </div>
                 </section>
+
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">2. Utilisation des Informations</h2>
-                    <ul class="politique-list">
-                        <li>Fournir et gérer nos services.</li>
-                        <li>Améliorer l'expérience utilisateur sur notre site.</li>
-                        <li>Communiquer avec vous pour répondre à vos demandes de support.</li>
-                        <li>Envoyer des newsletters, mises à jour, et autres communications (avec votre consentement).
-                        </li>
-                        <li>Analyser l'utilisation de notre site pour améliorer nos services.</li>
-                    </ul>
+                    <h2 class="h2-politique">2. Utilisation des Informations</h2>
+                    <div class="politique-intro">
+                        <ul class="politique-list">
+                            <li>Fournir et gérer nos services.</li>
+                            <li>Améliorer l'expérience utilisateur sur notre site.</li>
+                            <li>Communiquer avec vous pour répondre à vos demandes de support.</li>
+                            <li>Envoyer des newsletters, mises à jour, et autres communications (avec votre
+                                consentement).
+                            </li>
+                            <li>Analyser l'utilisation de notre site pour améliorer nos services.</li>
+                        </ul>
+                    </div>
                 </section>
+
                 <!-- Ajout des autres sections -->
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">3. Gestion des Identifiants</h2>
-                    <p>Les identifiants (pseudo et mot de passe) sont stockés de manière sécurisée en utilisant des
-                        techniques de hachage et de salage.</p>
+                    <h2 class="h2-politique">3. Gestion des Identifiants</h2>
+                    <div class="politique-intro">
+                        <p>Les identifiants (pseudo et mot de passe) sont stockés de manière
+                            sécurisée en utilisant des
+                            techniques de hachage et de salage.</p>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">4. Partage des Informations</h2>
-                    <p><strong>Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des
-                        tiers.</strong></p>
-                    <p>Toutefois, nous pouvons les partager avec :</p>
-                    <ul class="politique-list">
-                        <li>Fournisseurs de services (hébergement web, analyse, assistance client).</li>
-                        <li>Autorités légales si nécessaire.</li>
-                    </ul>
+                    <h2 class="h2-politique">4. Partage des Informations</h2>
+                    <div class="politique-intro">
+                        <p><strong>Nous ne vendons, n'échangeons ni ne louons vos informations
+                            personnelles à des
+                            tiers.</strong></p>
+                    </div>
+                    <div class="politique-intro">
+                        <p>Toutefois, nous pouvons les partager avec :</p>
+
+                        <ul class="politique-list">
+                            <li>Fournisseurs de services (hébergement web, analyse, assistance client).</li>
+                            <li>Autorités légales si nécessaire.</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">5. Cookies et Technologies Similaires</h2>
-                    <ul class="politique-list">
-                        <li>Mémoriser vos préférences et paramètres.</li>
-                        <li>Analyser l'utilisation de notre site pour l'améliorer.</li>
-                        <li>Améliorer votre expérience utilisateur.</li>
-                    </ul>
+                    <h2 class="h2-politique">5. Cookies et Technologies Similaires</h2>
+                    <div class="politique-intro">
+                        <ul class="politique-list">
+                            <li>Mémoriser vos préférences et paramètres.</li>
+                            <li>Analyser l'utilisation de notre site pour l'améliorer.</li>
+                            <li>Améliorer votre expérience utilisateur.</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">6. Sécurité des Informations</h2>
-                    <p>Nous mettons en œuvre des mesures de sécurité pour protéger vos informations. Cependant, aucune
-                        méthode n'est totalement sécurisée.</p>
+                    <h2 class="h2-politique">6. Sécurité des Informations</h2>
+                    <div class="politique-intro">
+                        <p>Nous mettons en œuvre des mesures de sécurité pour protéger vos
+                            informations. Cependant, aucune
+                            méthode n'est totalement sécurisée.</p>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">7. Vos Droits</h2>
-                    <ul class="politique-list">
-                        <li>Accéder à vos informations personnelles.</li>
-                        <li>Demander la correction d'informations inexactes.</li>
-                        <li>Demander la suppression de vos données, sous réserve d'exceptions légales.</li>
-                    </ul>
+                    <h2 class="h2-politique">7. Vos Droits</h2>
+                    <div class="politique-intro">
+                        <ul class="politique-list">
+                            <li>Accéder à vos informations personnelles.</li>
+                            <li>Demander la correction d'informations inexactes.</li>
+                            <li>Demander la suppression de vos données, sous réserve d'exceptions légales.</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">8. Modifications de cette Politique</h2>
-                    <p>Nous pouvons mettre à jour cette politique en publiant la nouvelle version sur notre site.</p>
+                    <h2 class="h2-politique">8. Modifications de cette Politique</h2>
+                    <div class="politique-intro">
+                        <p>Nous pouvons mettre à jour cette politique en publiant la nouvelle
+                            version sur notre site.</p>
+                    </div>
                 </section>
 
                 <section class="politique-section">
-                    <h2 class="politique-subtitle">9. Nous Contacter</h2>
-                    <p>Pour toute question, contactez-nous à : <a href="mailto:titimenageou@outlook.fr">titimenageou@outlook.fr</a>.
-                    </p>
+                    <h2 class="h2-politique">9. Nous Contacter</h2>
+                    <div class="politique-intro">
+                        <p>Pour toute question, contactez-nous à : <a class="links-politique"
+                                                                      href="mailto:titimenageou@outlook.fr">titimenageou@outlook.fr</a>.
+                        </p>
+                    </div>
                 </section>
 
                 <div class="politique-footer">
@@ -128,8 +164,4 @@
         </main>
     </div>
 </div>
-
-{% endblock %}
-
-{% block footer_content %}
 {% endblock %}
