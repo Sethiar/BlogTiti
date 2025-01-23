@@ -1,76 +1,111 @@
 {% extends 'baseform.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Formulaire qui permet à un utilisateur de s'inscrire en tant qu'administrateur.">
-    <title>{% block title %}Formulaire d'adhésion pour s'inscrire en tant qu'administrateur.{% endblock %}</title>
-    {% endblock %}
+<meta name="description" content="Formulaire qui permet à un utilisateur de s'inscrire en tant qu'administrateur.">
+<title>{% block title %}Formulaire d'adhésion pour s'inscrire en tant qu'administrateur.{% endblock %}</title>
+{% endblock %}
 
 {% block body_content %}
-    <header>
-    </header>
+<!-- Bordure extérieure -->
+<div class="outer-frame">
 
-    <form method="POST" action="{{ url_for('admin.user_admin_recording') }}" enctype="multipart/form-data">
-    <div class="imgcontainer">
-        <img src="../static/Images/images_formulaires/inscrip_titi.jpg" alt="Avatar" class="avatar">
-    </div>
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
 
-    <h3>Enregistrement Utilisateur Administrateur</h3>
-    {{ formuseradmin.csrf_token }}
-    <div class="container">
-        {{ formuseradmin.pseudo.label }} {{ formuseradmin.pseudo() }}
-        {% if formuseradmin.pseudo.errors %}
-            <ul>
-                {% for error in formuseradmin.pseudo.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <br><br>
-        {{ formuseradmin.role.label }} {{ formuseradmin.role() }}
-        {{ formuseradmin.date_naissance.label }} {{ formuseradmin.date_naissance() }}
-        {{ formuseradmin.email.label }} {{ formuseradmin.email() }}
-        {% if formuseradmin.email.errors %}
-            <ul>
-                {% for error in formuseradmin.email.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <br><br>
-        <div class="password-container">
-            {{ formuseradmin.password.label }} {{ formuseradmin.password() }}
-            <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
-            {% if formuseradmin.password.errors %}
-            <ul>
-                {% for error in formuseradmin.password.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
+        <!-- Conteneur de formulaire -->
+        <form method="POST" action="{{ url_for('admin.user_admin_recording') }}"
+              class="form-base"
+              enctype="multipart/form-data">
+
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/inscrip_titi.png') }}"
+                     alt="Image de titi ordinateur" class="avatar-form">
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if category == 'user_admin_recording' %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
             {% endif %}
-        </div>
-        <div class="password-container">
-            {{ formuseradmin.password2.label }} {{ formuseradmin.password2() }}
-            <span class="toggle-password" onclick="togglePassword('password2')"><i class="fas fa-eye"></i></span>
-            {% if formuseradmin.password2.errors %}
-            <ul>
-                {% for error in formuseradmin.password2.errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
+            {% endfor %}
             {% endif %}
-        </div>
-        <br><br>
-        <ul>
-            {{ formuseradmin.profil_photo.label }}
-            {{ formuseradmin.profil_photo }}
-        </ul>
-        <br><br>
+            {% endwith %}
+
+            <!-- Titre du formulaire -->
+            <h3 class="h3-form">Enregistrement Utilisateur Administrateur</h3>
+
+            <!-- Token CSRF pour la sécurité -->
+            {{ formuseradmin.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
+
+                <!-- Champ pour le pseudo -->
+                <div class="form-group">
+                    {{ formuseradmin.pseudo.label }}
+                    {{ formuseradmin.pseudo() }}
+                </div>
+
+                <!-- Champ pour le rôle -->
+                <div class="form-group">
+                    {{ formuseradmin.role.label }}
+                    {{ formuseradmin.role() }}
+                </div>
+
+                <!-- Champ pour la date de naissance -->
+                <div class="form-group">
+                    {{ formuseradmin.date_naissance.label }}
+                    {{ formuseradmin.date_naissance() }}
+                </div>
+
+                <!-- Champ pour l'email -->
+                <div class="form-group">
+                    {{ formuseradmin.email.label }}
+                    {{ formuseradmin.email() }}
+                </div>
+
+                <!-- Champ pour le mot de passe -->
+                <div class="form-group">
+                    {{ formuseradmin.password.label }}
+                    {{ formuseradmin.password() }}
+                    <span class="toggle-password" onclick="togglePassword('password')" aria-controls="password"><i
+                            class="fas fa-eye"></i>
+                    </span>
+                </div>
+
+                <!-- Champ pour la vérification du mot de passe -->
+                <div class="form-group">
+                    {{ formuseradmin.password2.label }}
+                    {{ formuseradmin.password2() }}
+                    <span class="toggle-password" onclick="togglePassword('password2')" aria-controls="password"><i
+                            class="fas fa-eye"></i>
+                    </span>
+                </div>
+
+                <!-- Champ pour la photo de profil -->
+                <div class="form-group">
+                    <ul>
+                        {{ formuseradmin.profil_photo.label }}
+                        {{ formuseradmin.profil_photo }}
+                    </ul>
+                </div>
+            </div>
+            <div class="separation"></div>
+
+            <!-- Champ pour les boutons du formulaire -->
+            <div class="container-btn">
+                <button type="submit" class="validated-btn" aria-label="Valider l'inscription">Validation de la
+                    souscription
+                </button>
+                <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
+            </div>
+        </form>
     </div>
-        <div class="separation"></div>
-    <div class="container" style="background-color:black">
-        <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la souscription</button>
-        <button type="button" class="cancelledbtn"><a href="{{ url_for('admin.back_end') }}" style="font-weight: normal;">Annulation de la souscription et retour au backend</a></button>
-    </div>
-</form>
+</div>
 
 {% endblock %}
