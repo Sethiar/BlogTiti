@@ -5,7 +5,6 @@
 
 /* Gère les conteneurs droit et gauche et les séparations et espacement. */
 
-
 // Base layout
 .layout {
   display: flex;
@@ -19,37 +18,120 @@
   width: 70%;
   padding: 2rem;
   overflow-y: auto;
-  margin-top: -200vh;
   background-color: $color-primary;
 }
 
 /* Cadre principal (conteneur externe) */
 .outer-frame {
-  border: 4px solid $color-accent-darkorange; /* Couleur et taille de la bordure externe */
-  border-radius: 15px; /* Coins arrondis */
-  padding: 2%; /* Espacement interne */
-  background: $color-lightgrey; /* Couleur de fond du cadre externe */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre subtile */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide */
-
-  &:hover {
-    transform: scale(1.05); /* Légère mise en avant */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Ombre amplifiée */
-  }
+  border: 4px solid $color-accent-darkorange;
+  border-radius: 15px;
+  /* Espacement interne */
+  padding: 2%;
+  background: $color-lightgrey;
+  /* Ombre subtile */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Cadre interne */
 .inner-frame {
-  border: 2px solid $color-neutral-gold; /* Couleur et taille de la bordure interne */
-  border-radius: 10px; /* Coins arrondis */
-  padding: 1.5%; /* Espacement interne */
-  background: $color-primary; /* Couleur de fond du cadre interne */
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre interne */
+  border: 2px solid $color-neutral-gold;
+  border-radius: 10px;
+  /* Espacement interne */
+  padding: 1.5%;
+  background: $color-primary;
+  /* Ombre interne */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: scale(1.02); /* Légère mise en avant du cadre interne */
-    border-color: $color-accent-darkorange; /* Changement de couleur de bordure */
+    /* Légère mise en avant du cadre interne */
+    transform: scale(1.02);
+    /* Changement de couleur de bordure */
+    border-color: $color-accent-darkorange;
   }
+}
+
+// Titre
+/* Section landing_page */
+.h1-landing {
+  font-size: $font-size-xxxl;
+  color: $color-accent-darkorange;
+  /* Centrage du texte sur toutes les lignes */
+  text-align: center;
+  /* Limite la largeur pour une meilleure lisibilité */
+  max-width: 80%;
+  /* Centrage dans des conteneurs flexibles */
+  margin: 0 auto;
+  /* Espacement confortable entre les lignes */
+  line-height: 1.5;
+}
+
+.h2-landing {
+  color: $color-secondary;
+  font-size: $font-size-xxl;
+}
+
+.h3-landing {
+  color: $color-accent-darkorange;
+  font-size: $font-size-xl;
+  /* Centrage du texte sur toutes les lignes */
+  text-align: center;
+  /* Limite la largeur pour une meilleure lisibilité */
+  max-width: 80%;
+  /* Centrage dans des conteneurs flexibles */
+  margin: 0 auto;
+  /* Espacement confortable entre les lignes */
+  line-height: 1.5;
+}
+
+.h4-landing {
+  color: $color-primary;
+  font-size: $font-size-lg;
+}
+
+/* Titre des formulaires */
+.h2-form {
+  color: $color-accent-darkorange;
+  text-align: center;
+}
+
+.h3-form {
+  text-decoration: underline;
+  color: $color-accent-orange;
+  text-align : center;
+}
+
+/* Espace des formulaires */
+.space-form {
+  height: 5vh;
+}
+
+/* Section politique/Informations/Mentions légales */
+/* Titre h1 */
+.h1-politique {
+  font-size: $font-size-xxxl;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3%;
+  color: $color-secondary;
+}
+
+.h2-politique {
+  font-size: $font-size-xxl;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: $color-accent-darkorange;
+  padding: 4%;
+  color: $color-secondary;
+  margin-bottom: 1%;
+}
+.h3-politique {
+  font-size: $font-size-xl;
+  font-weight: bolt;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  padding: 2%
 }
 
 // Separations
@@ -80,8 +162,9 @@
 /* Mobile - Portrait (max-width: 599px) */
 @media (max-width: 599px) {
   .layout {
-    flex-direction: column; /* Afficher la mise en page en colonne */
-    height: 10vh;
+    /* Afficher la mise en page en colonne */
+    flex-direction: column;
+    height: auto;
   }
 
   .main-content {
@@ -99,8 +182,9 @@
 /* Mobile - Paysage (min-width: 600px et max-width: 899px) */
 @media (min-width: 600px) and (max-width: 899px) {
   .layout {
-    flex-direction: column; /* Afficher la mise en page en colonne */
-    height: 30vh;
+    /* Retour à une mise en page en ligne */
+    flex-direction: row;
+    height: auto;
   }
 
   .main-content {
@@ -117,14 +201,9 @@
 
 /* Tablette - Portrait (min-width: 900px et max-width: 1199px) */
 @media (min-width: 900px) and (max-width: 1199px) {
-  .layout {
-    flex-direction: row; /* Retour à une mise en page en ligne */
-    height: 25vh;
-  }
-
   .main-content {
-    margin-left: 25%;
-    width: 75%;
+    margin-left: 30%;
+    width: 100%;
   }
 
   .outer-frame, .inner-frame {
@@ -135,13 +214,9 @@
 
 /* Tablette - Paysage (min-width: 1200px et max-width: 1399px) */
 @media (min-width: 1200px) and (max-width: 1399px) {
-  .layout {
-    flex-direction: row; /* Retour à une mise en page en ligne */
-  }
-
   .main-content {
-    margin-left: 25%;
-    width: 75%;
+    margin-left: 30%;
+    width: 100%;
   }
 
   .outer-frame, .inner-frame {
