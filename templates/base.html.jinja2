@@ -44,6 +44,7 @@
         <div class="logo">
             <img src="{{ url_for('static', filename='Images/images_bannière_logo/logo_titi.png') }}" alt="logo de titi">
         </div>
+        <div class="space"></div>
         <div id="navbar" class="nav-container">
             <!-- Menu principal -->
             <nav class="nav-links" aria-label="Navigation principale">
@@ -57,20 +58,22 @@
                     {% else %}
                     <li><a href="{{ url_for('auth.login', next=url_for('chat.chat_request')) }}">Demande de chat
                         vidéo</a></li>
-                    <li><a href="{{ url_for('frontend.show_videos') }}">Accès aux videos</a></li>
                     {% endif %}
+                    <li><a href="{{ url_for('frontend.show_videos') }}">Accès aux videos</a></li>
+
                     <li><a href="https://www.youtube.com/@titi.lebricoleur">Accès à ma chaîne YouTube</a></li>
                 </ul>
             </nav>
         </div>
-        <div class="space"></div>
+        <div class="space2"></div>
 
         <!-- Actions utilisateur -->
         <div class="actions">
             {% if logged_in %}
             <div class="logged">
-                <p>Bienvenue {{ pseudo }} !!</p>
+                <p class="logged-pseudo">Bienvenue {{ pseudo }} !!</p>
             </div>
+            <div class="space2"></div>
             {% endif %}
             <div class="buttons">
                 {% if logged_in %}
@@ -178,6 +181,7 @@
     );
   }
 });
+
 </script>
 
 <!-- jQuery -->
