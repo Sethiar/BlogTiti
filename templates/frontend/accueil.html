@@ -8,41 +8,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/caroussel.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/images.css') }}">
 {% endblock %}
 
 <!-- body -->
 {% block body_content %}
 
+<!-- main -->
 {% block main_content %}
 <div class="main-content">
+    <div class="space"></div>
+
     <!-- Conteneur de la bannière -->
     <div class="banniere">
         <img src="{{ url_for('static', filename='Images/images_bannière_logo/banniere_titi.png') }}"
              alt="image de la bannière de titi.">
     </div>
-    <div class="animation">
-        <div class="avatar right"></div>
-        <div class="zone" id="gardening">
-            <img src="../static/Images/images_accueil/terre_vierge.png" class="initial"
-                 data-next="../static/Images/images_accueil/plantes_poussees.png"
-                 data-initial="../static/Images/images_accueil/terre_vierge.png">
-        </div>
-        <div class="zone" id="building">
-            <div class="spritesheet" data-src="../static/Images/images_accueil/building.png"></div>
-        </div>
-        <div class="zone" id="mechanic">
-            <img src="../static/Images/images_accueil/mechanic.png" class="initial"
-                 data-next="../static/Images/images_accueil/mechanic2.png"
-                 data-initial="../static/Images/images_accueil/mechanic.png">
-        </div>
-        <div class="zone2" id="tools">
-            <img src="../static/Images/images_accueil/tools.png" class="initial"
-                 data-initial="../static/Images/images_accueil/tools.png">
-        </div>
-    </div>
 
+    <div class="space"></div>
     <div class="separation"></div>
     <div class="space"></div>
 
@@ -53,166 +35,194 @@
 
     <div class="space"></div>
     <div class="separation"></div>
+    <div class="space"></div>
 
     <!-- Conteneur de la section principal -->
     <div class="content-section-landing">
-        <!-- cadre extérieur -->
+        <!-- Cadre extérieur -->
         <div class="outer-frame">
 
-            <!-- cadre intérieur -->
+            <!-- Cadre intérieur -->
             <div class="inner-frame">
 
-                <div class="content-block">
-                    <img class="pics-accueil"
-                         src="{{ url_for('static', filename='Images/images_accueil/jardin1.png') }}"
-                         alt="Image de jardinage">
-                    <p class="text-accueil">Si vous voulez tout savoir et plus encore sur le jardinage, je vous donnerai
-                        tous les conseils nécessaires</p>
-                </div>
-                <div class="content-block">
-                    <img class="pics-accueil" src="{{ url_for('static', filename='Images/images_accueil/brico1.png') }}"
-                         alt="Image de bricolage">
-                    <p>Je vous propose de vous apprendre à bricoler de manière efficace. Et surtout, sans vous prendre
-                        la
-                        tête.</p>
-                </div>
-                <div class="content-block">
-                    <img class="pics-accueil"
-                         src="{{ url_for('static', filename='Images/images_accueil/divers1.png') }}"
-                         alt="Image de titi pour videos Youtube">
-                    <p>Depuis ce blog, vous allez avoir accès à toutes les vidéos de ma chaîne <b><a
-                            href="https://www.youtube.com/@titi.lebricoleur">Youtube</a></b>. Ainsi que la possibilité
-                        de
-                        poster vos commentaires et vos likes.</p>
-                </div>
-                <div class="content-block">
-                    <img class="pics-accueil" src="{{ url_for('static', filename='Images/images_accueil/forum1.png') }}"
-                         alt="Image de titi pour forum">
-                    <p>Et surtout, nous pourrons échanger tous ensemble dans la section <b><a
-                            href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de
-                        manière plus directe et plus sympathiquement surtout.</p>
-                </div>
+                <!-- Section des photos de la page d'accueil -->
+                <section class="photo-gallery">
+
+                    <!-- Première photo -->
+                    <div class="content-block">
+                        <img class="pics-accueil"
+                             src="{{ url_for('static', filename='Images/images_accueil/jardin1.png') }}"
+                             alt="Image de jardinage">
+                        <p class="text-accueil">
+                            Si vous voulez tout savoir et plus encore sur le jardinage, je vous
+                            donnerai tous les conseils nécessaires.
+                        </p>
+                    </div>
+
+                    <!-- Deuxième photo -->
+                    <div class="content-block">
+                        <img class="pics-accueil"
+                             src="{{ url_for('static', filename='Images/images_accueil/brico1.png') }}"
+                             alt="Image de bricolage">
+                        <p class="text-accueil">
+                            Je vous propose de vous apprendre à bricoler de manière efficace.
+                            Et surtout, sans vous prendre la tête.
+                        </p>
+                    </div>
+                    <!-- Troisième photo -->
+                    <div class="content-block">
+                        <img class="pics-accueil"
+                             src="{{ url_for('static', filename='Images/images_accueil/divers1.png') }}"
+                             alt="Image de titi pour videos Youtube">
+                        <p class="text-accueil">
+                            Depuis ce blog, vous allez avoir accès à toutes les vidéos de ma chaîne <b><a
+                                href="https://www.youtube.com/@titi.lebricoleur">Youtube</a></b>. Ainsi que la
+                            possibilité de poster vos commentaires et vos likes.
+                        </p>
+                    </div>
+
+                    <!-- Quatrième photo -->
+                    <div class="content-block">
+                        <img class="pics-accueil"
+                             src="{{ url_for('static', filename='Images/images_accueil/forum1.png') }}"
+                             alt="Image de titi pour forum">
+                        <p class="text-accueil">
+                            Et surtout, nous pourrons échanger tous ensemble dans la section <b><a
+                                href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de
+                            manière plus directe et plus sympathiquement surtout.
+                        </p>
+                    </div>
+                </section>
 
                 <div class="separation"></div>
                 <div class="space"></div>
 
-                <div class="content-block">
+                <!-- Photo de bienvenue -->
+                <div class="content-block-end">
                     <img class="pics-accueil-fin"
                          src="{{ url_for('static', filename='Images/images_accueil/bienvenue.png') }}"
                          alt="image de bienvenue">
                 </div>
 
+                <div class="space"></div>
 
-                <div id="end">
-                    <h3 class="h3-main">Bonne navigation sur le blog. J'espère que vous apprécierez votre visite.</h3>
+                <div class="end">
+                    <p class="p-ending">
+                        Bonne navigation sur le blog.
+                    </p>
+
+                    <div class="space2"></div>
+
+                    <p class="p-ending">
+                        J'espère que vous apprécierez votre visite.
+                    </p>
                 </div>
-                <div class="separation"></div>
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <!-- Carrousel des nouvelles vidéos -->
-                            <section class="new-videos">
-                                <h2>Nouvelles vidéos</h2>
-                                <br><br>
-                                <div id="carousel-new-videos" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                        {% for video in current_month %}
-                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                            <div class="d-flex">
-                                                <!-- Vidéo -->
-                                                <div class="video-container">
-                                                    <iframe width="450" height="215"
-                                                            src="https://www.youtube.com/embed/{{ video.video_id }}"
-                                                            frameborder="0"
-                                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowfullscreen></iframe>
-                                                </div>
-                                                <!-- Informations à côté -->
-                                                <div class="video-info ml-4">
-                                                    <h5>{{ video.title }}</h5>
-                                                    <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
-                                                        }}</p>
-                                                    <p>Vues : {{ video.view_count }}</p>
-                                                    <p>Likes : {{ video.like_count }}</p>
-                                                    <p>Commentaires : {{ video.comment_count }}</p>
-                                                </div>
+                <div class="space"></div>
+                <div class="separation"></div>
+                <div class="space"></div>
+
+                <!-- Conteneur pour le carrousel -->
+                <div class="container-carrousel">
+                    <div class="col-lg-8">
+                        <!-- Section des nouvelles vidéos -->
+                        <section class="new-videos">
+                            <!-- Titre de la section -->
+                            <h2 class="h2-landing">Nouvelles vidéos</h2>
+
+                            <div class="space"></div>
+
+                            <div id="carousel-new-videos" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for video in current_month %}
+                                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                        <div class="d-flex">
+
+                                            <!-- Vidéo -->
+                                            <div class="video-container">
+                                                <iframe width="450" height="215"
+                                                        src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                                        frameborder="0"
+                                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowfullscreen></iframe>
+                                            </div>
+
+                                            <!-- Informations à côté -->
+                                            <div class="video-info ml-4">
+                                                <h4 class="h4-landing">{{ video.title }}</h4>
+                                                <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
+                                                    }}</p>
+                                                <p>Vues : {{ video.view_count }}</p>
+                                                <p>Likes : {{ video.like_count }}</p>
+                                                <p>Commentaires : {{ video.comment_count }}</p>
                                             </div>
                                         </div>
-                                        {% endfor %}
                                     </div>
-                                    <a class="carousel-control-prev" href="#carousel-new-videos" role="button"
-                                       data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Précédent</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carousel-new-videos" role="button"
-                                       data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Suivant</span>
-                                    </a>
+                                    {% endfor %}
                                 </div>
-                            </section>
-                            <br><br>
-                            <div class="separation-space"></div>
-                            <section class="other-videos">
-                                <h2>Vidéos les plus populaires</h2>
-                                <br><br>
-                                <div id="carousel-popular-videos" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                        {% for video in popular %}
-                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                            <div class="d-flex">
-                                                <!-- Vidéo -->
-                                                <div class="video-container">
-                                                    <iframe width="450" height="215"
-                                                            src="https://www.youtube.com/embed/{{ video.video_id }}"
-                                                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                                <a class="carousel-control-prev" href="#carousel-new-videos" role="button"
+                                   data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Précédent</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-new-videos" role="button"
+                                   data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Suivant</span>
+                                </a>
+                            </div>
+                        </section>
+
+                        <div class="space"></div>
+                        <div class="separation"></div>
+                        <div class="space"></div>
+
+                        <!-- Section des vidéos les plus populaires -->
+                        <section class="other-videos">
+                            <!-- Titre de la section -->
+                            <h2 class="h2-landing">Vidéos les plus populaires</h2>
+
+                            <div class="space"></div>
+
+                            <div id="carousel-popular-videos" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for video in popular %}
+                                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                        <div class="d-flex">
+                                            <!-- Vidéo -->
+                                            <div class="video-container">
+                                                <iframe width="450" height="215"
+                                                        src="https://www.youtube.com/embed/{{ video.video_id }}"
+                                                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
                                         picture-in-picture" allowfullscreen></iframe>
-                                                </div>
-                                                <!-- Informations à côté -->
-                                                <div class="video-info ml-4">
-                                                    <h5>{{ video.title }}</h5>
-                                                    <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
-                                                        }}</p>
-                                                    <p>Vues : {{ video.view_count }}</p>
-                                                    <p>Likes : {{ video.like_count }}</p>
-                                                    <p>Commentaires : {{ video.comment_count }}</p>
-                                                    <br>
-                                                </div>
+                                            </div>
+                                            <!-- Informations à côté -->
+                                            <div class="video-info ml-4">
+                                                <h4 class="h4-landing">{{ video.title }}</h4>
+                                                <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
+                                                    }}</p>
+                                                <p>Vues : {{ video.view_count }}</p>
+                                                <p>Likes : {{ video.like_count }}</p>
+                                                <p>Commentaires : {{ video.comment_count }}</p>
                                                 <br>
                                             </div>
+                                            <div class="space"></div>
                                         </div>
-                                        {% endfor %}
                                     </div>
-                                    <a class="carousel-control-prev" href="#carousel-popular-videos" role="button"
-                                       data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Précédent</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carousel-popular-videos" role="button"
-                                       data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Suivant</span>
-                                    </a>
-                                </div>
-                            </section>
-                        </div>
-                        <br>
-                        <div class="col-lg-4">
-                            <br><br>
-                            <!-- Aside -->
-                            <aside>
-                                <h2>Archives</h2>
-                                <br>
-                                <ul>
-                                    {% for month_year, videos in archived.items() %}
-                                    <li><a href="{{ url_for('frontend.show_archived_videos', month_year=month_year) }}">{{
-                                        month_year | capitalize }}</a></li>
                                     {% endfor %}
-                                </ul>
-                            </aside>
-                        </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carousel-popular-videos" role="button"
+                                   data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Précédent</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-popular-videos" role="button"
+                                   data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Suivant</span>
+                                </a>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -220,6 +230,5 @@
         <div class="separation"></div>
     </div>
 </div>
-<script src="{{ url_for('static', filename='CSS/javascript/avatar_move.js') }}"></script>
 {% endblock %}
 {% endblock %}
