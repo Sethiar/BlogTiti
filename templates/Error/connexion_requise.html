@@ -7,17 +7,21 @@
 {%endblock %}
 
 {% block body_content %}
-<div id="container">
-    <div id="connexion-image">
-        <img src="../static/Images/images_connexion/connexion1.jpg" alt="Image illustrative">
+<div class="error-container">
+    <div id="imgcontainer-form">
+        <img src="{{ url_for('static', filename='Images/images_formulaire/connexion1.png') }}" alt="Image illustrative de l'erreur de connexion">
     </div>
-    <h1>Bonjour</h1>
-    <div id="explication">
-        <h3>Si vous êtes sur cette page, cela signifie que :</h3>
-        <p>Soit, vous n'avez pas rentré les bons identifiants de connexion</p>
-        <p>Soit vous n'êtes pas encore inscrit-e</p>
+    <h1 class="h1-error">Bonjour</h1>
+    <div class="politique-intro">
+        <h3 class="h3-error"><b>Si vous êtes sur cette page, cela signifie que :</b></h3>
+        <p>
+            Soit, vous n'avez pas rentré les bons identifiants de connexion
+        </p>
+        <p>
+            Soit vous n'êtes pas encore inscrit-e
+        </p>
     </div>
-    <div id="Typeerror">
+    <div class="politique-intro">
             <h3>En conséquence : </h3>
             <p>Vous n'avez pas la permission requise afin d'accéder aux fonctionnalités du blog.</p>
             <p>Si vous voulez vous inscrire afin de pouvoir discuter bricolage avec TitiTechnique,
@@ -31,9 +35,9 @@
 <div id="redirection">
     <p>Pour s'inscrire, c'est par ici.</p>
 </div>
-<div id="button">
-    <button><a href="{{ url_for('auth.user_connection_error') }}">Se connecter</a></button>
-    <button><a href="{{ url_for('user.user_recording') }}">Inscription</a></button>
+<div class="btn-container">
+    <a class=btn-primary href="{{ url_for('auth.user_connection_error') }}">Se connecter</a>
+    <div class="space"></div>
+    <a class=btn-primary href="{{ url_for('user.user_recording') }}">Inscription</a>
 </div>
-<br><br>
 {% endblock %}
