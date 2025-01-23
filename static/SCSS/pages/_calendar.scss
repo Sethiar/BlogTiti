@@ -1,0 +1,43 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+/* Style de la page calendar.html du blog */
+
+#table-appointment {
+  color: gold;
+  width: 90vw;
+  padding-left: 5vw;
+}
+
+h5 {
+  padding-left: 5vw;
+  text-decoration: underline;
+  font-size: 24px;
+}
+
+th {
+  color: darkorange;
+}
+
+tr {
+  color: white;
+}
+
+.link {
+  color: gold;
+}
+
+.link:hover {
+  color: orange;
+}
+
+.btn-valide {
+  width: 10vw;
+  border: 1px solid darkorange;
+  background-color: gold;
+}
+
+.btn-valide:hover {
+ border: 1px solid gold;
+  background-color: darkorange;
+}

@@ -38,26 +38,13 @@ img.avatar-form {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: scale(1.1); /* Agrandit l'image à 110% de sa taille originale */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Ajoute une ombre au survol */
+    /* Agrandit l'image à 110% de sa taille originale */
+    transform: scale(1.1);
+    /* Ajoute une ombre au survol */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
   }
 }
 
-.space-form {
-  height: 5vh;
-}
-
-/* Titre du formulaire */
-.h2-form {
-  color: $color-accent-darkorange;
-  text-align: center;
-}
-
-.h3-form {
-  text-decoration: underline;
-  color: $color-accent-orange;
-  text-align : center;
-}
 
 /* Conteneur de l'image */
 .form-base {

@@ -1,0 +1,51 @@
+// Importation des variables.
+@use '../base/variables' as *;
+
+// Styles de la page d'accueil
+
+/* Conteneur titre */
+.title-container-landing {
+  /* Utilise Flexbox pour aligner les éléments */
+  display: flex;
+  /* Centre horizontalement */
+  justify-content: center;
+  /* Centre verticalement si nécessaire */
+  align-items: center;
+  /* Justifie le texte */
+  text-align: center;
+  /* Assure que le conteneur prend toute la largeur */
+  width: 100%;
+}
+
+.text-accueil {
+  color: $color-secondary;
+  font-size: $font-size-xl;
+}
+
+.content-block-end {
+  /* Utilise Flexbox pour aligner les éléments */
+  display: flex;
+  /* Centre horizontalement */
+  justify-content: center;
+  /* Centre verticalement si nécessaire */
+  align-items: center;
+  /* Justifie le texte */
+  text-align: center;
+  /* Assure que le conteneur prend toute la largeur */
+  width: 100%;
+}
+
+.p-ending {
+  color : $color-accent-darkorange;
+  font-size: $font-size-xxl;
+  text-align: center;
+  justify-content: center;
+  padding-right: 5%;
+  /* Aniamtion fluide */
+  transition: transform 0.3s ease;
+
+  &:hover {
+    /* Agrandit l'image à 110% de sa taille originale */
+    transform: scale(1.1);
+  }
+}

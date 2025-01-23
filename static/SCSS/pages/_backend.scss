@@ -1,0 +1,218 @@
+// Importation des variables.
+@use '../base/variables' as *;
+
+
+// Backend CSS - pages/backend.scss
+
+/* Style pour la page d'accueil du baseback.html.jinja2 */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: $color-primary;
+  color: $color-secondary;
+  font-size: $font-size-base;
+}
+
+.header-backend {
+  display: flex;
+  justify-content: center;
+  padding: 2%;
+}
+
+.nav-backend{
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+
+  &:hover {
+    color: $color-secondary;
+  }
+}
+
+// Style global du backend.
+.h1-backend {
+  font-size: $font-size-xxxl;
+  color: $color-accent-darkorange;
+  text-align: center;
+}
+
+.annonce-back p {
+  font-size: $font-size-xxl;
+  color: $color-primary;
+  background-color: $color-lightgrey;
+  border: 1px solid $color-accent-darkorange;
+  border-radius: 12px;
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.h4-backend{
+  margin-left: 10%;
+}
+
+.h5-backend {
+  padding-left: 5vw;
+  text-decoration: underline;
+  font-size: $font-size-lg;
+  color: $color-neutral-gold;
+}
+
+// Style de la page calendar.html
+.table {
+  font-size: $font-size-xxl;
+  border: 1px solid $color-lightgrey;
+  width: 90%;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+th {
+  color: $color-accent-darkorange;
+  border: 1px solid $color-lightgrey;
+  padding: 2%;
+}
+
+tr {
+  color: $color-secondary;
+  padding: 1%;
+  border: 1px solid $color-lightgrey;
+}
+
+td {
+  margin-right: 1%;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  border: 1px solid $color-lightgrey;
+  padding: 2%;
+}
+
+.actions-buttons {
+  margin-right: 1rem;
+}
+
+.btn-suppression, .btn-valide {
+  width: 10vw;
+  border: 1px solid $color-accent-darkorange;
+  background-color: $color-neutral-gold;
+
+  &:hover {
+    border: 1px solid $color-neutral-gold;
+    background-color: $color-accent-darkorange;
+  }
+}
+
+// Page de la liste des utilisateurs.
+/* Sélection de tous les utilisateurs */
+.select-all-users {
+  color: $color-neutral-gold;
+  font-size: $font-size-lg;
+  transition: color 0.3s, transform 0.3s;
+
+  &:hover {
+    font-size: $font-size-xl;
+    color: $color-accent-darkorange;
+  }
+}
+
+/* Présentation des premières lettres des pseudos des utilisateurs */
+.lettre-navigation {
+  padding-left: 20vw;
+  display: flex-column;
+}
+
+/* Sélection des lettres */
+.lettre a {
+  color: $color-accent-darkorange;
+  margin-right: 4vw;
+  transition: color 0.3s, transform 0.3s;
+
+  &:hover {
+    color: $color-neutral-gold;
+    transform: scale(1.1);
+    text-decoration: underline;
+  }
+}
+
+
+.col-user {
+  width: 15vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-title {
+  width: 25vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-comment {
+  width: 40vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-actions {
+  width: 20vw;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.subject-comment-backend {
+  text-indent: 5%;
+  max-width: 50vw;
+  font-size: $font-size-base;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: justify;
+}
+
+.separation {
+  border: 1px solid $color-secondary;
+}
+
+.container-category {
+  margin: 0 auto;
+  text-align: center;
+  border : 1px solid $color-accent-orange;
+  font-size: $font-size-base;
+  width : 50%;
+}
+
+.label {
+  width: 40%;
+}
+
+#subject {
+  width: 30%;
+  margin-left: 10%;
+  border-collapse: collapse;
+  border: 1px solid $color-accent-orange;
+  text-align: left;
+}
+
+#subject th, #subject td {
+  padding: 8px;
+  font-size: 14px;
+  border-top: 1px solid $color-accent-orange;
+  border-bottom: 1px solid $color-accent-orange;
+}
+
+.button-subject {
+  color: $color-primary;
+  background-color: $color-accent-orange;
+  border: 1px solid $color-neutral-gold;
+  justify-content: flex-end;
+  margin: 10px 0;
+  padding: 2px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  cursor: pointer;
+}
+
+
