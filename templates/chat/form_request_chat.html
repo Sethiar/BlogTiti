@@ -1,96 +1,122 @@
 {% extends 'baseform.html.jinja2' %}
 
 {% block head_content %}
-    <meta name="description" content="Formulaire permettant de demander un chat vidéo avec l'administrateur.">
-    <title>{% block title %}Formulaire de demande de chat avec <b>Titi Technique</b>>.{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    {% endblock %}
+<meta name="description" content="Formulaire permettant de demander un chat vidéo avec l'administrateur.">
+<title>{% block title %}Formulaire de demande de chat avec <b>Titi Technique</b>>.{% endblock %}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+{% endblock %}
 
 {% block body_content %}
-    <header>
-        <div id="introduction">
-            <h2>Informations concernant la demande de chat vidéo.</h2>
-            <p>Coucou !!</p>
-            <p>Si vous souhaitez vous entretenir avec TitiTechnique directement en chat vidéo, vous
+<header>
+    <div class="politique-intro">
+        <h2 class="h2-chat">Informations concernant la demande de chat vidéo.</h2>
+        <p>
+            Si vous souhaitez vous entretenir avec TitiTechnique directement en chat vidéo, vous
             pouvez remplir ce formulaire. Votre demande sera traitée dans les plus brefs délais,
-            et nous ferons tout notre possible pour vous aider.</p>
-            <p>Afin de vous faciliter la démarche, nous vous proposons de faire ainsi :</p>
-            <ul>
-                <li>
-                    1 - Vous devez préciser une date (Ex : le 15 février)
-                    et l'heure à laquelle vous serez disponible.
-                </li>
-                <li>
-                    2 - Après l'envoi de la demande de chat vidéo, vous recevrez un mail vous avertissant que
-                    la demande a bien été effectuée et qu'elle est prise en charge.
-                </li>
-                <li>
-                    3 - Suite aux informations données, Tititechnique validera le rendez-vous ou vous proposera
-                    de renouveler votre demande s'il ne peut se rendre disponible à l'heure choisie.
-                </li>
-            </ul>
-        </div>
-    </header>
+            et nous ferons tout notre possible pour vous aider.
+        </p>
+        <p>
+            Afin de vous faciliter la démarche, nous vous proposons de faire ainsi :
+        </p>
+        <ul>
+            <li>
+                1 - Vous devez préciser une date (Ex : le 15 février)
+                et l'heure à laquelle vous serez disponible.
+            </li>
+            <li>
+                2 - Après l'envoi de la demande de chat vidéo, vous recevrez un mail vous avertissant que
+                la demande a bien été effectuée et qu'elle est prise en charge.
+            </li>
+            <li>
+                3 - Suite aux informations données, Tititechnique validera le rendez-vous ou vous proposera
+                de renouveler votre demande s'il ne peut se rendre disponible à l'heure choisie.
+            </li>
+        </ul>
+    </div>
+</header>
+<!-- Bordure extérieure -->
+<div class="outer-frame">
 
-    <form method="POST" action="{{ url_for('chat.send_request', user_id=current_user.id) }}" enctype="multipart/form-data">
-    <div class="imgcontainer">
-        <img src="{{ url_for('static', filename='Images/images_chat/avatar.png') }}" alt="Avatar" class="avatar">
-    </div>
-    <h3>Demande de chat vidéo</h3>
-    {{ formrequest.csrf_token }}
-    <div class="container">
-        {{ formrequest.pseudo.label }}
-        {{ formrequest.pseudo(class="form-control", readonly=True) }}
-        {% if formrequest.pseudo.errors %}
-        <ul>
-            {% for error in formrequest.pseudo.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <br><br>
-        {{ formrequest.request_content.label }} {{ formrequest.request_content(rows=20, cols=20) }}
-        {% if formrequest.request_content.errors %}
-        <ul>
-            {% for error in formrequest.request_content.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <br><br>
-        {{ formrequest.date_rdv.label }} {{ formrequest.date_rdv() }}
-        {% if formrequest.date_rdv.errors %}
-        <ul>
-            {% for error in formrequest.date_rdv.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <br><br>
-        {{ formrequest.heure.label }}
-        {{ formrequest.heure() }}
-        {% if formrequest.heure.errors %}
-        <ul>
-            {% for error in formrequest.periode.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <ul>
-            {{ formrequest.attachment.label }} {{ formrequest.attachment() }}
-        </ul>
-        <br><br>
-    </div>
-    <div class="separation"></div>
-    <div class="container" style="background-color:black">
-        <button type="submit" class="validatedbtn" style="font-weight: normal;">Validation de la demande</button>
-        <button type="button" class="cancelledbtn">
-            <a href="{{ url_for('landing_page') }}" style="font-weight: normal;">Annulation de la demande et retour à l'accueil</a>
-        </button>
-    </div>
-</form>
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
 
+        <!-- Conteneur de formulaire -->
+        <form method="POST" action="{{ url_for('chat.send_request', user_id=current_user.id) }}"
+              class="form-base"
+              enctype="multipart/form-data">
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/connexion1.png') }}"
+                     alt="Image de Titi de bienvenue" class="avatar-form">
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if category == 'send_request' %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!-- Titre du formulaire -->
+            <h3 class="h3-form">Demande de chat vidéo</h3>
+
+            <!-- Token CSRF pour la sécurité -->
+            {{ formrequest.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
+                <!-- Champ pour le pseudo -->
+                <div class="form-group">
+                    {{ formrequest.pseudo.label }}
+                    {{ formrequest.pseudo(class="form-control", readonly=True) }}
+                </div>
+
+                <!-- Champ pour le conteneu de la demande -->
+                <div class="form-group">
+                    {{ formrequest.request_content.label }}
+                    {{ formrequest.request_content(rows=20, cols=20) }}
+                </div>
+
+                <!-- Champ po la date du chat -->
+                <div class="form-group">
+                    {{ formrequest.date_rdv.label }}
+                    {{ formrequest.date_rdv() }}
+                </div>
+
+                <!-- Champ pour l'heure du chat -->
+                <div class="form-group">
+                    {{ formrequest.heure.label }}
+                    {{ formrequest.heure() }}
+                </div>
+
+                <!-- Champ pour joindre un fichier -->
+                <div class="form-group">
+                    {{ formrequest.attachment.label }} {{ formrequest.attachment() }}
+                </div>
+
+                <!-- Séparation -->
+                <div class="separation"></div>
+
+                <!-- Boutons d'action -->
+                <div class="space-form"></div>
+                <!-- Conteneur des boutons du formulaire -->
+                <div class="container-btn">
+                    <button type="submit" class="validated-btn" aria-label="Valider la connexion">Connexion au compte
+                        utilisateur
+                    </button>
+                    <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         flatpickr("input[type='time']", {
@@ -100,6 +126,6 @@
             time_24hr: true
         });
     });
-</script>
 
+</script>
 {% endblock %}
