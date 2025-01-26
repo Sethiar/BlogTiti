@@ -47,10 +47,27 @@
                 <div class="form-group">
                     {{ form.pseudo.label }}
                     {{ form.pseudo() }}
+                    {% if form.pseudo.errors %}
+                    <ul>
+                        {% for error in form.pseudo.errors %}
+                        <li>
+                            {{ error }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
+
                 <!--Renseignement du rôle -->
                 <div class="form-group">
                     {{ form.role.label }} {{ form.role() }}
+                    {% if form.role.errors %}
+                    <ul>
+                        {% for error in form.role.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
 
                 <!-- Champ pour le mot de passe -->
