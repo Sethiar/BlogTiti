@@ -1,8 +1,10 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-
+// =================================
 // Image du header
+// =================================
+
 /* Logo */
 .logo img {
   width: 350px;
@@ -35,7 +37,10 @@
   }
 }
 
-/* Section d'accueil */
+// =================================
+// Section d'accueil
+// =================================
+
 /* Section contenant les photos */
 .photo-gallery {
   display: flex;
@@ -57,7 +62,7 @@
   text-align: center;
 }
 
-/* Images */
+/* Images de la page d'accueil */
 .pics-accueil {
   /* Les images prennent toute la largeur de leur bloc */
   width: 100%;
@@ -103,5 +108,63 @@
   .content-block {
     flex: 1 1 100%; /* Chaque photo occupe 100% de la largeur */
     max-width: 100%;
+  }
+}
+
+// =================================
+// Section du forum
+// =================================
+
+/* Images du forum */
+/* Conteneur principal des images */
+.forum-pic {
+  /* Alignement des images en ligne */
+  display: flex;
+  /* Écarte les images sur les côtés */
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Conteneur de chaque image pour assurer le centrage */
+.forum-pic-left, .forum-pic-right {
+  display: flex;
+  /* Centre l'image horizontalement */
+  justify-content: center;
+  /* Centre l'image verticalement */
+  align-items: center;
+  /* Largeur flexible pour chaque div */
+  flex: 1;
+}
+
+.forum-pic-img {
+  width: 75%;
+  height: auto;
+  border-radius: 15px;
+  border: 1px solid $color-accent-orange;
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    /* Zoom léger au survol */
+    transform: scale(1.05);
+    /* Ombre au survol */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+/* Image du forum */
+@media (max-width: 768px) {
+  .forum-pic {
+    /* Les images s'empilent verticalement */
+    flex-direction: column;
+    /* Centre les images en mode colonne */
+    align-items: center;
+    /* Réduit l'espace entre les images */
+    gap: 1rem;
+  }
+
+  .forum-pic-img {
+    /* Les images deviennent un peu plus grandes en mode mobile */
+    width: 90%;
   }
 }

@@ -1,0 +1,69 @@
+// Importation de variables.scss
+@use '../base/variables' as *;
+
+
+//===========================
+// Styles de la pagination
+//===========================
+
+
+.pagination {
+  align-items: center;
+  margin: 1% auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Masquer la pagination si la page est trop grande */
+.pagination.hidden {
+  display: none;
+}
+
+.pagination a,
+.pagination .dots {
+  padding: 1% 1.5%;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: $color-neutral-darkgrey;
+  color: $color-primary;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pagination a.active {
+  background-color: $color-neutral-gold;
+  color: $color-secondary;
+}
+
+.pagination a:hover,
+.pagination .dots:hover {
+  background-color: $color-primary;
+  transform: scale(1.1);
+}
+
+.pagination .prev-next {
+  padding: 1% 1.5%;
+  background-color: $color-accent_darkorange;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination .dots {
+  display: inline-block;
+  padding: 0.5% 1%;
+  background-color: transparent;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .pagination a,
+  .pagination .dots {
+    font-size: $font-size-sm;
+    padding: 0.5% 1%;
+  }
+}

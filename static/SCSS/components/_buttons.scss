@@ -1,8 +1,9 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-
-/* Button CSS - Components/Buttons.scss */
+//===========================================
+// Components/Buttons.scss
+//===========================================
 
 /* Regroupement des styles communs aux boutons */
 %btn-common {
@@ -10,11 +11,6 @@
   text-decoration: none;
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-weight: bold;
-}
-
-.btn-primary-forum {
-  display: flex;
-  margin: 0 auto;
 }
 
 .btn-primary, .btn-primary-forum, .btn-primary-registration {
@@ -37,27 +33,24 @@
   width: 60%;  // Ajuste pour des écrans plus larges
 }
 
-.btn-secondary, .btn-secondary-forum, .reply-button, .change-button, .delete-comment-form button {
+.btn-secondary, .btn-secondary-forum {
   @extend %btn-common;
   padding: 2% 3%;
-  font-size: $font-size-lg;
-  background-color: $color-lightgrey;
+  font-size: $font-size-base;
+  background-color: $color-accent-darkorange;
   color: $color-primary;
 
   &:hover {
-    background-color: $color-neutral-darkgrey;
+    background-color: $color-primary;
     color: $color-neutral-gold;
   }
 }
 
-.delete-comment-form button {
-  background-color: $color-accent-darkorange;
-  &:hover {
-    background-color: $color-accent-darkred;
-    color: $color-secondary;
-  }
-}
+//=================================
+// Boutons forum
+//=================================
 
+/* Bouton retour arrière forum */
 .back-forum {
   @extend %btn-common;
   background-color: $color-accent-orange;
@@ -76,12 +69,60 @@
   }
 }
 
-// Form Buttons
+/* Bouton : Changer le commentaire */
+.change-button {
+  @extend %btn-common;
+  padding: 1% 2%;
+  font-size: $font-size-base;
+  background-color: $color-accent-darkorange;
+  color: $color-primary;
+
+  &:hover {
+    background-color: $color-primary;
+    border: 1px solid $color-secondary;
+    color: $color-neutral-gold;
+  }
+}
+
+/* Bouton : Supprimer le commentaire */
+.delete-comment-form button {
+  @extend %btn-common;
+  padding: 1% 2%;
+  font-size: $font-size-base;
+  background-color: $color-neutral-gold;
+
+  &:hover {
+    background-color: $color-accent-darkred;
+    border: 1px solid $color-neutral-darkgrey;
+    color: $color-secondary;
+  }
+}
+
+/* Bouton de réponse à un commentaire */
+.reply-button {
+  @extend %btn-common;
+  padding: 1% 2%;
+  font-size: $font-size-base;
+  background-color: $color-neutral-gold;
+  color: $color-primary;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    background-color: $color-primary;
+    border: 1px solid $color-secondary;
+    color: $color-neutral-gold;
+  }
+}
+//=========================
+// Boutons des formulaires
+//=========================
+
+/* Boutons de validation/annulation */
 .cancelled-btn, .validated-btn {
   @extend %btn-common;
   display: inline-block;
   width: 80%;
-  padding: 10px 20px;
+  padding: 1.5% 3%;
   text-align: center;
   font-size: $font-size-xl;
   cursor: pointer;
@@ -107,7 +148,11 @@
   }
 }
 
-// Backend buttons
+//=====================
+// Boutons du backend
+//=====================
+
+/* navigation du backend */
 nav button {
   @extend %btn-common;
   background-color: $color-accent-orange;
@@ -121,7 +166,7 @@ nav button {
   }
 }
 
-// Button containers
+/* Boutons des conteneurs */
 .button-container {
   display: flex;
   flex-direction: column;
@@ -155,28 +200,71 @@ nav button {
   }
 }
 
-/* Responsive design */
+//===============================
+// Responsivité pour les boutons 
+//===============================
+
+/* Responsivité pour les écrans moyens */
 @media (max-width: 1024px) {
   .btn-primary-registration {
-    width: 80%;  // Plus large sur les tablettes
+    /* Plus large sur les tablettes */
+    width: 80%;  
   }
 
-  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
-    padding: 2% 5%;
-    font-size: $font-size-base;
+  .btn-primary, .btn-secondary, .cancelled-btn, .validated-btn {
+    padding: 2% 3%;
+    font-size: $font-size-lg;
   }
 }
 
+/* Responsivité pour les petits écrans */
 @media (max-width: 768px) {
   .btn-primary-registration {
-    width: 100%;  // S'adapte complètement sur mobile
+    /* S'adapte complètement sur mobile */
+    width: 100%;
   }
 
   .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
     font-size: $font-size-base;
+    padding: 0.5% 1.5%;
   }
 
   .button-container button {
-    width: 100%;  // Les boutons prennent toute la largeur de l'écran
+    /* Les boutons prennent toute la largeur de l'écran */
+    width: 100%;  
+  }
+
+  .change-button,
+  .delete-comment-form button {
+    width: 60%;
+    text-align: center;
+    font-size: $font-size-sm;
+    padding: 1% 2%;  
+  }
+}
+
+/* Responsivité très petits écrans */
+@media (max-width: 480px) {
+  .btn-primary-registration {
+    /* Adaptation mobile */
+    width: 100%;
+  }
+
+  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
+    font-size: $font-size-small;
+    padding: 1% 2%;
+  }
+
+  .change-button,
+  .delete-comment-form button {
+    width: 60%;
+    text-align: center;
+    font-size: $font-size-small;
+    padding: 1% 2%;  
+  }
+
+  .button-container button {
+    /* Les boutons prennent toute la largeur de l'écran */
+    width: 70%;  
   }
 }

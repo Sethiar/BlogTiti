@@ -1,25 +1,6 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-/* Styles généraux */
-* {
-  background-color: $color-primary;
-  color: white;
-  font-family: Calibri, sans-serif;
-}
-
-
-  a {
-    background-color: orange;
-    color: black;
-
-    &:hover {
-      background-color: gold;
-      color: black;
-    }
-  }
-}
-
 /* Styles relatifs aux erreurs */
 .error {
   display: flex;
@@ -48,5 +29,40 @@
       margin: 5% auto 0;
       display: block;
     }
+  }
+}
+
+// Styles des erreurs dans les formulaires
+
+/* === Styles pour les alertes === */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: $font-primary;
+  font-size: 1rem;
+  line-height: 1.5;
+
+  &.alert-error {
+    color: $color-alert-error-text;
+    background-color: $color-alert-error-background;
+    border-color: $color-alert-error-border;
+  }
+
+  &.alert-warning {
+    color: $color-alert-warning-text;
+    background-color: $color-alert-warning-background;
+    border-color: $color-alert-warning-border;
+  }
+
+  &.alert-success {
+    color: $color-alert-success-text;
+    background-color: $color-alert-success-background;
+    border-color: $color-alert-success-border;
+  }
+
+  i {
+    margin-right: 5px;
   }
 }

@@ -1,20 +1,16 @@
 // Importation des variables
 @use '../base/variables' as *;
 
-/* Variables locales */
-$primary-color: orange;
-$secondary-color: black;
-$highlight-color: gold;
-$border-radius: 8px;
-
-
-// Page Accès aux vidéos et page commenter 1 Video.
+// ===============================
+// Section concernant les vidéos
+// ===============================
 
 /* Conteneur général pour les vidéos */
 .video-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  border-radius: 12px;
+  gap: 2%;
   margin: 0 auto;
   max-width: 1200px;
 
@@ -31,88 +27,66 @@ $border-radius: 8px;
 
 /* Style pour chaque élément vidéo */
 .video-item {
-  border: 1px solid lighten($secondary-color, 20%);
-  padding: 10px;
-  border-radius: $border-radius;
-  background-color: $primary-color;
+  border: 1px solid lighten($color-secondary, 20%);
+  padding: 1.5%;
+  border-radius: 12px;
+  background-color: $color-primary;;
   text-align: center;
-  min-height: 400px;
+  min-height: 40vh;
   box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05)
+    }
 
   iframe {
     width: 100%;
     height: auto;
+    border-radius: 12px;
+    border: 1px solid $color-accent-darkorange;
   }
 
   p {
-    background-color: $primary-color;
-    color: $secondary-color;
+    background-color: $color-accent-darkorange;
+    color: $color-primary;
     text-align: left;
     margin-left: 5%;
-    font-size: 14px;
+    font-size: $font-size-base;
     font-weight: bold;
     text-decoration: underline;
   }
 
   a {
-    border: 1px solid $highlight-color;
-    border-radius: $border-radius;
-    color: $highlight-color;
-    padding: 5px 10px;
-    background-color: $secondary-color;
-    font-size: 16px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid $color-accent-orange;
+    border-radius: 8px;
+    color: $color-primary;
+    padding: 2% 4%;
+    background-color: $color-accent-darkorange;
+    font-size: $font-size-base;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
     &:hover {
-      color: $primary-color;
+      transform: scale(1.1)
     }
   }
 }
 
 /* Section des informations */
 .informations {
-  border: 1px solid $secondary-color;
-  background-color: $primary-color;
+  border: 1px solid $color-secondary;
+  background-color: $color-accent-darkorange;
 
   span {
-    background-color: $primary-color;
-    color: $secondary-color;
-  }
-}
-
-/* Pagination */
-.pagination {
-  text-align: center;
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-
-  a {
-    color: $highlight-color;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin: 0 5px;
-    border: 1px solid lighten($secondary-color, 20%);
-    border-radius: $border-radius;
-    transition: background-color 0.3s ease, color 0.3s ease;
-
-    &:hover:not(.active) {
-      background-color: lighten($secondary-color, 40%);
-      color: $secondary-color;
-    }
-  }
-
-  .active {
-    background-color: $primary-color;
-    color: $secondary-color;
-    border: 1px solid darken($primary-color, 10%);
+    background-color: $color-accent-darkorange;
+    color: $color-primary;
   }
 }
 
 /* Vidéos de la page d'accueil */
 .video-info {
-  background-color: orange;
-  color: black;
+  background-color: $color-accent-darkorange;
+  color: $color-primary;
   padding: 1rem;
   border-radius: 25px;
   width: 90%;
@@ -122,8 +96,8 @@ $border-radius: 8px;
 
 .video-info p,
 .video-info h5 {
-  background-color: orange;
-  color: black;
+  background-color: $color-accent-orange;
+  color: $color-primary;
 }
 
 .video-info h5 {

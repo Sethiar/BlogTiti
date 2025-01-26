@@ -1,8 +1,10 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-
+//==============================
 // Footer styles globaux
+//==============================
+
 /* footer */
 footer {
   background-color: $color-footer;
@@ -15,7 +17,6 @@ footer {
   padding: 3rem 0;
   display: flex;
   flex-direction: column;
-  /* Centre le contenu */
   align-items: center;
   justify-content: center;
 }
@@ -32,22 +33,13 @@ footer {
   flex-wrap: wrap;
 }
 
-/* Chaque section du footer */
+/* Section du footer */
 .footer-section {
   flex: 1;
-  /* Garantit que chaque section ait une taille minimale */
+  /* Chaque section a une taille minimale */
   min-width: 200px;
-  /* Ajoute de l'espace entre les sections */
+  /* Espace entre les sections */
   margin: 0 1rem;
-}
-
-/* Titres des sections */
-footer h3 {
-  font-size: $font-size-xxl;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-decoration: underline;
-  color: $color-accent-orange;
 }
 
 /* Listes */
@@ -130,12 +122,6 @@ footer p {
     margin: 0 0 1.5rem 0;
   }
 
-  footer h3 {
-    /* Réduit la taille des titres pour les petits écrans */
-    font-size: $font-size-xl;
-    margin-bottom: 1rem;
-  }
-
   footer ul li {
     /* Réduit la taille des items de liste */
     font-size: $font-size-lg;
@@ -157,11 +143,6 @@ footer p {
     /* Les sections s'affichent verticalement */
     flex-direction: column;
     padding: 1rem;
-  }
-
-  footer h3 {
-    /* Réduit encore la taille des titres */
-    font-size: $font-size-xl;
   }
 
   footer ul li {

@@ -115,6 +115,12 @@ img.avatar-form {
 .forgot-password {
   text-align: center;
   margin-bottom: 2%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+    }
 }
 
 .forgot-password-a {
