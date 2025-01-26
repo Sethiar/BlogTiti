@@ -38,13 +38,16 @@
 
             <!-- Conteneur de la modification du commentaire -->
             <div class="form-group">
-                {{ formchange.comment_content.label }} {{ formchange.comment_content() }}
+                {{ formchange.comment_content.label }}
+                {{ formchange.comment_content(rows=20, cols=20) }}
                 <input type="hidden" name="video_id" value="{{ comment.video_id }}">
                 <input type="hidden" name="comment_id" value="{{ comment.id }}">
 
+                <!-- Conteneur des boutons du formulaire -->
                 <div class="container-btn">
-                    <button type="submit" class="validated-btn" aria-label="Valider la modification">Soumettre la
-                        réponse
+                    <button type="submit" class="validated-btn"
+                            aria-label="Valider la modification">
+                        Soumettre la réponse
                     </button>
                 </div>
             </div>

@@ -40,14 +40,16 @@
 
             <!-- Conteneur de la modification de la réponse au commentaire -->
             <div class="form-group">
-                {{ formchangereply.reply_content.label }} {{ formchangereply.reply_content() }}
+                {{ formchangereply.reply_content.label }}
+                {{ formchangereply.reply_content(rows=20, cols=20) }}
                 <input type="hidden" name="comment_id" value="{{ reply.subject_id }}">
                 <input type="hidden" name="reply_id" value="{{ reply.id }}">
 
                 <!-- Conteneur des boutons du formulaire -->
                 <div class="container-btn">
-                    <button type="submit" class="validated-btn" aria-label="Valider la modification">Soumettre la
-                        réponse
+                    <button type="submit" class="validated-btn"
+                            aria-label="Valider la modification">
+                        Soumettre la réponse
                     </button>
                 </div>
             </div>

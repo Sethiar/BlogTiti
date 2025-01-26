@@ -39,10 +39,12 @@
 
             <!-- Conteneur de la réponse au commentaire -->
             <div class="form-group">
-                {{ formsubjectreply.reply_content.label }} {{ formsubjectreply.reply_content() }}
+                {{ formsubjectreply.reply_content.label }}
+                {{ formsubjectreply.reply_content(rows=20, cols=20) }}
                 <input type="hidden" name="subject_id" value="{{ comment.subject_id }}">
                 <input type="hidden" name="comment_id" value="{{ comment.id }}">
 
+                <!-- Conteneur des boutons du formulaire -->
                 <div class="container-btn">
                     <button type="submit" class="validated-btn" aria-label="Valider la réponse">Soumettre la réponse
                     </button>

@@ -50,31 +50,49 @@
 
             <div class="space-form"></div>
 
-            <!-- Champ pour le mail -->
-            <div class="form-group">
-                {{ form_unsubscribe.email.label }}
-                {{ form_unsubscribe.email() }}
-            </div>
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
 
-            <!-- Champ pour le mot de passe -->
-            <div class="form-group">
-                {{ form_unsubscribe.label }}
-                {{ form_unsubscribe.password() }}
-                <span class="toggle-password" onclick="togglePassword('password')" aria-controls="password">
+                <!-- Champ pour le mail -->
+                <div class="form-group">
+                    {{ form_unsubscribe.email.label }} {{ form_unsubscribe.email() }}
+                    {% if form_unsubscribe.email.errors %}
+                    <ul>
+                        {% for error in form_unsubscribe.email.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour le mot de passe -->
+                <div class="form-group">
+                    {{ form_unsubscribe.label }}
+                    {{ form_unsubscribe.password() }}
+                    <span class="toggle-password" onclick="togglePassword('password')" aria-controls="password">
                         <i class="fas fa-eye"></i>
                     </span>
-            </div>
-            <div class="separation"></div>
+                    {% if form_unsubscribe.password.errors %}
+                    <ul>
+                        {% for error in form_unsubscribe.password.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="separation"></div>
 
-            <!-- Champ pour les boutons du formulaire -->
-            <div class="container-btn">
-                <button type="submit" class="validated-btn" aria-label="Valider l'inscription">Validation de la
-                    souscription
-                </button>
-                <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
+                <!-- Champ pour les boutons du formulaire -->
+                <div class="container-btn">
+                    <button type="submit" class="validated-btn" aria-label="Valider l'inscription">Validation de la
+                        souscription
+                    </button>
+                    <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
+
 
 {% endblock %}
