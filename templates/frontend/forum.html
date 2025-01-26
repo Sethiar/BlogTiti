@@ -3,7 +3,6 @@
 {% block head_content %}
 <meta name="description" content="Forum du blog permettant de discuter, interagir et donner son avis sur le blog.">
 <title>{% block title %}Bienvenue sur le forum du blog{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/forum.css') }}">
 {% endblock %}
 
 <!-- body -->
@@ -20,14 +19,15 @@
         <div class="inner-frame-politique">
 
             <!-- division de retour à la page d'accueil -->
+            <div class="space2"></div>
             <div class="back-link-forum">
                 <a class="btn-primary" href="{{ url_for('landing_page') }}">Retour à la page d'accueil</a>
             </div>
 
             <!-- Image du logo -->
             <div class="imgcontainer-form">
-                <img src="{{ url_for('static', filename='Images/images_bannière_logo/logo_titi.png') }}"
-                     alt="Logo de Tititechnique"
+                <img src="{{ url_for('static', filename='Images/images_accueil/forum1.png') }}"
+                     alt="Titi à la table des discussion"
                      class="avatar-form">
             </div>
 
@@ -36,80 +36,92 @@
                 <h1 class="h1-landing">Forum de discussion</h1>
             </div>
 
-            <div class="space"></div>
+            <div class="space2"></div>
             <div class="separation"></div>
+            <div class="space2"></div>
 
             <!-- Division pour image forum -->
             <div class="forum-image-container">
+                <!-- Première photo -->
                 <div class="forum-pic">
                     <div class="forum-pic-left">
                         <img src="{{ url_for('static', filename='Images/images_forum/forum4.png') }}"
-                             alt="Forum Image Left">
+                             alt="Titi répare son vélo"
+                             class="forum-pic-img">
                     </div>
-                    <div class="forum-pic-center">
-                        <img src="{{ url_for('static', filename='Images/images_accueil/forum1.png') }}"
-                             alt="Forum Image Center">
-                    </div>
+                    <!-- Deuxième photo -->
                     <div class="forum-pic-right">
                         <img src="{{ url_for('static', filename='Images/images_forum/forum5.png') }}"
-                             alt="Forum Image Right">
+                             alt="Titi fait de la peinture"
+                             class="forum-pic-img">
                     </div>
                 </div>
+            </div>
+
+            <div class="space-form"></div>
+
+            <!-- Séparation -->
+            <hr class="politique-divider">
+
+            <div class="form-container">
+                <h3 class="h3-forum">Ajouter un sujet sur le forum</h3>
 
                 <div class="space-form"></div>
 
-                <div class="form-container">
-                    <h3 class="h3-main">Ajouter un sujet sur le forum</h3>
+                <!-- Conteneur ajout de sujet -->
+                <form id="addSubjectForm" method="POST"
+                      action="{{ url_for('user.add_subject_forum') }}" class="form-base">
 
-                    <!-- Conteneur ajout de sujet -->
-                    <form id="addSubjectForm" method="POST"
-                          action="{{ url_for('user.add_subject_forum') }}">
+                    <!-- Token CSRF pour la sécurité -->
+                    {{ formsubjectforum.csrf_token }}
 
-                        <!-- Token CSRF pour la sécurité -->
-                        {{ formsubjectforum.csrf_token }}
+                    <!-- Champ pour le nouveau sujet -->
+                    <div class="form-group">
+                        {{ formsubjectforum.nom.label }}
+                        {{ formsubjectforum.nom(size=20) }}
+                    </div>
 
-                        <!-- Champ pour le nouveau sujet -->
-                        <div class="form-group">
-                            {{ formsubjectforum.nom.label }}
-                            {{ formsubjectforum.nom(size=20) }}
-                        </div>
+                    <!-- bouton de soumission du formulaire -->
+                    <button type="submit" class="btn-primary-forum">
+                        {{ formsubjectforum.submit.label }}
+                    </button>
+                </form>
+            </div>
+            <div class="space2"></div>
 
-                        <!-- bouton de soumission du formulaire -->
-                        <button type="submit" class="btn-primary-forum">
-                            {{ formsubjectforum.submit.label }}
-                        </button>
-                    </form>
-                </div>
+            <!-- Conteneur de la liste des sujets -->
+            <div class="subjects-container">
+                <h3 class="h4-forum">Sujets disponibles</h3>
+
                 <div class="space2"></div>
 
-                <div class="subjects-container">
-                    <h3 class="h3-main">Sujets disponibles</h3>
-
-                    <!--tableau des sujets -->
-                    <table class="subjects-table">
-                        <thead>
-                        <tr>
-                            <th>Sujet</th>
-                            <th>Auteur</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for subject in subjects %}
-                        <tr>
-                            <td class="subject-name">{{ subject.nom }}</td>
-                            <td class="subject-author">{{ subject.author }}</td>
-                            <td><a href="{{ url_for('frontend.forum_subject', subject_id=subject.id) }}"
-                                   class="btn-secondary-forum">Voir</a></td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <!--tableau des sujets -->
+                <table class="subjects-table">
+                    <thead>
+                    <tr>
+                        <th>Sujet</th>
+                        <th>Auteur</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for subject in subjects %}
+                    <tr>
+                        <td data-label="Sujet" class="subject-name">{{ subject.nom }}</td>
+                        <td data-label="Auteur" class="subject-author">{{ subject.author }}</td>
+                        <td data-label="Action">
+                            <a href="{{ url_for('frontend.forum_subject', subject_id=subject.id) }}"
+                               class="btn-secondary-forum">Voir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 <script>

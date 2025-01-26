@@ -21,6 +21,7 @@
 
     <div class="space"></div>
     <div class="separation"></div>
+    <div class="space"></div>
 
     <!-- Conteneur de la section principal -->
     <div class="content-section-landing">
@@ -34,7 +35,7 @@
                 <div class="video-container">
                     {% for video in videos %}
                     <div class="video-item">
-                        <h3 class="h3-main">{{ video.title }}</h3>
+                        <h3 class="h3-video">{{ video.title }}</h3>
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.video_id }}"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -59,22 +60,40 @@
 
                 <div class="space"></div>
                 <div class="separation"></div>
+                <div class="space"></div>
 
                 <!-- Pagination -->
                 <div class="pagination">
                     {% if page > 1 %}
-                    <a href="{{ url_for('frontend.show_videos', page=page-1) }}">Précédent</a>
+                    <a href="{{ url_for('frontend.show_videos', page=page-1) }}" class="prev-next">Précédent</a>
                     {% endif %}
 
+                    <!-- Pages précédentes -->
                     {% for p in range(1, total_pages + 1) %}
+                    {% if p <= 2 or p >= total_pages - 1 or (p >= page - 1 and p <= page + 1) %}
                     <a href="{{ url_for('frontend.show_videos', page=p) }}" class="{% if page == p %}active{% endif %}">{{
-                        p
-                        }}</a>
+                        p }}</a>
+                    {% elif p == page - 1 or p == page + 1 %}
+                    <span class="dots" onclick="showPageSelection()">...</span>
+                    {% endif %}
                     {% endfor %}
 
                     {% if page < total_pages %}
-                    <a href="{{ url_for('frontend.show_videos', page=page+1) }}">Suivant</a>
+                    <a href="{{ url_for('frontend.show_videos', page=page+1) }}" class="prev-next">Suivant</a>
                     {% endif %}
+                </div>
+
+                <!-- Modal pour choisir une page (à afficher si les '...' sont cliqués) -->
+                <div id="pageSelectionModal" style="display: none;">
+                    <div>
+                        <label for="pageSelect">Choisissez une page :</label>
+                        <select id="pageSelect">
+                            {% for p in range(1, total_pages + 1) %}
+                            <option value="{{ p }}" {% if p== page %}selected{% endif %}>Page {{ p }}</option>
+                            {% endfor %}
+                        </select>
+                        <button onclick="navigateToSelectedPage()">OK</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,4 +101,16 @@
 </div>
 
 {% endblock %}
+<script>
+  // Affiche la fenêtre de sélection de page
+  function showPageSelection() {
+    document.getElementById('pageSelectionModal').style.display = 'block';
+  }
+
+  // Navigue vers la page sélectionnée dans le modal
+  function navigateToSelectedPage() {
+    const selectedPage = document.getElementById('pageSelect').value;
+    window.location.href = "{{ url_for('frontend.show_videos', page='') }}" + selectedPage;
+  }
+</script>
 {% endblock %}
