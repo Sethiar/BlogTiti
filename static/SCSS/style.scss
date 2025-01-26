@@ -1,18 +1,22 @@
 // Variables et styles de base
 @use 'base/base-reset';
+@use 'base/functional';
 @use 'base/layout';
 @use 'base/typography';
 @use 'base/variables' as *;
 
 // Composants
 @use 'components/animations';
+@use 'components/archived-videos';
 @use 'components/buttons';
 @use 'components/carrousel';
+@use 'components/comments';
+@use 'components/errortype';
 @use 'components/footer';
 @use 'components/forms';
 @use 'components/header';
 @use 'components/images';
-@use 'components/links';
+@use 'components/pagination';
 @use 'components/videos';
 
 // Pages
