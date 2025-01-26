@@ -85,4 +85,4 @@ def landing_page():
 # Code lançant l'application.py.
 if __name__ == '__main__':
     #scheduled_task(app)
-    app.run()
+    app.run(debug=True)
