@@ -2,15 +2,18 @@
 @use '../base/variables' as *;
 
 
-// Backend CSS - pages/backend.scss
+//==============================
+// Style pour le backend
+//==============================
 
-/* Style pour la page d'accueil du baseback.html.jinja2 */
+
+/* Style pour la page d'accueil de baseback.html.jinja2 */
 html, body {
   margin: 0;
   padding: 0;
   background-color: $color-primary;
   color: $color-secondary;
-  font-size: $font-size-base;
+  font-size: $font-size-xl;
 }
 
 .header-backend {
@@ -31,11 +34,7 @@ html, body {
 }
 
 // Style global du backend.
-.h1-backend {
-  font-size: $font-size-xxxl;
-  color: $color-accent-darkorange;
-  text-align: center;
-}
+
 
 .annonce-back p {
   font-size: $font-size-xxl;
@@ -47,48 +46,6 @@ html, body {
   display: block;
   margin: 0 auto;
   text-align: center;
-}
-
-.h4-backend{
-  margin-left: 10%;
-}
-
-.h5-backend {
-  padding-left: 5vw;
-  text-decoration: underline;
-  font-size: $font-size-lg;
-  color: $color-neutral-gold;
-}
-
-// Style de la page calendar.html
-.table {
-  font-size: $font-size-xxl;
-  border: 1px solid $color-lightgrey;
-  width: 90%;
-  margin: 0 auto;
-  padding: 2%;
-}
-
-th {
-  color: $color-accent-darkorange;
-  border: 1px solid $color-lightgrey;
-  padding: 2%;
-}
-
-tr {
-  color: $color-secondary;
-  padding: 1%;
-  border: 1px solid $color-lightgrey;
-}
-
-td {
-  margin-right: 1%;
-}
-
-.table th, .table td {
-  vertical-align: middle;
-  border: 1px solid $color-lightgrey;
-  padding: 2%;
 }
 
 .actions-buttons {
@@ -137,7 +94,6 @@ td {
     text-decoration: underline;
   }
 }
-
 
 .col-user {
   width: 15vw;
@@ -188,20 +144,6 @@ td {
   width: 40%;
 }
 
-#subject {
-  width: 30%;
-  margin-left: 10%;
-  border-collapse: collapse;
-  border: 1px solid $color-accent-orange;
-  text-align: left;
-}
-
-#subject th, #subject td {
-  padding: 8px;
-  font-size: 14px;
-  border-top: 1px solid $color-accent-orange;
-  border-bottom: 1px solid $color-accent-orange;
-}
 
 .button-subject {
   color: $color-primary;
