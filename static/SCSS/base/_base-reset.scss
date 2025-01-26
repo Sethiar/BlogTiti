@@ -49,31 +49,116 @@ li {
   list-style: none;
 }
 
-/* Réinitialiser les bordures */
+// Styles pour les tableaux
+/* Réinitialiser les styles de base pour les tableaux */
 table {
+  /* Fusionne les bordures */
   border-collapse: collapse;
+  /* Évite les espaces entre les cellules */
   border-spacing: 0;
-  border: 1px solid $color-accent-darkorange;
-  border-radius: 20px;
-  overflow: hidden;
+  /* Utilise toute la largeur disponible */
   width: 100%;
   max-width: 100%;
+  border: 1px solid $color-accent-darkorange;
+  overflow: hidden;
 }
 
+/* Styles pour les en-têtes du tableau */
 th {
-  color: $color-secondary;
-  font-weight: bold;
+  color: $color-primary;
+  font-size: $font-size-xl;
+  text-decoration: underline;
+  text-decoration-color: $color-neutral-darkgrey2;
+  /* Centrage horizontal */
   text-align: center;
   padding: 1rem;
+  background-color: $color-accent-darkorange;
+  border: 1px solid $color-secondary;
 }
 
-td,
-th {
+/* Styles pour les cellules du tableau */
+td {
+  /* Espacement intérieur */
   padding: 1rem;
-  text-align: left;
+  font-size: $font-size-lg;
+  color: $color-accent-orange;
+  /* Centrage horizontal */
+  text-align: center;
+  /* Centrage vertical */
+  vertical-align: middle;
+  border: 1px solid $color-accent-darkorange;
 }
 
-/* Assurez-vous que les boutons sont sans styles par défaut */
+/* Styles pour le tableau des sujets */
+.subjects-table tr:nth-child(even) {
+  color: $color-primary;
+  /* Couleur de fond alternative pour chaque ligne */
+  background-color: $color-neutral-darkgrey2;
+}
+
+/* Styliser les liens dans le tableau */
+.subjects-table a.btn-secondary-forum {
+  color: $color-primary;
+  /* Ajout d'espace interne */
+  background-color: $color-accent-darkorange;
+  padding: 1% 2%;
+  border-radius: 20px;
+  display: inline-block;
+  /* Animation fluide */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: 1px solid $color-secondary;
+
+  &:hover {
+    background-color: $color-neutral-gold;
+    transform: scale(1.1);
+  }
+}
+
+/* Style des tableaux pour les écrans étroits */
+@media (max-width: 768px) {
+  .subjects-table,
+  .subjects-table thead,
+  .subjects-table tbody,
+  .subjects-table th,
+  .subjects-table td,
+  .subjects-table tr {
+    /* Chaque ligne devient un bloc */
+    display: block;
+  }
+
+  .subjects-table thead tr {
+    /* Cache l'en-tête du tableau */
+    display: none;
+  }
+
+  .subjects-table tr {
+    /* Ajoute un espace entre les lignes */
+    margin-bottom: 1rem;
+    border-bottom: 1rem solid $color-accent-orange;
+  }
+
+  .subjects-table td {
+    position: relative;
+    /* Décalage pour afficher les titres */
+    padding-left: 50%;
+  }
+
+  .subjects-table td::before {
+    /* Ajoute le titre de la colonne */
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 45%;
+    /* Espace entre le titre et les données */
+    padding-left: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+
+// Réinitialisation des styles des boutons
+/* Boutons sans styles par défaut */
 button {
   border: none;
   background: none;
@@ -100,7 +185,7 @@ img {
 @media (max-width: 599px) {
   html,
   body {
-    font-size: $font-size-xl;
+    font-size: $font-size-base;
   }
 
   /* Ajouter d'autres ajustements pour les mobiles ici si nécessaire */
@@ -110,7 +195,7 @@ img {
 @media (min-width: 600px) and (max-width: 899px) {
   html,
   body {
-    font-size: $font-size-xl;
+    font-size: $font-size-base;
   }
 
   /* Ajouter d'autres ajustements pour les mobiles paysage ici */
@@ -120,7 +205,7 @@ img {
 @media (min-width: 900px) and (max-width: 1199px) {
   html,
   body {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
   }
 
   /* Ajouter d'autres ajustements pour les tablettes portrait ici */
