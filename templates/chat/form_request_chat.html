@@ -45,6 +45,7 @@
         <form method="POST" action="{{ url_for('chat.send_request', user_id=current_user.id) }}"
               class="form-base"
               enctype="multipart/form-data">
+
             <!-- Image du logo -->
             <div class="imgcontainer-form">
                 <img src="{{ url_for('static', filename='Images/images_formulaires/connexion1.png') }}"
@@ -72,19 +73,20 @@
 
             <!-- Conteneur des champs du formulaire -->
             <div class="form-container">
+
                 <!-- Champ pour le pseudo -->
                 <div class="form-group">
                     {{ formrequest.pseudo.label }}
                     {{ formrequest.pseudo(class="form-control", readonly=True) }}
                 </div>
 
-                <!-- Champ pour le conteneu de la demande -->
+                <!-- Champ pour le contenu de la demande -->
                 <div class="form-group">
                     {{ formrequest.request_content.label }}
                     {{ formrequest.request_content(rows=20, cols=20) }}
                 </div>
 
-                <!-- Champ po la date du chat -->
+                <!-- Champ pour la date du chat -->
                 <div class="form-group">
                     {{ formrequest.date_rdv.label }}
                     {{ formrequest.date_rdv() }}
@@ -101,15 +103,14 @@
                     {{ formrequest.attachment.label }} {{ formrequest.attachment() }}
                 </div>
 
-                <!-- Séparation -->
                 <div class="separation"></div>
-
-                <!-- Boutons d'action -->
                 <div class="space-form"></div>
+
                 <!-- Conteneur des boutons du formulaire -->
                 <div class="container-btn">
-                    <button type="submit" class="validated-btn" aria-label="Valider la connexion">Connexion au compte
-                        utilisateur
+                    <button type="submit" class="validated-btn"
+                            aria-label="Valider la connexion">
+                        Connexion au compte utilisateur
                     </button>
                     <a href="{{ url_for('landing_page') }}" class="cancelled-btn">Annulation et retour à l'accueil</a>
                 </div>
@@ -126,6 +127,5 @@
             time_24hr: true
         });
     });
-
 </script>
 {% endblock %}
