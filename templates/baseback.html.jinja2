@@ -28,32 +28,41 @@
 <header class="header-backend">
     {% block header_content %}
     <nav class="nav-backend">
-        <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter en tant qu'administrateur</a></button>
+        <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter en tant
+            qu'administrateur</a></button>
         <a class="btn-primary" href="{{ url_for('landing_page') }}">Aller sur la page d'accueil du blog</a></button>
         <a class="btn-primary" href="{{ url_for('admin.back_end') }}">Retour au back-end</a></button>
-        <a class="btn-primary" href="{{ url_for('admin.create_admin_user_form') }}">Créer l'utilisateur administrateur</a></button>
+        <a class="btn-primary" href="{{ url_for('admin.create_admin_user_form') }}">Créer l'utilisateur
+            administrateur</a></button>
     </nav>
     {% endblock %}
 </header>
 
 {% block body_content %}
 <div class="space"></div>
-    <div class="annonce-back">
-        {% if logged_in %}
-            {% for admin in admin %}
-                <p>Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
-            {% endfor %}
-        {% endif %}
-    </div>
+
+<!-- Message de connexion admin -->
+<div class="annonce">
+    {% if logged_in %}
+    {% for admin in admin %}
+    <p>Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
+    {% endfor %}
+    {% endif %}
+</div>
+
 <div class="space"></div>
+
+<!-- Conteneur des outils du backend -->
 <div class="button-container">
-    <a href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a></button>
-    <a class="btn-primary" href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a></button>
-    <a class="btn-primary" href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a></button>
-    <a class="btn-primary" href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des vidéos des utilisateurs</a></button>
-    <a class="btn-primary" href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a></button>
-    <a class="btn-primary" href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux sujets du forum</a></button>
-    <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a></button>
+    <a class="btn-primary" href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a>
+    <a class="btn-primary" href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a>
+    <a class="btn-primary" href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a>
+    <a class="btn-primary" href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des
+        vidéos des utilisateurs</a>
+    <a class="btn-primary" href="{{ url_for('admin.list_subject_forum') }}">Aller à la liste des sujets du forum</a>
+    <a class="btn-primary" href="{{ url_for('admin.list_comments_forum') }}">Aller sur la liste des commentaires aux
+        sujets du forum</a>
+    <a class="btn-primary" href="{{ url_for('auth.logout_admin') }}">Se déconnecter du back end</a>
 </div>
 {% endblock %}
 
