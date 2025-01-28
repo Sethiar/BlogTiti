@@ -6,7 +6,6 @@
 // Style pour le backend
 //==============================
 
-
 /* Style pour la page d'accueil de baseback.html.jinja2 */
 html, body {
   margin: 0;
@@ -33,8 +32,7 @@ html, body {
   }
 }
 
-// Style global du backend.
-
+// === Style global du backend ===
 
 .annonce-back p {
   font-size: $font-size-xxl;
@@ -63,7 +61,7 @@ html, body {
   }
 }
 
-// Page de la liste des utilisateurs.
+// === Page de la liste des utilisateurs ===
 /* Sélection de tous les utilisateurs */
 .select-all-users {
   color: $color-neutral-gold;

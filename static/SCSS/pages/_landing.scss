@@ -1,7 +1,10 @@
 // Importation des variables.
 @use '../base/variables' as *;
 
+
+//==============================
 // Styles de la page d'accueil
+//==============================
 
 /* Conteneur titre */
 .title-container-landing {
@@ -17,11 +20,33 @@
   width: 100%;
 }
 
+/* Texte principal */
 .text-accueil {
   color: $color-secondary;
   font-size: $font-size-xl;
+
+  /* Responsivité */
+  @media (max-width: 768px) {
+    /* Réduction pour les tablettes */
+    font-size: $font-size-base; 
+  }
+
+  @media (max-width: 480px) {
+    /* Réduction supplémentaire pour les mobiles */
+    font-size: $font-size-small;
+  }
 }
 
+/* lien du texte d'accueil */
+.surlignage-accueil {
+  color: $color-accent-darkorange;
+  
+  &:hover {
+    color: $color-neutral-gold;
+  }
+}
+
+/* Contenu du block de bienvenue */
 .content-block-end {
   /* Utilise Flexbox pour aligner les éléments */
   display: flex;
@@ -30,22 +55,37 @@
   /* Centre verticalement si nécessaire */
   align-items: center;
   /* Justifie le texte */
-  text-align: center;
+  text-align: justify;
   /* Assure que le conteneur prend toute la largeur */
   width: 100%;
 }
 
+/* Text de bas de page */
 .p-ending {
   color : $color-accent-darkorange;
   font-size: $font-size-xxl;
   text-align: center;
   justify-content: center;
-  padding-right: 5%;
-  /* Aniamtion fluide */
+  /* Animation fluide */
   transition: transform 0.3s ease;
 
   &:hover {
     /* Agrandit l'image à 110% de sa taille originale */
     transform: scale(1.1);
+  }
+
+  /* Responsivité */
+  @media (max-width: 768px) {
+    /* Texte légèrement réduit pour les tablettes */
+    font-size: $font-size-base; 
+     /* Moins de marge pour optimiser l'espace */
+    padding-right: 3%;
+  }
+
+  @media (max-width: 480px) {
+    /* Texte encore plus petit pour les mobiles */
+    font-size: $font-size-sm; 
+    /* Réduction supplémentaire des marges */
+    padding-right: 2%; 
   }
 }
