@@ -1,11 +1,15 @@
 // Importation des variables.
 @use 'variables' as *;
 
+
+//==============================
 //layout CSS - base/layout.scss
+//==============================
+
 
 /* Gère les conteneurs droit et gauche et les séparations et espacement. */
 
-// Base layout
+// === Base layout ===
 .layout {
   display: flex;
   height: 0;
@@ -51,11 +55,13 @@
     border-color: $color-accent-darkorange;
   }
 }
-//========================================
-// Titre
-//========================================
 
-// ===Section landing_page ===
+
+//==================
+// Titre
+//==================
+
+// === Section landing_page ===
 .h1-landing {
   font-size: $font-size-xxxl;
   color: $color-accent-darkorange;
@@ -111,7 +117,7 @@
 }
 
 
-//=== Section du forum et des vidéos ===
+// === Section du forum et des vidéos ===
 /* Titre h3 */
 .h3-forum {
   color: $color-secondary;
@@ -131,14 +137,22 @@
   margin-left: 5%;
 }
 
-//=== Section politique/Informations/Mentions légales ===
+// === Section politique/Informations/Mentions légales ===
 /* Titre h1 */
 .h1-politique {
   font-size: $font-size-xxxl;
   font-weight: bold;
   text-align: center;
   margin-bottom: 3%;
-  color: $color-secondary;
+  color: $color-primary;
+  background-color: $color-accent-darkorange;
+  border: 1px solid $color-neutral-gold;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1, 1.05);
+  }
 }
 
 .h2-politique {
@@ -177,7 +191,7 @@
 // === Section footer ===
 /* Titres du footer */
 .h3-footer {
-  font-size: $font-size-xxl;
+  font-size: $font-size-lg;
   font-weight: bold;
   margin-bottom: 1rem;
   text-decoration: underline;
@@ -227,8 +241,9 @@
   height: 5vh;
 }
 
+
 //===========================================
-// Media Queries pour la Responsivité
+// Responsivité
 //===========================================
 
 /* Mobile - Portrait (max-width: 599px) */
@@ -250,9 +265,9 @@
     width: 100%;
   }
 
-  //========================================
+  //============
   // Titre
-  //========================================
+  //============
 
   /* Section landing_page */
   .h1-landing {
@@ -270,8 +285,23 @@
   
   /* Section footer */
   .h3-footer {
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
+  text-align: center;
   }
+
+  // === Section politique/Informations/Mentions légales ===
+/* Titre h1 */
+.h1-politique {
+  font-size: $font-size-lg;
+}
+
+.h2-politique {
+  font-size: $font-size-base;
+}
+
+.h3-politique {
+  font-size: $font-size-sm;
+}
 }
   
 
@@ -294,9 +324,9 @@
     width: 100%;
   }
 
-  //========================================
+  //=================
   // Titre
-  //========================================
+  //=================
 
   /* Section landing_page */
   .h1-landing {
@@ -313,7 +343,20 @@
   }
 
   .h3-footer {
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+
+  .h1-politique {
     font-size: $font-size-xl;
+  }
+  
+  .h2-politique {
+    font-size: $font-size-lg;
+  }
+  
+  .h3-politique {
+    font-size: $font-size-base;
   }
 }
 
@@ -327,6 +370,22 @@
   .outer-frame, .inner-frame {
     padding: 3%;
     width: 100%;
+  }
+
+  .h3-footer {
+    font-size: $font-size-base;
+  }
+
+  .h1-politique {
+    font-size: $font-size-xxl;
+  }
+  
+  .h2-politique {
+    font-size: $font-size-xl;
+  }
+  
+  .h3-politique {
+    font-size: $font-size-lg;
   }
 }
 

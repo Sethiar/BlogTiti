@@ -1,18 +1,28 @@
 /* Variables CSS - base/variables.scss */
 
 
+//=================================
 // Variables globales.
+//=================================
 
 
-// Taille des polices
-$font-size-small: 0.8rem;    // Taille petite (12.8px)
-$font-size-sm: 0.875rem;     // Taille petite (14px)
-$font-size-base: 1rem;       // Taille de base (16px)
-$font-size-lg: 1.25rem;      // Taille grande (20px)
-$font-size-xl: 1.5rem;       // Taille extra-large (24px)
-$font-size-xxl: 2rem;        // Taille super large (32px)
-$font-size-xxxl: 3rem;       // Taille extra-super large (40px)
-$font-size-title: 4rem;      // Taille de caractères de titre (48px)
+// === Taille des polices ===
+// Taille petite (12.8px)
+$font-size-small: 0.8rem;   
+ // Taille petite (14px)
+$font-size-sm: 0.875rem;
+// Taille de base (16px)
+$font-size-base: 1rem;
+// Taille grande (20px)
+$font-size-lg: 1.25rem;      
+// Taille extra-large (24px)
+$font-size-xl: 1.5rem;       
+// Taille super large (32px)
+$font-size-xxl: 2rem;        
+// Taille extra-super large (40px)
+$font-size-xxxl: 3rem;       
+// Taille de caractères de titre (48px)
+$font-size-title: 4rem;      
 
 
 // === Couleurs globales ===
@@ -22,12 +32,12 @@ $color-primary: #000000;
 $color-secondary: #ffffff;
 
 
-// Couleur background produits
+// === Couleur background produits ===
 /* Antracite */
 $color-background-product: #1e1e1e;
 
 
-// Couleur Texte landing_page
+// === Couleur Texte landing_page ===
 /* Blanc pur */
 $color-text-product: #fff;
 /* Blanc cassé */
@@ -45,38 +55,55 @@ $color-background-productcard-hover: #ff9c00;
 
 
 /* Accents */
-$color-accent-orange: #ffa500; // Orange
-$color-accent-darkred: darkred; // Rouge foncé
-$color-accent-darkorange: #ff8c00; // Orange foncé
+// Orange
+$color-accent-orange: #ffa500; 
+// Rouge foncé
+$color-accent-darkred: darkred; 
+// Orange foncé
+$color-accent-darkorange: #ff8c00; 
 
 
 
 /* Neutres */
-$color-neutral-darkgrey2: #555555; // Davy' Gray
-$color-neutral-darkgrey: #a9a9a9; // Gris foncé
-$color-neutral-gold: #ffd700; // Or
-$color-lightgrey: #f2f2f2; // Gris clair
+// Davy' Gray
+$color-neutral-darkgrey2: #555555; 
+// Gris foncé
+$color-neutral-darkgrey: #a9a9a9;
+ // Or
+$color-neutral-gold: #ffd700; 
+// Gris clair
+$color-lightgrey: #f2f2f2; 
 
 
 /* Spécifique */
-$color-footer: #212f3d; // Couleur pour le pied de page
+// Couleur pour le pied de page
+$color-footer: #212f3d; 
 
 
 // === Couleurs d'alerte ===
 /* Erreur */
-$color-alert-error-text: #a94442; // Texte
-$color-alert-error-background: #f2dede; // Fond
-$color-alert-error-border: #ebccd1; // Bordure
+// Texte
+$color-alert-error-text: #a94442;
+// Fond
+$color-alert-error-background: #f2dede; 
+// Bordure
+$color-alert-error-border: #ebccd1; 
 
 /* Avertissement */
-$color-alert-warning-text: #8a6d3b; // Texte
-$color-alert-warning-background: #fcf8e3; // Fond
-$color-alert-warning-border: #faebcc; // Bordure
+// Texte
+$color-alert-warning-text: #8a6d3b; 
+// Fond
+$color-alert-warning-background: #fcf8e3;
+ // Bordure
+$color-alert-warning-border: #faebcc; 
 
 /* Succès */
-$color-alert-success-text: #3c763d; // Texte
-$color-alert-success-background: #dff0d8; // Fond
-$color-alert-success-border: #d6e9c6; // Bordure
+// Texte
+$color-alert-success-text: #3c763d; 
+// Fond
+$color-alert-success-background: #dff0d8;
+// Bordure
+$color-alert-success-border: #d6e9c6; 
 
 // Polices
 $font-primary: 'Arial', sans-serif;

@@ -1,7 +1,10 @@
 // Importation des variables.
 @use 'variables' as *;
 
+
+//=============================================
 // Reset CSS - base/base-reset.scss
+//=============================================
 
 /* Réinitialiser les marges, le padding et la box-sizing */
 html,
@@ -185,7 +188,7 @@ img {
 @media (max-width: 599px) {
   html,
   body {
-    font-size: $font-size-base;
+    font-size: $font-size-sm;
   }
 
   /* Ajouter d'autres ajustements pour les mobiles ici si nécessaire */
@@ -215,6 +218,6 @@ img {
 @media (min-width: 1200px) and (max-width: 1399px) {
   html,
   body {
-    font-size: $font-size-xxl;
+    font-size: $font-size-xl;
   }
 }

@@ -1,7 +1,12 @@
 // Importation des variables.
 @use 'variables' as *;
 
-/* === Section Réinitialisation de Mot de Passe === */
+
+//=====================================================
+// === Section Réinitialisation de Mot de Passe
+//=====================================================
+
+/* Section reset le mot de passe */
 .reset-password-section {
   display: flex;
   margin: 0 auto;
