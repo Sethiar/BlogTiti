@@ -1,11 +1,15 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-// Variables locales
+// === Variables locales ===
 $header-bg: rgba(44, 62, 80, 0.95);
 $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
+//===============================
 // Style du Header
+//===============================
+
+// === conteneur du header ===
 .header {
   position: fixed;
   top: 0;
@@ -21,27 +25,27 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 2% 1%;
   transition: transform 0.3s ease;
 
-  // Masqué par défaut sur mobile
+  /* Masqué par défaut sur mobile */
   @media (max-width: 1024px) {
     display: none;
   }
 
-  // Lorsque le hamburger est actif
+  /* Lorsque le hamburger est actif */
   &.active {
     display: flex;
     position: absolute;
     width: 100%;
     height: 100vh;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1%;
     overflow-y: auto;
   }
 }
 
-// Hamburger Menu
+//=== Hamburger Menu ===
 .hamburger {
   display: none;
   position: fixed;
@@ -66,14 +70,14 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
 
-// Conteneur de navigation
+//=== Conteneur de navigation ===
 .nav-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   text-align: center;
   padding: 2rem 1rem;
-  gap: 2rem;
+  gap: 1.5rem;
 
   .nav-links {
     ul {
@@ -99,7 +103,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
 
-// Actions utilisateur
+//=== Actions utilisateur ===
 .actions {
   display: flex;
   flex-direction: column;
@@ -135,11 +139,16 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
 
-// Mobile-first adjustments
+//=============================
+// Responsivité
+//=============================
+
+/* Grands écrans */
 @media (max-width: 1024px) {
   .header {
     position: absolute;
-    width: 30%; /* Peut être ajusté selon la mise en page */
+    /* Ajustement mise en page */
+    width: 30%; 
     padding: 1rem;
   }
 
@@ -147,5 +156,27 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-left: 0;
     width: 100%;
     transition: margin-top 0.3s ease;
+  }
+
+  .nav-container {
+    gap: 1rem;
+
+    .nav-links ul {
+      flex-direction: column;
+
+      li a {
+        /* Ajustement des liens pour mobile */
+        font-size: $font-size-xl; 
+      }
+    }
+  }
+
+  .actions {
+    gap: 0.5rem;
+
+    a {
+      /* Réduction des boutons */
+      font-size: $font-size-lg; 
+    }
   }
 }

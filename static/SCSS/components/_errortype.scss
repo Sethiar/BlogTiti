@@ -1,7 +1,12 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-/* Styles relatifs aux erreurs */
+
+//====================================
+// Styles relatifs aux erreurs
+//====================================
+
+/* Conteneur principal des erreurs */
 .error {
   display: flex;
   justify-content: center;
@@ -32,9 +37,8 @@
   }
 }
 
-// Styles des erreurs dans les formulaires
-
-/* === Styles pour les alertes === */
+// === Styles des erreurs dans les formulaires ===
+/*Styles pour les alertes */
 .alert {
   padding: 15px;
   margin-bottom: 20px;

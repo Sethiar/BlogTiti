@@ -1,25 +1,86 @@
 // Importation des variables.
 @use '../base/variables' as *;
 
+
+//========================================
 // Forms CSS - Components/forms.scss
+//========================================
 
-/* Style général des formulaires */
 
-.annonce {
+/* Introduction des formulaires */
+.form-intro {
+  display: flex;
+  /* Les éléments en colonne */
+  flex-direction: column; 
+  /* Centrage des éléments verticalement */
+  justify-content: center;
+  /* Alignement du contenu à gauche */
+  align-items: flex-start; 
+  /* Augmente la largeur pour mieux espacer les éléments */
+  width: 60%; 
+  /* Fixer une largeur maximale pour plus de lisibilité */
+  max-width: 80vw;
+  /* Bordure plus légère pour un effet épuré */
+  border: 1px solid $color-lightgrey;
+  border-radius: 8px;
+  padding: 3%;
+  background: $color-lightgrey;
   color: $color-primary;
-  border: 1px solid $color-accent-darkorange;
-  font-size: $font-size-xxl;
-  padding: 2%; /* Ajout d'espacement interne */
-  text-align: justify; /* Alignement justifié du texte */
-  text-indent: 2em; /* Indentation de la première ligne */
-  justify-content: center; /* Centrage horizontal */
-  align-items: center; /* Centrage vertical */
-  height: auto; /* Hauteur adaptable au contenu */
-  margin: 0 auto; /* Centrage horizontal du conteneur */
-  max-width: 80%; /* Largeur maximale pour ne pas déborder */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour style */
-  border-radius: 10px; /* Coins arrondis */
-  background-color: $color-neutral-darkgrey; /* Fond optionnel */
+  /* Justifie le texte à gauche pour une lecture plus fluide */
+  text-align: left; 
+  line-height: 1.6;
+  margin: 0 auto;
+  /* Espacement plus important sous chaque section */
+  margin-bottom: 4%; 
+
+  /* Effet au survol */
+  &:hover {
+    background: lighten($color-lightgrey, 10%);
+    border-color: $color-neutral-gold;
+  }
+}
+
+/* Titre introductif */
+.title-intro {
+  font-size: $font-size-lg;
+  text-align: none;
+  text-align: justify;
+  font-weight: bold;
+  padding: 1% 2%;
+  text-indent:0;
+  color: $color-primary;
+  margin: 0 auto;
+  background-color: $color-accent-darkorange;
+  border-radius: 18px;
+  /* Espacement entre le titre et le texte */
+  margin-bottom: 3%;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1, 1.05)
+  }
+}
+
+/* Texte introductif */
+.text-intro {
+  font-size: $font-size-base;
+  /* Ajout d'espace entre les paragraphes */
+  margin-bottom: 1rem;
+  color: $color-primary;
+  text-align: justify;
+}
+
+/* Texte de lien avec survol */
+.text-intro b a {
+  color: $color-accent-orange;
+  font-weight: normal;
+  text-decoration: none;
+  /* Animation fluide */
+  transition: color 0.3s ease; 
+}
+
+.text-intro b a:hover {
+  color: $color-neutral-gold;
 }
 
 /* Styles du logo du formulaire. */
@@ -27,6 +88,15 @@
   display: flex;
   justify-content: center;
   margin: 24px 0 12px 0;
+  /* Animation fluide pour le zoom et l'ombre */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    /* Agrandit l'image à 110% de sa taille originale */
+    transform: scale(1.1);
+    /* Ajoute une ombre au survol */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* Image avatar dans le formulaire */
@@ -64,14 +134,16 @@ img.avatar-form {
   margin-bottom: 1%;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Augmente l'écart entre les champs */
+  /* Augmente l'écart entre les champs */
+  gap: 1rem; 
 
   .form-group {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* Pour s'assurer que chaque groupe de champs occupe toute la largeur disponible */
+    /* Pour s'assurer que chaque groupe de champs occupe toute la largeur disponible */
+    width: 100%; 
 
     label {
       display: block;
@@ -136,63 +208,104 @@ img.avatar-form {
   text-align: center;
 }
 
+//=================
+// Responsivité
+//=================
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .annonce {
-    max-width: 100%; /* Prend toute la largeur de l'écran */
-    padding: 5%; /* Espacement interne suffisant */
-    margin: 0; /* Pas de marges externes */
-  }
-
-  /* Enlever les styles qui forcent les marges et la largeur pour mobile */
-  .form-base {
-    max-width: 100%; /* Laisser le formulaire occuper toute la largeur */
-    margin: 0; /* Pas de marges externes */
-  }
-
-  .form-container {
-    gap: 8px; /* Espacement réduit pour les champs */
+/* Petit écrans */
+@media (max-width: 480px) {
+  .form-intro {
+    /* Prend toute la largeur de l'écran */
+    width: 100%; 
+    /* Espacement interne suffisant */
+    padding: 5%; 
+    /* Pas de marges externes */
+    margin: 0 auto; 
   }
 
   .form-group {
     label {
-      font-size: $font-size-lg; /* Ajustement de la taille du texte */
+      /* Ajustement de la taille du texte */
+      font-size: $font-size-small; 
     }
 
     input {
-      font-size: $font-size-lg; /* Ajuste la taille des champs */
+      /* Ajuste la taille des champs */
+      font-size: $font-size-small; 
+    }
+  }
+}
+
+/* Ecrans moyens */
+@media (max-width: 768px) {
+  .form-intro {
+    /* Prend toute la largeur de l'écran */
+    width: 100%; 
+    /* Espacement interne suffisant */
+    padding: 5%; 
+    /* Pas de marges externes */
+    margin: 0 auto; 
+  }
+
+  /* Suppression des styles qui forcent les marges et la largeur pour mobile */
+  .form-base {
+    /* Laisser le formulaire occuper toute la largeur */
+    max-width: 100%;
+    /* Pas de marges externes */
+    margin: 0; 
+  }
+
+  .form-container {
+    /* Espacement réduit pour les champs */
+    gap: 0.8rem; 
+  }
+
+  .form-group {
+    label {
+      /* Ajustement de la taille du texte */
+      font-size: $font-size-sm; 
+    }
+
+    input {
+      /* Ajuste la taille des champs */
+      font-size: $font-size-sm; 
     }
   }
 
   .container-btn {
-    padding: 1.2%; /* Ajustement du padding du bouton */
+    /* Ajustement du padding du bouton */
+    padding: 1.2%; 
   }
 }
 
 /* Tablettes en paysage */
 @media (max-width: 1024px) {
-  .annonce {
-    max-width: 90%; /* Réduit légèrement la largeur par rapport aux tablettes en portrait */
+  .form-intro {
+    /* Réduit légèrement la largeur par rapport aux tablettes en portrait */
+    width: 90%; 
     padding: 4%;
+    margin: 0 auto;
   }
 
   .form-base {
-    max-width: 90vw; /* Ajuste la largeur pour ne pas trop prendre de place */
-    margin: 5% auto; /* Ajuste la marge */
+    /* Ajuste la largeur pour ne pas trop prendre de place */
+    max-width: 90vw; 
+    /* Ajuste la marge */
+    margin: 5% auto; 
   }
 
   .form-container {
-    gap: 10px; /* Espacement réduit entre les champs */
+    /* Espacement réduit entre les champs */
+    gap: 1rem; 
   }
 
   .form-group {
     label {
-      font-size: $font-size-lg;
+      font-size: $font-size-base;
     }
 
     input {
-      font-size: $font-size-lg;
+      font-size: $font-size-base;
     }
   }
 

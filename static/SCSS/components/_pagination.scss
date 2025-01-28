@@ -6,7 +6,7 @@
 // Styles de la pagination
 //===========================
 
-
+/* Conteneur principal de la pagination */
 .pagination {
   align-items: center;
   margin: 1% auto;
@@ -55,6 +55,12 @@
   color: #999;
 }
 
+
+//==================
+// Responsivité
+//==================
+
+/* Ecrans moyens */
 @media (max-width: 768px) {
   .pagination {
     flex-wrap: wrap;

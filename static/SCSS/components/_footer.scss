@@ -1,4 +1,4 @@
-// Importation de variables.scss
+// Importation des variables.
 @use '../base/variables' as *;
 
 //==============================
@@ -8,16 +8,19 @@
 /* footer */
 footer {
   background-color: $color-footer;
+  /* Footer responsive */
   width: 70%;
   /* Décale le footer vers la droite */
-  margin-left: auto;
+  margin-left: auto; 
   margin-right: 0;
   color: $color-secondary;
   /* Augmente le padding pour les petites résolutions */
-  padding: 3rem 0;
+  padding: 3rem 0; 
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
 }
 
@@ -25,21 +28,21 @@ footer {
 .footer-content {
   display: flex;
   /* Distribue l'espace entre les sections */
-  justify-content: space-between;
-  /* Espacement entre les éléments */
+  justify-content: space-between; 
   gap: 2rem;
-  padding: 2rem;
+  /* Réduit le padding pour éviter trop d'espace sur mobile */
+  padding: 2rem; 
   /* Permet aux sections de passer à la ligne en cas de petite taille d'écran */
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
 }
 
 /* Section du footer */
 .footer-section {
   flex: 1;
   /* Chaque section a une taille minimale */
-  min-width: 200px;
+  min-width: 200px; 
   /* Espace entre les sections */
-  margin: 0 1rem;
+  margin: 0 1rem; 
 }
 
 /* Listes */
@@ -50,30 +53,28 @@ footer ul {
 
 footer ul li {
   /* Espace plus important entre les éléments de liste */
-  margin-bottom: 1rem;
-  font-size: $font-size-xl;
+  margin-bottom: 1rem; 
+  font-size: $font-size-base;
 
   a {
-    font-size: $font-size-xl;
     text-decoration: none;
     color: $color-secondary;
     transition: color 0.3s ease, text-decoration 0.3s ease;
 
     &:hover {
-      color: $color-accent-orange;
+      color: $color-neutral-gold;
       text-decoration: none;
     }
   }
 }
 
 footer ul li p {
-  font-size: $font-size-xl;
   color: $color-secondary;
 
   a {
-    font-size: $font-size-xl;
+    font-size: $font-size-base;
     text-decoration: none;
-    color: $color-accent-orange;
+    color: $color-neutral-gold;
     transition: color 0.3s ease;
 
     &:hover {
@@ -94,7 +95,7 @@ footer p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: $font-size-xl;
+  font-size: $font-size-sm;
   padding: 2%;
   color: $color-accent-darkorange;
 }
@@ -110,26 +111,21 @@ footer p {
 @media (max-width: 768px) {
   .footer-content {
     /* Les sections s'affichent verticalement sur mobile */
-    flex-direction: column;
+    flex-direction: column; 
     /* Réduit le padding */
-    padding: 1.5rem;
+    padding: 1.5rem; 
   }
 
   .footer-section {
     /* Chaque section prend toute la largeur */
-    width: 100%;
+    width: 100%; 
     /* Ajoute un espace vertical entre les sections */
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem 0; 
   }
 
   footer ul li {
     /* Réduit la taille des items de liste */
-    font-size: $font-size-lg;
-  }
-
-  footer p {
-    /* Réduit la taille du texte simple */
-    font-size: $font-size-lg;
+    font-size: $font-size-base; 
   }
 }
 
@@ -141,17 +137,17 @@ footer p {
 
   .footer-content {
     /* Les sections s'affichent verticalement */
-    flex-direction: column;
+    flex-direction: column; 
     padding: 1rem;
   }
 
   footer ul li {
     /* Réduit la taille des items de liste */
-    font-size: $font-size-lg;
+    font-size: $font-size-sm;
   }
 
   footer p {
     /* Réduit la taille du texte simple */
-    font-size: $font-size-lg;
+    font-size: $font-size-small; 
   }
 }

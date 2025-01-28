@@ -1,13 +1,14 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
+
 // =================================
 // Image du header
 // =================================
 
 /* Logo */
 .logo img {
-  width: 350px;
+  width: 40vw;
   height: auto;
   border: 1px solid $color-accent-orange;
   border-radius: 18px;
@@ -22,12 +23,12 @@
 
 /* Bannière */
 .banniere img {
-  width: 70%;
+  width: 70vw;
+  max-width: 100%;
   height: auto;
   border: 1px solid $color-accent-orange;
   border-radius: 24px;
   transition: transform 0.3s ease-in-out;
-  align-items: center;
   margin: 0 auto;
 
   /* Effet au survol */
@@ -64,8 +65,9 @@
 
 /* Images de la page d'accueil */
 .pics-accueil {
-  /* Les images prennent toute la largeur de leur bloc */
-  width: 100%;
+  /* Ajustement en fonction de l'écran */
+  width: 80vw; 
+  max-width: 100%;
   /* Garde les proportions des images */
   height: auto;
   border-radius: 50%;
@@ -81,6 +83,9 @@
 }
 
 .pics-accueil-fin {
+  /* Taille relative */
+  width: 50vw; 
+  max-width: 100%;
   border: 1px solid $color-accent-darkorange;
   border-radius: 50%;
   padding: 2%;
@@ -98,7 +103,8 @@
 /* Ajustements pour les écrans moyens */
 @media screen and (max-width: 768px) {
   .content-block {
-    flex: 1 1 calc(50% - 20px); /* Chaque photo occupe 50% de la largeur */
+    /* Chaque photo occupe 50% de la largeur */
+    flex: 1 1 calc(50% - 20px); 
     max-width: calc(50% - 20px);
   }
 }
@@ -106,16 +112,18 @@
 /* Ajustements pour les écrans petits (mobiles) */
 @media screen and (max-width: 480px) {
   .content-block {
-    flex: 1 1 100%; /* Chaque photo occupe 100% de la largeur */
+    /* Chaque photo occupe 100% de la largeur */
+    flex: 1 1 100%; 
     max-width: 100%;
   }
 }
+
 
 // =================================
 // Section du forum
 // =================================
 
-/* Images du forum */
+// === Images du forum ===
 /* Conteneur principal des images */
 .forum-pic {
   /* Alignement des images en ligne */
@@ -138,7 +146,10 @@
 }
 
 .forum-pic-img {
-  width: 75%;
+  /* Largeur relative à l'écran */
+  width: 60vw; 
+  /* Taille maximale sur écrans moyens */
+  max-width: 90%; 
   height: auto;
   border-radius: 15px;
   border: 1px solid $color-accent-orange;

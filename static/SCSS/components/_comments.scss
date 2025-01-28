@@ -1,8 +1,12 @@
 // Importation de variables.scss
 @use '../base/variables' as *;
 
-// Styles de la page forum
 
+//====================================
+// Styles des pages de commentaires
+//====================================
+
+//=== Styles principaux ===
 /* Styles pour centrer tout le contenu du h2 */
 .container-subject-forum {
   margin: 0 auto;
@@ -27,6 +31,7 @@
   font-size: $font-size-xl;
 }
 
+
 //=========================================
 // Styles de la section commentaire
 //=========================================
@@ -40,13 +45,16 @@
   background-color: $color-background-product-hover;
   border: 1px solid $color-accent-darkorange;
   border-radius: 5px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Ajoute une légère ombre */
+  /* Ajoute une légère ombre */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
 /* Section du titre */
 .comment-avis {
-  margin-bottom: 1.5rem; /* Ajoute un espacement sous le titre */
-  text-align: center; /* Centre le texte horizontalement */
+  /* Ajoute un espacement sous le titre */
+  margin-bottom: 1.5rem; 
+  /* Centre le texte horizontalement */
+  text-align: center; 
 }
 
 /* Champ de texte */
@@ -153,12 +161,16 @@ textarea {
   gap: 1rem;
 }
 
+
+//==============================
 // Conteneur des likes
+//==============================
+
 .like-section {
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: $color-primary;
+  background-color: transparent;
 }
 
 /* Wrapper pour l'icône et le message */
@@ -182,10 +194,21 @@ textarea {
   }
 }
 
+/* Conteneur des likes */
+.container-likes p {
+  border-radius: 12px;
+  background-color: $color-accent-orange;
+  transition: transform 0.3 ease;
+  
+  &:hover {
+    transform: scale(1, 1.05)
+  }
+}
+
 /* Message des utilisateurs ayant aimé */
 .like-message {
   font-size: $font-size-base;
-  color: $color-secondary;
+  color: $color-primary;
 }
 
 /* Suppression des marges inutiles pour le formulaire caché */
@@ -193,7 +216,6 @@ form#formlikecomment {
   margin: 0;
   padding: 0;
 }
-
 
 
 //========================================
@@ -307,11 +329,12 @@ form#formlikecomment {
   box-sizing: border-box;
 }
 
-//================================================
-// Media Queries pour rendre le design responsive
-//================================================
-/* Responsivité */
 
+//=======================
+// Responsivitée
+//=======================
+
+/* Très petits écrans */
 @media only screen and (max-width: 480px) {
   .container-subject-forum h2 {
     width: 100%;
@@ -339,6 +362,11 @@ form#formlikecomment {
   .delete-comment-form {
     margin-left: 0;
   }
+  
+  /* Conteneur des likes */
+  .container-likes p {
+    font-size: $font-size-small;
+  }
 
   .reply-profile-picture {
     width: 30px;
@@ -352,6 +380,7 @@ form#formlikecomment {
   }
 }
 
+/* Ecrans moyens */
 @media only screen and (max-width: 768px) {
   .container-subject-forum h2 {
     width: 95%;
@@ -393,6 +422,7 @@ form#formlikecomment {
   }
 }
 
+/* Grand écrans */
 @media only screen and (max-width: 1024px) {
   .container-subject-forum h2 {
     width: 85%;

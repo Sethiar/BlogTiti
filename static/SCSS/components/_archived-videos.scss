@@ -12,6 +12,7 @@
     }
 }
 
+/* Pour les écrans encore plus petits */
 @media screen and (max-width: 480px) {
     .video-container {
         grid-template-columns: 1fr;
