@@ -13,12 +13,16 @@
 <!-- main -->
 {% block main_content %}
 <div class="main-content">
+  
   <!-- Cadre extérieur -->
   <div class="outer-frame-politique">
+    
     <!-- Cadre intérieur -->
     <div class="inner-frame-politique">
+      
       <!-- Division de retour à la page de tous les sujets -->
       <div class="space2"></div>
+      
       <div class="back-link-forum">
         <a class="btn-primary" href="{{ url_for('frontend.forum') }}"
           >Retour au forum</a
@@ -45,6 +49,7 @@
 
       <!-- Division pour image forum -->
       <div class="forum-image-container">
+        
         <!-- Première photo -->
         <div class="forum-pic">
           <div class="forum-pic-left">
@@ -54,6 +59,7 @@
               class="forum-pic-img"
             />
           </div>
+          
           <!-- Deuxième photo -->
           <div class="forum-pic-right">
             <img
@@ -84,6 +90,7 @@
 
       <!-- Conteneur formulaire des commentaires -->
       <div class="container-comment">
+        
         <!-- Conteneur commentaire -->
         <div class="comment-avis">
           <h4 class="h4-forum">Vous pouvez laisser un commentaire :</h4>
@@ -119,6 +126,8 @@
           </form>
         </div>
       </div>
+
+      <!-- Espacement -->
       <div class="space2"></div>
       <div class="separation"></div>
       <div class="space2"></div>
@@ -127,6 +136,7 @@
 
       <!-- Conteneur pour poster un commentaire -->
       <div class="comment">
+        
         <!-- Conteneur de la photo de l'utilisateur -->
         <div class="comment-header">
           <img
@@ -134,6 +144,7 @@
             alt="Photo de profil"
             class="profile-picture"
           />
+
           <div class="comment-user-info">
             <strong class="user-pseudo">{{ comment.user.pseudo }}</strong>
             <span class="user-role">{{ comment.user.role }} a commenté  </span>
@@ -142,6 +153,7 @@
             </small>
           </div>
         </div>
+
         <div class="separation"></div>
 
         <!-- Conteneur du contenu du commentaire -->
@@ -156,11 +168,10 @@
 
         <!-- Conteneur des actions utilisateurs -->
         <div class="comment-actions">
+          
           <!-- Lien vers la modification du commentaire -->
           <a
-            href="{{ url_for('user.change_comment', id=comment.id) }}"
-            class="change-button"
-          >
+            href="{{ url_for('user.change_comment', id=comment.id) }}">
             Modifier le commentaire
           </a>
 
@@ -171,25 +182,26 @@
           <form
             action="{{ url_for('user.delete_comment', id=comment.id) }}"
             method="POST"
-            class="delete-comment-form"
-          >
+            class="delete-comment-form">
             <!-- Token CSRF pour la sécurité -->
             {{ formsuppress.csrf_token }}
 
             <!-- Utilisation d'un bouton pour la suppression -->
             <button
               type="submit"
-              onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre commentaire ?'); "
-            >
+              onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre commentaire ?'); ">
               Supprimer le commentaire
             </button>
           </form>
         </div>
         {% endif %}
       </div>
+    </div>
+
 
       <!-- Conteneur de réponse à un commentaire -->
       <div class="reply-button-container">
+        
         <!-- Lien permettant de répondre à un commentaire -->
         <a
           href="{{ url_for('user.reply_form_subject', comment_id=comment.id, user_pseudo=current_user.pseudo) }}"
@@ -215,26 +227,29 @@
               &#9825; 
               {% endif %}
             </div>
+            
+            <div class="container-likes">
 
-            <!-- Message des utilisateurs qui ont aimé -->
-            <p class="like-message" id="like-message-{{ comment.id }}" >
-                {% set like_data = comment_likes_data[comment.id] %} 
-                {% if like_data.like_count == 1 %} 
-                1 utilisateur a aimé le commentaire. 
-                {% elif like_data.like_count > 1 %} 
-                {{like_data.like_count}} utilisateurs ont aimé le commentaire. 
-                {% else %} 
-                Personne n'a aimé le commentaire pour le moment. 
-                {% endif %}
-            </p>
-        </div>
-
+                <!-- Message des utilisateurs qui ont aimé -->
+                <p class="like-message" id="like-message-{{ comment.id }}" >
+                    {% set like_data = comment_likes_data[comment.id] %} 
+                    {% if like_data.like_count == 1 %} 
+                    1 utilisateur a aimé le commentaire. 
+                    {% elif like_data.like_count > 1 %} 
+                    {{like_data.like_count}} utilisateurs ont aimé le commentaire. 
+                    {% else %} 
+                    Personne n'a aimé le commentaire pour le moment. 
+                    {% endif %}
+                </p>
+            </div>
+          </div>
 
         <!-- Formulaire permettant de liker un commentaire -->
         <form id="formlikecomment" method="POST"
                 action="{{ url_for('user.likes_comment_subject') }}"
                 style="display: none">
-            <!-- Token CSRF pour la sécurité -->
+            
+                <!-- Token CSRF pour la sécurité -->
             {{ formlikecomment.csrf_token }}
 
             <input type="hidden" name="comment_id" value="{{ comment.id }}"/>

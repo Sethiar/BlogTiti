@@ -76,7 +76,7 @@
                              alt="Image de titi pour videos Youtube">
                         <p class="text-accueil">
                             Depuis ce blog, vous allez avoir accès à toutes les vidéos de ma chaîne <b><a
-                                href="https://www.youtube.com/@titi.lebricoleur">Youtube</a></b>. Ainsi que la
+                                class="surlignage-accueil" href="https://www.youtube.com/@titi.lebricoleur">Youtube</a></b>. Ainsi que la
                             possibilité de poster vos commentaires et vos likes.
                         </p>
                     </div>
@@ -88,7 +88,7 @@
                              alt="Image de titi pour forum">
                         <p class="text-accueil">
                             Et surtout, nous pourrons échanger tous ensemble dans la section <b><a
-                                href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de
+                                class="surlignage-accueil" href="{{ url_for('frontend.forum') }}">"Forum"</a></b>. Afin de pouvoir nous parler de
                             manière plus directe et plus sympathiquement surtout.
                         </p>
                     </div>
@@ -111,8 +111,6 @@
                         Bonne navigation sur le blog.
                     </p>
 
-                    <div class="space2"></div>
-
                     <p class="p-ending">
                         J'espère que vous apprécierez votre visite.
                     </p>
@@ -130,7 +128,7 @@
                             <!-- Titre de la section -->
                             <h2 class="h2-landing">Nouvelles vidéos</h2>
 
-                            <div class="space"></div>
+                            <div class="space2"></div>
 
                             <div id="carousel-new-videos" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
@@ -145,16 +143,6 @@
                                                         frameborder="0"
                                                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                                         allowfullscreen></iframe>
-                                            </div>
-
-                                            <!-- Informations à côté -->
-                                            <div class="video-info ml-4">
-                                                <h4 class="h4-landing">{{ video.title }}</h4>
-                                                <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
-                                                    }}</p>
-                                                <p>Vues : {{ video.view_count }}</p>
-                                                <p>Likes : {{ video.like_count }}</p>
-                                                <p>Commentaires : {{ video.comment_count }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -173,16 +161,16 @@
                             </div>
                         </section>
 
-                        <div class="space"></div>
+                        <div class="space2"></div>
                         <div class="separation"></div>
-                        <div class="space"></div>
+                        <div class="space2"></div>
 
                         <!-- Section des vidéos les plus populaires -->
                         <section class="other-videos">
                             <!-- Titre de la section -->
                             <h2 class="h2-landing">Vidéos les plus populaires</h2>
 
-                            <div class="space"></div>
+                            <div class="space2"></div>
 
                             <div id="carousel-popular-videos" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
@@ -195,16 +183,6 @@
                                                         src="https://www.youtube.com/embed/{{ video.video_id }}"
                                                         frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
                                         picture-in-picture" allowfullscreen></iframe>
-                                            </div>
-                                            <!-- Informations à côté -->
-                                            <div class="video-info ml-4">
-                                                <h4 class="h4-landing">{{ video.title }}</h4>
-                                                <p>Date de publication : {{ video.published_at.strftime('%d %B %Y')
-                                                    }}</p>
-                                                <p>Vues : {{ video.view_count }}</p>
-                                                <p>Likes : {{ video.like_count }}</p>
-                                                <p>Commentaires : {{ video.comment_count }}</p>
-                                                <br>
                                             </div>
                                             <div class="space"></div>
                                         </div>

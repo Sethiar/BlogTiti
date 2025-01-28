@@ -11,17 +11,28 @@
 <!-- main -->
 {% block main_content %}
 <div class="main-content">
-    <div class="separation"></div>
-    <div class="space"></div>
 
-    <!-- Conteneur titre -->
-    <div class="title-container-landing">
-        <h1 class="h1-landing">Vidéos de TitiTechnique</h1>
-    </div>
+    <!-- cadre extérieur -->
+    <div class="outer-frame">
 
-    <div class="space"></div>
-    <div class="separation"></div>
-    <div class="space"></div>
+        <!-- cadre intérieur -->
+        <div class="inner-frame">
+
+            <!-- division de retour à la page d'accueil -->
+            <div class="space2"></div>
+            <div class="back-link-landing">
+                <a class="btn-primary" href="{{ url_for('landing_page') }}">Retour à la page d'accueil</a>
+            </div>
+            <div class="space"></div>
+
+            <!-- Conteneur titre -->
+            <div class="title-container-landing">
+                 <h1 class="h1-landing">Vidéos de TitiTechnique</h1>
+            </div>
+
+            <div class="space"></div>
+            <div class="separation"></div>
+            <div class="space"></div>
 
     <!-- Conteneur de la section principal -->
     <div class="content-section-landing">

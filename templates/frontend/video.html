@@ -6,19 +6,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% endblock %}
 
-<!-- body -->
-{% block body_content %}
-
 <!-- main -->
 {% block main_content %}
 <div class="main-content">
+    
+    <!-- Cadre extérieur -->
+    <div class="outer-frame-politique">
+      
+        <!-- Cadre intérieur -->
+      <div class="inner-frame-politique">
+        
+        <!-- Division de retour à la page de tous les sujets -->
+        <div class="space2"></div>
+        
+        <div class="back-link-forum">
+            <!-- Division de retour à la page de toutes les vidéos -->
+            <div>
+                <a class="btn-primary" href="{{ url_for('frontend.show_videos') }}">Retour aux vidéos</a>
+            </div>
+        </div>
 
-    <!-- Division de retour à la page de toutes les vidéos -->
-    <div>
-        <a class="btn-primary" href="{{ url_for('frontend.show_videos') }}">Retour aux vidéos</a>
-    </div>
-
-    <section>
         <!-- Conteneur titre -->
         <div class="title-container-landing">
             <h1 class="h1-landing">Vidéo sélectionnée</h1>
@@ -61,25 +68,39 @@
 
                         <!-- Conteneur commentaire -->
                         <div class="comment-avis">
-                            <h3 class="forum-subtitle">Vous pouvez laisser un commentaire :</h3>
+                            <h4 class="h4-forum">Vous pouvez laisser un commentaire :</h43>
                         </div>
 
                         <!-- Conteneur formulaire du commentaire -->
-                        <div class="form-comment">
-                            <form id="addCommentVideo" method="POST"
+                        <div class="form-base">
+                            <form 
+                                id="addCommentVideo" 
+                                method="POST"
                                   action="{{ url_for('user.comment_video', user_pseudo=current_user.pseudo, video_id=video.id) }}">
 
                                 <!-- Token de sécurité -->
                                 {{ formcomment.csrf_token }}
+
                                 <input type="hidden" name="video_id" value="{{ video.id }}">
                                 <input type="hidden" name="user_pseudo" value="{{ current_user.pseudo }}">
                                 <textarea name="comment_content" placeholder="Votre commentaire"
                                           required></textarea>
-                                <button type="submit">Poster le commentaire</button>
+                                
+                                    <div class="space-form"></div>
+                                    <div class="separation"></div>
+                                    <div class="space-form"></div>
+                                    <button class="btn-primary-forum" type="submit">
+                                        Poster le commentaire
+                                    </button>
                             </form>
                         </div>
                     </div>
 
+                    <!-- Espacement -->
+                    <div class="space2"></div>
+                    <div class="separation"></div>
+                    <div class="space2"></div>
+                
                     {% for comment in comment_video %}
 
                     <!-- Conteneur pour poster un commentaire -->
@@ -89,20 +110,25 @@
                         <div class="comment-header">
                             <img src="{{ url_for('user.profil_photo', user_id=comment.user_id) }}"
                                  alt="Photo de profil"
-                                 class="profile-picture">
+                                 class="profile-picture"/>
+
                             <div class="comment-user-info">
                                 <strong class="user-pseudo">{{ comment.user.pseudo }}</strong>
-                                <span class="user-role">{{ comment.user.role }} a commenté :</span>
+                                <span class="user-role">{{ comment.user.role }} a commenté  </span>
                                 <small class="comment-date">
                                     Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:mm') }}
                                 </small>
                             </div>
                         </div>
 
+                        <div class="separation"></div>
+
                         <!-- Conteneur du contenu du commentaire -->
                         <div class="content-comment">
                             {{ comment.comment_content | replace('\n', '<br>') | safe }}
                         </div>
+
+                        <div class="separation"></div>
 
                         <!-- Conteneur des modifications au commentaire -->
                         {% if comment.user_id == current_user.id %}
@@ -115,16 +141,21 @@
                                 Modifier le commentaire
                             </a>
 
+                            <!-- Espacement responsive -->
+                            <div class="space-phone"></div>
+
                             <!-- Formulaire de suppression du commentaire -->
                             <form action="{{ url_for('user.delete_comment_video', id=comment.id) }}" method="POST"
-                                  class="delete-comment-form" style="margin-left:10%;display:inline;">
+                                  class="delete-comment-form">
 
                                 <!-- Token CSRF pour la sécurité -->
                                 {{ formsuppress.csrf_token }}
 
                                 <!-- Utilisation d'un bouton pour la suppression -->
-                                <button type="submit" class="suppress-button"
-                                        onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre commentaire ?'); ">
+                                <button
+                                    type="submit"
+                                    onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre commentaire ?'); "
+                                >
                                     Supprimer le commentaire
                                 </button>
                             </form>
@@ -142,6 +173,39 @@
 
                     <!-- Conteneur permettant de liker un commentaire -->
                     <div class="like-section" data-user-id="{{ current_user.pseudo }}">
+                        <div class="like-wrapper">
+                            
+                            <!-- Conteneur de l'icône du like -->
+                            <div class="like-icon" data-comment-id="{{ comment.id }}"
+                                onclick="toggleLike(this, '{{ comment.id }}', '{{ current_user.pseudo }}')">
+                       
+                                {% if comment_likes_data[comment.id].liked_by_current_user %}
+
+                                <!-- Icône pour un cœur plein -->
+                                &#9829;
+                                {% else %}
+                                <!-- Icône pour un cœur vide -->
+                                &#9825;
+                                {% endif %}
+                            </div>
+
+                            <div class="container-likes"></div>
+
+                                <!-- Message des utilisateurs qui ont aimé -->
+                                <p class="like-message" id="like-message-{{ comment.id }}" >
+                                    {% set like_data = comment_likes_data[comment.id] %}
+                                    {% if like_data.like_count == 1 %}
+                                    1 utilisateur a aimé le commentaire.
+                                    {% elif like_data.like_count > 1 %}
+                                    {{ like_data.like_count}} utilisateurs ont aimé le commentaire.
+                                    {% else %}
+                                    Personne n'a aimé le commentaire pour le moment.
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Formulaire permettant de liker un commentaire -->
                         <form id="formlikecomment" method="POST"
                               action="{{ url_for('user.likes_comment_video') }}"
                               style="display: none;">
@@ -153,35 +217,12 @@
                             <button type="submit" class="like-submit"></button>
                         </form>
 
-                        <!-- Conteneur de l'icône du like -->
-                        <div class="like-icon" data-comment-id="{{ comment.id }}"
-                             onclick="toggleLike(this, '{{ comment.id }}', '{{ current_user.pseudo }}')"
-                             style="cursor: pointer;">
-                            {% if comment_likes_data[comment.id].liked_by_current_user %}
-
-                            <!-- Icône pour un cœur plein -->
-                            &#9829;
-                            {% else %}
-                            <!-- Icône pour un cœur vide -->
-                            &#9825;
-                            {% endif %}
-                        </div>
-
-                        <!-- Conteneur de l'utilisateur qui a liké -->
-                        <div class="liked-users">
-                            <p id="like-message-{{ comment.id }}">
-                                {% set like_data = comment_likes_data[comment.id] %}
-                                {% if like_data.like_count == 1 %}
-                                1 utilisateur a aimé le commentaire.
-                                {% elif like_data.like_count > 1 %}
-                                {{ like_data.like_count}} utilisateurs ont aimé le commentaire.
-                                {% else %}
-                                Personne n'a aimé le commentaire pour le moment.
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
+                        <div class="space"></div>
+                     </div>
                 </div>
+            </div>
+
+            <div class="inner-frame">            
 
                 <!-- Conteneur principal de réponses au commentaire -->
                 <div class="replies-container">
@@ -193,7 +234,7 @@
                         <!-- Conteneur de la photo de l'utilisateur qui a répondu -->
                         <div class="reply-header">
                             <img src="{{ url_for('user.profil_photo', user_id=reply.user_id) }}"
-                                 alt="Photo de profil" class="reply-profile-picture">
+                                 alt="Photo de profil" class="reply-profile-picture"/>
 
                             <!-- Conteneur du pseudo de l'utilisateur qui a répondu -->
                             <div class="reply-info">
@@ -205,12 +246,16 @@
                             </div>
                         </div>
 
+                        <div class="separation"></div>
+
                         <!-- Contenu de la réponse -->
                         <div class="reply-body">
                             <p class="reply-content">
                                 {{ reply.reply_content | replace('\n', '<br>') | safe }}
                             </p>
                         </div>
+
+                        <div class="separation"></div>
 
                         <!-- Conteneur permettant de changer le contenu de la réponse -->
                         <div class="reply-actions">
@@ -222,24 +267,35 @@
                                 Modifier la réponse
                             </a>
 
+                            <!-- Espacement responsive -->
+              <div class="space-phone"></div>
+
                             <!-- Formulaire de suppression de la réponse -->
                             <form action="{{ url_for('user.delete_reply_video', id=reply.id) }}" method="POST"
-                                  class="delete-comment-form" style="margin-left:10%;display:inline;">
+                                  class="delete-comment-form" 
+                                  style="margin-left:10%; display:inline;">
 
                                 <!-- Token CSRF pour la sécurité -->
                                 {{ formsuppressreply.csrf_token }}
 
                                 <!-- Utilisation d'un bouton pour la suppression -->
-                                <button type="submit" class="suppress-button"
-                                        onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre réponse ?');">
-                                    Supprimer la réponse
-                                </button>
-                            </form>
+                <button
+                type="submit"
+                class="suppress-button"
+                onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre réponse ?');"
+              >
+                Supprimer la réponse
+              </button>
+            </form>
+            <div class="space2"></div>
                             {% endif %}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
+                <div class="space2"></div>
+        <div class="separation2"></div>
+        <div class="space2"></div>
                 {% endfor %}
             </div>
 
@@ -252,10 +308,10 @@
             </div>
         </div>
 
-    </section>
+    </div>
+    </div>
+
 </div>
-{% endblock %}
-{% block footer_content %}
 <script src="{{ url_for('static', filename='javascript/like_comment_video.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -274,6 +330,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
-
-{% endblock %}
 {% endblock %}
