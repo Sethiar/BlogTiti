@@ -201,9 +201,14 @@
 // === Section Backend ===
 /* Titres */
 .h1-backend {
-  font-size: $font-size-xxxl;
+  width: 60%;
+  font-size: $font-size-xxl;
   color: $color-accent-darkorange;
-  text-align: center;
+  background-color: $color-lightgrey;
+  border-radius: 12px;
+  margin: 0 auto;
+  padding: 2% 3%;
+  text-justify: center;
 }
 
 .h4-backend{
