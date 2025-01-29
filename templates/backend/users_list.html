@@ -6,34 +6,49 @@
 {% endblock %}
 
 {% block body_content %}
-<br><br>
-<br><br>
+
+<div class="space"></div>
+
+<!-- Sélection de la première lettre de l'alphabet pour les utilisateurs -->
 <div class="lettre-navigation">
-    <h5>Filtrage des pseudos par leur première lettre.</h5>
+
+    <h5 class="h5-backend">Filtrage des pseudos par leur première lettre.</h5>
+
+    <div class="space2"></div>
+    
+    <!-- Sélection de tous les utilisateurs -->
     <a href="{{ url_for('admin.users_list') }}" class="select-all-users">Tous</a>
-    <br>
+    
+    <div class="space2"></div>
+    
+    <!-- Affichage des lettres -->
     <div class="lettre">
         {% for lettre in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
         <a href="{{ url_for('admin.users_list', lettre=lettre) }}">{{ lettre }}</a>
         {% endfor %}
     </div>
 </div>
-<br>
+
+<div class="space2"></div>
+
 <div class="container">
 
-    <h5>Liste des Utilisateurs</h5>
-    <br>
-    <table class="table">
+    <h5 class="h5-backend">Liste des Utilisateurs</h5>
+
+    <div class="space2"></div>
+    
+    <table class="backend-table">
         <thead>
             <tr>
-                <th>Pseudo de l'utilisateur</th>
-                <th>Email de l'utilisateur</th>
-                <th>Statut du bannissement</th>
-                <th>Nombre de bannissement</th>
-                <th>Actions</th>
+                <th style="width: 13vw;">Pseudo de l'utilisateur</th>
+                <th style="width: 15vw;">Email de l'utilisateur</th>
+                <th style="width: 11vw;">Statut du bannissement</th>
+                <th style="width: 7vw;">Nombre de bannissement</th>
+                <th style="width: 12vw;">Actions</th>
             </tr>
         </thead>
         <tbody>
+            <!-- Affichage des utilisateurs au sein du tableau -->
             {% for user in users %}
             <tr>
                 <td>{{ user.pseudo }}</td>
@@ -41,16 +56,27 @@
                 <td>{{ user.banned }}</td>
                 <td>{{ user.count_ban }}</td>
                 <td>
-                    <form action="{{ url_for('admin.suppress_user', id=user.id) }}" method="POST" class="btn-valide">
+                    <!-- Formulaire de suppression d'un utilisateur-->
+                    <form action="{{ url_for('admin.suppress_user', id=user.id) }}" method="POST" class="btn-valide-back">
+                        
+                        <!-- Token de vérification -->
                         {{ formuser.csrf_token }}
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ user.pseudo }}">Supprimer   <i class="fas fa-trash"></i></button>
+                        <button type="submit"  data-pseudo="l'utilisateur {{ user.pseudo }}">Supprimer   <i class="fas fa-trash"></i></button>
                     </form>
-                    <form method="POST" action="{{ url_for('admin.banning_user', id=user.id) }}">
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ user.pseudo }}">Bannir   <i class="fas fa-ban"></i></button>
+
+                    <!-- Formulaire de bannissement d'un utilisateur-->
+                    <form method="POST" action="{{ url_for('admin.banning_user', id=user.id) }}" class="btn-valide-back">
+                        <button type="submit" data-pseudo="l'utilisateur {{ user.pseudo }}">Bannir   <i class="fas fa-ban"></i></button>
+                        
+                        <!-- Token de vérification -->
                         {{ formban.csrf_token }}
                     </form>
-                    <form  method="POST" action ="{{ url_for('admin.unbanning_user', id=user.id) }}">
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ user.pseudo }}">Débannir   <i class="fas fa-thumbs-up"></i></button>
+
+                    <!-- Formulaire de suppression du bannissement d'un utilisateur-->
+                    <form  method="POST" action ="{{ url_for('admin.unbanning_user', id=user.id) }}" class="btn-valide-back">
+                        <button type="submit" data-pseudo="l'utilisateur {{ user.pseudo }}">Débannir   <i class="fas fa-thumbs-up"></i></button>
+                        
+                        <!-- Token de vérification -->
                         {{ formunban.csrf_token }}
                     </form>
                 </td>

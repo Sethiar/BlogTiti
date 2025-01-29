@@ -3,8 +3,11 @@
 {% block head_content %}
     <meta name="description" content="Page du backend afin d'afficher la liste des rendez-vous pour le chat vidéo.">
     <title>{% block title %}Page administrateur - Calendrier pour chat vidéo{% endblock %}</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
-    <link rel='stylesheet' type="text/css" href="{{ url_for('static',filename='CSS/calendar.css') }}">
+    
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static',filename='gen/style.css') }}">
+    
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -13,10 +16,18 @@
 {% endblock %}
 
 {% block body_content %}
-<br><br>
+
+<div class="space"></div>
+
+<!-- Tableau récapitulant toutes les demandes de visio -->
 <div id="table-appointment">
+
     <h5 class="h5-backend">Liste des demandes de chat vidéo</h5>
-    <table class="table">
+    
+    <div class="space"></div>
+    
+    <!-- Tableau -->
+    <table class="backend-table">
         <thead>
             <tr>
                 <th>Pseudo de l'utilisateur</th>
@@ -26,7 +37,7 @@
                 <th>Statue de la requête</th>
                 <th>Lien de connexion Administrateur</th>
                 <th>Envoi du lien utilisateur</th>
-                <th>Actions</th>
+                <th style="width:20vw;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +47,10 @@
                 <td>{{ request.filename }}</td>
                 <td>{{ moment(request.date_rdv).format("DD/MM/YYYY") }}</td>
                 <td>{{ moment(request.heure).format("HH:00") }}</td>
+                
                 <td>{{ request.status }}</td>
+                
+                <!-- Traitement de la requête -->
                 <td>
                     {% if request.status == 'validée' %}
                         {% set rdv = rdv_data | selectattr("pseudo", "equalto", request.pseudo) | first %}
@@ -49,33 +63,41 @@
                         Non disponible
                     {% endif %}
                 </td>
+                
                 <td>
+                    <!-- Traitement de la validation de la requête -->
                     {% if request.status == 'validée' %}
-                    <form action="{{ url_for('chat.send_user_link', id=request.id) }}" method="POST" class="btn_send">
+                    <form action="{{ url_for('chat.send_user_link', id=request.id) }}" method="POST" class="btn-send">
                         {{ formlink.csrf_token }}
                         <input type="text" name="chat_link" placeholder="Lien pour l'utilisateur" required>
-                        <button type="submit">Envoyer</button>
+                        <button class="button-form" type="submit">Envoyer</button>
                     </form>
                     {% else %}
                     Non disponible
                     {% endif %}
                 </td>
                 <td>
-                    <form action="{{ url_for('chat.suppress_request', id=request.id) }}" method="POST" class="btn-valide">
+                    <!--Formulaire afin de supprimer la demande de visio --> 
+                    <form action="{{ url_for('chat.suppress_request', id=request.id) }}" method="POST" class="btn-valide-back">
+                        
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request.pseudo }}">
+                        <button type="submit" data-pseudo="l'utilisateur {{ request.pseudo }}">
                             Supprimer   <i class="fas fa-trash"></i>
                         </button>
                     </form>
-                    <form action="{{url_for('chat.valide_request', id=request.id) }}" method="POST" class="btn-valide">
+
+                    <!--Formulaire afin de valider la demande de visio --> 
+                    <form action="{{url_for('chat.valide_request', id=request.id) }}" method="POST" class="btn-valide-back">
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                        <button type="submit" data-pseudo="l'utilisateur {{ request_pseudo }}">
                             Valider la requête   <i class="fas fa-thumbs-up"></i>
                         </button>
                     </form>
-                    <form action="{{url_for('chat.refuse_request', id=request.id) }}" method="POST" class="btn-valide">
+
+                    <!--Formulaire afin de refuser la demande de visio --> 
+                    <form action="{{url_for('chat.refuse_request', id=request.id) }}" method="POST" class="btn-valide-back">
                         {{ formrequest.csrf_token }}
-                        <button type="submit" class="btn-valide" data-pseudo="l'utilisateur {{ request_pseudo }}">
+                        <button type="submit" data-pseudo="l'utilisateur {{ request_pseudo }}">
                             Refuser la requête   <i class="fas fa-thumbs-down"></i>
                         </button>
                     </form>
@@ -85,10 +107,15 @@
         </tbody>
     </table>
 </div>
-<br><br>
+
+<div class="space"></div>
+
+<!-- Conteneur du calendrier -->
 <div class="container">
     <h5 class="h5-backend">Calendrier des Rendez-vous</h5>
-    <br>
+    
+    <div class="space2"></div>
+
     <div id="calendar"></div>
 </div>
 

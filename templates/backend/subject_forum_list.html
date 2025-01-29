@@ -6,41 +6,70 @@
 {% endblock %}
 
 {% block body_content %}
-<br><br>
-<br><br>
+
+<div class="space"></div>
+
+<!-- Conteneur permettant l'ajout d'un sujet pour le forum -->
 <div class="categorie">
-    <h5>Ajouter un sujet sur le forum</h5>
-    <br>
-    <form method="POST" action="{{ url_for('admin.add_subject_forum_back') }}">
+
+    <div class="space2"></div>
+    
+    <h4 class="h4-backend-sujet">Ajouter un sujet sur le forum</h4>
+    
+    <!-- Formulaire permettant l'ajout d'un sujet -->
+    <form method="POST" action="{{ url_for('admin.add_subject_forum_back') }}" class="form-base">
+        
+        <!-- Token de vérification -->
         {{ formsubjectforum.csrf_token }}
-        {{ formsubjectforum.nom.label }}
-        <label class="label"> : {{ formsubjectforum.nom(size=20) }}</label>
-        {{ formsubjectforum.submit() }}
+        
+        <!-- Conteneur des champs du formulaire -->
+        <div class="form-container">
+                
+            <!-- Champ pour le sujet -->
+            <div class="form-group">
+                {{ formsubjectforum.nom.label }}
+                {{ formsubjectforum.nom() }}
+            </div>
+
+        <!-- Champ pour les boutons du formulaire -->
+        <div class="container-btn">
+            <button type="submit" class="validated-btn" aria-label="Ajouter le sujet">Ajouter le sujet</button>
     </form>
-    <br>
+
+    <div class="space2"></div>
+
 </div>
+
+<!-- Conteneur renvoyant la liste de tous les sujets-->
 <div class="subjects-container">
 
     <h5 class="h5-backend">Liste des sujets</h5>
-    <br>
-    <table class="subjects-table">
+
+    <div class="space2"></div>
+
+    <!-- Tableau  -->
+    <table class="backend-table">
         <thead>
             <tr>
-                <th>Sujets du forum</th>
-                <th>Auteur du sujet</th>
-                <th>Actions</th>
+                <th class="width: 13vw;">Sujets du forum</th>
+                <th class="width: 13vw;">Auteur du sujet</th>
+                <th class="width: 13vw;">Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for subject in subject_data %}
+            <!-- Affichage des sujets -->            
+             {% for subject in subject_data %}
             <tr>
                 <td class="subject-name">{{ subject.nom }}</td>
                 <td class="subject-author">{{ subject.author }}</td>
 
                 <td>
-                    <form action="{{ url_for('admin.suppress_subject', id=subject.id) }}" method="POST" class="btn-suppression">
+                    <!-- Formulaire supprimant un sujet -->
+                    <form action="{{ url_for('admin.suppress_subject', id=subject.id) }}" method="POST" class="btn-valide-back">
+                        <!-- Token de vérification-->
                         {{ formsuppresssubject.csrf_token }}
-                        <button type="submit" class="btn-suppression" data-pseudo="le sujet {{ subject.nom }}">Supprimer   <i class="fas fa-trash"></i></button>
+                        
+                        <button type="submit" data-pseudo="le sujet {{ subject.nom }}">Supprimer   <i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>

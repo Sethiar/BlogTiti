@@ -6,14 +6,22 @@
 {% endblock %}
 
 {% block body_content %}
-<br><br>
-<br><br>
 
-<h5>Liste des commentaires des sujets du forum par utilisateur</h5>
-<br>
+<div class="space"></div>
+
+<!-- Sélection de la première lettre de l'alphabet pour les utilisateurs -->
 <div class="lettre-navigation">
+
+    <h5 class="h5-backend">Liste des commentaires des sujets du forum par utilisateur</h5>
+
+    <div class="space2"></div>
+    
+    <!-- Sélection de tous les utilisateurs -->     
     <a href="{{ url_for('admin.list_comments_forum') }}" class="select-all-users">Tous</a>
-    <br>
+
+    <div class="space2"></div>
+    
+    <!-- Affichage des lettres -->
     <div class="lettre">
         {% for lettre in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
         <a href="{{ url_for('admin.list_comments_forum', lettre=lettre) }}">{{ lettre }}</a>
@@ -21,19 +29,26 @@
     </div>
 </div>
 
-<br><br>
+<div class="space2"></div>
 
 <div class="container">
-    <table class="table">
+
+    <h5 class="h5-backend">Liste des commentaires par utilisateur</h5>
+    
+    <div class="space2"></div>
+    
+    <!-- Tableau  -->
+    <table class="backend-table">
         <thead>
             <tr>
-                <th>Pseudo de l'utilisateur</th>
-                <th>Titre du sujet commenté</th>
-                <th>Commentaires</th>
-                <th>Actions</th>
+                <th class="width: 13vw;">Pseudo de l'utilisateur</th>
+                <th class="width: 13vw;">Titre du sujet commenté</th>
+                <th class="width: 13vw;">Commentaires</th>
+                <th class="width: 13vw;">Actions</th>
             </tr>
         </thead>
         <tbody>
+            <!-- Affichage des commentaires par utilisateurs au sein du tableau -->
             {% for user, comments in user_comments.items() %}
             {% for item in comments %}
             <tr>
@@ -41,10 +56,13 @@
                 <td>{{ item.sujet.nom }}</td>
                 <td class="subject-comment-backend">{{ item.comment.comment_content }}</td>
                 <td>
-                    <form action="{{ url_for('admin.suppress_subject_comment', id=item.comment.id) }}" method="POST" class="btn_suppression">
+                    <!-- Formulaire permettant de supprimer un commentaire -->
+                    <form action="{{ url_for('admin.suppress_subject_comment', id=item.comment.id) }}" method="POST" class="btn-valide-back">
+                        
+                        <!-- Token de vérification -->
                         {{ suppressform.csrf_token }}
                         <input type="hidden" name="comment_id" value="{{ item.comment.id }}">
-                        <button type="submit" class="btn-suppression">Supprimer   <i class="fas fa-trash"></i></button>
+                        <button type="submit">Supprimer   <i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>

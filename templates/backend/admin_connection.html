@@ -18,10 +18,11 @@
               enctype="multipart/form-data">
 
             <!-- Image du logo -->
-            <div class="imgcontainer">
-                <img style="width: 50%;" src="{{ url_for('static', filename='Images/images_gogol/titi_pas_beau.png') }}"
+            <div class="imgcontainer-form">
+                <img style="width: 50%;" src="{{ url_for('static', filename='Images/images_error/panot.avif') }}"
                      alt="Photo de Titi rigolote" class="avatar-form">
             </div>
+
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
