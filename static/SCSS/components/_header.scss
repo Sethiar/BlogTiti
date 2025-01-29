@@ -90,7 +90,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       align-items: center;
 
       li a {
-        font-size: $font-size-xxl;
+        font-size: $font-size-xl;
         color: $color-secondary;
         text-decoration: none;
         transition: color 0.3s ease;
@@ -112,7 +112,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   gap: 1rem;
 
   .logged {
-    font-size: $font-size-xxl;
+    font-size: $font-size-xl;
     color: $color-secondary;
     font-weight: bold;
     color: $color-accent-orange;
@@ -123,7 +123,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   a {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
     color: $color-primary;
     padding: 0.8rem 1rem;
     border-radius: 5px;
@@ -166,7 +166,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
       li a {
         /* Ajustement des liens pour mobile */
-        font-size: $font-size-xl; 
+        font-size: $font-size-lg; 
       }
     }
   }
@@ -176,7 +176,7 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
     a {
       /* Réduction des boutons */
-      font-size: $font-size-lg; 
+      font-size: $font-size-base; 
     }
   }
 }
