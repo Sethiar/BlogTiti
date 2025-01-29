@@ -32,6 +32,16 @@ html, body {
   }
 }
 
+.back-logged_in {
+  display: flex;
+  width: 70%;
+  color: $color-primary;
+  background-color: $color-lightgrey;
+  border-radius: 18px;
+  margin: 0 auto;
+
+}
+
 // === Style global du backend ===
 
 .annonce-back p {
@@ -50,27 +60,101 @@ html, body {
   margin-right: 1rem;
 }
 
-.btn-suppression, .btn-valide {
-  width: 10vw;
-  border: 1px solid $color-accent-darkorange;
+
+// === Page du calendrier ===
+/* Classe des tableaux du backend */
+#table-appointment {
+  font-family: Arial, sans-serif;
+}
+
+.backend-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-neutral-darkgrey2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.backend-table th, 
+.backend-table td {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  padding: 1%;
+  text-align: left;
+  border-bottom: 1px solid $color-lightgrey;
+}
+
+.backend-table th {
+  font-size: $font-size-sm;
+  background-color: $color-accent-darkorange;
+}
+
+.backend-table tbody tr:nth-child(even) {
+  background-color: $color-lightgrey;
+  
+}
+
+.backend-table tbody tr:hover {
   background-color: $color-neutral-gold;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.button-form{
+  background: #4CAF50;
+  color: $color-primary;
+  border: none;
+  padding: 0.8% 12%;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  
+  &:hover {
+    background: #45a049;
+  }
+}
+
+.btn-valide-back {
+  width: 100%;
+  font-size: $font-size-sm;
+  border: 1px solid $color-primary;
+  border-radius: 12px;
+  background-color: $color-neutral-gold;
+  gap: 1rem;
 
   &:hover {
-    border: 1px solid $color-neutral-gold;
+    color: $color-neutral-gold;
     background-color: $color-accent-darkorange;
   }
+}
+
+.btn-valide-back i {
+  margin: 5px;
 }
 
 // === Page de la liste des utilisateurs ===
 /* Sélection de tous les utilisateurs */
 .select-all-users {
-  color: $color-neutral-gold;
+  color: $color-primary;
+  background-color: $color-accent-darkorange;
+  border-radius: 18px;
+  padding: 1% 1.5%;
   font-size: $font-size-lg;
   transition: color 0.3s, transform 0.3s;
 
   &:hover {
     font-size: $font-size-xl;
-    color: $color-accent-darkorange;
+    background-color: $color-neutral-gold;
+    text-decoration: none;
   }
 }
 
@@ -93,43 +177,20 @@ html, body {
   }
 }
 
-.col-user {
-  width: 15vw;
-  text-align: center;
-  vertical-align: middle;
-}
 
-.col-title {
-  width: 25vw;
-  text-align: center;
-  vertical-align: middle;
-}
+// Présentaiton des sujets du forum
 
-.col-comment {
-  width: 40vw;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.col-actions {
-  width: 20vw;
-  text-align: center;
-  vertical-align: middle;
-}
-
+/* Styles des commentaires des sujets du backend */
 .subject-comment-backend {
   text-indent: 5%;
   max-width: 50vw;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   word-wrap: break-word;
   white-space: normal;
   text-align: justify;
 }
 
-.separation {
-  border: 1px solid $color-secondary;
-}
-
+/* Conteneur de catégories */
 .container-category {
   margin: 0 auto;
   text-align: center;
@@ -138,21 +199,15 @@ html, body {
   width : 50%;
 }
 
-.label {
+.h4-backend-sujet {
+  display: flex;
   width: 40%;
-}
-
-
-.button-subject {
+  font-size: $font-size-xl;
   color: $color-primary;
-  background-color: $color-accent-orange;
-  border: 1px solid $color-neutral-gold;
-  justify-content: flex-end;
-  margin: 10px 0;
-  padding: 2px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
-  cursor: pointer;
+  background-color: $color-accent-darkorange;
+  border-radius: 18px;
+  padding: 1% 1.5%;
+  margin: 0 auto;
+  text-align: center;
 }
-
 
