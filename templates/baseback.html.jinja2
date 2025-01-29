@@ -40,12 +40,14 @@
 
 {% block body_content %}
 <div class="space"></div>
+<div class="separation"></div>
+<div class="space"></div>
 
 <!-- Message de connexion admin -->
-<div class="annonce">
+<div class="back-logged_in">
     {% if logged_in %}
     {% for admin in admin %}
-    <p>Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
+    <p class="back-intro">Bienvenue, {{ admin.pseudo }} ! Vous êtes connecté en tant que : {{ admin.role }}.</p>
     {% endfor %}
     {% endif %}
 </div>
@@ -54,7 +56,7 @@
 
 <!-- Conteneur des outils du backend -->
 <div class="button-container">
-    <a class="btn-primary" href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous du chat vidéo</a>
+    <a class="btn-primary" href="{{ url_for('admin.calendar') }}">Aller au calendrier des rendez-vous de la visio</a>
     <a class="btn-primary" href="{{ url_for('admin.users_list') }}">Aller à la liste des utilisateurs</a>
     <a class="btn-primary" href="{{ url_for('admin.videos_list') }}">Aller à la liste des vidéos</a>
     <a class="btn-primary" href="{{ url_for('admin.list_comments_video') }}">Aller sur la liste des commentaires des
@@ -67,6 +69,7 @@
 {% endblock %}
 
 <div class="space"></div>
+<div class="separation"></div>
 
 </body>
 </html>

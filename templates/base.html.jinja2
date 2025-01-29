@@ -56,8 +56,7 @@
                     <li><a href="{{ url_for('chat.chat_request', user_id=current_user.id) }}">Demande de chat vidéo</a>
                     </li>
                     {% else %}
-                    <li><a href="{{ url_for('auth.login', next=url_for('chat.chat_request')) }}">Demande de chat
-                        vidéo</a></li>
+                    <li><a href="{{ url_for('auth.login', next=url_for('chat.chat_request')) }}">Demande de visio</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('frontend.show_videos') }}">Accès aux videos</a></li>
 
