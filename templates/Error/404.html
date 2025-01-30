@@ -1,34 +1,66 @@
-{% extends 'baseerror.html.jinja2' %}
-
+{% extends 'baseerror.html.jinja2' %} 
 {% block head_content %}
-    <meta name="description" content="Page renvoyant l'erreur 404.">
-    <title>{% block title %}Erreur 404{% endblock %}</title>
-{% endblock %}
+<meta name="description" content="Page renvoyant l'erreur 404." />
+<title>{% block title %}Erreur 404{% endblock %}</title>
+{% endblock %} 
 
 {% block body_content %}
-<div id="container-error">
-    <div id="error-image404">
-        <img src="{{ url_for('static', filename='Images/images_error/error404.png') }}" alt="Image illustrative de titi dans l'espace">
-    </div>
-    <h1 class="h1-error">Erreur 404 -- Alors, on est perdu-e ???</h1>
-    <div class="error-404">
-        <div class="politique-intro">
-            <p>
-                Oups ! La page que vous cherchez semble être en dérangement.
-            </p>
-            <p>
-                Mais ne vous inquiétez pas, si le problème persiste après quelques minutes, vous pouvez contacter
-            <b>Tititechnique</b> en suivant <a href="mailto:titimenageou@outlook.fr">ce lien.</a>
-            </p>
-        </div>
-    </div>
-        <br>
-        <div class="politique-intro">
-            <p>
-                Nous vous souhaitons une bonne journée et nous vous prions d'accepter nos excuses pour les désagréments occasionnés.
-            </p>
-        </div>
 
-    <div class="separation"></div>
+<!-- Bordure extérieure -->
+<div class="outer-frame-politique">
+  
+    <!-- Bordure intérieure -->
+    <div class="inner-frame-politique">
+    
+        <!-- Conteneur principal -->
+        <div class="politique-main">
+      
+            <!-- Cadrage du conteneur principal -->
+            <div class="politique-border">
+
+                <div class="container-error">
+                    <!-- Conteneur de l'image -->
+                    <div class="error-image404">
+                        <img
+                        src="{{ url_for('static', filename='Images/images_error/error404.png') }}" 
+                        alt="Image illustrative de titi perdu dans l'espace"
+                        />
+                    </div>
+
+                    <div class="space2"></div>
+                    
+                    <!-- Titre de la page d'erreur 401 -->
+                    <h3 class="h3-error">Erreur 404 -- Alors, on est perdu-e ???</h3>
+         
+                    <div class="space2"></div>
+                    
+                    <!-- Conteneur de l'erreur -->
+                    <div class="error-404">
+          
+                        <div class="politique-intro">
+          
+                            <p class="text-intro">         
+                                Oups ! La page que vous cherchez semble être en dérangement.          
+                            </p>
+             
+                            <p class="text-intro">             
+                                Mais ne vous inquiétez pas, si le problème persiste après                                              
+                                quelques minutes, vous pouvez contacter <b>Tititechnique</b> en suivant
+              
+                                <a href="mailto:titimenageou@outlook.fr" class="link">ce lien.</a>
+                            </p>               
+                
+                            <p class="text-intro">                               
+                                Nous vous souhaitons une bonne journée et nous vous prions                                     
+                                d'accepter nos excuses pour les désagréments occasionnés.          
+                            </p>         
+                        </div>
+                        <div class="separation"></div>       
+                    </div>  
+                </div>
+            </div>  
+        </div> 
+    </div>    
 </div>
-{% endblock %}
+
+{% endblock %} 

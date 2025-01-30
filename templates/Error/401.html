@@ -6,20 +6,50 @@
 {% endblock %}
 
 {% block body_content %}
-    <div class="error-401">
-        <div class="error-message401">
-            <h1 class="h1-error">Erreur 401</h1>
-            <div class="politique-intro">
-            <p>
-                Oups ! Il semble que vous n'ayez pas l'autorisation d'accéder à cette page.
-            </p>
-            <p>
-                Mais ne vous inquiétez pas, même les meilleurs se trompent parfois !
-            </p>
-            </div>
-        </div>
-        <div class="error-image401">
-            <img src="{{ url_for('static', filename='Images/images_error/error401.png') }}" alt="Image illustrative erreur 401">
-        </div>
-    </div>
-{% endblock %}
+
+<!-- Bordure extérieure -->
+<div class="outer-frame-politique">
+  
+    <!-- Bordure intérieure -->
+    <div class="inner-frame-politique">
+    
+        <!-- Conteneur principal -->
+        <main class="politique-main">
+      
+            <!-- Cadrage du conteneur principal -->
+            <div class="politique-border">
+
+                <div id="container-error">
+                    <!-- Conteneur de l'image -->
+                    <div id="error-image404">
+                        <img
+                        src="{{ url_for('static', filename='Images/images_error/error401.jpg') }}" 
+                        alt="Image illustrative de problème d'identification"
+                        />
+                    </div>
+                    
+                    <!-- Titre de la page d'erreur 401 -->
+                    <h3 class="h3-error">Erreur 401 Défaut de connexion ???</h3>
+
+                    <!-- Conteneur de l'erreur -->
+                    <div class="error-404">
+                               
+                        <div class="politique-intro">           
+                            <p class="text-intro">                            
+                                Oups ! Il semble que vous n'ayez pas l'autorisation d'accéder à cette page.                                                 
+                            </p>
+
+                            <p class="text-intro">                                           
+                                Mais ne vous inquiétez pas, même les meilleurs se trompent parfois !
+                            </p>
+                        </div>
+
+                        <div class="separation"></div>        
+                    </div>  
+                </div>
+            </div>  
+        </div> 
+    </div>    
+</div>
+
+{% endblock %} 
