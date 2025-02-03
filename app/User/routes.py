@@ -32,7 +32,7 @@ from app.Models.forms import UserSaving, NewSubjectForumForm, ChangeCommentSubje
     ChangeCommentVideoForm, SuppressCommentVideoForm, ReplyVideoForm, ChangeReplyVideo, SuppressReplyVideo
 
 from app.Mail.routes import mail_reply_forum_comment, mail_like_comment_subject, \
-    mail_reply_video_comment, mail_like_comment_video
+    mail_reply_video_comment, mail_like_comment_video, mail_user_inscription, send_confirmation_email_user
 
 from app.extensions import allowed_file
 
@@ -105,13 +105,14 @@ def user_recording():
         try:
             db.session.add(new_user)
             db.session.commit()
+            send_confirmation_email_user(email)
+            mail_user_inscription(email)
             flash("Inscription réussie! Vous pouvez maintenant vous connecter.")
-            return redirect(url_for("mail.send_confirmation_email_user", email=email))
         except Exception as e:
             db.session.rollback()
             flash(f"Erreur lors de l'enregistrement de l'utilisateur: {str(e)}", "error")
 
-    return render_template("User/form_user.html", form=form)
+    return render_template("user/form_user.html", form=form)
 
 
 # Méthode permettant de visualiser la photo de l'utilisateur.
@@ -467,7 +468,7 @@ def reply_form_subject(comment_id, user_pseudo):
     # Récupération des utilisateurs qui ont posté sur le sujet.
     user = User.query.filter_by(pseudo=user_pseudo).first()
 
-    return render_template("User/reply_form_subject.html", formsubjectreply=formsubjectreply,
+    return render_template("user/reply_form_subject.html", formsubjectreply=formsubjectreply,
                            comment=comment, user=user)
 
 
@@ -770,5 +771,5 @@ def reply_form_video(comment_id, user_pseudo):
     # Récupération des utilisateurs qui ont posté sur le sujet.
     user = User.query.filter_by(pseudo=user_pseudo).first()
 
-    return render_template("User/reply_form_video.html", formreply=formreply,
+    return render_template("user/reply_form_video.html", formreply=formreply,
                            comment=comment, user=user)
