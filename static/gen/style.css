@@ -1,0 +1,2748 @@
+@charset "UTF-8";
+/* Variables CSS - base/variables.scss */
+/* Noir */
+/* Blanc */
+/* Antracite */
+/* Blanc pur */
+/* Blanc cassé */
+/* Gris très très clair */
+/* Gris foncé */
+/* Orange plus clair */
+/* Accents */
+/* Neutres */
+/* Spécifique */
+/* Erreur */
+/* Avertissement */
+/* Succès */
+/* Réinitialiser les marges, le padding et la box-sizing */
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+figure,
+figcaption,
+footer,
+header,
+section,
+article,
+main,
+aside {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Utiliser box-sizing border-box par défaut */
+}
+
+/* Éviter que le texte soit hérité de styles non désirés */
+body {
+  line-height: 1.6;
+  font-family: "Calibri", "Arial", sans-serif;
+}
+
+/* Réinitialiser les styles pour les liens */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Réinitialiser les styles pour les listes */
+ul,
+li {
+  list-style: none;
+}
+
+/* Réinitialiser les styles de base pour les tableaux */
+table {
+  /* Fusionne les bordures */
+  border-collapse: collapse;
+  /* Évite les espaces entre les cellules */
+  border-spacing: 0;
+  /* Utilise toute la largeur disponible */
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #ff8c00;
+  overflow: hidden;
+}
+
+/* Styles pour les en-têtes du tableau */
+th {
+  color: #000000;
+  font-size: 1.5rem;
+  text-decoration: underline;
+  text-decoration-color: #555555;
+  /* Centrage horizontal */
+  text-align: center;
+  padding: 1rem;
+  background-color: #ff8c00;
+  border: 1px solid #ffffff;
+}
+
+/* Styles pour les cellules du tableau */
+td {
+  /* Espacement intérieur */
+  padding: 1rem;
+  font-size: 1.25rem;
+  color: #ffa500;
+  /* Centrage horizontal */
+  text-align: center;
+  /* Centrage vertical */
+  vertical-align: middle;
+  border: 1px solid #ff8c00;
+}
+
+/* Styles pour le tableau des sujets */
+.subjects-table tr:nth-child(even) {
+  color: #000000;
+  /* Couleur de fond alternative pour chaque ligne */
+  background-color: #555555;
+}
+
+/* Styliser les liens dans le tableau */
+.subjects-table a.btn-secondary-forum {
+  color: #000000;
+  /* Ajout d'espace interne */
+  background-color: #ff8c00;
+  padding: 1% 2%;
+  border-radius: 20px;
+  display: inline-block;
+  /* Animation fluide */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: 1px solid #ffffff;
+}
+.subjects-table a.btn-secondary-forum:hover {
+  background-color: #ffd700;
+  transform: scale(1.1);
+}
+
+/* Style des tableaux pour les écrans étroits */
+@media (max-width: 768px) {
+  .subjects-table,
+  .subjects-table thead,
+  .subjects-table tbody,
+  .subjects-table th,
+  .subjects-table td,
+  .subjects-table tr {
+    /* Chaque ligne devient un bloc */
+    display: block;
+  }
+  .subjects-table thead tr {
+    /* Cache l'en-tête du tableau */
+    display: none;
+  }
+  .subjects-table tr {
+    /* Ajoute un espace entre les lignes */
+    margin-bottom: 1rem;
+    border-bottom: 1rem solid #ffa500;
+  }
+  .subjects-table td {
+    position: relative;
+    /* Décalage pour afficher les titres */
+    padding-left: 50%;
+  }
+  .subjects-table td::before {
+    /* Ajoute le titre de la colonne */
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 45%;
+    /* Espace entre le titre et les données */
+    padding-left: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+/* Boutons sans styles par défaut */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Empêcher les comportements par défaut des formulaires */
+input,
+textarea {
+  outline: none;
+}
+
+/* Contrôler les valeurs par défaut des images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Media Queries pour la Responsivité */
+/* Mobile - Portrait (max-width: 599px) */
+@media (max-width: 599px) {
+  html,
+  body {
+    font-size: 0.875rem;
+  }
+  /* Ajouter d'autres ajustements pour les mobiles ici si nécessaire */
+}
+/* Mobile - Paysage (min-width: 600px et max-width: 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+  html,
+  body {
+    font-size: 1rem;
+  }
+  /* Ajouter d'autres ajustements pour les mobiles paysage ici */
+}
+/* Tablette - Portrait (min-width: 900px et max-width: 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  html,
+  body {
+    font-size: 1.25rem;
+  }
+  /* Ajouter d'autres ajustements pour les tablettes portrait ici */
+}
+/* Tablette - Paysage (min-width: 1200px et max-width: 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  html,
+  body {
+    font-size: 1.5rem;
+  }
+}
+/* Section reset le mot de passe */
+.reset-password-section {
+  display: flex;
+  margin: 0 auto;
+  /* Centre horizontalement */
+  justify-content: center;
+  /* Centre verticalement */
+  align-items: center;
+  width: 50%;
+  border: 2px solid #ff8c00;
+  border-radius: 10px;
+  padding: 2%;
+  background: #f2f2f2;
+  font-size: 2rem;
+  color: #000000;
+  line-height: 1.8;
+  margin-bottom: 3%;
+}
+.reset-password-section:hover {
+  background: white;
+  border-color: #ffd700;
+}
+
+.reset-password-container {
+  width: 50%;
+  padding: 2%;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.reset-password-message {
+  font-size: 1.5rem;
+  color: #000000;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+/* Gère les conteneurs droit et gauche et les séparations et espacement. */
+.layout {
+  display: flex;
+  height: 0;
+}
+
+/* Conteneur principal */
+.main-content {
+  position: relative;
+  margin-left: 30%;
+  width: 70%;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #000000;
+}
+
+/* Cadre principal (conteneur externe) */
+.outer-frame {
+  border: 4px solid #ff8c00;
+  border-radius: 15px;
+  /* Espacement interne */
+  padding: 2%;
+  background: #f2f2f2;
+  /* Ombre subtile */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Cadre interne */
+.inner-frame {
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  /* Espacement interne */
+  padding: 1.5%;
+  background: #000000;
+  /* Ombre interne */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.inner-frame:hover {
+  /* Légère mise en avant du cadre interne */
+  transform: scale(1.02);
+  /* Changement de couleur de bordure */
+  border-color: #ff8c00;
+}
+
+.h1-landing {
+  font-size: 3rem;
+  color: #ff8c00;
+  /* Centrage du texte sur toutes les lignes */
+  text-align: center;
+  /* Limite la largeur pour une meilleure lisibilité */
+  max-width: 80%;
+  /* Centrage dans des conteneurs flexibles */
+  margin: 0 auto;
+  /* Espacement confortable entre les lignes */
+  line-height: 1.5;
+}
+
+.h2-landing {
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.h3-landing {
+  color: #ff8c00;
+  font-size: 1.5rem;
+  /* Centrage du texte sur toutes les lignes */
+  text-align: center;
+  /* Limite la largeur pour une meilleure lisibilité */
+  max-width: 80%;
+  /* Centrage dans des conteneurs flexibles */
+  margin: 0 auto;
+  /* Espacement confortable entre les lignes */
+  line-height: 1.5;
+}
+
+.h4-landing {
+  color: #000000;
+  font-size: 1.25rem;
+}
+
+/* Titre des formulaires */
+.h2-form {
+  color: #ff8c00;
+  text-align: center;
+}
+
+.h3-form {
+  text-decoration: underline;
+  color: #ffa500;
+  text-align: center;
+}
+
+/* Espace des formulaires */
+.space-form {
+  height: 5vh;
+}
+
+/* Titre h3 */
+.h3-forum {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #ffa500;
+  text-align: center;
+}
+
+/* Titre h4 */
+.h4-forum {
+  color: #000000;
+  font-size: 1.5rem;
+  background-color: #ff8c00;
+  border-radius: 12px;
+  margin-left: 5%;
+}
+
+/* Titre h1 */
+.h1-politique {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3%;
+  color: #000000;
+  background-color: #ff8c00;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.h1-politique:hover {
+  transform: scale(1, 1.05);
+}
+
+.h2-politique {
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #ff8c00;
+  padding: 4%;
+  color: #ffffff;
+  margin-bottom: 1%;
+}
+
+.h3-politique {
+  font-size: 1.5rem;
+  font-weight: bolt;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  padding: 2%;
+}
+
+.h1-wait {
+  font-size: 2rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #ff8c00;
+}
+
+.h3-video {
+  font-size: 1.25rem;
+  color: #ff8c00;
+}
+
+/* Titres du footer */
+.h3-footer {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  color: #ffa500;
+}
+
+/* Titres */
+.h1-backend {
+  width: 60%;
+  font-size: 2rem;
+  color: #ff8c00;
+  background-color: #f2f2f2;
+  border-radius: 12px;
+  margin: 0 auto;
+  padding: 2% 3%;
+  text-justify: center;
+}
+
+.h4-backend {
+  margin-left: 10%;
+}
+
+.h5-backend {
+  padding-left: 5vw;
+  text-decoration: underline;
+  font-size: 1.25rem;
+  color: #ffd700;
+}
+
+.separation1 {
+  width: 90%;
+  margin: 0 auto;
+  border-bottom: 3px solid #ffd700;
+}
+
+.separation2 {
+  width: 80%;
+  margin: auto;
+  border-bottom: 3px solid #ffd700;
+}
+
+.space {
+  height: 10vh;
+}
+
+.space2 {
+  height: 5vh;
+}
+
+/* Mobile - Portrait (max-width: 599px) */
+@media (max-width: 599px) {
+  .layout {
+    /* Afficher la mise en page en colonne */
+    flex-direction: column;
+    height: auto;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    top: 0;
+  }
+  .outer-frame, .inner-frame {
+    padding: 1%;
+    width: 100%;
+  }
+  /* Section landing_page */
+  .h1-landing {
+    font-size: 1.25rem;
+  }
+  /* Section forum */
+  .h3-forum {
+    font-size: 1rem;
+  }
+  .h4-forum {
+    font-size: 0.875rem;
+  }
+  /* Section footer */
+  .h3-footer {
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  /* Titre h1 */
+  .h1-politique {
+    font-size: 1.25rem;
+  }
+  .h2-politique {
+    font-size: 1rem;
+  }
+  .h3-politique {
+    font-size: 0.875rem;
+  }
+}
+/* Mobile - Paysage (min-width: 600px et max-width: 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+  .layout {
+    /* Retour à une mise en page en ligne */
+    flex-direction: row;
+    height: auto;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    top: 0;
+  }
+  .outer-frame, .inner-frame {
+    padding: 5%;
+    width: 100%;
+  }
+  /* Section landing_page */
+  .h1-landing {
+    font-size: 2rem;
+  }
+  /* Section forum */
+  .h3-forum {
+    font-size: 1.5rem;
+  }
+  .h4-forum {
+    font-size: 1.25rem;
+  }
+  .h3-footer {
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  .h1-politique {
+    font-size: 1.5rem;
+  }
+  .h2-politique {
+    font-size: 1.25rem;
+  }
+  .h3-politique {
+    font-size: 1rem;
+  }
+}
+/* Tablette - Portrait (min-width: 900px et max-width: 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .main-content {
+    margin-left: 30%;
+    width: 100%;
+  }
+  .outer-frame, .inner-frame {
+    padding: 3%;
+    width: 100%;
+  }
+  .h3-footer {
+    font-size: 1rem;
+  }
+  .h1-politique {
+    font-size: 2rem;
+  }
+  .h2-politique {
+    font-size: 1.5rem;
+  }
+  .h3-politique {
+    font-size: 1.25rem;
+  }
+}
+/* Tablette - Paysage (min-width: 1200px et max-width: 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .main-content {
+    margin-left: 30%;
+    width: 100%;
+  }
+  .outer-frame, .inner-frame {
+    padding: 3%;
+    width: 100%;
+  }
+}
+/* Pour les écrans plus petits */
+@media screen and (max-width: 768px) {
+  .video-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Pour les écrans encore plus petits */
+@media screen and (max-width: 480px) {
+  .video-container {
+    grid-template-columns: 1fr;
+  }
+}
+/* Regroupement des styles communs aux boutons */
+nav button, .cancelled-btn, .validated-btn, .reply-button, .delete-comment-form button, .change-button, .back-forum, .btn-secondary, .btn-secondary-forum, .btn-primary, .btn-primary-forum, .btn-primary-registration {
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+.btn-primary, .btn-primary-forum, .btn-primary-registration {
+  padding: 2% 4%;
+  font-size: 1rem;
+  background-color: #ff8c00;
+  color: #000000;
+}
+.btn-primary:hover, .btn-primary-forum:hover, .btn-primary-registration:hover {
+  background-color: #000000;
+  border: 2px solid #ffd700;
+  color: #ff8c00;
+}
+
+.btn-primary-registration {
+  display: block;
+  margin: 0 auto;
+  /* Ajuste pour des écrans plus larges */
+  width: 60%;
+}
+
+.btn-secondary, .btn-secondary-forum {
+  padding: 2% 3%;
+  font-size: 1rem;
+  background-color: #ff8c00;
+  color: #000000;
+}
+.btn-secondary:hover, .btn-secondary-forum:hover {
+  background-color: #000000;
+  color: #ffd700;
+}
+
+/* Bouton retour arrière forum */
+.back-forum {
+  background-color: #ffa500;
+  color: #000000;
+  padding: 2px 7px;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.25rem;
+  box-shadow: 2px 2px 10px rgba(255, 165, 0, 0.5);
+  cursor: pointer;
+}
+.back-forum:hover {
+  transform: scale(1.1);
+  text-decoration: none;
+  color: #000000;
+}
+
+/* Bouton : Changer le commentaire */
+.change-button {
+  padding: 1% 2%;
+  font-size: 1rem;
+  background-color: #ff8c00;
+  color: #000000;
+}
+.change-button:hover {
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  color: #ffd700;
+}
+
+/* Bouton : Supprimer le commentaire */
+.delete-comment-form button {
+  padding: 1% 2%;
+  font-size: 1rem;
+  background-color: #ffd700;
+}
+.delete-comment-form button:hover {
+  background-color: darkred;
+  border: 1px solid #a9a9a9;
+  color: #ffffff;
+}
+
+/* Bouton de réponse à un commentaire */
+.reply-button {
+  padding: 1% 2%;
+  font-size: 1rem;
+  background-color: #ffd700;
+  color: #000000;
+  transition: transform 0.3s ease;
+}
+.reply-button:hover {
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  color: #ffd700;
+}
+
+/* Boutons de validation/annulation */
+.cancelled-btn, .validated-btn {
+  display: inline-block;
+  width: 80%;
+  padding: 1.5% 3%;
+  text-align: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.cancelled-btn {
+  background-color: #ffd700;
+}
+.cancelled-btn:hover {
+  background-color: darkred;
+  color: #ffffff;
+}
+
+.validated-btn {
+  background-color: #ff8c00;
+}
+.validated-btn:hover {
+  background-color: #000000;
+  color: #ffd700;
+  border: 1px solid #ffd700;
+  transform: scale(1.05);
+}
+
+/* navigation du backend */
+nav button {
+  background-color: #ffa500;
+  color: #000000;
+  border: 2px solid #ffd700;
+  padding: 10px 20px;
+}
+nav button:hover {
+  background-color: #ffd700;
+  border: 2px solid #ffa500;
+}
+
+/* Boutons des conteneurs */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.button-container button {
+  width: 70%;
+  padding: 10px 20px;
+  background-color: #ffa500;
+  color: #000000;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button a {
+  text-decoration: none;
+  color: #000000;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.button-container button a:hover {
+  background-color: #ff8c00;
+  border: 2px solid #ffd700;
+}
+
+/* Responsivité pour les écrans moyens */
+@media (max-width: 1024px) {
+  .btn-primary-registration {
+    /* Plus large sur les tablettes */
+    width: 80%;
+  }
+  .btn-primary, .btn-secondary, .cancelled-btn, .validated-btn {
+    padding: 2% 3%;
+    font-size: 1.25rem;
+  }
+}
+/* Responsivité pour les petits écrans */
+@media (max-width: 768px) {
+  .btn-primary-registration {
+    /* S'adapte complètement sur mobile */
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
+    font-size: 1rem;
+    padding: 0.5% 1.5%;
+  }
+  .button-container button {
+    /* Les boutons prennent toute la largeur de l'écran */
+    width: 100%;
+  }
+  .change-button,
+  .delete-comment-form button {
+    width: 60%;
+    text-align: center;
+    font-size: 0.875rem;
+    padding: 1% 2%;
+  }
+}
+/* Responsivité très petits écrans */
+@media (max-width: 480px) {
+  .btn-primary-registration {
+    /* Adaptation mobile */
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary, .reply-button, .change-button, .cancelled-btn, .validated-btn {
+    font-size: 0.8rem;
+    padding: 1% 2%;
+  }
+  .change-button,
+  .delete-comment-form button {
+    width: 60%;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 1% 2%;
+  }
+  .button-container button {
+    /* Les boutons prennent toute la largeur de l'écran */
+    width: 70%;
+  }
+}
+/* Carrousel de l'accueil */
+/* Flèches 'next' et 'previous' */ /* Styles pour centrer tout le contenu du h2 */
+.container-subject-forum {
+  margin: 0 auto;
+  font-size: 2rem;
+  width: 70%;
+  height: 10vh;
+  color: #000000;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.container-subject-forum:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Styles pour formulaire d'ajout de sujet */
+#addSubjectForm label {
+  font-size: 1.5rem;
+}
+
+/* Conteneur des commentaires */
+.container-comment {
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+  padding: 2%;
+  background-color: #292929;
+  border: 1px solid #ff8c00;
+  border-radius: 5px;
+  /* Ajoute une légère ombre */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Section du titre */
+.comment-avis {
+  /* Ajoute un espacement sous le titre */
+  margin-bottom: 1.5rem;
+  /* Centre le texte horizontalement */
+  text-align: center;
+}
+
+/* Champ de texte */
+textarea {
+  width: 80%;
+  height: 15vh;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 1.25rem;
+  border: 1px solid #ffa500;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+textarea:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Commentaire individuel */
+.comment {
+  background-color: #a9a9a9;
+  border: 1px solid #ddd;
+  color: #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  border-radius: 8px;
+  padding: 1%;
+  margin-bottom: 2%;
+}
+
+/* Photo des utilisateurs ayant posté */
+.comment-header {
+  display: flex;
+  align-items: center;
+  background-color: #a9a9a9;
+  color: #000000;
+  gap: 1%;
+  margin-bottom: 1%;
+}
+
+/* Photo Utilisateur */
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #a9a9a9;
+  border: 1px solid #ffd700;
+  object-fit: cover;
+}
+.profile-picture:hover {
+  transform: scale(1.1);
+}
+
+/* Info utilisateur */
+.comment-user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Pseudo de l'utilisateur */
+.user-pseudo {
+  font-weight: bold;
+  color: #000000;
+}
+
+/* Rôle de l'utilisateur */
+.user-role {
+  color: #000000;
+  background-color: transparent;
+  font-size: 1.25rem;
+}
+
+/* Date du commentaire */
+.comment-date {
+  color: #000000;
+  background-color: transparent;
+  border-top: 1px solid #000000;
+}
+
+/* Contenu du commentaire */
+.content-comment {
+  text-indent: 5%;
+  text-align: justify;
+  background-color: transparent;
+  color: #000000;
+  font-size: 1.25rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Conteneur actions utilisateur */
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.like-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
+
+/* Wrapper pour l'icône et le message */
+.like-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Conteneur de l'icône */
+.like-icon {
+  color: #ffa500;
+  cursor: pointer;
+  font-size: 2rem;
+  align-items: left;
+  transition: transform 0.3s ease;
+}
+.like-icon:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+}
+
+/* Conteneur des likes */
+.container-likes p {
+  border-radius: 12px;
+  background-color: #ffa500;
+  transition: transform 0.3 ease;
+}
+.container-likes p:hover {
+  transform: scale(1, 1.05);
+}
+
+/* Message des utilisateurs ayant aimé */
+.like-message {
+  font-size: 1rem;
+  color: #000000;
+}
+
+/* Suppression des marges inutiles pour le formulaire caché */
+form#formlikecomment {
+  margin: 0;
+  padding: 0;
+}
+
+/* Conteneur principal des réponses */
+.replies-container {
+  margin-top: 5%;
+  padding-left: 7%;
+}
+
+/* Conteneur d'une réponse individuelle */
+.reply-card {
+  background: #555555;
+  border: 1px solid #ffd700;
+  border-radius: 8px;
+  padding: 1%;
+  margin-bottom: 1%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Entête des réponses */
+.reply-header {
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 1%;
+  margin-bottom: 1%;
+  margin-left: 10%;
+}
+
+/* Section de réponsee */
+.comment-reply {
+  text-indent: 5%;
+  color: #000000;
+  font-size: 1.25rem;
+  height: auto;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+/* Style des réponses aux commentaires */
+.reply-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 1.2%;
+  border-top: 1px solid #eee;
+  margin-top: 6%;
+}
+
+/* Image de la section de réponse */
+.reply-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffd700;
+  color: #000000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide pour le zoom et l'ombre */
+}
+.reply-profile-picture:hover {
+  transform: scale(1.1); /* Agrandit légèrement l'image */
+}
+
+/* Infos utilisateur qui a répondu */
+.reply-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #000000;
+}
+
+.reply-user-pseudo {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.reply-user-role {
+  font-size: 1rem;
+  color: #000000;
+}
+
+.reply-date {
+  font-size: 1rem;
+  color: #000000;
+  border-top: 1px solid #000000;
+}
+
+.reply-content {
+  text-align: center;
+  color: #000000;
+  line-height: 1.5;
+  padding-right: 4%;
+  padding-bottom: 2%;
+  font-size: 1rem;
+  margin-right: 7%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.8%;
+  box-sizing: border-box;
+}
+
+/* Très petits écrans */
+@media only screen and (max-width: 480px) {
+  .container-subject-forum h2 {
+    width: 100%;
+    font-size: 0.875rem;
+  }
+  .comment-user-info, .user-role {
+    font-size: 0.875rem;
+  }
+  .user-pseudo, .content-comment {
+    font-size: 1rem;
+  }
+  textarea {
+    width: 100%;
+    height: 10vh;
+    font-size: 0.875rem;
+  }
+  .space-phone {
+    height: 0.8vh;
+  }
+  .delete-comment-form {
+    margin-left: 0;
+  }
+  /* Conteneur des likes */
+  .container-likes p {
+    font-size: 0.8rem;
+  }
+  .reply-profile-picture {
+    width: 30px;
+    height: 30px;
+  }
+  .reply-content {
+    font-size: 0.875rem;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}
+/* Ecrans moyens */
+@media only screen and (max-width: 768px) {
+  .container-subject-forum h2 {
+    width: 95%;
+    font-size: 1rem;
+  }
+  .comment {
+    font-size: 0.875rem;
+  }
+  .comment-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  textarea {
+    width: 95%;
+    height: 10vh;
+    font-size: 0.875rem;
+  }
+  .space-phone {
+    height: 0.9vh;
+  }
+  .reply-profile-picture {
+    width: 35px;
+    height: 35px;
+  }
+  .reply-date {
+    font-size: 0.875rem;
+  }
+  .reply-content {
+    font-size: 0.875rem;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+/* Grand écrans */
+@media only screen and (max-width: 1024px) {
+  .container-subject-forum h2 {
+    width: 85%;
+    font-size: 1.25rem;
+  }
+  .profile-picture {
+    width: 40px;
+    height: 40px;
+  }
+  .comment-content {
+    font-size: 1rem;
+  }
+  textarea {
+    width: 90%;
+    height: 12vh;
+    font-size: 1rem;
+  }
+}
+/* Conteneur principal des erreurs */
+.error-image404 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
+.error-image404 img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 2%;
+  display: block;
+}
+
+.h3-error {
+  font-size: 2rem;
+  color: #000000;
+  background-color: #ff8c00;
+  border-radius: 18px;
+  padding: 1% 2%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/*Styles pour les alertes */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.alert.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+.alert.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+.alert.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.alert i {
+  margin-right: 5px;
+}
+
+/* footer */
+footer {
+  background-color: #212f3d;
+  /* Footer responsive */
+  width: 70%;
+  /* Décale le footer vers la droite */
+  margin-left: auto;
+  margin-right: 0;
+  color: #ffffff;
+  /* Augmente le padding pour les petites résolutions */
+  padding: 3rem 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Contenu principal du pied de page */
+.footer-content {
+  display: flex;
+  /* Distribue l'espace entre les sections */
+  justify-content: space-between;
+  gap: 2rem;
+  /* Réduit le padding pour éviter trop d'espace sur mobile */
+  padding: 2rem;
+  /* Permet aux sections de passer à la ligne en cas de petite taille d'écran */
+  flex-wrap: wrap;
+}
+
+/* Section du footer */
+.footer-section {
+  flex: 1;
+  /* Chaque section a une taille minimale */
+  min-width: 200px;
+  /* Espace entre les sections */
+  margin: 0 1rem;
+}
+
+/* Listes */
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer ul li {
+  /* Espace plus important entre les éléments de liste */
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+footer ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+footer ul li a:hover {
+  color: #ffd700;
+  text-decoration: none;
+}
+
+footer ul li p {
+  color: #ffffff;
+}
+footer ul li p a {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #ffd700;
+  transition: color 0.3s ease;
+}
+footer ul li p a:hover {
+  color: #ffa500;
+}
+
+/* Texte simple */
+footer p {
+  margin-bottom: 1.5%;
+  color: #ffa500;
+}
+
+/* Bas de la section */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  padding: 2%;
+  color: #ff8c00;
+}
+
+/* Adaptation mobile */
+@media (max-width: 1024px) {
+  footer {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .footer-content {
+    /* Les sections s'affichent verticalement sur mobile */
+    flex-direction: column;
+    /* Réduit le padding */
+    padding: 1.5rem;
+  }
+  .footer-section {
+    /* Chaque section prend toute la largeur */
+    width: 100%;
+    /* Ajoute un espace vertical entre les sections */
+    margin: 0 0 1.5rem 0;
+  }
+  footer ul li {
+    /* Réduit la taille des items de liste */
+    font-size: 1rem;
+  }
+}
+/* Adaptation très petit écran (téléphones) */
+@media (max-width: 480px) {
+  footer {
+    padding: 2rem 0;
+  }
+  .footer-content {
+    /* Les sections s'affichent verticalement */
+    flex-direction: column;
+    padding: 1rem;
+  }
+  footer ul li {
+    /* Réduit la taille des items de liste */
+    font-size: 0.875rem;
+  }
+  footer p {
+    /* Réduit la taille du texte simple */
+    font-size: 0.8rem;
+  }
+}
+/* Introduction des formulaires */
+.form-intro {
+  display: flex;
+  /* Les éléments en colonne */
+  flex-direction: column;
+  /* Centrage des éléments verticalement */
+  justify-content: center;
+  /* Alignement du contenu à gauche */
+  align-items: flex-start;
+  /* Augmente la largeur pour mieux espacer les éléments */
+  width: 60%;
+  /* Fixer une largeur maximale pour plus de lisibilité */
+  max-width: 80vw;
+  /* Bordure plus légère pour un effet épuré */
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  padding: 3%;
+  background: #f2f2f2;
+  color: #000000;
+  /* Justifie le texte à gauche pour une lecture plus fluide */
+  text-align: left;
+  line-height: 1.6;
+  margin: 0 auto;
+  /* Espacement plus important sous chaque section */
+  margin-bottom: 4%;
+  /* Effet au survol */
+}
+.form-intro:hover {
+  background: white;
+  border-color: #ffd700;
+}
+
+/* Titre introductif */
+.title-intro {
+  font-size: 1.25rem;
+  text-align: none;
+  text-align: justify;
+  font-weight: bold;
+  padding: 1% 2%;
+  text-indent: 0;
+  color: #000000;
+  margin: 0 auto;
+  background-color: #ff8c00;
+  border-radius: 18px;
+  /* Espacement entre le titre et le texte */
+  margin-bottom: 3%;
+  transition: transform 0.3s ease;
+}
+.title-intro:hover {
+  transform: scale(1, 1.05);
+}
+
+/* Texte introductif */
+.text-intro {
+  font-size: 1rem;
+  /* Ajout d'espace entre les paragraphes */
+  margin-bottom: 1rem;
+  color: #000000;
+  text-align: justify;
+}
+
+/* Texte de lien avec survol */
+.text-intro b a {
+  color: #ffa500;
+  font-weight: normal;
+  text-decoration: none;
+  /* Animation fluide */
+  transition: color 0.3s ease;
+}
+
+.text-intro b a:hover {
+  color: #ffd700;
+}
+
+/* Styles du logo du formulaire. */
+.imgcontainer-form {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 12px 0;
+  /* Animation fluide pour le zoom et l'ombre */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.imgcontainer-form:hover {
+  /* Agrandit l'image à 110% de sa taille originale */
+  transform: scale(1.1);
+  /* Ajoute une ombre au survol */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Image avatar dans le formulaire */
+img.avatar-form {
+  width: 45%;
+  align-items: center;
+  border-radius: 50%;
+  /* Animation fluide pour le zoom et l'ombre */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+img.avatar-form:hover {
+  /* Agrandit l'image à 110% de sa taille originale */
+  transform: scale(1.1);
+  /* Ajoute une ombre au survol */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Conteneur de l'image */
+.form-base {
+  background-color: #000000;
+  border: 2px solid #ffa500;
+  padding: 20px;
+  font-size: 1.5rem;
+  max-width: 30vw;
+  margin: 5% auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Conteneur des champs */
+.form-container {
+  margin-bottom: 1%;
+  display: flex;
+  flex-direction: column;
+  /* Augmente l'écart entre les champs */
+  gap: 1rem;
+}
+.form-container .form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Pour s'assurer que chaque groupe de champs occupe toute la largeur disponible */
+  width: 100%;
+}
+.form-container .form-group label {
+  display: block;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1.5%;
+  background-color: transparent;
+}
+.form-container .form-group input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 12px;
+  display: inline-block;
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  background-color: lightgrey;
+  color: #000000;
+}
+.form-container .form-group input:hover {
+  background-color: white;
+  border: 1px solid #ff8c00;
+}
+.form-container .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: 7%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #000000;
+  font-size: 1.5rem;
+}
+
+/* Lien pour mot de passe oublié */
+.forgot-password {
+  text-align: center;
+  margin-bottom: 2%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.forgot-password:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.forgot-password-a {
+  color: #ff8c00;
+  padding: 2% 3%;
+}
+
+.container-btn {
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Petit écrans */
+@media (max-width: 480px) {
+  .form-intro {
+    /* Prend toute la largeur de l'écran */
+    width: 100%;
+    /* Espacement interne suffisant */
+    padding: 5%;
+    /* Pas de marges externes */
+    margin: 0 auto;
+  }
+  .form-group label {
+    /* Ajustement de la taille du texte */
+    font-size: 0.8rem;
+  }
+  .form-group input {
+    /* Ajuste la taille des champs */
+    font-size: 0.8rem;
+  }
+}
+/* Ecrans moyens */
+@media (max-width: 768px) {
+  .form-intro {
+    /* Prend toute la largeur de l'écran */
+    width: 100%;
+    /* Espacement interne suffisant */
+    padding: 5%;
+    /* Pas de marges externes */
+    margin: 0 auto;
+  }
+  /* Suppression des styles qui forcent les marges et la largeur pour mobile */
+  .form-base {
+    /* Laisser le formulaire occuper toute la largeur */
+    max-width: 100%;
+    /* Pas de marges externes */
+    margin: 0;
+  }
+  .form-container {
+    /* Espacement réduit pour les champs */
+    gap: 0.8rem;
+  }
+  .form-group label {
+    /* Ajustement de la taille du texte */
+    font-size: 0.875rem;
+  }
+  .form-group input {
+    /* Ajuste la taille des champs */
+    font-size: 0.875rem;
+  }
+  .container-btn {
+    /* Ajustement du padding du bouton */
+    padding: 1.2%;
+  }
+}
+/* Tablettes en paysage */
+@media (max-width: 1024px) {
+  .form-intro {
+    /* Réduit légèrement la largeur par rapport aux tablettes en portrait */
+    width: 90%;
+    padding: 4%;
+    margin: 0 auto;
+  }
+  .form-base {
+    /* Ajuste la largeur pour ne pas trop prendre de place */
+    max-width: 90vw;
+    /* Ajuste la marge */
+    margin: 5% auto;
+  }
+  .form-container {
+    /* Espacement réduit entre les champs */
+    gap: 1rem;
+  }
+  .form-group label {
+    font-size: 1rem;
+  }
+  .form-group input {
+    font-size: 1rem;
+  }
+  .container-btn {
+    padding: 1.4%;
+  }
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 30%;
+  height: 100vh;
+  background-color: rgba(44, 62, 80, 0.95);
+  box-shadow: -4px 0 8px 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-right: 2px solid #ff8c00;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2% 1%;
+  transition: transform 0.3s ease;
+  /* Masqué par défaut sur mobile */
+  /* Lorsque le hamburger est actif */
+}
+@media (max-width: 1024px) {
+  .header {
+    display: none;
+  }
+}
+.header.active {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  padding: 1%;
+  overflow-y: auto;
+}
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1002;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.hamburger .line {
+  width: 2rem;
+  height: 0.3rem;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+@media (max-width: 1024px) {
+  .hamburger {
+    display: flex;
+  }
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  padding: 2rem 1rem;
+  gap: 1.5rem;
+}
+.nav-container .nav-links ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.nav-container .nav-links ul li a {
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-container .nav-links ul li a:hover {
+  color: #ff8c00;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+.actions .logged {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
+  color: #ffa500;
+}
+.actions .logged p {
+  text-indent: 0 !important;
+}
+.actions a {
+  font-size: 1.25rem;
+  color: #000000;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  background-color: #ff8c00;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.actions a:hover {
+  background-color: #000000;
+  color: #ffd700;
+  transform: scale(1.05);
+}
+
+/* Grands écrans */
+@media (max-width: 1024px) {
+  .header {
+    position: absolute;
+    /* Ajustement mise en page */
+    width: 30%;
+    padding: 1rem;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    transition: margin-top 0.3s ease;
+  }
+  .nav-container {
+    gap: 1rem;
+  }
+  .nav-container .nav-links ul {
+    flex-direction: column;
+  }
+  .nav-container .nav-links ul li a {
+    /* Ajustement des liens pour mobile */
+    font-size: 1.25rem;
+  }
+  .actions {
+    gap: 0.5rem;
+  }
+  .actions a {
+    /* Réduction des boutons */
+    font-size: 1rem;
+  }
+}
+/* Logo */
+.logo img {
+  width: 40vw;
+  height: auto;
+  border: 1px solid #ffa500;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+  /* Effet au survol */
+}
+.logo img:hover {
+  transform: scale(1.1); /* Zoom au survol */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Bannière */
+.banniere img {
+  width: 70vw;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ffa500;
+  border-radius: 24px;
+  transition: transform 0.3s ease-in-out;
+  margin: 0 auto;
+  /* Effet au survol */
+}
+.banniere img:hover {
+  transform: scale(1.1); /* Zoom au survol */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Section contenant les photos */
+.photo-gallery {
+  display: flex;
+  /* Permet d'adapter les blocs sur plusieurs lignes */
+  flex-wrap: wrap;
+  /* Espacement entre les photos */
+  gap: 20px;
+  /* Centrage des photos horizontalement */
+  justify-content: center;
+  padding: 2%;
+}
+
+/* Blocs individuels */
+.content-block {
+  /* Par défaut, chaque photo occupe 50% de la largeur */
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+  /* Centre le texte sous les photos */
+  text-align: center;
+}
+
+/* Images de la page d'accueil */
+.pics-accueil {
+  /* Ajustement en fonction de l'écran */
+  width: 80vw;
+  max-width: 100%;
+  /* Garde les proportions des images */
+  height: auto;
+  border-radius: 50%;
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pics-accueil:hover {
+  /* Légère mise en avant */
+  transform: scale(1.05);
+  /* Ombre amplifiée */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.pics-accueil-fin {
+  /* Taille relative */
+  width: 50vw;
+  max-width: 100%;
+  border: 1px solid #ff8c00;
+  border-radius: 50%;
+  padding: 2%;
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pics-accueil-fin:hover {
+  /* Légère mise en avant */
+  transform: scale(1.05);
+  /* Ombre amplifiée */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustements pour les écrans moyens */
+@media screen and (max-width: 768px) {
+  .content-block {
+    /* Chaque photo occupe 50% de la largeur */
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+/* Ajustements pour les écrans petits (mobiles) */
+@media screen and (max-width: 480px) {
+  .content-block {
+    /* Chaque photo occupe 100% de la largeur */
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+/* Conteneur principal des images */
+.forum-pic {
+  /* Alignement des images en ligne */
+  display: flex;
+  /* Écarte les images sur les côtés */
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Conteneur de chaque image pour assurer le centrage */
+.forum-pic-left, .forum-pic-right {
+  display: flex;
+  /* Centre l'image horizontalement */
+  justify-content: center;
+  /* Centre l'image verticalement */
+  align-items: center;
+  /* Largeur flexible pour chaque div */
+  flex: 1;
+}
+
+.forum-pic-img {
+  /* Largeur relative à l'écran */
+  width: 60vw;
+  /* Taille maximale sur écrans moyens */
+  max-width: 90%;
+  height: auto;
+  border-radius: 15px;
+  border: 1px solid #ffa500;
+  /* Animation fluide */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.forum-pic-img:hover {
+  /* Zoom léger au survol */
+  transform: scale(1.05);
+  /* Ombre au survol */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Image du forum */
+@media (max-width: 768px) {
+  .forum-pic {
+    /* Les images s'empilent verticalement */
+    flex-direction: column;
+    /* Centre les images en mode colonne */
+    align-items: center;
+    /* Réduit l'espace entre les images */
+    gap: 1rem;
+  }
+  .forum-pic-img {
+    /* Les images deviennent un peu plus grandes en mode mobile */
+    width: 90%;
+  }
+}
+/* Conteneur principal de la pagination */
+.pagination {
+  align-items: center;
+  margin: 1% auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Masquer la pagination si la page est trop grande */
+.pagination.hidden {
+  display: none;
+}
+
+.pagination a,
+.pagination .dots {
+  padding: 1% 1.5%;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: #a9a9a9;
+  color: #000000;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pagination a.active {
+  background-color: #ffd700;
+  color: #ffffff;
+}
+
+.pagination a:hover,
+.pagination .dots:hover {
+  background-color: #000000;
+  transform: scale(1.1);
+}
+
+.pagination .prev-next {
+  padding: 1% 1.5%;
+  background-color: #ff8c00;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination .dots {
+  display: inline-block;
+  padding: 0.5% 1%;
+  background-color: transparent;
+  color: #999;
+}
+
+/* Ecrans moyens */
+@media (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .pagination a,
+  .pagination .dots {
+    font-size: 0.875rem;
+    padding: 0.5% 1%;
+  }
+}
+/* Conteneur général pour les vidéos */
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 12px;
+  gap: 2%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+@media screen and (max-width: 768px) {
+  .video-container {
+    /* Deux colonnes pour écrans moyens */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 480px) {
+  .video-container {
+    /* Une colonne pour petits écrans */
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Style pour chaque élément vidéo */
+.video-item {
+  border: 1px solid white;
+  padding: 1.5%;
+  border-radius: 12px;
+  background-color: #000000;
+  text-align: center;
+  min-height: 40vh;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.video-item:hover {
+  transform: scale(1.05);
+}
+.video-item iframe {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #ff8c00;
+}
+.video-item p {
+  background-color: #ff8c00;
+  color: #000000;
+  text-align: left;
+  margin-left: 5%;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.video-item a {
+  border: 1px solid #ffa500;
+  border-radius: 8px;
+  color: #000000;
+  padding: 2% 4%;
+  background-color: #ff8c00;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.video-item a:hover {
+  transform: scale(1.1);
+}
+
+/* Section des informations */
+.informations {
+  border: 1px solid #ffffff;
+  background-color: #ff8c00;
+}
+.informations span {
+  background-color: #ff8c00;
+  color: #000000;
+}
+
+/* Vidéos de la page d'accueil */
+.video-info {
+  background-color: #ff8c00;
+  color: #000000;
+  padding: 1rem;
+  border-radius: 25px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.video-info p,
+.video-info h5 {
+  background-color: #ffa500;
+  color: #000000;
+}
+
+.video-info h5 {
+  text-decoration: underline;
+}
+
+/* Style pour la page d'accueil de baseback.html.jinja2 */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.header-backend {
+  display: flex;
+  justify-content: center;
+  padding: 2%;
+}
+
+.nav-backend {
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+}
+.nav-backend:hover {
+  color: #ffffff;
+}
+
+.back-logged_in {
+  display: flex;
+  width: 70%;
+  color: #000000;
+  background-color: #f2f2f2;
+  border-radius: 18px;
+  margin: 0 auto;
+}
+
+.annonce-back p {
+  font-size: 2rem;
+  color: #000000;
+  background-color: #f2f2f2;
+  border: 1px solid #ff8c00;
+  border-radius: 12px;
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.actions-buttons {
+  margin-right: 1rem;
+}
+
+/* Classe des tableaux du backend */
+#table-appointment {
+  font-family: Arial, sans-serif;
+}
+
+.backend-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #555555;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.backend-table th,
+.backend-table td {
+  font-size: 0.875rem;
+  color: #000000;
+  padding: 1%;
+  text-align: left;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.backend-table th {
+  font-size: 0.875rem;
+  background-color: #ff8c00;
+}
+
+.backend-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.backend-table tbody tr:hover {
+  background-color: #ffd700;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.button-form {
+  background: #4CAF50;
+  color: #000000;
+  border: none;
+  padding: 0.8% 12%;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+.button-form:hover {
+  background: #45a049;
+}
+
+.btn-valide-back {
+  width: 100%;
+  font-size: 0.875rem;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  background-color: #ffd700;
+  gap: 1rem;
+}
+.btn-valide-back:hover {
+  color: #ffd700;
+  background-color: #ff8c00;
+}
+
+.btn-valide-back i {
+  margin: 5px;
+}
+
+/* Sélection de tous les utilisateurs */
+.select-all-users {
+  color: #000000;
+  background-color: #ff8c00;
+  border-radius: 18px;
+  padding: 1% 1.5%;
+  font-size: 1.25rem;
+  transition: color 0.3s, transform 0.3s;
+}
+.select-all-users:hover {
+  font-size: 1.5rem;
+  background-color: #ffd700;
+  text-decoration: none;
+}
+
+/* Présentation des premières lettres des pseudos des utilisateurs */
+.lettre-navigation {
+  padding-left: 20vw;
+  display: flex-column;
+}
+
+/* Sélection des lettres */
+.lettre a {
+  color: #ff8c00;
+  margin-right: 4vw;
+  transition: color 0.3s, transform 0.3s;
+}
+.lettre a:hover {
+  color: #ffd700;
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+/* Styles des commentaires des sujets du backend */
+.subject-comment-backend {
+  text-indent: 5%;
+  max-width: 50vw;
+  font-size: 0.875rem;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: justify;
+}
+
+/* Conteneur de catégories */
+.container-category {
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid #ffa500;
+  font-size: 1rem;
+  width: 50%;
+}
+
+.h4-backend-sujet {
+  display: flex;
+  width: 40%;
+  font-size: 1.5rem;
+  color: #000000;
+  background-color: #ff8c00;
+  border-radius: 18px;
+  padding: 1% 1.5%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#table-appointment {
+  color: #ffd700;
+  width: 90vw;
+  padding-left: 5vw;
+}
+
+.link {
+  color: #000000;
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+.btn-valide {
+  width: 10vw;
+  border: 1px solid #ff8c00;
+  background-color: #ffd700;
+}
+
+.btn-valide:hover {
+  border: 1px solid #ffd700;
+  background-color: #ff8c00;
+}
+
+/* Conteneur titre */
+.title-container-landing {
+  /* Utilise Flexbox pour aligner les éléments */
+  display: flex;
+  /* Centre horizontalement */
+  justify-content: center;
+  /* Centre verticalement si nécessaire */
+  align-items: center;
+  /* Justifie le texte */
+  text-align: center;
+  /* Assure que le conteneur prend toute la largeur */
+  width: 100%;
+}
+
+/* Texte principal */
+.text-accueil {
+  color: #ffffff;
+  font-size: 1.5rem;
+  /* Responsivité */
+}
+@media (max-width: 768px) {
+  .text-accueil {
+    /* Réduction pour les tablettes */
+    font-size: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .text-accueil {
+    /* Réduction supplémentaire pour les mobiles */
+    font-size: 0.8rem;
+  }
+}
+
+/* lien du texte d'accueil */
+.surlignage-accueil {
+  color: #ff8c00;
+}
+.surlignage-accueil:hover {
+  color: #ffd700;
+}
+
+/* Contenu du block de bienvenue */
+.content-block-end {
+  /* Utilise Flexbox pour aligner les éléments */
+  display: flex;
+  /* Centre horizontalement */
+  justify-content: center;
+  /* Centre verticalement si nécessaire */
+  align-items: center;
+  /* Justifie le texte */
+  text-align: justify;
+  /* Assure que le conteneur prend toute la largeur */
+  width: 100%;
+}
+
+/* Text de bas de page */
+.p-ending {
+  color: #ff8c00;
+  font-size: 2rem;
+  text-align: center;
+  justify-content: center;
+  /* Animation fluide */
+  transition: transform 0.3s ease;
+  /* Responsivité */
+}
+.p-ending:hover {
+  /* Agrandit l'image à 110% de sa taille originale */
+  transform: scale(1.1);
+}
+@media (max-width: 768px) {
+  .p-ending {
+    /* Texte légèrement réduit pour les tablettes */
+    font-size: 1rem;
+    /* Moins de marge pour optimiser l'espace */
+    padding-right: 3%;
+  }
+}
+@media (max-width: 480px) {
+  .p-ending {
+    /* Texte encore plus petit pour les mobiles */
+    font-size: 0.875rem;
+    /* Réduction supplémentaire des marges */
+    padding-right: 2%;
+  }
+}
+
+/* Styles globaux */
+body {
+  background-color: #000000;
+}
+
+/* Cadre principal */
+.outer-frame-politique {
+  border: 4px solid #ff8c00;
+  border-radius: 15px;
+  padding: 2%;
+  margin: 10%;
+  background: #f2f2f2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.outer-frame-politique:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Cadre interne */
+.inner-frame-politique {
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  padding: 1.5%;
+  background: #000000;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.politique-main {
+  padding: 40px 20px;
+  font-family: "Roboto", sans-serif;
+  background-color: #000000;
+  color: #f2f2f2;
+  line-height: 1.6;
+}
+
+.politique-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.politique-header .politique-update {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.politique-home-link {
+  font-size: 1.5rem;
+  color: #ff8c00;
+  text-decoration: none;
+  margin-top: 1%;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.politique-home-link:hover {
+  color: #ffd700;
+  transform: scale(1.1);
+}
+
+.politique-divider {
+  border: none;
+  height: 2px;
+  background-color: #ffd700;
+  margin: 20px 0;
+}
+
+.politique-logo {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+.politique-logo .politique-logo-img {
+  width: 40%;
+  border: 1px solid #ff8c00;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.politique-logo .politique-logo-img:hover {
+  transform: scale(1.05);
+}
+
+.politique-content {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 4% 2%;
+  border: 1px solid #f2f2f2;
+  border-radius: 18px;
+}
+.politique-content .politique-section {
+  margin-bottom: 4%;
+}
+.politique-content .politique-section p {
+  font-size: 1.5rem;
+  margin-bottom: 1.5%;
+  line-height: 1.8;
+}
+.politique-content .politique-section .politique-list {
+  margin: 3%;
+  padding: 0;
+  list-style-type: disc;
+  padding-left: 2%;
+  padding-right: 5%;
+}
+.politique-content .politique-section .politique-list li {
+  font-size: 1.5rem;
+  margin-bottom: 1%;
+}
+
+.politique-intro {
+  border: 2px solid #ff8c00;
+  border-radius: 10px;
+  padding: 2%;
+  background: #f2f2f2;
+  font-size: 2rem;
+  color: #000000;
+  text-align: justify;
+  line-height: 1.8;
+  margin-bottom: 3%;
+}
+.politique-intro:hover {
+  background: white;
+  border-color: #ffd700;
+}
+
+.links-politique {
+  color: #ff8c00;
+}
+.links-politique:hover {
+  color: #000000;
+  text-decoration: underline;
+  text-decoration-color: #ff8c00;
+}
+
+/* Style de la page de informations */
+.contact-content {
+  display: flex;
+  /* Centre le contenu horizontalement */
+  justify-content: center;
+  /* Aligne verticalement si nécessaire */
+  align-items: center;
+  position: relative;
+  /* S'assure que le conteneur occupe toute la hauteur de la page */
+  height: 100vh;
+}
+
+.politique-footer {
+  text-align: center;
+  margin-top: 20%;
+  font-size: 2rem;
+  color: #f2f2f2;
+}
+.politique-footer p {
+  font-style: italic;
+}
+
+p {
+  text-indent: 2em;
+}
+
+/* Pour les écrans de 1200px et plus (tablettes et bureau) */
+@media (min-width: 1200px) {
+  .outer-frame-politique {
+    margin: 5%;
+    padding: 3%;
+  }
+  .politique-main {
+    padding: 4.5% 3%;
+  }
+  .politique-title {
+    font-size: 2rem;
+  }
+  .politique-content {
+    max-width: 75%;
+  }
+}
+/* Pour les écrans de 768px à 1199px (tablettes) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .outer-frame-politique {
+    margin: 8%;
+    padding: 2.5%;
+  }
+  .politique-header .politique-update {
+    font-size: 1.25rem;
+  }
+  .politique-home-link {
+    font-size: 1.5rem;
+  }
+  .politique-logo .politique-logo-img {
+    width: 60%;
+    transition: transform 0.3s ease;
+  }
+  .politique-logo .politique-logo-img:hover {
+    transform: scale(1.1);
+  }
+  .politique-main {
+    padding: 4% 2.5%;
+  }
+  .politique-title {
+    font-size: 2rem;
+  }
+  .politique-content {
+    max-width: 85%;
+  }
+  .politique-content .politique-section {
+    margin-bottom: 4%;
+  }
+  .politique-content .politique-section p {
+    font-size: 1.25rem;
+  }
+  .politique-content .politique-section .politique-list {
+    margin: 2%;
+  }
+  .politique-content .politique-section .politique-list li {
+    font-size: 1rem;
+    margin-bottom: 2%;
+  }
+  .politique-footer {
+    font-size: 1.5rem;
+  }
+}
+/* Pour les écrans de 480px à 767px (mobiles en paysage et petites tablettes) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .outer-frame-politique {
+    margin: 12%;
+    padding: 2%;
+  }
+  .politique-header .politique-update {
+    font-size: 1rem;
+  }
+  .politique-home-link {
+    font-size: 1.25rem;
+  }
+  .politique-logo .politique-logo-img {
+    width: 75%;
+    transition: transform 0.3s ease;
+  }
+  .politique-logo .politique-logo-img:hover {
+    transform: scale(1.1);
+  }
+  .politique-main {
+    padding: 3% 1.5%;
+  }
+  .politique-title {
+    font-size: 1.5rem;
+  }
+  .politique-content {
+    max-width: 90%;
+  }
+  .politique-content .politique-section {
+    margin-bottom: 4%;
+  }
+  .politique-content .politique-section p {
+    font-size: 1rem;
+  }
+  .politique-content .politique-section .politique-list {
+    margin: 2%;
+  }
+  .politique-content .politique-section .politique-list li {
+    font-size: 0.875rem;
+    margin-bottom: 2%;
+  }
+  .politique-footer {
+    font-size: 1.25rem;
+  }
+}
+/* Pour les écrans de moins de 480px (mobiles) */
+@media (max-width: 479px) {
+  .outer-frame-politique {
+    margin: 10%;
+    padding: 1.5%;
+  }
+  .politique-header .politique-update {
+    font-size: 0.8rem;
+  }
+  .politique-home-link {
+    font-size: 1rem;
+  }
+  .politique-logo .politique-logo-img {
+    width: 80%;
+    transition: transform 0.3s ease;
+  }
+  .politique-logo .politique-logo-img:hover {
+    transform: scale(1.1);
+  }
+  .politique-main {
+    padding: 2% 1%;
+  }
+  .politique-title {
+    font-size: 1.25rem;
+  }
+  .politique-content {
+    max-width: 100%;
+  }
+  .politique-content .politique-section {
+    margin-bottom: 4%;
+  }
+  .politique-content .politique-section p {
+    font-size: 1rem;
+  }
+  .politique-content .politique-section .politique-list {
+    margin: 2%;
+  }
+  .politique-content .politique-section .politique-list li {
+    font-size: 0.875rem;
+    margin-bottom: 2%;
+  }
+  .politique-footer {
+    font-size: 1rem;
+  }
+}
