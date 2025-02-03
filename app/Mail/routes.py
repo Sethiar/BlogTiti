@@ -84,6 +84,26 @@ def send_birthday_email(email):
     current_app.extensions['mail'].send(msg)
 
 
+# Méthode qui avertit l'administrateur qu'un nouvel utilisateur s'est inscrit.
+def mail_user_inscription(email):
+    """
+    Envoie un mail informant l'administrateur qu'un utilisateur s'est inscrit sur le blog.
+    :param email: email de l'utilisateur qui s'est inscrit.
+    """
+
+    user = User.query.filter_by(email=email).first()
+
+    msg = Message("Inscription d'un nouveau membre",
+                  sender=current_app.config["MAIL_DEFAULT_SENDER"],
+                  recipients=[email])
+    msg.body = f"Hey hey Titi, \n" \
+               "\n" \
+               f"Un nouveau membre, {user.pseudo}, vient de s'inscrire. \n" \
+               f"Et un de plus. \n"
+    current_app.extensions['mail'].send(msg)
+
+
+
 # Méthode qui avertit l'utilisateur de son bannissement pendant 7 jours.
 def mail_banned_user(email):
     """
