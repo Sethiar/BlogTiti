@@ -50,14 +50,8 @@
             <nav class="nav-links" aria-label="Navigation principale">
                 <ul>
                     <li><a href="{{ url_for('landing_page') }}">Accueil de Titi</a></li>
-                    <li><a href="{{ url_for('user.user_recording') }}">Devenir membre</a></li>
                     <li><a href="{{ url_for('frontend.forum') }}">Forum de Titi</a></li>
-                    {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('chat.chat_request', user_id=current_user.id) }}">Demande de chat vidéo</a>
-                    </li>
-                    {% else %}
-                    <li><a href="{{ url_for('auth.login', next=url_for('chat.chat_request')) }}">Demande de visio</a></li>
-                    {% endif %}
+                    <li><a href="#">Demande de visio</a></li>
                     <li><a href="{{ url_for('frontend.show_videos') }}">Accès aux videos</a></li>
 
                     <li><a href="https://www.youtube.com/@titi.lebricoleur">Accès à ma chaîne YouTube</a></li>
@@ -66,21 +60,6 @@
         </div>
         <div class="space2"></div>
 
-        <!-- Actions utilisateur -->
-        <div class="actions">
-            {% if logged_in %}
-            <div class="logged">
-                <p class="logged-pseudo">Bienvenue {{ pseudo }} !!</p>
-            </div>
-            {% endif %}
-            <div class="buttons">
-                {% if logged_in %}
-                <a href="{{ url_for('auth.user_logout') }}" class="btn-primary">Se déconnecter</a>
-                {% else %}
-                <a href="{{ url_for('auth.login') }}" class="btn-primary">Se connecter</a>
-                {% endif %}
-            </div>
-        </div>
     </header>
     <!-- Menu hamburger pour mobile -->
     <button class="hamburger" aria-label="Ouvrir le menu">
@@ -115,7 +94,6 @@
                 <ul>
                     <li><a href="https://www.youtube.com/@titi.lebricoleur">Chaîne Youtube</a></li>
                     <li><a href="{{ url_for('functional.informations') }}">Informations</a></li>
-                    <li><a href="{{ url_for('auth.unsubscribe_acces') }}" style="color: red;">Se désinscrire</a></li>
                 </ul>
             </section>
             <section class="footer-section">
