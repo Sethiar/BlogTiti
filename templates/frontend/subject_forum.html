@@ -13,16 +13,13 @@
 <!-- main -->
 {% block main_content %}
 <div class="main-content">
-  
   <!-- Cadre extérieur -->
   <div class="outer-frame-politique">
-    
     <!-- Cadre intérieur -->
     <div class="inner-frame-politique">
-      
       <!-- Division de retour à la page de tous les sujets -->
       <div class="space2"></div>
-      
+
       <div class="back-link-forum">
         <a class="btn-primary" href="{{ url_for('frontend.forum') }}"
           >Retour au forum</a
@@ -49,7 +46,6 @@
 
       <!-- Division pour image forum -->
       <div class="forum-image-container">
-        
         <!-- Première photo -->
         <div class="forum-pic">
           <div class="forum-pic-left">
@@ -59,7 +55,7 @@
               class="forum-pic-img"
             />
           </div>
-          
+
           <!-- Deuxième photo -->
           <div class="forum-pic-right">
             <img
@@ -90,7 +86,6 @@
 
       <!-- Conteneur formulaire des commentaires -->
       <div class="container-comment">
-        
         <!-- Conteneur commentaire -->
         <div class="comment-avis">
           <h4 class="h4-forum">Vous pouvez laisser un commentaire :</h4>
@@ -101,17 +96,12 @@
           <form
             id="addCommentSubject"
             method="POST"
-            action="{{ url_for('user.comment_subject', user_pseudo=current_user.pseudo, subject_id=subject.id) }}"
+            action="{{ url_for('user.comment_subject', subject_id=subject.id) }}"
           >
             <!-- Token de sécurité -->
             {{ formcomment.csrf_token }}
 
             <input type="hidden" name="subject_id" value="{{ subject.id }}" />
-            <input
-              type="hidden"
-              name="user_pseudo"
-              value="{{ current_user.pseudo }}"
-            />
             <textarea
               name="comment_content"
               placeholder="Votre commentaire"
@@ -136,18 +126,15 @@
 
       <!-- Conteneur pour poster un commentaire -->
       <div class="comment">
-        
-        <!-- Conteneur de la photo de l'utilisateur -->
-        <div class="comment-header">
-          <img
-            src="{{ url_for('user.profil_photo', user_id=comment.user_id) }}"
-            alt="Photo de profil"
-            class="profile-picture"
-          />
+          
+          <!-- Conteneur de la photo de l'utilisateur qui a répondu -->
+          <div class="comment-header">
+            <img src="../../static/Images/images_forum/default.png"
+                alt="Photo de profil par default" class="reply-profile-picture">
 
           <div class="comment-user-info">
-            <strong class="user-pseudo">{{ comment.user.pseudo }}</strong>
-            <span class="user-role">{{ comment.user.role }} a commenté  </span>
+            <strong class="user-pseudo">Utilisateur</strong>
+            <span class="user-role"> a commenté </span>
             <small class="comment-date">
               Le {{ moment(comment.comment_date).format('DD-MM-YYYY à HH:mm') }}
             </small>
@@ -163,224 +150,72 @@
 
         <div class="separation"></div>
 
-        <!-- Conteneur des modifications au commentaire -->
-        {% if comment.user_id == current_user.id %}
-
-        <!-- Conteneur des actions utilisateurs -->
-        <div class="comment-actions">
-          
-          <!-- Lien vers la modification du commentaire -->
+        <!-- Conteneur de réponse à un commentaire -->
+        <div class="reply-button-container">
+          <!-- Lien permettant de répondre à un commentaire -->
           <a
-            href="{{ url_for('user.change_comment', id=comment.id) }}">
-            Modifier le commentaire
+            href="{{ url_for('user.reply_form_subject', comment_id=comment.id) }}"
+            class="reply-button"
+          >
+            Répondre
           </a>
 
-          <!-- Espacement responsive -->
-          <div class="space-phone"></div>
-
-          <!-- Formulaire de suppression du commentaire -->
-          <form
-            action="{{ url_for('user.delete_comment', id=comment.id) }}"
-            method="POST"
-            class="delete-comment-form">
-            <!-- Token CSRF pour la sécurité -->
-            {{ formsuppress.csrf_token }}
-
-            <!-- Utilisation d'un bouton pour la suppression -->
-            <button
-              type="submit"
-              onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre commentaire ?'); ">
-              Supprimer le commentaire
-            </button>
-          </form>
+          <div class="space"></div>
         </div>
-        {% endif %}
       </div>
     </div>
 
+    <div class="inner-frame">
+      
+      <!-- Conteneur principal de réponses au commentaire -->
+      <div class="replies-container">
+        {% for reply in comment.replies %}
 
-      <!-- Conteneur de réponse à un commentaire -->
-      <div class="reply-button-container">
-        
-        <!-- Lien permettant de répondre à un commentaire -->
-        <a
-          href="{{ url_for('user.reply_form_subject', comment_id=comment.id, user_pseudo=current_user.pseudo) }}"
-          class="reply-button"
-          >Répondre</a
-        >
+        <!-- Conteneur d'une réponse individuelle -->
+        <div class="reply-card">
 
-        <!-- Conteneur permettant de liker un commentaire -->
-        <div class="like-section" data-user-id="{{ current_user.pseudo }}">
-          <div class="like-wrapper">
-            <!-- Conteneur de l'icône du like -->
-            <div
-              class="like-icon"
-              data-comment-id="{{ comment.id }}"
-              onclick="toggleLike(this, '{{ comment.id }}', '{{ current_user.pseudo }}')"
-            >
-              {% if comment_likes_data[comment.id].liked_by_current_user %}
+          <!-- Conteneur de la photo de l'utilisateur qui a répondu -->
+          <div class="reply-header">
+            <img src="../../static/Images/images_forum/default.png"
+              alt="Photo de profil par default" class="reply-profile-picture">
 
-              <!-- Icône pour un cœur plein -->
-              &#9829; 
-              {% else %}
-              <!-- Icône pour un cœur vide -->
-              &#9825; 
-              {% endif %}
-            </div>
-            
-            <div class="container-likes">
-
-                <!-- Message des utilisateurs qui ont aimé -->
-                <p class="like-message" id="like-message-{{ comment.id }}" >
-                    {% set like_data = comment_likes_data[comment.id] %} 
-                    {% if like_data.like_count == 1 %} 
-                    1 utilisateur a aimé le commentaire. 
-                    {% elif like_data.like_count > 1 %} 
-                    {{like_data.like_count}} utilisateurs ont aimé le commentaire. 
-                    {% else %} 
-                    Personne n'a aimé le commentaire pour le moment. 
-                    {% endif %}
-                </p>
+            <!-- Conteneur du pseudo de l'utilisateur qui a répondu -->
+            <div class="reply-info">
+              <strong class="reply-user-pseudo"> Utilisateur </strong>
+              <span class="reply-user-role"> a répondu </span>
+              <small class="reply-date">
+                Le {{ moment(reply.reply_date).format('DD-MM-YYYY à HH:mm') }}
+              </small>
             </div>
           </div>
 
-        <!-- Formulaire permettant de liker un commentaire -->
-        <form id="formlikecomment" method="POST"
-                action="{{ url_for('user.likes_comment_subject') }}"
-                style="display: none">
-            
-                <!-- Token CSRF pour la sécurité -->
-            {{ formlikecomment.csrf_token }}
-
-            <input type="hidden" name="comment_id" value="{{ comment.id }}"/>
-                <input
-                  type="hidden"name="user_pseudo"value="{{ current_user.pseudo }}"/>
-                <button type="submit" class="like-submit"></button>
-              </form>
-
-              <div class="space"></div>
-            </div>
+          <!-- Contenu de la réponse -->
+          <div class="reply-body">
+            <p class="reply-content">
+              {{ reply.reply_content | replace('\n', '<br />') | safe }}
+            </p>
           </div>
         </div>
-        
-        <div class="inner-frame">
-        
-            <!-- Conteneur principal de réponses au commentaire -->
-            <div class="replies-container">
-            {% for reply in comment.replies %}
-
-                <!-- Conteneur d'une réponse individuelle -->
-                <div class="reply-card">
-
-                    <!-- Conteneur de la photo de l'utilisateur qui a répondu -->
-                    <div class="reply-header">
-                       <img
-                            src="{{ url_for('user.profil_photo', user_id=reply.user_id) }}"
-                            alt="Photo de profil"
-                            class="reply-profile-picture"
-                        />
-
-                        <!-- Conteneur du pseudo de l'utilisateur qui a répondu -->
-                        <div class="reply-info">
-                            <strong class="reply-user-pseudo">
-                                {{ reply.user.pseudo }}
-                            </strong>
-                            <span class="reply-user-role">
-                            {{ reply.user.role }} a répondu
-                            </span>
-                            <small class="reply-date">
-                                Le {{ moment(reply.reply_date).format('DD-MM-YYYY à HH:mm') }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="separation"></div>
-
-            <!-- Contenu de la réponse -->
-            <div class="reply-body">
-              <p class="reply-content">
-                {{ reply.reply_content | replace('\n', '<br />') | safe }}
-              </p>
-            </div>
-
-            <div class="separation"></div>
-            
-            <!-- Conteneur permettant de changer le contenu de la réponse -->
-            <div class="reply-actions">
-              {% if reply.user_id == current_user.id %}
-
-              <!-- Lien vers la modification de la réponse -->
-              <a
-                href="{{ url_for('user.change_reply', id=reply.id) }}"
-                class="change-button"
-                style="margin-left: 10%"
-              >
-                Modifier la réponse
-              </a>
-
-              <!-- Espacement responsive -->
-              <div class="space-phone"></div>
-
-              <!-- Formulaire de suppression de la réponse -->
-              <form
-                action="{{ url_for('user.delete_reply', id=reply.id) }}"
-                method="POST"
-                class="delete-comment-form"
-                style="margin-left: 10%; display: inline"
-              >
-                <!-- Token CSRF pour la sécurité -->
-                {{ formsuppressreply.csrf_token }}
-
-                <!-- Utilisation d'un bouton pour la suppression -->
-                <button
-                  type="submit"
-                  class="suppress-button"
-                  onclick="return confirm('Êtes-vous certain-e de vouloir supprimer votre réponse ?');"
-                >
-                  Supprimer la réponse
-                </button>
-              </form>
-              <div class="space2"></div>
-              {% endif %}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="space2"></div>
-        <div class="separation2"></div>
-        <div class="space2"></div>
+        <div class="separation"></div>
         {% endfor %}
       </div>
-      </div>
-
-      <!-- Séparation -->
-      <hr class="politique-divider" />
-
-      <!-- Division de retour à la page d'accueil -->
-      <div class="back-link-forum">
-        <a class="btn-primary" href="{{ url_for('landing_page') }}"
-          >Retour à la page d'accueil</a
-        >
-      </div>
+      {% endfor %}
     </div>
+
+    <div class="space2"></div>
+    <div class="separation2"></div>
+    <div class="space2"></div>
+
+    <!-- Séparation -->
+    <hr class="politique-divider" />
+
+    <!-- Division de retour à la page d'accueil -->
+    <div class="back-link-forum">
+      <a class="btn-primary" href="{{ url_for('landing_page') }}">
+        Retour à la page d'accueil
+      </a>
+    </div>
+
+    {% endblock %}
   </div>
-  
-
-  <script src="{{ url_for('static', filename='javascript/like_comment_subject.js') }}"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var form = document.getElementById('addCommentSubject');
-
-        // Variable JavaScript indiquant si l'utilisateur est connecté
-        var isAuthenticated = {{ is_authenticated|tojson }};
-
-        form.addEventListener('submit', function(event) {
-            if (!isAuthenticated) {
-                // Afficher une alerte si l'utilisateur n'est pas connecté
-                alert("Vous devez être connecté pour ajouter un commentaire à ce sujet.");
-                event.preventDefault(); // Empêche la soumission du formulaire
-                }
-        });
-    });
-  </script>
-  {% endblock %}
 </div>

@@ -123,21 +123,4 @@
 </div>
 
 {% endblock %}
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('addSubjectForm');
-
-    // Variable JavaScript indiquant si l'utilisateur est connecté
-    var isAuthenticated = {{ is_authenticated|tojson }};
-
-    form.addEventListener('submit', function(event) {
-        if (!isAuthenticated) {
-            // Afficher une alerte si l'utilisateur n'est pas connecté
-            alert("Vous devez être connecté pour ajouter un sujet.");
-            event.preventDefault(); // Empêche la soumission du formulaire
-            }
-    });
-});
-</script>
 {% endblock %}
