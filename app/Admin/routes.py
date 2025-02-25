@@ -5,19 +5,15 @@ utilisateurs, la suppression des commentaires des différentes sections et l'acc
 
 from datetime import datetime
 
-import bcrypt
 
 from app.Admin import admin_bp
 
-from flask import render_template, url_for, redirect, flash, request
-
-from PIL import Image
-from io import BytesIO
+from flask import render_template, url_for, redirect, flash
 
 from markupsafe import escape
 
 from app.Models import db
-from app.Models.forms import  SuppressSubject, UserAdminSaving, NewSubjectForumForm
+from app.Models.forms import  SuppressSubject, NewSubjectForumForm
 
 from app.Models.admin import Admin
 from app.Models.subject_forum import SubjectForum
@@ -27,8 +23,6 @@ from app.Models.videos import Video
 from app.Models.comment_video import CommentVideo
 
 from app.decorators import admin_required
-
-from app.extensions import allowed_file
 
 
 # Route permettant d'accéder au backend.
@@ -97,7 +91,8 @@ def list_subject_forum():
     """
     # Instanciation du formulaire de suppression.
     formsuppresssubject = SuppressSubject()
-    # Instanciation du formulaire d'ajout.
+    
+    # Instanciation du formulaire d'ajout de sujet.
     formsubjectforum = NewSubjectForumForm()
 
     # Récupération des sujets du forum.
@@ -108,6 +103,9 @@ def list_subject_forum():
         {'id': subject_id, 'nom': nom, 'author': author}
         for subject_id, nom, author in subjects
     ]
+    
+    # Fermeture de session.
+    db.session.close()
 
     return render_template("backend/subject_forum_list.html", subject_data=subject_data,
                            formsuppresssubject=formsuppresssubject, formsubjectforum=formsubjectforum)
@@ -139,6 +137,9 @@ def add_subject_forum_back():
         {'id': subject_id, 'nom': nom, 'author': author}
         for subject_id, nom, author in subjects
     ]
+    
+    # Fermeture de la session.
+    db.session.close()
 
     # Retourne la vue avec le formulaire et les sujets mis à jour.
     return render_template("backend/subject_forum_list.html", formsubjectforum=formsubjectforum,
@@ -176,6 +177,9 @@ def suppress_subject(id):
     else:
         # Message d'erreur si le sujet n'est pas trouvé.
         flash("Le sujet demandé n'existe pas.", 'error')
+        
+        # Fermeture de la session.
+        db.session.close()
 
     return redirect(url_for("admin.list_subject_forum"))
 
@@ -211,6 +215,9 @@ def suppress_subject_comment(id):
     else:
         # Si le commentaire n'est pas trouvé, un message d'erreur peut être affiché.
         flash("Le commentaire demandé n'existe pas.", 'error')
+        
+        # Fermeture de la session.
+        db.session.close()
 
     return redirect(url_for("admin.list_comments_forum"))
 
@@ -245,100 +252,12 @@ def suppress_video_comment(id):
     db.session.commit()
 
     flash(f"Le commentaire a été supprimé avec succès le {datetime.now().strftime('%d-%m-%Y à %H:%M:%S')}", 'success')
+    
+    # Fermeture de la session.
+    db.session.close()
     return redirect(url_for('admin.list_comments_video'))
 
 
-# Route permettant de joindre le formulaire pour enregistrer un utilisateur avec le rôle administrateur.
-@admin_bp.route("/creer-administrateur-utilisateur", methods=['GET', 'POST'])
-def create_admin_user_form():
-    """
-    Crée un utilisateur avec le rôle administrateur automatiquement.
-    Utilise des informations prédéfinies et des variables d'environnement pour créer un administrateur.
-    :return: Redirection vers la page du backend - Admin/backend.html ou affiche un message d'erreur.
-    """
-    # Instanciation du formulaire.
-    formuseradmin = UserAdminSaving()
-
-    return render_template("backend/form_useradmin.html", formuseradmin=formuseradmin)
-
-
-# Route permettant de traiter les données du formulaire de l'enregistrement d'un utilisateur administrateur.
-@admin_bp.route('/enregistrement-utilisateur-administrateur', methods=['GET', 'POST'])
-def user_admin_recording():
-    """
-    Gère l'enregistrement d'un nouvel utilisateur. Cette fonction traite à la fois les
-    requêtes GET et POST. Lors d'une requête GET, elle affiche le formulaire
-    d'enregistrement. Lors d'une requête POST, elle traite les données soumises par
-    l'utilisateur, valide le formulaire, gère le fichier de photo de profil, redimensionne
-    l'image et enregistre les informations de l'utilisateur dans la base de données.
-
-    :return: Redirection vers la page de confirmation de l'email si l'inscription est réussie,
-             sinon redirection vers la page d'enregistrement avec un message d'erreur.
-    """
-    formuseradmin = UserAdminSaving()
-
-    if formuseradmin.validate_on_submit():
-        # Assainissement des données.
-        pseudo = formuseradmin.pseudo.data
-        role = formuseradmin.role.data
-        password_hash = formuseradmin.password.data
-        email = formuseradmin.email.data
-        date_naissance = formuseradmin.date_naissance.data
-
-        salt = bcrypt.gensalt()
-        password_hash = bcrypt.hashpw(password_hash.encode('utf-8'), salt)
-
-        # Vérification de la soumission du fichier.
-        if 'profil_photo' not in request.files or request.files['profil_photo'].filename == '':
-            flash("Aucune photo de profil fournie.", "error")
-            return redirect(url_for('user.user_recording'))
-
-        profil_photo = request.files['profil_photo']
-        if profil_photo and allowed_file(profil_photo.filename):
-            photo_data = profil_photo.read()
-
-            # Redimensionnement de l'image avec Pillow.
-            try:
-                img = Image.open(BytesIO(photo_data))
-                img.thumbnail((75, 75))
-                img_format = img.format if img.format else 'JPEG'
-                output = BytesIO()
-                img.save(output, format=img_format)
-                photo_data_resized = output.getvalue()
-            except Exception as e:
-                flash(f"Erreur lors du redimensionnement de l'image : {str(e)}", "error")
-                return redirect(url_for("admin.user_admin_recording"))
-
-            if len(photo_data_resized) > 5 * 1024 * 1024:  # 5 Mo
-                flash("Le fichier est trop grand (maximum 5 Mo).", "error")
-                return redirect(url_for("admin.user_admin_recording"))
-
-            photo_data = profil_photo.read()  # Lire les données binaires de l'image
-        else:
-            flash("Type de fichier non autorisé.", "error")
-            return redirect(url_for("admin.user_admin_recording"))
-
-        new_user = User(
-            pseudo=pseudo,
-            role=role,
-            password_hash=password_hash,
-            salt=salt,
-            email=email,
-            date_naissance=date_naissance,
-            # Stockage des données binaires de l'image.
-            profil_photo=photo_data_resized
-        )
-
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Inscription réussie! Vous pouvez maintenant vous connecter.")
-            return redirect(url_for("mail.send_confirmation_email_user", email=email))
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Erreur lors de l'enregistrement de l'utilisateur: {str(e)}", "error")
-
-    return render_template("backend/backend.html", formuseradmin=formuseradmin)
 
 
 

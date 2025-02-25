@@ -5,6 +5,8 @@ Modèles des formulaires utilisés dans le blog de Tititechnique.
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 
+from app.Models.admin import Admin
+
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, EmailField, DateField, FileField, \
     TextAreaField
 from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo
@@ -188,8 +190,8 @@ class UserAdminSaving(FlaskForm):
 
         """
         # Vérification des pseudos des utilisateurs déjà présents dans la base de données.
-        user = User.query.filter_by(pseudo=pseudo.data).first()
-        if user:
+        adminuser = Admin.query.filter_by(pseudo=pseudo.data).first()
+        if adminuser:
             raise ValidationError('Ce pseudo est déjà utilisé. Veuillez en choisir un autre.')
 
     # Fonction qui vérifie si l'email existe déjà.
@@ -465,3 +467,30 @@ class SuppressCommentVideoAdminForm(FlaskForm):
     submit = SubmitField(
         "Supprimer"
     )
+
+
+# Formulaire de demande de visio.
+class AskVisio(FlaskForm):
+    """
+    Formulaire afin de demander une visio avec l'administrateur.
+    
+    Attributes : 
+        email (EmailField) : email de l'utilisateur.
+        submit (SubmitField) : Bouton de soumission du formulaire.
+        csrf_token (HiddenField) : Champ de sécurité. 
+    """
+    # Champ du formulaire Email de l'utilisateur
+    email = EmailField(
+        "Email de l'utilisateur",
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Votre email"}
+    )
+    # Bouton de soumission du formulaire
+    submit = SubmitField(
+        "Valider la demande de visio"
+    )
+    # Token de sécurité
+    csrf_token = HiddenField()
+    
+
+    

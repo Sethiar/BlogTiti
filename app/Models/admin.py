@@ -16,7 +16,9 @@ class Admin(db.Model, UserMixin):
     Attributes :
         id (int): Identifiant de l'administrateur.
         pseudo (str): Pseudo de l'administrateur.
-        role (str): Rôle de l'administrateur
+        role (str): Rôle de l'administrateur.
+        email (str): Email de l'administrateur.
+        
         password_hash (LB): Mot de passe hashé.
         salt (LB): Salage du mot de passe.
     """
