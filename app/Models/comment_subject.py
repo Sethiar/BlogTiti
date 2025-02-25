@@ -16,7 +16,6 @@ class CommentSubject(db.Model):
         comment_content (str) : Contenu du commentaire.
         comment_date (datetime) : Date et heure du commentaire.
         subject_id (int): Identifiant du sujet associé au commentaire.
-        user_id (int) : Identifiant de l'utilisateur qui a écrit le commentaire.
     """
     __tablename__ = "comment_subject"
     __table_args__ = {"extend_existing": True}
@@ -29,15 +28,8 @@ class CommentSubject(db.Model):
     subject_id = db.Column(db.Integer, db.ForeignKey('subject_forum.id'), nullable=False)
     subject = db.relationship('SubjectForum', back_populates='comments')
 
-    # Relation avec la classe User.
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', back_populates='comments_subject')
-
     # Relation avec la classe ReplySubject avec suppression en cascade.
     replies = db.relationship('ReplySubject', back_populates='comment', cascade='all, delete-orphan')
-
-    # Relation avec la classe LikeCommentSubject avec suppression en cascade.
-    likes = db.relationship('CommentLikeSubject', back_populates='comment', cascade='all, delete-orphan')
 
     def __repr__(self):
         """
@@ -46,5 +38,5 @@ class CommentSubject(db.Model):
         Returns :
             str: Chaîne représentant l'objet CommentSubject.
         """
-        return f"CommentSubject(id={self.id}, subject_id={self.subject_id}, user_id={self.user_id}, " \
+        return f"CommentSubject(id={self.id}, subject_id={self.subject_id}, " \
                f"comment_date={self.comment_date})"

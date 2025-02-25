@@ -6,10 +6,8 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, EmailField, DateField, FileField, \
-    TextAreaField, TimeField
+    TextAreaField
 from wtforms.validators import DataRequired, Length, ValidationError, Email, EqualTo
-
-from app.Models.user import User
 
 
 # Formulaire permettant la connexion administrateur.
@@ -103,129 +101,6 @@ class AdminRecording(FlaskForm):
     profil_photo = FileField(
         "Photo de profil souhaitée :",
         validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], "Images only !!")]
-    )
-    # Action de soumission du formulaire.
-    submit = SubmitField(
-        "Souscrire aux conditions générales du blog"
-    )
-    csrf_token = HiddenField()
-
-
-class UserSaving(FlaskForm):
-    """
-        Formulaire d'inscription pour les utilisateurs du site.
-
-        Attributes:
-            email (EmailField): Champ pour l'adresse e-mail de l'utilisateur.
-            pseudo (StringField) : Champ pour le pseudo unique de l'utilisateur.
-            password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
-            password2 (PasswordField) : Champ pour la confirmation du mot de passe de l'utilisateur.
-            profil_photo (FileField) : Champ pour télécharger la photo de profil de l'utilisateur.
-            date_naissance (DateField) : Champ pour la date de naissance de l'utilisateur.
-            submit (SubmitField): Bouton de soumission du formulaire.
-            csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-
-        Example:
-            form = UserSaving()
-        """
-    # Email de l'utilisateur.
-    email = EmailField(
-        "Email",
-        validators=[DataRequired(), Email()],
-        render_kw={"placeholder": "Votre email"}
-    )
-    # Pseudo de l'utilisateur.
-    pseudo = StringField(
-        "Pseudo",
-        validators=[DataRequired(), Length(min=2, max=30)],
-        render_kw={"placeholder": "Votre pseudo"}
-    )
-    # Password de l'utilisateur.
-    password = PasswordField(
-        "Mot de passe Utilisateur",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Mot de passe"}
-    )
-    # Vérification du password de l'utilisateur.
-    password2 = PasswordField(
-        "Confirmer le mot de passe",
-        validators=[DataRequired(), EqualTo('password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Confirmation du mot de passe"}
-    )
-    # Date de naissance de l'utilisateur.
-    date_naissance = DateField(
-        "Date de naissance",
-        validators=[DataRequired()]
-    )
-    # Photo choisie par l'utilisateur.
-    profil_photo = FileField(
-        "Photo de profil souhaitée :",
-        validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], "Images seulement !!")]
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "Souscrire aux conditions générales du blog"
-    )
-    csrf_token = HiddenField()
-
-    # Fonction qui vérifie si le pseudo existe déjà.
-    def validate_pseudo(self, pseudo):
-        """
-        Valide que le pseudo choisi n'existe pas déjà dans la base de données des utilisateurs.
-
-        Args :
-            pseudo (StringField): Pseudo à valider.
-
-        Raises :
-            ValidationError : Si le pseudo est déjà utilisé.
-
-        """
-        # Vérification des pseudos utilisateurs déjà présents dans la table de données.
-        user = User.query.filter_by(pseudo=pseudo.data).first()
-        if user:
-            raise ValidationError('Ce pseudo est déjà utilisé. Veuillez en choisir un autre.')
-
-    # Fonction qui vérifie si l'email existe déjà.
-    def validate_email(self, email):
-        """
-        Valide que l'adresse e-mail n'existe pas déjà dans la base de données des utilisateurs.
-
-        Args :
-            email (EmailField): Adresse e-mail à valider.
-
-        Raises :
-            ValidationError : Si l'e-mail est déjà utilisé.
-
-        """
-        # Vérification des emails utilisateurs déjà présents dans la table de données.
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
-            raise ValidationError('Cet email est déjà utilisé. Utilisez un autre email.')
-
-    def __repr__(self):
-        return f"UserSaving(pseudo='{self.pseudo}', email='{self.email.data}', date de naissance='{self.date_naissance}')"
-
-
-# Formulaire de désinscription utilisateur.
-class UserUnsubscribe(FlaskForm):
-    """
-    Formulaire de désinscription pour les utilisateurs du site.
-
-    Attributes:
-        email (EmailField): Champ pour l'adresse e-mail de l'utilisateur.
-        password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
-    """
-    # Email de l'utilisateur.
-    email = EmailField(
-        "Email",
-        validators=[DataRequired(), Email()],
-        render_kw={"placeholder": "Votre email"}
-    )
-    # Password donné par l'utilisateur.
-    password = PasswordField(
-        "Mot de passe utilisateur",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre mot de passe"}
     )
     # Action de soumission du formulaire.
     submit = SubmitField(
@@ -329,128 +204,9 @@ class UserAdminSaving(FlaskForm):
             ValidationError : Si l'e-mail est déjà utilisé.
 
         """
-        # Vérification des emails des utilisateurs déjà présents dans la base de données.
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
-            raise ValidationError('Cet email est déjà utilisé. Utilisez un autre email.')
 
     def __repr__(self):
-        return f"UserSaving(pseudo='{self.pseudo}', email='{self.email.data}', date de naissance='{self.date_naissance}')"
-
-
-# Formulaire permettant l'authentification d'un utilisateur.
-class UserConnection(FlaskForm):
-    """
-    Formulaire de connexion pour les utilisateurs du site.
-
-    Attributes :
-        pseudo (StringField) : Champ pour le pseudo de l'utilisateur.
-        password (PasswordField) : Champ pour le mot de passe de l'utilisateur.
-        submit (SubmitField): Bouton de soumission du formulaire.
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-
-    Example
-        form = UserConnection()
-    """
-    # Pseudo de l'utilisateur désirant se connecter.
-    pseudo = StringField(
-        "Pseudo",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre pseudo"}
-    )
-    # Mot de passe de l'utilisateur.
-    password = PasswordField(
-        "Mot de passe", validators=[DataRequired()],
-                             render_kw={"placeholder": "Votre mot de passe"}
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "se connecter"
-    )
-    csrf_token = HiddenField()
-
-
-# Formulaire pour mot de passe oublié.
-class ForgetPassword(FlaskForm):
-    """
-    Formulaire permettant de réinitialiser le mot de passe.
-
-    Attributes :
-        email(EmailField) : Email de l'utilisateur voulant réinitialiser son mot de passe.
-        new_password (PasswordField) : Nouveau mot de passe.
-        csrf_token (HiddenFields) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Email de l'utilisateur désirant changer son mot de passe.
-    email = EmailField(
-        "Email",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre email"}
-    )
-    # Action de soumission du formulaire.
-    submit = SubmitField(
-        "Réinitialiser le mot de passe"
-    )
-    csrf_token = HiddenField()
-
-
-# Formulaire pour enregistrer son nouveau mot de passe.
-class RenamePassword(FlaskForm):
-    """
-    Formulaire permettant de réinitialiser le mot de passe.
-
-    Attributes :
-        new_password (PasswordField) : Nouveau mot de passe.
-        confirm_password (PasswordField) : Confirmation du mot de passe.
-        csrf_token (HiddenFields) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Nouveau mot de passe.
-    new_password = PasswordField(
-        "Nouveau mot de passe utilisateur",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Nouveau mot de passe"}
-    )
-    # Confirmation du nouveau mot de passe.
-    confirm_password = PasswordField(
-        "Confirmer le nouveau mot de passe",
-        validators=[DataRequired(), EqualTo('new_password', message='Les mots de passe doivent correspondre.')],
-        render_kw={"placeholder": "Confirmation du nouveau mot de passe"}
-    )
-    csrf_token = HiddenField()
-
-
-# Formulaire permettant de bannir un utilisateur.
-class BanUserForm(FlaskForm):
-    """
-    Formulaire permettant de bannir un utilisateur.
-
-    Attributes :
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-        submit (SubmitField): Bouton de soumission du formulaire.
-
-    Example:
-        form = BanUserForm()
-
-    """
-    # Action de soumettre le formulaire.
-    submit = SubmitField('Bannir')
-    csrf_token = HiddenField()
-
-
-# Formulaire permettant de bannir un utilisateur.
-class UnBanUserForm(FlaskForm):
-    """
-    Formulaire permettant de débannir un utilisateur.
-
-    Attributes :
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-        submit (SubmitField): Bouton de soumission du formulaire.
-
-    Example:
-        form = UnBanUserForm()
-    """
-    # Action de soumettre le formulaire.
-    submit = SubmitField('Débannir')
-    csrf_token = HiddenField()
+        return f"UserAdminSaving(pseudo='{self.pseudo}', email='{self.email.data}', date de naissance='{self.date_naissance}')"
 
 
 # Formulaire permettant la création d'un nouveau sujet sur le forum.
@@ -504,7 +260,6 @@ class CommentSubjectForm(FlaskForm):
 
     Attributes :
         comment_content (TextAreaField) : Champ pour le contenu du commentaire.
-        user_pseudo (StringField) : Champ pour le pseudo de l'utilisateur.
 
     Example :
         form = CommentSubjectForm()
@@ -516,40 +271,11 @@ class CommentSubjectForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "Saisie du commentaire"}
     )
-    # Le pseudo de l'utilisateur.
-    user_pseudo = StringField(
-        "Pseudo de l'utilisateur",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre pseudo"}
-    )
     # Action de soumettre le formulaire.
     submit = SubmitField(
         "Soumettre le commentaire"
     )
 
-    csrf_token = HiddenField()
-
-
-# Formulaire permettant à un utilisateur de modifier son commentaire pour la section forum.
-class ChangeCommentSubjectForm(FlaskForm):
-    """
-    Formulaire permettant de modifier un commentaire par l'utilisateur.
-
-    Attributes :
-        comment_content : Contenu du commentaire de l'utilisateur.
-        submit (SubmitField): Bouton de soumission du formulaire.
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Contenu du commentaire de l'utilisateur.
-    comment_content = TextAreaField(
-        "Contenu du commentaire",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Saisie du commentaire"}
-    )
-    # Action de soumettre le commentaire.
-    submit = SubmitField(
-        "Soumettre le commentaire"
-    )
     csrf_token = HiddenField()
 
 
@@ -595,29 +321,6 @@ class ReplySubjectForm(FlaskForm):
     csrf_token = HiddenField()
 
 
-# Formulaire permettant à un utilisateur de modifier sa réponse à un commentaire dans la section forum.
-class ChangeReplySubject(FlaskForm):
-    """
-    Formulaire permettant à un utilisateur de modifier sa réponse.
-
-    Attributes :
-        reply_content : Contenu du commentaire de l'utilisateur.
-        submit (SubmitField) : Bouton de soumission du formulaire.
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Contenu de la réponse.
-    reply_content = TextAreaField(
-        "Contenu de la réponse",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre réponse"}
-    )
-    # Action de soumettre le commentaire.
-    submit = SubmitField(
-        "Soumettre la réponse"
-    )
-    csrf_token = HiddenField()
-
-
 # Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire dans la section forum.
 class SuppressReplySubject(FlaskForm):
     """
@@ -658,76 +361,6 @@ class SuppressCommentSubjectForm(FlaskForm):
     )
 
 
-# Formulaire permettant de liker un commentaire dans la section forum.
-class CommentLike(FlaskForm):
-    """
-    Formulaire permettant de liker un commentaire.
-
-    Attributes :
-        csrf_token (HiddenField) : Jeton csrf_token pour la sécurité des commentaires.
-        submit (SubmitField): Bouton de soumission du formulaire.
-
-    Example:
-        form = CommentLike()
-    """
-    # Action de soumettre le commentaire.
-    submit = SubmitField()
-    csrf_token = HiddenField()
-
-
-# Formulaire permettant de demander un chat vidéo à l'administrateur.
-class ChatRequestForm(FlaskForm):
-    """
-    Formulaire permettant de demander un chat vidéo à l'administrateur.
-
-    Attributes:
-        request_content (TextAreaField): Champ pour le contenu de la demande.
-        pseudo (StringField): Champ pour le pseudo de l'utilisateur.
-        date_rdv (DateField): Champ pour sélectionner la date du chat vidéo.
-        heure (TimeField): Champ pour indiquer l'heure du chat vidéo.
-        attachment (FileField): Champ pour joindre un document à la demande de chat.
-        submit (SubmitField): Bouton pour soumettre le formulaire.
-        csrf_token (HiddenField): Champ caché pour la protection CSRF.
-
-    Example :
-        form = ChatRequestForm()
-    """
-    # Le contenu de la demande.
-    request_content = TextAreaField(
-        "Contenu de la demande",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Veuillez préciser le motif de votre demande pour le chat vidéo"}
-    )
-    # Le pseudo de l'utilisateur.
-    pseudo = StringField(
-        "Pseudo de l'utilisateur",
-        validators=[DataRequired()]
-    )
-    # La date du chat vidéo.
-    date_rdv = DateField(
-        "Veuillez sélectionner la date souhaitée",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Date souhaitée pour le chat vidéo :"}
-    )
-    # L'heure souhaitée.
-    heure = TimeField(
-        "Heure souhaitée",
-        format='%H:%M',
-        validators=[DataRequired()],
-        render_kw={"placeholder": "12:00"}
-    )
-    # Lier un fichier à la demande de chat.
-    attachment = FileField(
-        "Joindre un document",
-        validators=[FileAllowed(['pdf', 'doc', 'docx'], 'Seuls les fichiers PDF ou Word sont autorisés')]
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "Soumettre la demande"
-    )
-    csrf_token = HiddenField()
-
-
 # Formulaire permettant à un utilisateur de créer un commentaire pour la section vidéo.
 class CommentVideoForm(FlaskForm):
     """
@@ -741,34 +374,6 @@ class CommentVideoForm(FlaskForm):
         form = CommentVideoForm()
     """
     # Le contenu du commentaire.
-    comment_content = TextAreaField(
-        "Contenu du commentaire",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre commentaire"}
-    )
-    # Le pseudo de l'utilisateur.
-    user_pseudo = StringField(
-        "Pseudo de l'utilisateur",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre pseudo"}
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "Soumettre le commentaire"
-    )
-    csrf_token = HiddenField()
-
-
-# Formulaire permettant à un utilisateur de modifier son commentaire pour la section vidéo.
-class ChangeCommentVideoForm(FlaskForm):
-    """
-    Formulaire permettant de supprimer un commentaire par l'utilisateur.
-    Attributes :
-        comment_content : Contenu du commentaire de l'utilisateur.
-        submit (SubmitField): Bouton de soumission du formulaire.
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Contenu du commentaire de l'utilisateur.
     comment_content = TextAreaField(
         "Contenu du commentaire",
         validators=[DataRequired()],
@@ -822,28 +427,6 @@ class ReplyVideoForm(FlaskForm):
     csrf_token = HiddenField()
 
 
-# Formulaire permettant à un utilisateur de modifier sa réponse à un commentaire dans la section vidéo.
-class ChangeReplyVideo(FlaskForm):
-    """
-    Formulaire permettant de modifier une réponse par l'utilisateur.
-    Attributes :
-        reply_content : Contenu du commentaire de l'utilisateur.
-        submit (SubmitField): Bouton de soumission du formulaire.
-        csrf_token (HiddenField) : Jeton CSRF pour la sécurité du formulaire.
-    """
-    # Contenu du commentaire de l'utilisateur.
-    reply_content = TextAreaField(
-        "Contenu du commentaire",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Votre réponse"}
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "Soumettre la réponse"
-    )
-    csrf_token = HiddenField()
-
-
 # Formulaire permettant à un utilisateur de supprimer sa réponse à un commentaire dans la section vidéo.
 class SuppressReplyVideo(FlaskForm):
     """
@@ -882,25 +465,3 @@ class SuppressCommentVideoAdminForm(FlaskForm):
     submit = SubmitField(
         "Supprimer"
     )
-
-
-# Formulaire permettant d'envoyer le lien pour la session de chat vidéo.
-class UserLink(FlaskForm):
-    """
-    Formulaire pour envoyer le lien à l'utilisateur.
-
-    Attributes :
-        chat_link (StringField) : Champ afin de renseigner le lien du Chat vidéo.
-        submit (SubmitField): Bouton de soumission du formulaire.
-    """
-    # Champ afin de coller le lien pour le chat vidéo.
-    chat_link = StringField(
-        "Chat_link",
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Veuillez renseigner le lien copié"}
-    )
-    # Action de soumettre le formulaire.
-    submit = SubmitField(
-        "Envoyer"
-    )
-    csrf_token = HiddenField()

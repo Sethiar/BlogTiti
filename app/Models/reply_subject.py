@@ -16,7 +16,6 @@ class ReplySubject(db.Model):
         reply_content (str) : Contenu de la réponse.
         reply_date (datetime) : Date et heure de la réponse (par défaut, date actuelle UTC).
         comment_id (int) : Identifiant du commentaire associé à la réponse.
-        user_id (int) : Identifiant de l'utilisateur ayant posté la réponse.
     """
     __tablename__ = "reply_subject"
     __table_args__ = {"extend_existing": True}
@@ -29,9 +28,6 @@ class ReplySubject(db.Model):
     comment_id = db.Column(db.Integer, db.ForeignKey('comment_subject.id'), nullable=False)
     comment = db.relationship('CommentSubject', back_populates='replies')
 
-    # Relation avec la classe User.
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', back_populates='replies_subject')
 
     def __repr__(self):
         """
@@ -40,7 +36,6 @@ class ReplySubject(db.Model):
         Returns :
             str: Chaîne représentant l'objet Reply.
         """
-        return f"ReplySubject(id={self.id}, comment_id={self.comment_id}, user_id={self.user_id}, " \
-               f"date={self.reply_date}, like={self.reply_likes}, dislikes={self.reply_dislikes})"
+        return f"ReplySubject(id={self.id}, comment_id={self.comment_id}, date={self.reply_date})"
 
 

@@ -29,15 +29,9 @@ class CommentVideo(db.Model):
     video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
     video = db.relationship('Video', back_populates='comments_video')
 
-    # Relation avec la classe User.
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', back_populates='comments_video')
-
     # Relation avec la classe ReplyVideo avec suppression en cascade.
     replies = db.relationship('ReplyVideo', back_populates='comment_video', cascade='all, delete-orphan')
 
-    # Relation avec la classe LikeCommentVideo avec suppression en cascade.
-    likes = db.relationship('CommentLikeVideo', back_populates='comment_video', cascade='all, delete-orphan')
 
 
 def __repr__(self):
@@ -47,5 +41,5 @@ def __repr__(self):
     Returns :
         str: Chaîne représentant l'objet CommentVideo.
     """
-    return f"CommentVideo(id={self.id}, video_id={self.video_id}, user_id={self.user_id}, " \
+    return f"CommentVideo(id={self.id}, video_id={self.video_id}, " \
                f"comment_date={self.comment_date})"

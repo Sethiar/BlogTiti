@@ -32,9 +32,6 @@ class Admin(db.Model, UserMixin):
     password_hash = db.Column(db.LargeBinary(255), nullable=False)
     salt = db.Column(db.LargeBinary(255), nullable=False)
 
-    # Relation avec la table ChatRequest.
-    chat_requests = db.relationship('ChatRequest', back_populates='admin', cascade='all, delete-orphan')
-
     def __repr__(self):
         """
         Renvoie une chaîne de caractère représentant l'objet Administrateur.

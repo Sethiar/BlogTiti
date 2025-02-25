@@ -15,28 +15,6 @@ class Anonyme(AnonymousUserMixin):
         visits (int): Compteur de visites des utilisateurs anonymes.
     """
     @property
-    def is_authenticated(self):
-        """
-        Vérifie si l'utilisateur est authentifié.
-
-        Returns :
-            bool: False, car l'utilisateur n'est pas authentifié.
-        """
-        # L'utilisateur anonyme n'est pas authentifié.
-        return False
-
-    @property
-    def is_active(self):
-        """
-        Vérifie si l'utilisateur est actif.
-
-        Returns :
-             bool : True car l'utilisateur est considéré comme actif.
-        """
-        # L'utilisateur anonyme est considéré comme actif.
-        return True
-
-    @property
     def is_admin(self):
         """
         Vérifie si l'utilisateur est un administrateur.
