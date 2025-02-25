@@ -1,0 +1,60 @@
+{% extends 'baseform.html.jinja2' %}
+
+{% block head_content %}
+<meta name="description" content="Formulaire de demande de visio par l'utilisateur.">
+<title>{% block title %}Demande de visio avec Tititechnique{% endblock %}</title>
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+
+{% block body_content %}
+<!-- Bordure extérieure -->
+<div class="outer-frame">
+
+    <!-- Bordure intérieure -->
+    <div class="inner-frame">
+
+        <!-- Titre du formulaire -->
+        <h2 class="h2-form">Voici le formulaire afin de demander une visio avec Tititechnique. </h2>
+
+        <!-- Conteneur du formulaire -->
+        <form method="POST" action="{{ url_for('chat.send_visio') }}"
+            class="form-base" enctype="multipart/form-data">
+              
+
+            <!-- Image du logo -->
+            <div class="imgcontainer-form">
+                <img src="{{ url_for('static', filename='Images/images_formulaires/connexion1.png') }}"
+                     alt="Titi à son ordinateur" class="avatar-form">
+            </div>
+
+            <!-- Titre de la section du formulaire -->
+            <h3 class="h3-form">Demande de visio</h3>
+
+            <!-- hidden_tag pour génération du token CSRF pour la sécurité -->
+            {{ formvisio.csrf_token }}
+
+            <div class="space-form"></div>
+
+            <!-- Conteneur des champs du formulaire -->
+            <div class="form-container">
+
+                <!-- Conteneur de l'email de l'utilisateur-->
+                <div class="form-group">
+                    {{ formvisio.label }}
+                    {{ formvisio.email }}
+                </div>
+            </div>
+
+            <!-- Conteneur des boutons du formulaire -->
+            <div class="container-btn">
+                <button type="submit" class="validated-btn" aria-label="Valider la réponse">
+                    Demander la visio
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
