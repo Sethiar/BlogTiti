@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 from itsdangerous import URLSafeTimedSerializer
 
-from flask import Flask, session, redirect, url_for, request, g
+from flask import Flask
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
@@ -33,6 +33,7 @@ load_dotenv()
 
 # Instanciation de Flask-mail.
 mailing = Mail()
+
 # Instanciation de Flask-login.
 login_manager = LoginManager()
 
@@ -149,12 +150,9 @@ def create_app():
     csrf.init_app(app)
 
     from app.Models.admin import Admin
-    from app.Models.user import User
 
     # Configuration du LoginManager pour les utilisateurs.
     login_manager.init_app(app)
-    # Redirection automatique si utilisateur n'est pas authentifié vers un formulaire.
-    login_manager.login_view = 'auth.user_connection'
 
     # Enregistrement de la classe Anonyme.
     login_manager.anonymous_user = Anonyme
@@ -168,10 +166,6 @@ def create_app():
         :param user_id: Identifiant de l'utilisateur ou administrateur.
         :return: Instance de User ou Admin.
         """
-        # Chargement d'un utilisateur.
-        user = User.query.get(int(user_id))
-        if user:
-            return user
 
         # Si ce n'est pas un utilisateur, chargement d'un administrateur.
         admin = Admin.query.get(int(user_id))
@@ -180,31 +174,6 @@ def create_app():
 
         # Si aucun n'est trouvé, retourne None.
         return None
-
-    # Gestion des utilisateurs non authentifiés.
-    @login_manager.unauthorized_handler
-    def unauthorized():
-        """
-        Redirige les utilisateurs non authentifiés vers la page de connexion.
-
-        Returns:
-            Redirection vers la page "connexion_requise".
-        """
-        # Vérification de l'appel de la méthode.
-        print("Unauthorized handler called")
-        return redirect(url_for('auth.user_connection', next=request.url))
-
-    @app.context_processor
-    def inject_logged_in():
-        """
-        Injecte le statut de connexion et le pseudo dans le contexte global.
-
-        Returns:
-            dict: Contexte contenant le statut de connexion et le pseudo.
-        """
-        logged_in = session.get("logged_in", False)
-        pseudo = session.get("pseudo", None)
-        return dict(logged_in=logged_in, pseudo=pseudo)
 
     # Configuration de la journalisation.
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
