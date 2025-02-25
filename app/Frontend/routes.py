@@ -6,19 +6,15 @@ import os
 from app.Frontend import frontend_bp
 
 from flask import abort
-from flask_login import current_user
 
-from app.Models.forms import NewSubjectForumForm, CommentSubjectForm, CommentLike, SuppressCommentForm, \
-    SuppressReplySubject, CommentVideoForm, SuppressCommentVideoForm, SuppressReplyVideo
+from app.Models.forms import NewSubjectForumForm, CommentSubjectForm, CommentVideoForm
 
 from app.Models.subject_forum import SubjectForum
 from app.Models.comment_subject import CommentSubject
-from app.Models.likes_comment_subject import CommentLikeSubject
 
 from app.Models.videos import Video
 
 from app.Models.comment_video import CommentVideo
-from app.Models.likes_comment_video import CommentLikeVideo
 
 from flask import render_template, request
 
@@ -47,18 +43,12 @@ def forum():
     # Récupération de tous les sujets de la table de données.
     subjects = SubjectForum.query.all()
 
-    # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
 
-    # Debug : Vérification du type.
-    print("Type of is_authenticated:", type(is_authenticated))
-
-    return render_template('frontend/forum.html', formsubjectforum=formsubjectforum, subjects=subjects,
-                           is_authenticated=is_authenticated)
+    return render_template('frontend/forum.html', formsubjectforum=formsubjectforum, subjects=subjects)
 
 
 # Route pour visualiser le sujet de discussion sur un sujet en particulier.
-@frontend_bp.route('/accès-sujet-forum/<int:subject_id>', methods=['GET', 'POST'])
+@frontend_bp.route('/acces-sujet-forum/<int:subject_id>', methods=['GET', 'POST'])
 def forum_subject(subject_id):
     """
     Route permettant d'accéder à un sujet spécifique du forum.
@@ -74,18 +64,9 @@ def forum_subject(subject_id):
     """
     # Création de l'instance des formulaires.
     formcomment = CommentSubjectForm()
-    formlikecomment = CommentLike()
-    formsuppress = SuppressCommentForm()
-    formsuppressreply = SuppressReplySubject()
 
     # Récupération du sujet spécifié par l'id depuis la base de données.
     subject = SubjectForum.query.get_or_404(subject_id)
-
-    # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
-
-    # Debug: Vérification du type.
-    print("Type of is_authenticated:", type(is_authenticated))
 
     # Vérification de l'existence du sujet.
     if not subject:
@@ -95,23 +76,8 @@ def forum_subject(subject_id):
     # Récupération des commentaires associés à ce sujet.
     comment_subject = CommentSubject.query.filter_by(subject_id=subject_id).all()
 
-    # Préparation des données de likes pour chaque commentaire.
-    comment_likes_data = {}
-    for comment in comment_subject:
-        like_count = CommentLikeSubject.query.filter_by(comment_id=comment.id).count()
-        liked_user_ids = [like.user_id for like in CommentLikeSubject.query.filter_by(comment_id=comment.id).all()]
-        liked_by_current_user = current_user.is_authenticated and current_user.id in liked_user_ids
-        comment_likes_data[comment.id] = {
-            "like_count": like_count,
-            "liked_user_ids": liked_user_ids,
-            "liked_by_current_user": liked_by_current_user
-        }
-
     return render_template("frontend/subject_forum.html", subject=subject, subject_id=subject_id,
-                           formsuppress=formsuppress, formsuppressreply=formsuppressreply,
-                           comment_subject=comment_subject, formcomment=formcomment,
-                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data,
-                           is_authenticated=is_authenticated)
+                           comment_subject=comment_subject, formcomment=formcomment)
 
 
 # Route permettant d'afficher toutes les vidéos de la chaîne Tititechnique avec pagination.
@@ -235,19 +201,10 @@ def display_video(video_id):
         404 Error: Si aucune vidéo correspondant à l'ID spécifié n'est trouvée dans la base de données.
     """
     # Création de l'instance des formulaires.
-    formcomment = CommentVideoForm()
-    formlikecomment = CommentLike()
-    formsuppress = SuppressCommentVideoForm()
-    formsuppressreply = SuppressReplyVideo()
+    formcommentvideo = CommentVideoForm()
 
     # Récupération due la vidéo spécifiée par l'id depuis la base de données.
     video = Video.query.get_or_404(video_id)
-
-    # Passage de la valeur booléenne d'authentification au template.
-    is_authenticated = current_user.is_authenticated
-
-    # Debug: Vérification du type.
-    print("Type of is_authenticated:", type(is_authenticated))
 
     # Vérification de l'existence due la vidéo.
     if not video:
@@ -257,22 +214,8 @@ def display_video(video_id):
     # Récupération des commentaires associés à cette vidéo.
     comment_video = CommentVideo.query.filter_by(video_id=video_id).all()
 
-    # Préparation des données de likes pour chaque commentaire.
-    comment_likes_data = {}
-    for comment in comment_video:
-        like_count = CommentLikeVideo.query.filter_by(comment_id=comment.id).count()
-        liked_user_ids = [like.user_id for like in CommentLikeVideo.query.filter_by(comment_id=comment.id).all()]
-        liked_by_current_user = current_user.id in liked_user_ids
-        comment_likes_data[comment.id] = {
-            "like_count": like_count,
-            "liked_user_ids": liked_user_ids,
-            "liked_by_current_user": liked_by_current_user
-        }
-
     return render_template("frontend/video.html", video=video, video_id=video_id,
-                           formsuppress=formsuppress, formsuppressreply=formsuppressreply,
-                           comment_video=comment_video, formcomment=formcomment,
-                           formlikecomment=formlikecomment, comment_likes_data=comment_likes_data,
-                           is_authenticated=is_authenticated)
+                           comment_video=comment_video, formcommentvideo=formcommentvideo)
+            
 
 

@@ -22,21 +22,8 @@ def generate_unique_id():
     return str(uuid.uuid4())
 
 
-# Route permettant à l'utilisateur de bien se connecter au blog.
-@functional_bp.route("/connexion-requise")
-def connexion_requise():
-    """
-    Affiche un message informant l'utilisateur qu'une connexion est requise
-    pour accéder à la page demandée.
-
-    Returns:
-        Template HTML de la page "connexion_requise".
-    """
-    return render_template("Error/connexion_requise.html")
-
-
 #  Route permettant d'accéder à la politique de confidentialité.
-@functional_bp.route("/Politique-de-confidentialité")
+@functional_bp.route("/Politique-de-confidentialite")
 def politique():
     """
     Accès à la Politique de confidentialité du blog.
@@ -48,7 +35,7 @@ def politique():
 
 
 #  Route permettant d'accéder aux mentions légales.
-@functional_bp.route("/mentions-légales")
+@functional_bp.route("/mentions-legales")
 def mentions():
     """
     Accès aux Mentions légales du blog.
