@@ -13,7 +13,8 @@ from flask import render_template, url_for, redirect, flash
 from markupsafe import escape
 
 from app.Models import db
-from app.Models.forms import  SuppressSubject, NewSubjectForumForm
+from app.Models.forms import  SuppressSubject, NewSubjectForumForm, \
+SuppressCommentSubjectForm, SuppressCommentVideoAdminForm
 
 from app.Models.admin import Admin
 from app.Models.subject_forum import SubjectForum
@@ -184,6 +185,30 @@ def suppress_subject(id):
     return redirect(url_for("admin.list_subject_forum"))
 
 
+# Route permettant de chercher un commentaire de la partie forum par date d'édition.
+@admin_bp.route("/backend/liste-commentaire-forum", methods=['GET', 'POST'])
+@admin_required
+def list_comments_forum():
+    """
+    Fonction qui permet de rechercher un commentaire de la section forum par date d'édition.
+    
+    Args:
+        SuppressCommentSubjectForm : formulaire permettant de supprimer un commentaire 
+    de la base de données 'CommentSubject'.
+        Comment : commentaire de la base de données CommentSubject. 
+        
+    Returns:
+        Response: Redirection vers la page admin de la liste des commentaires de la section forum.    
+    """
+    # Instanciation du formulaire
+    suppressform = SuppressCommentSubjectForm()
+    
+    # Récupération de tous les commentaires.
+    comments = CommentSubject.query.all()
+    
+    return render_template('backend/users_subject_comments.html', comments=comments, suppressform=suppressform)
+
+
 # Route permettant de supprimer un commentaire d'un sujet du forum.
 @admin_bp.route("/backend/supprimer-commentaires-sujets/<int:id>", methods=['GET', 'POST'])
 @admin_required
@@ -220,6 +245,29 @@ def suppress_subject_comment(id):
         db.session.close()
 
     return redirect(url_for("admin.list_comments_forum"))
+
+
+# Route permettant de chercher un commentaire par date d'édition.
+@admin_bp.route("/backend/liste-commentaire-video", methods=['GET', 'POST'])
+def list_comments_video():
+    """
+    Fonction qui permet de rechercher un commentaire de la section vidéo par date d'édition.
+    
+    Args:
+        SuppressCommentVideoAdminForm : formulaire permettant de supprimer un commentaire 
+    de la base de données 'CommentVideo'.
+        Comment : commentaire de la base de données CommentVideo. 
+        
+    Returns:
+        Response: Redirection vers la page admin de la liste des commentaires de la section vidéo.    
+    """
+    # instanciation du formulaire.
+    suppressform = SuppressCommentVideoAdminForm()
+    
+    # Récupération de ltous les commentaires de la section vidéo.
+    comments = CommentVideo.query.all()
+    
+    return render_template('backend/users_video_comments.html', suppressform=suppressform, comments=comments)
 
 
 # Route permettant de supprimer un commentaire d'une vidéo.

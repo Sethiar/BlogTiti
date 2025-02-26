@@ -2,38 +2,27 @@
 
 {% block head_content %}
     <meta name="description" content="Page du backend afin d'afficher la liste des commentaires des utilisateurs de la section vidéo.">
-    <title>{% block title %}Page administrateur - Liste des utilisateurs et de leurs commentaires en fonction des vidéos{% endblock %}</title>
+    <title>{% block title %}Page administrateur - Liste des commentaires en fonction des vidéos{% endblock %}</title>
 {% endblock %}
 
 {% block body_content %}
 
 <div class="space"></div>
 
-<!-- Sélection de la première lettre de l'alphabet pour les utilisateurs -->
+<!-- Section de titre -->
 <div class="lettre-navigation">
 
-    <h5 class="h5-backend">Liste des commentaires des vidéos par utilisateur</h5>
+    <h5 class="h5-backend">Liste des commentaires des vidéos par date d'édition </h5>
 
     <div class="space2"></div>
     
-    <!-- Sélection de tous les utilisateurs -->
-    <a href="{{ url_for('admin.list_comments_video') }}" class="select-all-users">Tous</a>
-    
-    <div class="space2"></div>
-    
-    <!-- Affichage des lettres -->
-    <div class="lettre">
-        {% for lettre in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
-        <a href="{{ url_for('admin.list_comments_video', lettre=lettre) }}">{{ lettre }}</a>
-        {% endfor %}
-    </div>
 </div>
 
 <div class="space2"></div>
 
 <div class="container">
     
-    <h5 class="h5-backend">Liste des commentaires par utilisateur</h5>
+    <h5 class="h5-backend">Liste des commentaires</h5>
 
     <div class="space2"></div>
     
@@ -41,30 +30,28 @@
     <table class="backend-table">
         <thead>
             <tr>
-                <th class="width: 13vw;">Pseudo de l'utilisateur</th>
                 <th class="width: 13vw;">Titre du sujet commenté</th>
+                <th class="width: 13vw;">Date du commentaire</th>
                 <th class="width: 13vw;">Commentaires</th>
                 <th class="width: 13vw;">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Affichage des commentaires par utilisateurs au sein du tableau -->
-            {% for user, comments in user_comments.items() %}
-            {% for item in comments %}
+            <!-- Affichage des commentaires au sein du tableau -->
+            {% for comment in comments %}
             <tr>
-                <td>{{ user }}</td>
-                <td>{{ item.video.title }}</td>
-                <td class="subject-comment-backend">{{ item.comment.comment_content }}</td>
+                <td>{{ comment.video.title }}</td>
+                <td>{{ comment.comment_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td class="subject-comment-backend">{{ comment.comment_content }}</td>
                 <td>
                     <!-- Formulaire permettant de supprimer un commentaire -->
-                    <form action="{{ url_for('admin.suppress_video_comment', id=item.comment.id) }}" method="POST" class="btn-valide-back">
+                    <form action="{{ url_for('admin.suppress_video_comment', id=comment.id) }}" method="POST" class="btn-valide-back">
                         {{ suppressform.csrf_token }}
-                        <input type="hidden" name="comment_id" value="{{ item.comment.id }}">
+                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
                         <button type="submit">Supprimer   <i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
-            {% endfor %}
             {% endfor %}
         </tbody>
     </table>
