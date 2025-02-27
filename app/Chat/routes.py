@@ -10,7 +10,9 @@ from app import db
 
 from app.Models.visio import Visio
 from app.Models.forms import AskVisio
-from app.Mail.routes import send_confirmation_request_reception, send_request_admin
+from app.Mail.routes import send_confirmation_request_reception, send_request_admin, send_mail_validate_visio
+
+from app.Models.forms import UserLink
 
 from app.extensions import create_whereby_meeting_admin
 
@@ -76,8 +78,50 @@ def send_visio():
     # Retour à la page d'accueil.        
     return render_template("frontend/accueil.html")    
             
-            
+
+# Route permettant d'envoyer le lien du chat vidéo à l'utilisateur par mail.
+@chat_bp.route('/envoi-lien-utilisateur/<int:id>', methods=['POST'])
+def send_user_link(id):
+    """
+    Envoie un e-mail contenant le lien de la visio à un utilisateur spécifique.
+
+    Cette route récupère le lien du chat vidéo depuis le formulaire soumis.
     
+    Un e-mail contenant le lien du chat vidéo est ensuite envoyé à l'utilisateur.
+
+    Args:
+        id (int): L'identifiant de la requête de la visio associée au mail de l'utilisateur.
+
+    Returns:
+        Response: Redirection vers la page de la liste des demandes de visio.
+    """
+    # Instanciation du formulaire.
+    form = UserLink()
+
+    if form.validate_on_submit():
+        # Récupération du lien de la visio à partir du formulaire.
+        visio_link = form.visio_link.data
+
+        # Récupération de la requête de chat vidéo associée à l'ID fourni.
+        visio_data = Visio.query.get(id)
+
+        if visio_data:
+            # Récupération de l'utilisateur lié à la requête.
+            email = visio_data.email
+
+            if email:
+                # Appel de la fonction pour envoyer l'e-mail avec le lien du chat vidéo.
+                send_mail_validate_visio(email, visio_data, visio_link)
+                flash("Le lien a été envoyé à l'utilisateur avec succès.", "success")
+            else:
+                flash("Erreur : mail de l'utilisateur introuvable.", "danger")
+        else:
+            flash("Erreur : requête de la visio introuvable.", "danger")
+    else:
+        flash("Erreur dans le formulaire, veuillez vérifier les champs.", "danger")
+
+    return redirect(url_for('admin.visio_display'))
+
 
 # Route permettant de générer le lien du chat pour l'administrateur.
 @chat_bp.route('/admin_room_url')

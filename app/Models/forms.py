@@ -492,5 +492,46 @@ class AskVisio(FlaskForm):
     # Token de sécurité
     csrf_token = HiddenField()
     
+    
+# Fromulaire qui supprime la demande de visio.
+class FormSuppressVisio(FlaskForm):
+    """
+    Formulaire afin de suppriemr une demande de visio.
+    
+    Attributes :
+        visio_id (Hiddenfields) : Champ caché pour la demande de viso à supprimer.
+        submit (SubmitField) : Bouotn de soumission du formulaire.
+        csrf_token (HiddenFields) : Champ de sécurité.
+    """
+    # Champ caché de l'id de la visio à supprimer.
+    visio_id = HiddenField(
+        "visio_id",
+        validators=[DataRequired()]
+    )
+    # Champ caché du token.
+    csrf_token = HiddenField()
+    # Bouton de soumission.
+    submit = SubmitField(
+        "Supprimer"
+    )
+    
+    
+# Formulaire permettant d'envoyer le lien pour la session de chat vidéo à l'utilisateur.
+class UserLink(FlaskForm):
+    """
+    Formulaire pour envoyer le lien à l'utilisateur.
+    """
 
+    # Réception du lien pour le chat à envoyer à l'utilisateur.
+    visio_link = StringField(
+        "Visio-link",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Veuillez renseigner le lien copié."}
+    )
+
+    # Action de soumettre le formulaire.
+    submit = SubmitField("Envoyer à l'utilisateur")
+
+    # Token de sécurité.
+    csrf_token = HiddenField()    
     

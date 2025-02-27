@@ -14,15 +14,16 @@ from markupsafe import escape
 
 from app.Models import db
 from app.Models.forms import  SuppressSubject, NewSubjectForumForm, \
-SuppressCommentSubjectForm, SuppressCommentVideoAdminForm
+SuppressCommentSubjectForm, SuppressCommentVideoAdminForm, FormSuppressVisio, UserLink
 
 from app.Models.admin import Admin
 from app.Models.subject_forum import SubjectForum
 from app.Models.comment_subject import CommentSubject
 from app.Models.videos import Video
-
 from app.Models.comment_video import CommentVideo
+from app.Models.visio import Visio
 
+from app.extensions import create_whereby_meeting_admin
 from app.decorators import admin_required
 
 
@@ -305,6 +306,78 @@ def suppress_video_comment(id):
     db.session.close()
     return redirect(url_for('admin.list_comments_video'))
 
+
+# Route permettant d'afficher les demandes de visio au sein du backend.
+@admin_bp.route('/backend/affichage-demande-visio', methods=['GET', 'POST'])
+def visio_display():
+    """
+    Cette fonction permet d'afficher les demandes de viso faites à l'administrateur.
+    
+    Celui-ci pourra alors les supprimer via un bouton au sein du tableau afin de 
+    pourvoir avoir une vision plus précise des demandes. 
+    
+    Chaque demande de visio possèdera les informations suivantes : Mail de l'utilisateur et date de la demande.
+    
+    
+    """
+    # Instanciation du formulaire.
+    formsuppressvisio = FormSuppressVisio()
+    formlink = UserLink()
+    
+    # Récupération des données.
+    visios = Visio.query.all()
+    
+    # Préparation des donénes de la demande de visio.
+    visio_data = []
+    
+    for visio in visios:
+        admin_room_url = create_whereby_meeting_admin()
+        
+        visio_data.append({
+            'email': visio.email,
+            'link': admin_room_url
+        })
+    
+    return render_template('backend/backvisio.html', formsuppressvisio=formsuppressvisio, formlink=formlink,
+                           visios=visios, visio_data=visio_data)
+
+
+# Route permettant de supprimer un commentaire d'une vidéo.
+@admin_bp.route("/backend/supprimer-demande-visio/<int:id>", methods=['POST'])
+@admin_required
+def suppress_visio(id):
+    """
+    Supprime la demande de visio identifiée par son ID et redirige vers la liste des demandes.
+
+    Cette route est accessible uniquement aux administrateurs. Elle permet de supprimer une demande de visio
+    spécifique de la base de données en utilisant son identifiant unique. Après la suppression, l'administrateur est redirigé
+    vers la page de demandes de visio.
+
+    Args:
+        id (int): L'identifiant unique de la visio à supprimer.
+
+    Context:
+        visio : demande de visio récupérée depuis la base de données à l'aide de l'ID fourni.
+
+    Returns:
+        Response: Une redirection vers la liste des demandes de visio après la suppression, avec un message flash
+                  indiquant le succès de l'opération.
+    """
+
+    # Récupération de toutes les demandes de visio postées sur le blog.
+    visio = Visio.query.get_or_404(id)
+
+    # Suppression du commentaire de la base de données.
+    db.session.delete(visio)
+    db.session.commit()
+
+    flash(f"La demande de visio a été supprimée avec succès le {datetime.now().strftime('%d-%m-%Y à %H:%M:%S')}", 'success')
+    
+    # Fermeture de la session.
+    db.session.close()
+    
+    # Redirection vers la page des demandes de visio.
+    return redirect(url_for('admin.visio_display'))
 
 
 
