@@ -8,7 +8,7 @@ from app import create_app
 
 app = create_app()
 
-# L'installation des tables de données dans un contexte d'application.
+# L'installation des tables de données dans un contexte d'application.py.
 with app.app_context():
 
     # Création de toutes les tables à partir de leur classe.
