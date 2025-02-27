@@ -1,0 +1,68 @@
+{% extends 'baseback.html.jinja2' %}
+
+{% block head_content %}
+<meta name="description"
+    content="Page du backend qui renvoie à l'administrateur les informations concernant les demandes de visio."
+<title>{% block title %}Page administrateur - Liste des demandes de visio{% endblock %}</title>
+{% endblock %}
+
+{% block body_content %}
+<div class="space"></div>
+<h5 class="h5-backend">Liste des demandes de visio</h5>
+<div class="space2"></div>
+
+
+<!-- Conteneur renvoyant la liste de tous les sujets-->
+<div class="subjects-container">
+        
+    <!-- Tableau  -->
+    <table class="backend-table">
+        <thead>
+            <tr>
+                <th class="width: 13vw">Email de l'utilisateur</th>
+                <th class="width: 13vw">Date de la demande</th>
+                <th class="width: 13vw">Générer un lien pour la visio</th>
+                <th class="width: 13vw">Envoyer le lien à l'utilisateur</th>
+                <th class="width: 13vw">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Affichage des mails utilisateurs -->
+             {% for visio in visios %}
+             <tr>
+                <td class="subject-name">{{ visio.email }}</td>
+                <td class="subject-author">{{ visio.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    {% set rdv = visio_data | selectattr("email", "equalto", visio.email) | first %}
+                    {% if rdv %}
+                    <a href="{{ rdv.link }}" target="_blank" class="btn-primary">Lien de connexion</a>
+                    {% else %}
+                    Non disponible
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{{ url_for('chat.send_user_link', id=visio.id) }}" method="POST" class="btn_send">
+                        {{ formlink.csrf_token }}
+                        <input type="text" name="visio_link" placeholder="Lien pour l'utilisateur" required>
+                        <button type="submit" class="btn-primary">Envoyer</button>
+                    </form>
+                </td>
+                <td>
+                    <!-- Formulaire supprimant le mail de l'utilisateur -->
+                    <form action="{{ url_for('admin.suppress_visio', id=visio.id) }}" method="POST" class="btn-valide-back">
+                        <!-- Token de vérification -->
+                        {{ formsuppressvisio.csrf_token }}
+
+                        <button type="submit" data-pseudo="l'email {{ visio.mail }}">Supprimer   <i class="fas fa-trash"></i></button>
+                    </form> 
+                </td>
+             </tr>
+             {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="separation"></div>
+
+{% endblock %}
+
